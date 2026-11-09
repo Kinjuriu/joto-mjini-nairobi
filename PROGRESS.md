@@ -22,3 +22,8 @@ Times are local, Africa/Nairobi (UTC+3).
   - Web data in `site/public/data/`: wards.geojson (85 kB), county.geojson, places.geojson, comparison_areas.geojson, legends.json, chart CSVs, raster PMTiles (hot, cool, anomaly, tree, population, GHSL 1990 and 2020), buildings.pmtiles (43.5 MB).
   - Static figures in `outputs/figures/` (PNG and SVG), copied to `site/public/figures/`.
   - Node repaired (D19). Next: Phase 3, story site.
+- 2026-11-10 02:48 **Phase 3 finished: story site.**
+  - `site/` (Vite 8.3.7, vanilla JS, MapLibre 6.17.0, PMTiles 4.5.0, Scrollama 3.2.0, D3 7.9.2, Source Serif 4 and Source Sans 3 via Fontsource 5.3.1; Playwright 1.65.0 for QA). Structure follows the NASA story: title block, hero swipe map, sections, tree chart beside text, air temperature chart with El Niño shading, nine-chapter scrollytelling map, built-up swipe map, satellite explainer, ward explorer, cooling section, methods and credits.
+  - Copy numbers are filled at build time from `analysis/results.json` (D23). Added findings F14 (Kileleshwa and Kawangware) and F15 (satellite record facts) for the copy.
+  - Builds with `npm run build`; preview checked with Playwright at 1440 and 375 px: no console errors, PMTiles range requests return 206, first load about 1.5 MB before map tiles.
+  - `site/SITE_REPORT.md` written. Next: Phase 4, QA and morning report.

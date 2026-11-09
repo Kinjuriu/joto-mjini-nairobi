@@ -59,7 +59,7 @@ def main() -> None:
            f"surface temperature unless the finding says air temperature.\n"]
 
     out.append(finding(
-        "F1", "On hot mornings the middle of Nairobi's ground was close to 39 °C",
+        "F1", f"On hot mornings, half of Nairobi's ground was hotter than {c(q1['county_median_c'])}",
         f"On clear January to March mornings, half of Nairobi County's ground was hotter than {c(q1['county_median_c'])} "
         f"at the surface. The hottest tenth of the land averaged {c(q1['hottest10pct_land_mean_c'])}; the coolest tenth "
         f"averaged {c(q1['coolest10pct_land_mean_c'])}.",
@@ -71,7 +71,7 @@ def main() -> None:
         CAVEAT_LST, f"High. Recomputed independently with a rioxarray clip: {chk['county_median']['independent']} °C."))
 
     out.append(finding(
-        "F2", f"The hottest wards were about {q1['ward_gap_c']:.0f} °C hotter than the coolest",
+        "F2", f"The hottest wards were {q1['ward_gap_c']:.1f} °C hotter than the coolest",
         f"{q1['hottest_ward']} was the hottest ward at the surface ({c(q1['hottest_ward_c'])}) and "
         f"{q1['coolest_ward']} the coolest ({c(q1['coolest_ward_c'])}). The {q1['n_wards_each_group']} hottest wards "
         f"averaged {c(q1['hottest_wards_mean_c'])}, {c(q1['ward_gap_c'])} more than the {q1['n_wards_each_group']} "
@@ -86,7 +86,7 @@ def main() -> None:
         f"{chk['ward_rank_agreement_spearman']}). Medium for interpretation, because ward medians mix land uses."))
 
     out.append(finding(
-        "F3", f"The city centre and Industrial Area were {q2['gap_c']:.0f} °C hotter than Karura and the Arboretum",
+        "F3", f"The city centre and Industrial Area were {q2['gap_c']:.1f} °C hotter than Karura and the Arboretum",
         f"On hot mornings, the ground in the city centre and Industrial Area ({c(q2['hot_areas_median_c'])}) was "
         f"{c(q2['gap_c'])} hotter than Karura Forest and the Nairobi Arboretum ({c(q2['cool_areas_median_c'])}).",
         f"CBD {c(q2['CBD']['median_c'])}; Industrial Area {c(q2['Industrial Area']['median_c'])}; Karura Forest "
@@ -102,7 +102,7 @@ def main() -> None:
         f"High. Karura recomputed by a windowed read: {chk['karura_median']['independent']} °C."))
 
     out.append(finding(
-        "F4", f"Built-up cells were {q3['built_minus_tree_c']:.0f} °C hotter than tree-covered cells",
+        "F4", f"Built-up cells were {q3['built_minus_tree_c']:.1f} °C hotter than tree-covered cells",
         f"On hot mornings, mostly built-up ground was on average {c(q3['built_minus_tree_c'])} hotter at the surface than "
         f"ground mostly under trees. Areas with more trees were cooler: the hot-season surface temperature fell from "
         f"{c(q3['tree_band_0_10_mean_c'])} where tree cover was under 10 % to {c(q3['tree_band_90_100_mean_c'])} where it "
@@ -156,7 +156,8 @@ def main() -> None:
     out.append(finding(
         "F7", "Ten wards where people live on the hottest ground",
         f"Weighted by where people live, the hottest wards were {', '.join(w['ward_name'] for w in tw[:-1])} and "
-        f"{tw[-1]['ward_name']}. Together they are home to about {n(q4['top10_total_pop'])} people.",
+        f"{tw[-1]['ward_name']}. Together they are home to about {n(q4['top10_total_pop'])} people. None of them has more "
+        f"than {q4['top10_max_tree_pct']:.1f} % of its land under trees.",
         "; ".join(f"{w['ward_name']} {c(w['pop_weighted_lst_c'])}, {n(w['pop_total'])} people" for w in tw),
         "Population-weighted mean of hot-season surface temperature over the 30 m cells of each ward (weights: WorldPop "
         "2025 people per cell); populations rounded to the nearest 100",
@@ -275,6 +276,39 @@ def main() -> None:
         "data/processed/landsat_scene_catalogue.csv, data/processed/rasters/lst_hottest_clear_day.tif",
         "src/pipeline/s2b_composites.py, main", CAVEAT_LST + " One scene; a September date, so it is outside the "
         "January to March season used elsewhere.", "High for the number; it is one morning."))
+
+    q9, q0 = r["q9"], r["q0"]
+    kl, kw = q9["Kileleshwa"], q9["Kawangware"]
+    out.append(finding(
+        "F14", f"Leafy Kileleshwa and dense Kawangware, {q9['distance_km']:.1f} km apart, differed by {q9['lst_gap_c']:.1f} °C",
+        f"Kawangware, where about {n(kw['pop_density_per_km2'])} people live per square kilometre, had a median surface "
+        f"temperature of {c(kw['lst_median_c'])} on hot mornings and {kw['tree_pct']:.0f} % tree cover. Kileleshwa, "
+        f"{q9['distance_km']:.1f} km away at the nearest point, had {c(kl['lst_median_c'])} and {kl['tree_pct']:.0f} % tree cover.",
+        f"Kawangware: {c(kw['lst_median_c'])}, tree cover {kw['tree_pct']} %, built-up {kw['built_pct']} %, about "
+        f"{n(kw['pop_total'])} people on {kw['area_km2']} km² ({n(kw['pop_density_per_km2'])} per km²), rank {kw['rank_hottest']} "
+        f"of {q0['n_wards']}. Kileleshwa: {c(kl['lst_median_c'])}, tree cover {kl['tree_pct']} %, built-up {kl['built_pct']} %, "
+        f"about {n(kl['pop_total'])} people on {kl['area_km2']} km² ({n(kl['pop_density_per_km2'])} per km²), rank "
+        f"{kl['rank_hottest']}. Gap {c(q9['lst_gap_c'])}; nearest distance between ward boundaries {q9['distance_km']} km",
+        "Ward medians and shares as in F2 and F4; distance between ward polygons in UTM 37S",
+        HOT + ", tree_fraction_30m.tif, built_fraction_30m.tif, population_30m.tif, nairobi_wards.geojson",
+        "src/analysis/core.py, q9_pair",
+        CAVEAT_LST + " Two wards chosen to illustrate a contrast (Kileleshwa includes Lavington); they are not a "
+        "random sample. Ward populations are modelled.",
+        "High for the numbers; the pair was chosen, so it illustrates F4 and F8 rather than proving them."))
+
+    out.append(finding(
+        "F15", "What the satellite record contains",
+        f"We checked {n(q0['n_scenes_searched'])} Landsat 8 and 9 passes over Nairobi between "
+        f"{_date(q0['first_scene'])} and {_date(q0['last_scene'])}; {q0['n_scenes_usable']} were clear enough to use. "
+        f"The satellites pass at about {q0['overpass_local']} in the morning, Nairobi time.",
+        f"{q0['n_scenes_searched']} scenes with under 40 % cloud for the whole scene; {q0['n_scenes_usable']} with at least "
+        f"80 % of the county clear; {q0['usable_hot_months_share_pct']} % of usable scenes fall in January to March; mean "
+        f"local overpass time of the hot-season scenes {q0['overpass_local']}; hot-season composite {q0['n_hot_scenes']} "
+        f"scenes; cool-season composite {q0['n_cool_scenes']} scenes from {q0['cool_first_year']}",
+        "STAC search of landsat-c2-l2 on Planetary Computer, cloud mask from qa_pixel",
+        "data/processed/landsat_scene_catalogue.csv, data/processed/composites_meta.json",
+        "src/pipeline/s2_landsat.py, src/pipeline/s2b_composites.py, src/analysis/core.py q0_data",
+        "Scenes with more than 40 % cloud over the whole scene were not searched.", "High."))
 
     out.append("""## Checks
 

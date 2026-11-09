@@ -1,10 +1,10 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:25 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:32 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
-### F1. On hot mornings the middle of Nairobi's ground was close to 39 °C
+### F1. On hot mornings, half of Nairobi's ground was hotter than 38.7 °C
 
 - **Sentence for the story:** On clear January to March mornings, half of Nairobi County's ground was hotter than 38.7 °C at the surface. The hottest tenth of the land averaged 44.9 °C; the coolest tenth averaged 29.3 °C.
 - **Number(s):** county median 38.7 °C; 10th percentile 31.6 °C; 90th percentile 43.3 °C; mean of hottest 10 % 44.9 °C; mean of coolest 10 % 29.3 °C; 99.6 % of county cells have a value
@@ -14,7 +14,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time).
 - **Confidence:** High. Recomputed independently with a rioxarray clip: 38.7 °C.
 
-### F2. The hottest wards were about 7 °C hotter than the coolest
+### F2. The hottest wards were 7.2 °C hotter than the coolest
 
 - **Sentence for the story:** Ruai was the hottest ward at the surface (42.4 °C) and Karen the coolest (32.3 °C). The 8 hottest wards averaged 41.8 °C, 7.2 °C more than the 8 coolest (34.6 °C).
 - **Number(s):** hottest wards: Ruai 42.4, Embakasi 42.1, Kangemi 42.0, Viwandani 41.9, Mwiki 41.8, Kawangware 41.6, Dandora Area I 41.4, Babadogo 41.4; coolest wards: Karen 32.3, Karura 33.0, Kitisuru 33.6, Uthiru/Ruthimitu 34.7, Mutuini 35.1, Kileleshwa 35.7, Parklands/Highridge 36.1, Roysambu 36.2 (°C, ward medians)
@@ -24,7 +24,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Ward medians include all land in the ward (homes, roads, open ground, forest). Ruai and Embakasi contain large open and bare areas (and the airport in Embakasi), not only homes.
 - **Confidence:** High for the numbers (exactextract coverage-weighted medians give the same ranking, Spearman 1.0). Medium for interpretation, because ward medians mix land uses.
 
-### F3. The city centre and Industrial Area were 13 °C hotter than Karura and the Arboretum
+### F3. The city centre and Industrial Area were 12.8 °C hotter than Karura and the Arboretum
 
 - **Sentence for the story:** On hot mornings, the ground in the city centre and Industrial Area (40.5 °C) was 12.8 °C hotter than Karura Forest and the Nairobi Arboretum (27.6 °C).
 - **Number(s):** CBD 38.8 °C; Industrial Area 41.3 °C; Karura Forest 27.5 °C; Nairobi Arboretum 28.8 °C; combined gap 12.8 °C; Industrial Area minus Karura 13.8 °C; CBD minus Arboretum 10.0 °C. Cool season: CBD 36.7 °C, Karura 24.8 °C
@@ -34,7 +34,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Under a forest canopy the satellite sees the top of the trees, not the ground below.
 - **Confidence:** High. Karura recomputed by a windowed read: 27.5 °C.
 
-### F4. Built-up cells were 8 °C hotter than tree-covered cells
+### F4. Built-up cells were 7.8 °C hotter than tree-covered cells
 
 - **Sentence for the story:** On hot mornings, mostly built-up ground was on average 7.8 °C hotter at the surface than ground mostly under trees. Areas with more trees were cooler: the hot-season surface temperature fell from 39.9 °C where tree cover was under 10 % to 31.5 °C where it was over 90 %.
 - **Number(s):** cells at least 75 % built-up: median 39.8 °C (212,215 cells); cells at least 75 % tree cover: median 31.9 °C (134,784 cells); tree band 0 to 10 % mean 39.9 °C, 90 to 100 % mean 31.5 °C (difference 8.4 °C); Spearman correlation with NDVI -0.75, with tree share -0.63
@@ -66,7 +66,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 
 ### F7. Ten wards where people live on the hottest ground
 
-- **Sentence for the story:** Weighted by where people live, the hottest wards were Viwandani, Kangemi, Kawangware, Dandora Area I, Babadogo, Kayole South, Kiamaiko, Kariobangi North, Dandora Area II and Upper Savannah. Together they are home to about 348,000 people.
+- **Sentence for the story:** Weighted by where people live, the hottest wards were Viwandani, Kangemi, Kawangware, Dandora Area I, Babadogo, Kayole South, Kiamaiko, Kariobangi North, Dandora Area II and Upper Savannah. Together they are home to about 348,000 people. None of them has more than 12.5 % of its land under trees.
 - **Number(s):** Viwandani 42.2 °C, 49,100 people; Kangemi 42.2 °C, 11,700 people; Kawangware 41.9 °C, 56,500 people; Dandora Area I 41.7 °C, 12,900 people; Babadogo 41.4 °C, 42,500 people; Kayole South 41.4 °C, 38,200 people; Kiamaiko 41.3 °C, 45,700 people; Kariobangi North 41.3 °C, 39,100 people; Dandora Area II 41.2 °C, 28,600 people; Upper Savannah 41.2 °C, 23,200 people
 - **Method:** Population-weighted mean of hot-season surface temperature over the 30 m cells of each ward (weights: WorldPop 2025 people per cell); populations rounded to the nearest 100
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/population_30m.tif, data/processed/nairobi_wards.geojson
@@ -133,6 +133,26 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Script:** src/pipeline/s2b_composites.py, main
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). One scene; a September date, so it is outside the January to March season used elsewhere.
 - **Confidence:** High for the number; it is one morning.
+
+### F14. Leafy Kileleshwa and dense Kawangware, 1.3 km apart, differed by 5.9 °C
+
+- **Sentence for the story:** Kawangware, where about 30,300 people live per square kilometre, had a median surface temperature of 41.6 °C on hot mornings and 10 % tree cover. Kileleshwa, 1.3 km away at the nearest point, had 35.7 °C and 48 % tree cover.
+- **Number(s):** Kawangware: 41.6 °C, tree cover 9.9 %, built-up 86.4 %, about 56,500 people on 1.9 km² (30,300 per km²), rank 6 of 85. Kileleshwa: 35.7 °C, tree cover 48.4 %, built-up 46.8 %, about 41,800 people on 9.3 km² (4,500 per km²), rank 80. Gap 5.9 °C; nearest distance between ward boundaries 1.3 km
+- **Method:** Ward medians and shares as in F2 and F4; distance between ward polygons in UTM 37S
+- **Data:** data/processed/rasters/lst_hot_season_median.tif, tree_fraction_30m.tif, built_fraction_30m.tif, population_30m.tif, nairobi_wards.geojson
+- **Script:** src/analysis/core.py, q9_pair
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Two wards chosen to illustrate a contrast (Kileleshwa includes Lavington); they are not a random sample. Ward populations are modelled.
+- **Confidence:** High for the numbers; the pair was chosen, so it illustrates F4 and F8 rather than proving them.
+
+### F15. What the satellite record contains
+
+- **Sentence for the story:** We checked 205 Landsat 8 and 9 passes over Nairobi between 7 April 2013 and 26 October 2026; 68 were clear enough to use. The satellites pass at about 10:43 in the morning, Nairobi time.
+- **Number(s):** 205 scenes with under 40 % cloud for the whole scene; 68 with at least 80 % of the county clear; 51.5 % of usable scenes fall in January to March; mean local overpass time of the hot-season scenes 10:43; hot-season composite 12 scenes; cool-season composite 4 scenes from 2018
+- **Method:** STAC search of landsat-c2-l2 on Planetary Computer, cloud mask from qa_pixel
+- **Data:** data/processed/landsat_scene_catalogue.csv, data/processed/composites_meta.json
+- **Script:** src/pipeline/s2_landsat.py, src/pipeline/s2b_composites.py, src/analysis/core.py q0_data
+- **Caveats:** Scenes with more than 40 % cloud over the whole scene were not searched.
+- **Confidence:** High.
 
 ## Checks
 

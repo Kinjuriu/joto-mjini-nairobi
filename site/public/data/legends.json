@@ -180,23 +180,18 @@
     "clamp_ends": false,
     "classes": [
       {
-        "colour": "#F1EEE8",
-        "from": 0.1,
+        "colour": "#C9C2B5",
+        "from": 0.05,
         "to": 0.25
       },
       {
-        "colour": "#C9C2B5",
+        "colour": "#8C8475",
         "from": 0.25,
         "to": 0.5
       },
       {
-        "colour": "#8C8475",
-        "from": 0.5,
-        "to": 0.75
-      },
-      {
         "colour": "#3E3A33",
-        "from": 0.75,
+        "from": 0.5,
         "to": 1.0
       }
     ],
@@ -208,23 +203,18 @@
     "clamp_ends": false,
     "classes": [
       {
-        "colour": "#F1EEE8",
-        "from": 0.1,
+        "colour": "#C9C2B5",
+        "from": 0.05,
         "to": 0.25
       },
       {
-        "colour": "#C9C2B5",
+        "colour": "#8C8475",
         "from": 0.25,
         "to": 0.5
       },
       {
-        "colour": "#8C8475",
-        "from": 0.5,
-        "to": 0.75
-      },
-      {
         "colour": "#3E3A33",
-        "from": 0.75,
+        "from": 0.5,
         "to": 1.0
       }
     ],

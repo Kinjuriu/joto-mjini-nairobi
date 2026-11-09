@@ -32,7 +32,8 @@ NEUTRAL = ["#F1EEE8", "#C9C2B5", "#8C8475", "#3E3A33"]
 
 ANOMALY_BREAKS = [-12, -4, -1.5, 1.5, 4, 12]      # deg C difference from county median
 TREE_BREAKS = [0.1, 0.25, 0.5, 0.75, 1.0001]       # share of cell; under 10 % transparent
-BUILT_BREAKS = [0.1, 0.25, 0.5, 0.75, 1.0001]      # GHSL share of cell built; under 10 % transparent
+BUILT_BREAKS = [0.05, 0.25, 0.5, 1.0001]          # GHSL share of cell built; under 5 % transparent
+BUILT_COLOURS = NEUTRAL[1:]                         # three darker steps so growth reads on the grey basemap
 POP_BREAKS = [1000, 5000, 15000, 30000, 1e9]       # people per km2; under 1,000 transparent
 
 
@@ -102,7 +103,7 @@ def rasters(force: bool = False) -> None:
     for name, (a, br, col, clamp, unit, title) in jobs.items():
         out = SITE_DATA / f"{name}.pmtiles"
         a = a.copy()
-        a[~np.isfinite(L.hot) & np.isnan(a)] = np.nan
+        a[~L.county] = np.nan   # web layers stop at the county edge; the 2 km buffer is for analysis only
         legends[name] = legend_entry(br, col, unit, title, clamp)
         if should_skip(out, force):
             continue
@@ -112,11 +113,14 @@ def rasters(force: bool = False) -> None:
     for yr in (1990, 2020):
         name = f"ghsl_built_{yr}"
         out = SITE_DATA / f"{name}.pmtiles"
-        legends[name] = legend_entry(BUILT_BREAKS, NEUTRAL, "share of cell built", f"Built-up surface, GHSL {yr}", False)
+        legends[name] = legend_entry(BUILT_BREAKS, BUILT_COLOURS, "share of cell built", f"Built-up surface, GHSL {yr}", False)
         if should_skip(out, force):
             continue
         a = read(RASTERS / f"ghsl_built_{yr}.tif")
-        to_pmtiles(classify(a, BUILT_BREAKS, NEUTRAL, False), t90, UTM, out, name)
+        from rasterio.features import rasterize
+        county = gpd.read_file(PROCESSED / "nairobi_boundary.geojson").to_crs(UTM)
+        a[~rasterize(county.geometry, out_shape=a.shape, transform=t90, fill=0, default_value=1).astype(bool)] = np.nan
+        to_pmtiles(classify(a, BUILT_BREAKS, BUILT_COLOURS, False), t90, UTM, out, name)
     legends["_meta"] = dict(county_median_c=round(county_med, 1), lst_breaks=LST_BREAKS,
                             note="Surface temperature layers share the same fixed breaks so they can be compared.")
     # Clean up JSON keys (from_ -> from).

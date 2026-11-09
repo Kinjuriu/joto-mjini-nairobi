@@ -200,6 +200,7 @@ def q4_exposure(wards: pd.DataFrame) -> dict:
         top10_pop_weighted=[dict(ward_name=r.ward_name, pop_weighted_lst_c=r1(r.pop_weighted_lst_c),
                                  pop_total=int(round(r.pop_total, -2))) for r in top.itertuples()],
         top10_total_pop=int(round(top["pop_total"].sum(), -3)),
+        top10_max_tree_pct=r1(top["tree_pct"].max()),
     )
 
 
@@ -336,12 +337,52 @@ def q8_air() -> dict:
     )
 
 
+# ---------------------------------------------------------------- Story extras
+PAIR = ("Kileleshwa", "Kawangware")   # neighbouring wards with contrasting tree cover (chapter 5)
+
+
+def q9_pair(wards: pd.DataFrame) -> dict:
+    out = {}
+    for name in PAIR:
+        r = wards[wards["ward_name"] == name].iloc[0]
+        out[name] = dict(lst_median_c=r1(r.lst_median_c), tree_pct=r1(r.tree_pct), built_pct=r1(r.built_pct),
+                         pop_total=int(round(r.pop_total, -2)), area_km2=r1(r.area_km2),
+                         pop_density_per_km2=int(round(r.pop_total / r.area_km2, -2)),
+                         rank_hottest=int(r.rank_hottest))
+    a, b = out[PAIR[1]], out[PAIR[0]]
+    out["lst_gap_c"] = r1(a["lst_median_c"] - b["lst_median_c"])
+    # Do the two wards share a boundary?
+    g = load().wards.set_index("ward_name").geometry
+    out["share_boundary"] = bool(g[PAIR[0]].buffer(30).intersects(g[PAIR[1]]))
+    out["distance_km"] = r1(g[PAIR[0]].distance(g[PAIR[1]]) / 1000)
+    out["centroid_distance_km"] = r1(g[PAIR[0]].centroid.distance(g[PAIR[1]].centroid) / 1000)
+    return out
+
+
+def q0_data() -> dict:
+    from src.pipeline.s2_landsat import CATALOGUE
+    cat = pd.read_csv(CATALOGUE)
+    meta = json.loads(META.read_text())
+    hs = cat[cat["scene_id"].isin(meta["hot_season"]["scenes"])]
+    t = pd.to_datetime(hs["datetime_nairobi"])
+    mins = (t.dt.hour * 60 + t.dt.minute).mean()
+    return dict(n_scenes_searched=len(cat), n_scenes_usable=int(cat["usable"].sum()),
+                first_scene=str(pd.to_datetime(cat["date"]).min().date()),
+                last_scene=str(pd.to_datetime(cat["date"]).max().date()),
+                n_hot_scenes=meta["hot_season"]["n_scenes"], n_cool_scenes=meta["cool_season"]["n_scenes"],
+                cool_first_year=meta["cool_season"]["first_year"],
+                overpass_local=f"{int(mins // 60)}:{int(mins % 60):02d}",
+                usable_hot_months_share_pct=r1(100 * cat[cat["usable"]]["date"].str[5:7].isin(["01", "02", "03"]).mean()),
+                n_wards=len(load().wards))
+
+
 def main() -> dict:
     wards = ward_table()
     wards.to_csv(CHARTS / "ward_stats.csv", index=False)
     results = dict(
         q1=q1_where_hottest(wards), q2=q2_gap(), q3=q3_landcover(), q4=q4_exposure(wards),
         q5=q5_park_rings(), q6=q6_trend(), q7=q7_inequality(wards), q8=q8_air(),
+        q9=q9_pair(wards), q0=q0_data(),
         composites=json.loads(META.read_text()),
     )
     RESULTS.write_text(json.dumps(results, indent=2, default=lambda o: o.item() if hasattr(o, "item") else str(o)))
