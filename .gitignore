@@ -1,0 +1,25 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Large data (rebuild with the pipeline)
+data/raw/
+data/interim/
+data/_trash/
+_trash/
+
+# Node
+site/node_modules/
+site/dist/
+
+# OS and editors
+.DS_Store
+.vscode/
+
+# Logs can be large; keep the folder, not the files
+logs/*.log
