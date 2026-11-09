@@ -85,3 +85,44 @@ None. Every number resolved from `analysis/results.json`. The byline, publicatio
 - **The surface temperature colour scale clamps** values below 24 °C and above 48 °C to the end colours (legend shows boundaries 28 to 44). This keeps every surface temperature map comparable.
 - **The El Niño shading** uses #ECE8E1, the neutral midpoint of the diverging ramp, so it reads as background, not data.
 - **Hosts' names** appear once, in Acknowledgements, with "The hosts did not commission or review this work."
+
+## 6. QA results (Phase 4)
+
+Automated checks with Playwright 1.65.0 against `npx vite preview` (scripts `site/qa/shoot.mjs` and `site/qa/widths.mjs`; screenshots in `outputs/screenshots/`, raw report `outputs/screenshots/qa_report.json`):
+
+- Browser console: no errors and no warnings other than Chromium's headless "GPU stall due to ReadPixels" performance notice.
+- Failed requests: none apart from `net::ERR_ABORTED` on PMTiles requests, which is MapLibre cancelling tiles that are no longer needed after the map moves.
+- PMTiles range requests: the preview server answers `Range: bytes=0-16383` with `206 Partial Content` for every archive.
+- First load before map tiles: about 1.5 MB (fonts, scripts, styles, GeoJSON, CSV), under the 3 MB budget.
+- No horizontal overflow at 360, 768, 1280 and 1600 px (one overflow at 360 px from the top-wards table was fixed).
+- Keyboard: the hero swipe handle moved from 50 to 30 with ten Left Arrow presses at both widths; typing "Viwand" and Enter in the ward list selected Viwandani; the URL hash became `#layer=buildings&ward=NBO-081` after choosing the buildings layer.
+- Reduced motion: the page scrolls through every chapter with `reducedMotion: 'reduce'` with no errors; chapter moves use `jumpTo`, layer fades are 0 ms.
+- JavaScript off: title, prose, static hero map, static charts and the top-wards table all show; explorer controls and JavaScript-only instructions are hidden.
+- Both notebooks re-executed top to bottom with `jupyter nbconvert --execute` (log `logs/notebooks_phase4.log`).
+- Links: 39 external links checked (`outputs/qa/link_check.md`); 34 respond, the 5 others are explained there (publishers blocking bots, one checker artefact, one API endpoint).
+- Copy: no em dashes, no "not X, but Y", no hype words in the site, FINDINGS, SOURCES or reports. Every number in the built page (61 distinct values) appears in `analysis/FINDINGS.md`, apart from a licence version (4.0) and a DOI fragment.
+
+Human-eye review of the screenshots (by me; Stephane should repeat it):
+
+- The first screen shows the headline, the subtitle and the top of the hero map at 360, 375, 768, 1280, 1440 and 1600 px.
+- Cool places look cool (Karura, the Arboretum, Karen, Ngong Road Forest) and hot places look hot (Industrial Area, Embakasi, Ruai).
+- Fixed during review: legend labels ran together ("under 2828"); built-up maps were too faint; chapters 2 and 7 could keep the previous layer after a fast jump; the "June to August" label covered the zoom buttons on phones; a table overflowed at 360 px.
+- Remaining: on phones the first lines of a chapter card pass under the sticky map before the card becomes active; basemap labels sometimes crowd at mid zooms; in the no-JavaScript view the static hero image repeats its own title under the page headline.
+
+## 7. Pre-ship checklist (from Stephane's full guide)
+
+- [x] Palette and typefaces are exactly those set in prompt 03, and nothing else. Note: the basemap uses Protomaps' grayscale flavour with Noto Sans labels inside the map tiles, and the note box background #EFEBE3 is a tint between the paper and the hairline colour. Chart and map data colours are only the fixed ramps.
+- [x] Every effect passes the hand-coding test, with a one-line reason (section 1).
+- [x] Nothing from the banned list remains (no gradients, glows, reveals, parallax, scroll-jacking, cursor effects, icon sets, emoji, bento grids, pie or donut charts, dual axes, hover-only information). MapLibre's own zoom buttons are drawn by the library, not an icon set.
+- [x] Hover only makes clickable things more inviting; nothing disappears on hover.
+- [x] Nothing important is reachable only by hover (ward panel after click or tap; chart values by tap and keyboard; key numbers in text).
+- [x] Native scrolling; no reveal animations; one header state at a time (the masthead is not sticky; only the scrollytelling map is sticky).
+- [x] Body text meets WCAG AA contrast (section 3).
+- [x] No stock icons or emoji in the interface.
+- [x] All images are sharp and match their content (static figures rendered at 200 dpi from the same data).
+- [x] The first screen states the key finding, defines the measure and shows the hero map.
+- [x] Every chart and map has a title, subtitle, source and date. Note: the two swipe maps and the scrollytelling map carry title and date in the caption rather than above the map.
+- [x] Works at 360, 768, 1280 and 1600 px (screenshots `width_*`).
+- [x] Keyboard-only use and reduced motion both work (see QA results). Not tested with a screen reader.
+- [x] Works with JavaScript off at its default state (`no_javascript_1440.png`).
+- [ ] A human has QA'd every page and every interaction. **This one is Stephane's to do.**

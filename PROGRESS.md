@@ -27,3 +27,8 @@ Times are local, Africa/Nairobi (UTC+3).
   - Copy numbers are filled at build time from `analysis/results.json` (D23). Added findings F14 (Kileleshwa and Kawangware) and F15 (satellite record facts) for the copy.
   - Builds with `npm run build`; preview checked with Playwright at 1440 and 375 px: no console errors, PMTiles range requests return 206, first load about 1.5 MB before map tiles.
   - `site/SITE_REPORT.md` written. Next: Phase 4, QA and morning report.
+- 2026-11-10 02:58 **Phase 4 finished: QA and morning report.**
+  - Screenshots in `outputs/screenshots/` (first screens, full pages, nine chapters, explorer, swipe by keyboard, no JavaScript, widths 360 to 1600); QA scripts `site/qa/shoot.mjs`, `site/qa/widths.mjs`; link check `outputs/qa/link_check.md`.
+  - Fixed during QA: table overflow at 360 px; JavaScript-only controls hidden without JavaScript; swipe zoom buttons hidden on phones; overpass time aligned to 10:43 in FINDINGS.
+  - Notebooks 01 and 02 re-executed cleanly. `site/SITE_REPORT.md` has QA results and the pre-ship checklist. `docs/presentation_outline.md` and `MORNING_REPORT.md` written.
+  - Next: only the optional "if time remains" items, in prompt order.

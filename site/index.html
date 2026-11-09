@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Joto Mjini: Nairobi's heat divide</title>
   <meta name="description" content="On hot mornings, the ground in central Nairobi is {{q2.gap_c|c}} hotter than in its forests. A data story about land surface temperature, trees and people across Nairobi's 85 wards.">
   <link rel="icon" href="data:,">
+  <script>document.documentElement.classList.remove('no-js');</script>
   <script type="module" src="/src/main.js"></script>
 </head>
 <body>
@@ -35,7 +36,7 @@
       </div>
       <div class="legend" data-legend="lst_hot_season"></div>
       <figcaption class="caption">
-        <strong>Land surface temperature on clear mornings.</strong> Left of the handle: median of {{q0.n_hot_scenes|raw}} Landsat 8 and 9 scenes, January to March 2023 to 2026. Right: median of {{q0.n_cool_scenes|raw}} scenes, June to August {{q0.cool_first_year|raw}} to 2026. Both sides use the same colour scale. Drag the handle, or focus it and use the arrow keys.
+        <strong>Land surface temperature on clear mornings.</strong> Left of the handle: median of {{q0.n_hot_scenes|raw}} Landsat 8 and 9 scenes, January to March 2023 to 2026. Right: median of {{q0.n_cool_scenes|raw}} scenes, June to August {{q0.cool_first_year|raw}} to 2026. Both sides use the same colour scale.<span class="js-only"> Drag the handle, or focus it and use the arrow keys.</span>
         <span class="source">Source: USGS Landsat Collection 2 Level-2 via Microsoft Planetary Computer, analysis Joto Mjini. Basemap © OpenStreetMap contributors, Protomaps. Accessed 10 November 2026.</span>
       </figcaption>
     </figure>
@@ -89,7 +90,7 @@
         <div class="chart chart--wide" data-chart="air-temp" role="img" aria-label="Line chart of daily high air temperature in central Nairobi since January 2023, with the El Niño months from May 2026 shaded. Highs mostly fall between 20 and 31 °C.">
           <noscript><img src="figures/chart_daily_air_temp.png" alt="Daily high air temperature in central Nairobi since January 2023, with the El Niño period shaded." width="2200" height="1000"></noscript>
         </div>
-        <figcaption class="caption">Shaded: El Niño conditions, from May 2026 (NOAA Relative Oceanic Niño Index at or above +0.5 °C). Tap or hover on the chart, or focus it and use the arrow keys, to read single days.
+        <figcaption class="caption">Shaded: El Niño conditions, from May 2026 (NOAA Relative Oceanic Niño Index at or above +0.5 °C).<span class="js-only"> Tap or hover on the chart, or focus it and use the arrow keys, to read single days.</span>
           <span class="source">Source: Open-Meteo historical weather API, ERA5 reanalysis (Copernicus Climate Change Service, ECMWF), CC BY 4.0; NOAA Climate Prediction Center. Accessed 10 November 2026.</span>
         </figcaption>
       </figure>
@@ -198,7 +199,7 @@
     <section class="explorer" id="explore" aria-labelledby="explore-title">
       <div class="col prose">
         <h2 id="explore-title">Find your ward</h2>
-        <p>Choose a ward from the list, or click or tap the map. The panel shows the ward's numbers. Use the buttons to switch what the map shows. The address bar keeps your view, so you can share it.</p>
+        <p class="js-only">Choose a ward from the list, or click or tap the map. The panel shows the ward's numbers. Use the buttons to switch what the map shows. The address bar keeps your view, so you can share it.</p>
       </div>
       <div class="explorer__layout">
         <div class="explorer__controls">

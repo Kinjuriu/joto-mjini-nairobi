@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:32 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:50 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -11,7 +11,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Median and percentiles of all 30 m cells whose centre is in the county, hot-season composite
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/nairobi_boundary.geojson
 - **Script:** src/analysis/core.py, q1_where_hottest
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time).
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15).
 - **Confidence:** High. Recomputed independently with a rioxarray clip: 38.7 °C.
 
 ### F2. The hottest wards were 7.2 °C hotter than the coolest
@@ -21,7 +21,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Median of 30 m cells whose centre lies in each ward; mean of the top and bottom tenth of wards (8 each)
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/nairobi_wards.geojson
 - **Script:** src/analysis/core.py, ward_table and q1_where_hottest
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Ward medians include all land in the ward (homes, roads, open ground, forest). Ruai and Embakasi contain large open and bare areas (and the airport in Embakasi), not only homes.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Ward medians include all land in the ward (homes, roads, open ground, forest). Ruai and Embakasi contain large open and bare areas (and the airport in Embakasi) as well as homes.
 - **Confidence:** High for the numbers (exactextract coverage-weighted medians give the same ranking, Spearman 1.0). Medium for interpretation, because ward medians mix land uses.
 
 ### F3. The city centre and Industrial Area were 12.8 °C hotter than Karura and the Arboretum
@@ -31,7 +31,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Median of 30 m cells in each area. Areas: CBD = 750 m circle around -1.284, 36.824; Industrial Area = 1000 m circle around the OSM place 'Industrial Area' (-1.3045, 36.8442); Karura = OSM polygon 'Karura Forest' (landuse=forest); Arboretum = OSM polygon 'Nairobi Arboretum' (landuse=forest). Combined values pool the cells of the two areas in each group.
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/comparison_areas.geojson (the exact shapes used)
 - **Script:** src/analysis/core.py, q2_gap
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Under a forest canopy the satellite sees the top of the trees, not the ground below.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Under a forest canopy the satellite sees the top of the trees, not the ground below.
 - **Confidence:** High. Karura recomputed by a windowed read: 27.5 °C.
 
 ### F4. Built-up cells were 7.8 °C hotter than tree-covered cells
@@ -41,7 +41,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** WorldCover 10 m classes counted inside each 30 m cell; medians of hot-season surface temperature; means for each 10 % band of tree cover (table analysis/tables/lst_by_tree_band.csv)
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/tree_fraction_30m.tif, built_fraction_30m.tif, ndvi_hot_season_median.tif
 - **Script:** src/analysis/core.py, q3_landcover
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). WorldCover is from 2021; the composite is 2023 to 2026. This is an association: places with trees differ in other ways too (height, slope, soil moisture, how they are used). It does not show how much planting trees would cool a place.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). WorldCover is from 2021; the composite is 2023 to 2026. This is an association: places with trees differ in other ways too (height, slope, soil moisture, how they are used). It does not show how much planting trees would cool a place.
 - **Confidence:** High for the association; the method does not support a causal number.
 
 ### F5. Dry grass and bare ground were as hot as roofs and roads
@@ -51,7 +51,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Median hot-season surface temperature of 30 m cells by their majority WorldCover class
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/worldcover_majority_30m.tif
 - **Script:** src/analysis/core.py, q3_landcover
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Dry grass is hot at the surface in January to March; in the wet season it is cooler. This is why Nairobi National Park (mostly grassland) is not among the coolest places on these maps.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Dry grass is hot at the surface in January to March; in the wet season it is cooler. This is why Nairobi National Park (mostly grassland) is not among the coolest places on these maps.
 - **Confidence:** High.
 
 ### F6. About 827,000 people live on the hottest fifth of the county's ground
@@ -61,7 +61,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Hottest 20 % of county 30 m cells by hot-season surface temperature; WorldPop 2025 people summed in those cells; population-weighted mean over all county cells
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/population_30m.tif
 - **Script:** src/analysis/core.py, q4_exposure
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). WorldPop is a modelled estimate (2025, constrained to mapped buildings). It may undercount the densest informal settlements. The hottest fifth of land also includes the airport and open plains in the east, where few people live, so the share of people (under 20 %) is lower than the share of land.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). WorldPop is a modelled estimate (2025, constrained to mapped buildings). It may undercount the densest informal settlements. The hottest fifth of land also includes the airport and open plains in the east, where few people live, so the share of people (under 20 %) is lower than the share of land.
 - **Confidence:** High for the arithmetic (recomputed with xarray: 827,000); medium for the population estimate itself.
 
 ### F7. Ten wards where people live on the hottest ground
@@ -71,7 +71,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Population-weighted mean of hot-season surface temperature over the 30 m cells of each ward (weights: WorldPop 2025 people per cell); populations rounded to the nearest 100
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/population_30m.tif, data/processed/nairobi_wards.geojson
 - **Script:** src/analysis/core.py, q4_exposure (table analysis/tables/top_wards.csv)
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Several of these wards are small; the ward boundaries come from a community-made layer (geoBoundaries ADM3), not from the IEBC directly. Ward populations are modelled, not census counts.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Several of these wards are small; the ward boundaries come from a community-made layer (geoBoundaries ADM3), not from the IEBC directly. Ward populations are modelled, not census counts.
 - **Confidence:** Medium: the ranking is robust (ward totals add to within 2.4 % of the county total) but small differences (0.1 °C) between neighbouring ranks are not meaningful.
 
 ### F8. People in the hottest fifth of wards lived on ground 4.4 °C hotter, with a tenth of the tree cover
@@ -81,7 +81,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Wards ranked by population-weighted surface temperature; top and bottom 17 wards; group temperature weighted by population, tree and built-up shares weighted by ward area
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, tree_fraction_30m.tif, built_fraction_30m.tif, population_30m.tif
 - **Script:** src/analysis/core.py, q7_inequality
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). This compares places and the exposure of the people who live there. It says nothing about income or wealth; no open ward-level income data was used. The coolest fifth includes large leafy wards (Karen, Karura, Kitisuru) and some dense central wards. No settlement-level comparison: no open informal-settlement layer could be downloaded (DECISIONS D9). Hottest fifth: Viwandani, Kangemi, Kawangware, Dandora Area I, Babadogo, Kayole South, Kiamaiko, Kariobangi North, Dandora Area II, Upper Savannah, Landimawe, Imara Daima, Kayole Central, Dandora Area III, Harambee, Ruai, Lindi. Coolest fifth: Pangani, Mugumo-Ini, California, Woodley/Kenyatta Golf, Mlango Kubwa, Zimmerman, Eastleigh North, Waithaka, Uthiru/Ruthimitu, Roysambu, Kilimani, Kileleshwa, Parklands/Highridge, Mutuini, Karura, Kitisuru, Karen.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). This compares places and the exposure of the people who live there. It says nothing about income or wealth; no open ward-level income data was used. The coolest fifth includes large leafy wards (Karen, Karura, Kitisuru) and some dense central wards. No settlement-level comparison: no open informal-settlement layer could be downloaded (DECISIONS D9). Hottest fifth: Viwandani, Kangemi, Kawangware, Dandora Area I, Babadogo, Kayole South, Kiamaiko, Kariobangi North, Dandora Area II, Upper Savannah, Landimawe, Imara Daima, Kayole Central, Dandora Area III, Harambee, Ruai, Lindi. Coolest fifth: Pangani, Mugumo-Ini, California, Woodley/Kenyatta Golf, Mlango Kubwa, Zimmerman, Eastleigh North, Waithaka, Uthiru/Ruthimitu, Roysambu, Kilimani, Kileleshwa, Parklands/Highridge, Mutuini, Karura, Kitisuru, Karen.
 - **Confidence:** Medium: the direction is clear; the size depends on how wards are grouped.
 
 ### F9. Built-up land next to Karura Forest was a little cooler; the difference faded within about 500 m
@@ -91,7 +91,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Built-up cells (WorldCover built-up share >= 50 %, tree share < 30 %) outside all OSM parks and forests, in 100 m rings out to 1,000 m from the park edge; medians of hot-season surface temperature; 'reach' is the first ring within 0.5 C of the 700 to 1,000 m band.
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, built_fraction_30m.tif, tree_fraction_30m.tif, data/processed/nairobi_places.geojson
 - **Script:** src/analysis/core.py, q5_park_rings (table analysis/tables/park_rings.csv)
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). The 100 m sensor footprint blurs the first ring, so part of the edge effect may be the park itself showing through. Neighbourhoods next to these parks also differ in other ways (larger plots, more garden trees). The rings around Karura do not rise smoothly. Treat as indicative.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). The 100 m sensor footprint blurs the first ring, so part of the edge effect may be the park itself showing through. Neighbourhoods next to these parks also differ in other ways (larger plots, more garden trees). The rings around Karura do not rise smoothly. Treat as indicative.
 - **Confidence:** Low to medium: a consistent sign at all three parks, but small and noisy; do not quote as a cooling distance.
 
 ### F10. Nairobi's built-up area grew by half between 1990 and 2020; the surface temperature record shows no clear trend
@@ -111,7 +111,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Median of county cells in each composite; Spearman rank correlation between the two composites over every 7th valid county cell and over the 85 ward medians
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/lst_cool_season_median.tif
 - **Script:** src/analysis/core.py, q1_where_hottest and q2_gap
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). The cool-season composite has only 4 scenes from four different years (2018 to 2026) because the cool season is cloudy. Rank correlation measures whether places keep their order, not whether the gaps stay the same size.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). The cool-season composite has only 4 scenes from four different years (2018 to 2026) because the cool season is cloudy. Rank correlation measures whether places keep their order, not whether the gaps stay the same size.
 - **Confidence:** Medium.
 
 ### F12. Air temperature: hot one day, cooler the next
@@ -131,7 +131,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Usable scene (at least 80 % of county clear) with the highest county median
 - **Data:** data/processed/landsat_scene_catalogue.csv, data/processed/rasters/lst_hottest_clear_day.tif
 - **Script:** src/pipeline/s2b_composites.py, main
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). One scene; a September date, so it is outside the January to March season used elsewhere.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). One scene; a September date, so it is outside the January to March season used elsewhere.
 - **Confidence:** High for the number; it is one morning.
 
 ### F14. Leafy Kileleshwa and dense Kawangware, 1.3 km apart, differed by 5.9 °C
@@ -141,7 +141,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Method:** Ward medians and shares as in F2 and F4; distance between ward polygons in UTM 37S
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, tree_fraction_30m.tif, built_fraction_30m.tif, population_30m.tif, nairobi_wards.geojson
 - **Script:** src/analysis/core.py, q9_pair
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time). Two wards chosen to illustrate a contrast (Kileleshwa includes Lavington); they are not a random sample. Ward populations are modelled.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Two wards chosen to illustrate a contrast (Kileleshwa includes Lavington); they are not a random sample. Ward populations are modelled.
 - **Confidence:** High for the numbers; the pair was chosen, so it illustrates F4 and F8 rather than proving them.
 
 ### F15. What the satellite record contains
@@ -170,7 +170,7 @@ Recorded in `analysis/checks.json` by `src/analysis/checks.py`:
 ## What the data cannot tell us
 
 - **The air people breathe and feel.** Landsat measures how hot surfaces are (roofs, roads, soil, tree tops), not the air temperature at head height. On a sunny morning the two can differ by more than 10 °C. Shade, wind and humidity also change how heat feels.
-- **Night-time heat.** Landsat passes over Nairobi at about 10:40 in the morning. It says nothing about how slowly places cool down at night, which matters for sleep and health.
+- **Night-time heat.** Landsat passes over Nairobi at about 10:43 in the morning (F15). It says nothing about how slowly places cool down at night, which matters for sleep and health.
 - **Afternoon peaks.** Surfaces are usually hotter in the early afternoon than at the time of the overpass.
 - **Indoor heat.** Temperature inside homes, especially under iron sheet roofs, is not measured here.
 - **Detail finer than about 100 m.** The thermal sensor sees areas of about 100 m; a value at a single building describes the area around it.

@@ -1,6 +1,6 @@
 # Processed data manifest
 
-Generated 2026-11-10 02:25 (Africa/Nairobi) by `src/pipeline/manifest.py`.
+Generated 2026-11-10 02:46 (Africa/Nairobi) by `src/pipeline/manifest.py`.
 
 | File | Size | Grid | Purpose |
 |---|---|---|---|
@@ -51,20 +51,20 @@ Generated 2026-11-10 02:25 (Africa/Nairobi) by `src/pipeline/manifest.py`.
 | `site/public/data/comparison_areas.geojson` | 15 kB |  |  |
 | `site/public/data/county.geojson` | 9 kB |  |  |
 | `site/public/data/daily_air_temp_2023_now.csv` | 45 kB |  |  |
-| `site/public/data/ghsl_built_1990.pmtiles` | 0.2 MB |  | GHSL built-up surface fraction, epoch 1990, regridded to 90 m |
-| `site/public/data/ghsl_built_2020.pmtiles` | 0.3 MB |  | GHSL built-up surface fraction, epoch 2020, regridded to 90 m |
+| `site/public/data/ghsl_built_1990.pmtiles` | 0.1 MB |  | GHSL built-up surface fraction, epoch 1990, regridded to 90 m |
+| `site/public/data/ghsl_built_2020.pmtiles` | 0.2 MB |  | GHSL built-up surface fraction, epoch 2020, regridded to 90 m |
 | `site/public/data/ghsl_built_by_epoch.csv` | 0 kB |  | GHSL built-up surface fraction, epoch poch, regridded to 90 m |
 | `site/public/data/hot_season_by_year.csv` | 1 kB |  |  |
-| `site/public/data/legends.json` | 5 kB |  |  |
-| `site/public/data/lst_anomaly.pmtiles` | 3.5 MB |  |  |
+| `site/public/data/legends.json` | 4 kB |  |  |
+| `site/public/data/lst_anomaly.pmtiles` | 1.6 MB |  |  |
 | `site/public/data/lst_by_landcover.csv` | 0 kB |  |  |
 | `site/public/data/lst_by_tree_band.csv` | 1 kB |  |  |
-| `site/public/data/lst_cool_season.pmtiles` | 3.1 MB |  |  |
-| `site/public/data/lst_hot_season.pmtiles` | 3.4 MB |  |  |
+| `site/public/data/lst_cool_season.pmtiles` | 1.4 MB |  |  |
+| `site/public/data/lst_hot_season.pmtiles` | 1.6 MB |  |  |
 | `site/public/data/nairobi_basemap.pmtiles` | 26.5 MB |  |  |
 | `site/public/data/park_rings.csv` | 1 kB |  |  |
 | `site/public/data/places.geojson` | 8 kB |  |  |
-| `site/public/data/population.pmtiles` | 1.3 MB |  |  |
+| `site/public/data/population.pmtiles` | 0.7 MB |  |  |
 | `site/public/data/top_wards.csv` | 1 kB |  |  |
-| `site/public/data/tree_fraction.pmtiles` | 4.8 MB |  |  |
+| `site/public/data/tree_fraction.pmtiles` | 1.9 MB |  |  |
 | `site/public/data/wards.geojson` | 86 kB |  |  |

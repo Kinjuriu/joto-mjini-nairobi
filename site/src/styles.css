@@ -210,6 +210,10 @@ img { max-width: 100%; height: auto; display: block; }
 .sources li { font-family: var(--sans); font-size: 16px; }
 .footer { font-family: var(--sans); font-size: 14px; color: var(--ink-2); border-top: 1px solid var(--rule); margin-top: 56px; padding-top: 14px; padding-bottom: 40px; }
 
+/* Without JavaScript: hide controls that cannot work; static images and the table remain. */
+.no-js .js-only, .no-js .explorer__controls, .no-js .legend, .no-js .explorer__map .legend--overlay { display: none !important; }
+.no-js .explorer__map { height: auto; min-height: 0; }
+
 /* Narrow screens */
 @media (max-width: 860px) {
   body { font-size: 18px; }
@@ -228,10 +232,16 @@ img { max-width: 100%; height: auto; display: block; }
   .explorer__map { height: 60vh; min-height: 320px; }
   .segmented button { flex: 1 1 auto; border-bottom: 1px solid var(--ink); }
   .map-frame--hero { height: 52vh; min-height: 300px; }
+  /* Phones pinch to zoom; the buttons would collide with the swipe labels. */
+  .compare .maplibregl-ctrl-top-right { display: none; }
+  .compare__label--right { right: 10px; }
   h2 { font-size: 25px; margin-top: 44px; }
 }
 @media (max-width: 420px) {
   .tagline { font-size: 14px; }
+  .data-table { font-size: 14px; }
+  .data-table th, .data-table td { padding: 6px 4px; }
+  .data-table thead th { font-size: 13px; }
   .dek { font-size: 17px; }
 }
 

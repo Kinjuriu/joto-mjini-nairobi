@@ -13,7 +13,7 @@ CHK = ROOT / "analysis" / "checks.json"
 OUT = ROOT / "analysis" / "FINDINGS.md"
 HOT = "data/processed/rasters/lst_hot_season_median.tif"
 CAVEAT_LST = ("Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe "
-              "the area around a place, not a single roof or street; mid-morning overpass only (about 10:40 Nairobi time).")
+              "the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15).")
 
 
 def c(x: float) -> str:
@@ -81,7 +81,7 @@ def main() -> None:
         "Median of 30 m cells whose centre lies in each ward; mean of the top and bottom tenth of wards (8 each)",
         HOT + ", data/processed/nairobi_wards.geojson", "src/analysis/core.py, ward_table and q1_where_hottest",
         CAVEAT_LST + " Ward medians include all land in the ward (homes, roads, open ground, forest). Ruai and Embakasi "
-        "contain large open and bare areas (and the airport in Embakasi), not only homes.",
+        "contain large open and bare areas (and the airport in Embakasi) as well as homes.",
         "High for the numbers (exactextract coverage-weighted medians give the same ranking, Spearman "
         f"{chk['ward_rank_agreement_spearman']}). Medium for interpretation, because ward medians mix land uses."))
 
@@ -319,7 +319,7 @@ Recorded in `analysis/checks.json` by `src/analysis/checks.py`:
 ## What the data cannot tell us
 
 - **The air people breathe and feel.** Landsat measures how hot surfaces are (roofs, roads, soil, tree tops), not the air temperature at head height. On a sunny morning the two can differ by more than 10 °C. Shade, wind and humidity also change how heat feels.
-- **Night-time heat.** Landsat passes over Nairobi at about 10:40 in the morning. It says nothing about how slowly places cool down at night, which matters for sleep and health.
+- **Night-time heat.** Landsat passes over Nairobi at about 10:43 in the morning (F15). It says nothing about how slowly places cool down at night, which matters for sleep and health.
 - **Afternoon peaks.** Surfaces are usually hotter in the early afternoon than at the time of the overpass.
 - **Indoor heat.** Temperature inside homes, especially under iron sheet roofs, is not measured here.
 - **Detail finer than about 100 m.** The thermal sensor sees areas of about 100 m; a value at a single building describes the area around it.
