@@ -1,9 +1,11 @@
 # Processed data manifest
 
-Generated 2026-11-10 02:13 (Africa/Nairobi) by `src/pipeline/manifest.py`.
+Generated 2026-11-10 02:25 (Africa/Nairobi) by `src/pipeline/manifest.py`.
 
 | File | Size | Grid | Purpose |
 |---|---|---|---|
+| `data/processed/buildings_lst.parquet` | 93.7 MB |  |  |
+| `data/processed/comparison_areas.geojson` | 15 kB |  |  |
 | `data/processed/composites_meta.json` | 3 kB |  | Which scenes and years went into each composite |
 | `data/processed/landsat_scene_catalogue.csv` | 29 kB |  | Every Landsat 8/9 scene 2013 to now with clear fraction and county stats |
 | `data/processed/lst_2026_el_nino_period.csv` | 0 kB |  | Usable scenes since May 2026 (for the later El Nino phase) |
@@ -45,4 +47,24 @@ Generated 2026-11-10 02:13 (Africa/Nairobi) by `src/pipeline/manifest.py`.
 | `data/processed/rasters/worldcover_2021.tif` | 4.3 MB | EPSG:32737, 10 m | ESA WorldCover 2021 classes, 10 m, nested in the 30 m grid |
 | `data/processed/rasters/worldcover_majority_30m.tif` | 0.7 MB | EPSG:32737, 30 m | Majority WorldCover class per 30 m cell |
 | `data/processed/roni.csv` | 15 kB |  | NOAA CPC Relative Oceanic Nino Index, 3-month running mean |
+| `site/public/data/buildings.pmtiles` | 43.5 MB |  |  |
+| `site/public/data/comparison_areas.geojson` | 15 kB |  |  |
+| `site/public/data/county.geojson` | 9 kB |  |  |
+| `site/public/data/daily_air_temp_2023_now.csv` | 45 kB |  |  |
+| `site/public/data/ghsl_built_1990.pmtiles` | 0.2 MB |  | GHSL built-up surface fraction, epoch 1990, regridded to 90 m |
+| `site/public/data/ghsl_built_2020.pmtiles` | 0.3 MB |  | GHSL built-up surface fraction, epoch 2020, regridded to 90 m |
+| `site/public/data/ghsl_built_by_epoch.csv` | 0 kB |  | GHSL built-up surface fraction, epoch poch, regridded to 90 m |
+| `site/public/data/hot_season_by_year.csv` | 1 kB |  |  |
+| `site/public/data/legends.json` | 5 kB |  |  |
+| `site/public/data/lst_anomaly.pmtiles` | 3.5 MB |  |  |
+| `site/public/data/lst_by_landcover.csv` | 0 kB |  |  |
+| `site/public/data/lst_by_tree_band.csv` | 1 kB |  |  |
+| `site/public/data/lst_cool_season.pmtiles` | 3.1 MB |  |  |
+| `site/public/data/lst_hot_season.pmtiles` | 3.4 MB |  |  |
 | `site/public/data/nairobi_basemap.pmtiles` | 26.5 MB |  |  |
+| `site/public/data/park_rings.csv` | 1 kB |  |  |
+| `site/public/data/places.geojson` | 8 kB |  |  |
+| `site/public/data/population.pmtiles` | 1.3 MB |  |  |
+| `site/public/data/top_wards.csv` | 1 kB |  |  |
+| `site/public/data/tree_fraction.pmtiles` | 4.8 MB |  |  |
+| `site/public/data/wards.geojson` | 86 kB |  |  |

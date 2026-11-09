@@ -1,0 +1,54 @@
+{
+  "county_median": {
+    "core": 38.7,
+    "independent": 38.7,
+    "method": "rioxarray clip of the composite vs rasterio rasterize mask",
+    "match": true
+  },
+  "hottest_ward": {
+    "ward": "Ruai",
+    "core": 42.4,
+    "independent": 42.4,
+    "method": "exactextract coverage-weighted median vs cell-centre median",
+    "match": true
+  },
+  "coolest_ward": {
+    "ward": "Karen",
+    "core": 32.3,
+    "independent": 32.3,
+    "method": "exactextract coverage-weighted median vs cell-centre median",
+    "match": true
+  },
+  "ward_rank_agreement_spearman": 1.0,
+  "karura_median": {
+    "core": 27.5,
+    "independent": 27.5,
+    "method": "windowed numpy read with geometry_mask vs full-grid mask",
+    "match": true
+  },
+  "pop_hottest20": {
+    "core": 827000,
+    "independent": 827000,
+    "method": "xarray clip and threshold vs numpy mask",
+    "match": true
+  },
+  "spot_cool_places": {
+    "values": {
+      "Karura Forest": 27.5,
+      "Nairobi Arboretum": 28.8,
+      "Nairobi National Park": 37.8,
+      "Nairobi Dam": 34.1,
+      "City Park": 31.4
+    },
+    "cbd": 38.8,
+    "industrial": 41.3,
+    "all_cooler": true
+  },
+  "ward_pop_sum": {
+    "ward_sum": 5521712,
+    "county": 5657304,
+    "diff_pct": -2.4,
+    "within_5pct": true,
+    "worldpop_year": 2025
+  }
+}

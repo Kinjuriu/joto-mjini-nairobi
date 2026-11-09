@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="612pt" height="388.8pt" viewBox="0 0 612 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-10T02:22:54.029384</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 612 388.8 
+L 612 0 
+L 0 0 
+z
+" style="fill: #f7f4ee"/>
+  </g>
+  <g id="line2d_1">
+   <path d="M 30.6 85.536 
+L 563.04 85.536 
+" style="fill: none; stroke: #1c1b19; stroke-width: 0.8; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_2">
+   <path d="M 30.6 110.808 
+L 563.04 110.808 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_3">
+   <path d="M 30.6 136.08 
+L 563.04 136.08 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_4">
+   <path d="M 30.6 161.352 
+L 563.04 161.352 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_5">
+   <path d="M 30.6 186.624 
+L 563.04 186.624 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_6">
+   <path d="M 30.6 211.896 
+L 563.04 211.896 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_7">
+   <path d="M 30.6 237.168 
+L 563.04 237.168 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_8">
+   <path d="M 30.6 262.44 
+L 563.04 262.44 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_9">
+   <path d="M 30.6 287.712 
+L 563.04 287.712 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_10">
+   <path d="M 30.6 312.984 
+L 563.04 312.984 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_11">
+   <path d="M 30.6 338.256 
+L 563.04 338.256 
+" style="fill: none; stroke: #d8d2c6; stroke-width: 0.5; stroke-linecap: square"/>
+  </g>
+  <g id="text_1">
+   <text style="font-weight: 600; font-size: 17px; font-family: 'Source Serif 4'; text-anchor: start; fill: #1c1b19" x="24.48" y="33.164" transform="rotate(-0 24.48 33.164)">The ten wards where people live on the hottest ground</text>
+  </g>
+  <g id="text_2">
+   <text style="font-size: 11.5px; font-family: 'Source Sans 3'; text-anchor: start; fill: #4a4740" x="24.48" y="48.436" transform="rotate(-0 24.48 48.436)">Population-weighted land surface temperature, hot-season mornings 2023 to 2026.</text>
+  </g>
+  <g id="text_3">
+   <text style="font-size: 9px; font-family: 'Source Sans 3'; text-anchor: start; fill: #4a4740" x="24.48" y="376.146" transform="rotate(-0 24.48 376.146)">Sources: Landsat (USGS); WorldPop 2025 (CC BY 4.0); wards geoBoundaries (CC BY 4.0).</text>
+  </g>
+  <g id="text_4">
+   <text style="font-weight: 600; font-size: 10px; font-family: 'Source Sans 3'; text-anchor: start; fill: #4a4740" x="30.6" y="77.76" transform="rotate(-0 30.6 77.76)">Ward</text>
+  </g>
+  <g id="text_5">
+   <text style="font-weight: 600; font-size: 10px; font-family: 'Source Sans 3'; text-anchor: end; fill: #4a4740" x="244.8" y="77.76" transform="rotate(-0 244.8 77.76)">Surface temp. (°C)</text>
+  </g>
+  <g id="text_6">
+   <text style="font-weight: 600; font-size: 10px; font-family: 'Source Sans 3'; text-anchor: end; fill: #4a4740" x="391.68" y="77.76" transform="rotate(-0 391.68 77.76)">People</text>
+  </g>
+  <g id="text_7">
+   <text style="font-weight: 600; font-size: 10px; font-family: 'Source Sans 3'; text-anchor: end; fill: #4a4740" x="538.56" y="77.76" transform="rotate(-0 538.56 77.76)">Tree cover</text>
+  </g>
+  <g id="text_8">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="103.032" transform="rotate(-0 30.6 103.032)">1. Viwandani</text>
+  </g>
+  <g id="text_9">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="103.032" transform="rotate(-0 244.8 103.032)">42.2</text>
+  </g>
+  <g id="text_10">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="103.032" transform="rotate(-0 391.68 103.032)">49,100</text>
+  </g>
+  <g id="text_11">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="103.032" transform="rotate(-0 538.56 103.032)">2 %</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="128.304" transform="rotate(-0 30.6 128.304)">2. Kangemi</text>
+  </g>
+  <g id="text_13">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="128.304" transform="rotate(-0 244.8 128.304)">42.2</text>
+  </g>
+  <g id="text_14">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="128.304" transform="rotate(-0 391.68 128.304)">11,700</text>
+  </g>
+  <g id="text_15">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="128.304" transform="rotate(-0 538.56 128.304)">13 %</text>
+  </g>
+  <g id="text_16">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="153.576" transform="rotate(-0 30.6 153.576)">3. Kawangware</text>
+  </g>
+  <g id="text_17">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="153.576" transform="rotate(-0 244.8 153.576)">41.9</text>
+  </g>
+  <g id="text_18">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="153.576" transform="rotate(-0 391.68 153.576)">56,500</text>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="153.576" transform="rotate(-0 538.56 153.576)">10 %</text>
+  </g>
+  <g id="text_20">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="178.848" transform="rotate(-0 30.6 178.848)">4. Dandora Area I</text>
+  </g>
+  <g id="text_21">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="178.848" transform="rotate(-0 244.8 178.848)">41.7</text>
+  </g>
+  <g id="text_22">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="178.848" transform="rotate(-0 391.68 178.848)">12,900</text>
+  </g>
+  <g id="text_23">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="178.848" transform="rotate(-0 538.56 178.848)">3 %</text>
+  </g>
+  <g id="text_24">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="204.12" transform="rotate(-0 30.6 204.12)">5. Babadogo</text>
+  </g>
+  <g id="text_25">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="204.12" transform="rotate(-0 244.8 204.12)">41.4</text>
+  </g>
+  <g id="text_26">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="204.12" transform="rotate(-0 391.68 204.12)">42,500</text>
+  </g>
+  <g id="text_27">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="204.12" transform="rotate(-0 538.56 204.12)">8 %</text>
+  </g>
+  <g id="text_28">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="229.392" transform="rotate(-0 30.6 229.392)">6. Kayole South</text>
+  </g>
+  <g id="text_29">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="229.392" transform="rotate(-0 244.8 229.392)">41.4</text>
+  </g>
+  <g id="text_30">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="229.392" transform="rotate(-0 391.68 229.392)">38,200</text>
+  </g>
+  <g id="text_31">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="229.392" transform="rotate(-0 538.56 229.392)">1 %</text>
+  </g>
+  <g id="text_32">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="254.664" transform="rotate(-0 30.6 254.664)">7. Kiamaiko</text>
+  </g>
+  <g id="text_33">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="254.664" transform="rotate(-0 244.8 254.664)">41.3</text>
+  </g>
+  <g id="text_34">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="254.664" transform="rotate(-0 391.68 254.664)">45,700</text>
+  </g>
+  <g id="text_35">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="254.664" transform="rotate(-0 538.56 254.664)">2 %</text>
+  </g>
+  <g id="text_36">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="279.936" transform="rotate(-0 30.6 279.936)">8. Kariobangi North</text>
+  </g>
+  <g id="text_37">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="279.936" transform="rotate(-0 244.8 279.936)">41.3</text>
+  </g>
+  <g id="text_38">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="279.936" transform="rotate(-0 391.68 279.936)">39,100</text>
+  </g>
+  <g id="text_39">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="279.936" transform="rotate(-0 538.56 279.936)">5 %</text>
+  </g>
+  <g id="text_40">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="305.208" transform="rotate(-0 30.6 305.208)">9. Dandora Area II</text>
+  </g>
+  <g id="text_41">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="305.208" transform="rotate(-0 244.8 305.208)">41.2</text>
+  </g>
+  <g id="text_42">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="305.208" transform="rotate(-0 391.68 305.208)">28,600</text>
+  </g>
+  <g id="text_43">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="305.208" transform="rotate(-0 538.56 305.208)">8 %</text>
+  </g>
+  <g id="text_44">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: start; fill: #1c1b19" x="30.6" y="330.48" transform="rotate(-0 30.6 330.48)">10. Upper Savannah</text>
+  </g>
+  <g id="text_45">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="244.8" y="330.48" transform="rotate(-0 244.8 330.48)">41.2</text>
+  </g>
+  <g id="text_46">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="391.68" y="330.48" transform="rotate(-0 391.68 330.48)">23,200</text>
+  </g>
+  <g id="text_47">
+   <text style="font-size: 11px; font-family: 'Source Sans 3'; text-anchor: end; fill: #1c1b19" x="538.56" y="330.48" transform="rotate(-0 538.56 330.48)">3 %</text>
+  </g>
+ </g>
+</svg>

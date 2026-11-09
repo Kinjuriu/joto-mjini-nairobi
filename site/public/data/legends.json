@@ -1,0 +1,247 @@
+{
+  "lst_hot_season": {
+    "title": "Land surface temperature, January to March median",
+    "unit": "deg C",
+    "clamp_ends": true,
+    "classes": [
+      {
+        "colour": "#FFF5E6",
+        "from": 24,
+        "to": 28
+      },
+      {
+        "colour": "#FDD9A8",
+        "from": 28,
+        "to": 32
+      },
+      {
+        "colour": "#F9B06A",
+        "from": 32,
+        "to": 35
+      },
+      {
+        "colour": "#EE7D3B",
+        "from": 35,
+        "to": 38
+      },
+      {
+        "colour": "#D2481E",
+        "from": 38,
+        "to": 41
+      },
+      {
+        "colour": "#A3200F",
+        "from": 41,
+        "to": 44
+      },
+      {
+        "colour": "#6B0F0A",
+        "from": 44,
+        "to": 48
+      }
+    ],
+    "transparent_below": null
+  },
+  "lst_cool_season": {
+    "title": "Land surface temperature, June to August median",
+    "unit": "deg C",
+    "clamp_ends": true,
+    "classes": [
+      {
+        "colour": "#FFF5E6",
+        "from": 24,
+        "to": 28
+      },
+      {
+        "colour": "#FDD9A8",
+        "from": 28,
+        "to": 32
+      },
+      {
+        "colour": "#F9B06A",
+        "from": 32,
+        "to": 35
+      },
+      {
+        "colour": "#EE7D3B",
+        "from": 35,
+        "to": 38
+      },
+      {
+        "colour": "#D2481E",
+        "from": 38,
+        "to": 41
+      },
+      {
+        "colour": "#A3200F",
+        "from": 41,
+        "to": 44
+      },
+      {
+        "colour": "#6B0F0A",
+        "from": 44,
+        "to": 48
+      }
+    ],
+    "transparent_below": null
+  },
+  "lst_anomaly": {
+    "title": "Difference from the county median (38.7 deg C)",
+    "unit": "deg C",
+    "clamp_ends": true,
+    "classes": [
+      {
+        "colour": "#2F6B8F",
+        "from": -12,
+        "to": -4
+      },
+      {
+        "colour": "#8CB7CF",
+        "from": -4,
+        "to": -1.5
+      },
+      {
+        "colour": "#ECE8E1",
+        "from": -1.5,
+        "to": 1.5
+      },
+      {
+        "colour": "#F1A66B",
+        "from": 1.5,
+        "to": 4
+      },
+      {
+        "colour": "#C2401A",
+        "from": 4,
+        "to": 12
+      }
+    ],
+    "transparent_below": null
+  },
+  "tree_fraction": {
+    "title": "Tree cover, ESA WorldCover 2021",
+    "unit": "share of 30 m cell",
+    "clamp_ends": false,
+    "classes": [
+      {
+        "colour": "#EEF3E6",
+        "from": 0.1,
+        "to": 0.25
+      },
+      {
+        "colour": "#B9D3A0",
+        "from": 0.25,
+        "to": 0.5
+      },
+      {
+        "colour": "#6FA36A",
+        "from": 0.5,
+        "to": 0.75
+      },
+      {
+        "colour": "#2E6B3F",
+        "from": 0.75,
+        "to": 1.0
+      }
+    ],
+    "transparent_below": null
+  },
+  "population": {
+    "title": "Population density, WorldPop 2025",
+    "unit": "people per km2",
+    "clamp_ends": false,
+    "classes": [
+      {
+        "colour": "#F1EEE8",
+        "from": 1000,
+        "to": 5000
+      },
+      {
+        "colour": "#C9C2B5",
+        "from": 5000,
+        "to": 15000
+      },
+      {
+        "colour": "#8C8475",
+        "from": 15000,
+        "to": 30000
+      },
+      {
+        "colour": "#3E3A33",
+        "from": 30000,
+        "to": null
+      }
+    ],
+    "transparent_below": null
+  },
+  "ghsl_built_1990": {
+    "title": "Built-up surface, GHSL 1990",
+    "unit": "share of cell built",
+    "clamp_ends": false,
+    "classes": [
+      {
+        "colour": "#F1EEE8",
+        "from": 0.1,
+        "to": 0.25
+      },
+      {
+        "colour": "#C9C2B5",
+        "from": 0.25,
+        "to": 0.5
+      },
+      {
+        "colour": "#8C8475",
+        "from": 0.5,
+        "to": 0.75
+      },
+      {
+        "colour": "#3E3A33",
+        "from": 0.75,
+        "to": 1.0
+      }
+    ],
+    "transparent_below": null
+  },
+  "ghsl_built_2020": {
+    "title": "Built-up surface, GHSL 2020",
+    "unit": "share of cell built",
+    "clamp_ends": false,
+    "classes": [
+      {
+        "colour": "#F1EEE8",
+        "from": 0.1,
+        "to": 0.25
+      },
+      {
+        "colour": "#C9C2B5",
+        "from": 0.25,
+        "to": 0.5
+      },
+      {
+        "colour": "#8C8475",
+        "from": 0.5,
+        "to": 0.75
+      },
+      {
+        "colour": "#3E3A33",
+        "from": 0.75,
+        "to": 1.0
+      }
+    ],
+    "transparent_below": null
+  },
+  "_meta": {
+    "county_median_c": 38.7,
+    "lst_breaks": [
+      24,
+      28,
+      32,
+      35,
+      38,
+      41,
+      44,
+      48
+    ],
+    "note": "Surface temperature layers share the same fixed breaks so they can be compared."
+  }
+}

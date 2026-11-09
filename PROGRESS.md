@@ -16,3 +16,9 @@ Times are local, Africa/Nairobi (UTC+3).
   - Step 7: Protomaps basemap extract, 26.5 MB.
   - Step 8: `data/processed/MANIFEST.md`; notebook `notebooks/01_data_pipeline.ipynb` executes top to bottom.
   - Skipped (optional): Kisumu, CLMS sharpening. Next: Phase 2, analysis.
+- 2026-11-10 02:27 **Phase 2 finished: analysis.**
+  - Code: `src/analysis/layers.py`, `core.py` (questions 1 to 8), `checks.py`, `web.py`, `figures.py`, `findings.py`. Notebook `notebooks/02_analysis.ipynb` executes.
+  - Findings: `analysis/FINDINGS.md` (F1 to F13, generated from `analysis/results.json`); tables in `analysis/tables/`; checks in `analysis/checks.json` (five independent recomputations match; cool places all cooler than CBD and Industrial Area; ward populations within 2.4 % of the county total, WorldPop 2025, 5,657,304).
+  - Web data in `site/public/data/`: wards.geojson (85 kB), county.geojson, places.geojson, comparison_areas.geojson, legends.json, chart CSVs, raster PMTiles (hot, cool, anomaly, tree, population, GHSL 1990 and 2020), buildings.pmtiles (43.5 MB).
+  - Static figures in `outputs/figures/` (PNG and SVG), copied to `site/public/figures/`.
+  - Node repaired (D19). Next: Phase 3, story site.
