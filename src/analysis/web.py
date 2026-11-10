@@ -133,8 +133,11 @@ def wards(force: bool = False) -> None:
     ws = pd.read_csv(TABLES / "ward_stats.csv")
     b = pd.read_parquet(PROCESSED / "buildings_lst.parquet", columns=["ward_id"]) \
         if (PROCESSED / "buildings_lst.parquet").exists() else None
-    g = gpd.read_file(PROCESSED / "nairobi_wards.geojson")[["ward_id", "geometry"]]
+    g = gpd.read_file(PROCESSED / "nairobi_wards.geojson")[["ward_id", "subcounty", "geometry"]]
     g = g.merge(ws, on="ward_id")
+    # Roof caveat (FINDINGS F16): dense, almost treeless wards, where iron sheet roofs may make the
+    # satellite read the ground cooler than it is.
+    g["roof_caveat"] = (g["built_pct"] >= 75) & (g["tree_pct"] < 5)
     if b is not None:
         nb = b["ward_id"].value_counts()
         g["n_buildings"] = g["ward_id"].map(nb).fillna(0).astype(int)
@@ -145,7 +148,7 @@ def wards(force: bool = False) -> None:
     g["tree_pct"], g["built_pct"] = g["tree_pct"].round(1), g["built_pct"].round(1)
     g["ndvi_median"] = g["ndvi_median"].round(2)
     g["pop_total"] = g["pop_total"].round(-1).astype(int)
-    keep = ["ward_id", "ward_name", "lst_median_c", "lst_p90_c", "lst_anomaly_c", "pop_total", "pop_weighted_lst_c",
+    keep = ["ward_id", "ward_name", "subcounty", "roof_caveat", "lst_median_c", "lst_p90_c", "lst_anomaly_c", "pop_total", "pop_weighted_lst_c",
             "tree_pct", "built_pct", "ndvi_median", "rank_hottest", "rank_pop_weighted", "n_buildings",
             "cool_lst_median_c", "area_km2", "geometry"]
     g = g[keep].to_crs(UTM)

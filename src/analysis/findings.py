@@ -311,8 +311,39 @@ def main() -> None:
         "Scenes with more than 40 % cloud over the whole scene were not searched.", "High."))
 
     extra_path = ROOT / "analysis" / "results_extra.json"
-    if extra_path.exists():
-        ex = json.loads(extra_path.read_text())
+    ex = json.loads(extra_path.read_text()) if extra_path.exists() else {}
+    re_ = ex.get("roof_emissivity")
+    if re_:
+        d, lf, cb = re_["dense_low_tree"], re_["leafy"], re_["cbd"]
+        out.append(finding(
+            "F16", "The satellite product assumes ordinary emissivity over metal roofs, so dense wards may be hotter than shown",
+            "Some dense wards with almost no trees, such as " + ", ".join(d["wards"][:3]) + ", look cooler than expected. "
+            "The satellite product assumes their surfaces give off heat as efficiently as ordinary built-up land. Bare "
+            "iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can "
+            "read the surface as cooler than it is. Treat the surface temperature of these wards as a lower bound.",
+            f"median Landsat emissivity, hot-season scenes: dense low-tree wards ({', '.join(d['wards'])}) {d['emis_median']}; "
+            f"leafy wards ({', '.join(lf['wards'])}) {lf['emis_median']}; Nairobi Central {cb['emis_median']}; county "
+            f"median {re_['county_emis_median']}; 5th percentile {re_['county_emis_p05']}; ward medians range "
+            f"{re_['ward_emis_range'][0]} to {re_['ward_emis_range'][1]}; Spearman correlation of ward emissivity with "
+            f"built-up share {re_['spearman_emis_vs_built']}; each 0.01 of emissivity overestimated lowers the retrieved "
+            f"temperature by about {re_['sensitivity_c_per_0p01_emis']} °C at these temperatures",
+            "Per-cell median of the Landsat Collection 2 ST_EMIS band over the 12 hot-season scenes (cloud-masked), then "
+            "ward medians. Sensitivity from the Planck-law approximation dT ≈ T/n · dε/ε with n ≈ 4.5 at 10.9 µm. "
+            "Literature: USGS Collection 2 surface temperature takes emissivity from ASTER GED (2000 to 2008 mean) "
+            "adjusted with NDVI (USGS, Landsat Collection 2 Surface Temperature; Malakar et al. 2018, IEEE TGRS 56(10)); "
+            "Nichol, Usman, Fawole and Shults (2025), 'Refining the urban thermal landscape: insights from corrected "
+            "emissivity over indigenous roof materials', Remote Sensing 17(21), 3545, doi:10.3390/rs17213545, found that "
+            "lowering metal-roof emissivity from 0.96 to 0.63 raised a Landsat city-wide urban surface temperature from "
+            "41 °C to 49 °C in sub-Saharan cities and turned apparent cool islands into heat islands.",
+            "data/processed/rasters/emis_hot_season_median.tif, analysis/tables/ward_emissivity.csv",
+            "src/analysis/emissivity.py",
+            "This test shows what the product assumes, not what the roofs are. ASTER GED is a 2000 to 2008 average at "
+            "about 100 m, older than many roofs, and blends roofs with roads, soil and yards. Painted or rusted sheets "
+            "have higher emissivity than new galvanised sheets. We have no roof material map, so the size of any bias per "
+            "ward is unknown.",
+            "Medium that a bias is possible (the emissivity used in the dense wards is no lower than elsewhere, so metal "
+            "roofs are not accounted for); low on its size."))
+    if ex:
         out.append("## Optional findings (prompt 02, 'if time remains')\n\nNot used in the story yet. Written by "
                    "`src/analysis/extras.py` to `analysis/results_extra.json`.\n")
         sd = ex.get("season_difference")

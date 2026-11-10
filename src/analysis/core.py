@@ -26,10 +26,12 @@ RESULTS = ROOT / "analysis" / "results.json"
 CHARTS = ROOT / "analysis" / "tables"
 CHARTS.mkdir(parents=True, exist_ok=True)
 
-# Comparison areas for Q2, stated exactly so the numbers can be reproduced.
-CBD_CENTRE = (36.8240, -1.2840)       # lon, lat: CBD core between Moi Avenue and Tom Mboya Street
-CBD_RADIUS_M = 750
-INDUSTRIAL_RADIUS_M = 1000            # around the OSM place=suburb point "Industrial Area"
+# Comparison areas for Q2 (v2), stated exactly so the numbers can be reproduced.
+# City centre = the IEBC-based Nairobi Central ward polygon. Industrial Area = the connected group of
+# OpenStreetMap landuse=industrial polygons (touching ones merged) that contains or is nearest to the
+# OSM place=suburb point "Industrial Area". The v1 circles are kept in data/processed/_old/.
+CBD_WARD = "Nairobi Central"
+OSM_INDUSTRIAL = ROOT / "data" / "raw" / "osm_industrial" / "industrial.json"
 WC_NAMES = {10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland", 50: "Built-up",
             60: "Bare or sparse vegetation", 80: "Water", 90: "Herbaceous wetland"}
 
@@ -97,14 +99,35 @@ def q1_where_hottest(wards: pd.DataFrame) -> dict:
 
 
 # ---------------------------------------------------------------- Q2
+def _industrial_area() -> tuple[gpd.GeoSeries, list[str]]:
+    """Merge touching OSM landuse=industrial polygons; keep the group at the 'Industrial Area' place point."""
+    from shapely.ops import unary_union
+    from src.pipeline.s1_boundaries import osm_json_to_gdf
+    from src.analysis.layers import places
+    els = json.loads(OSM_INDUSTRIAL.read_text())["elements"]
+    for e in els:   # osm_json_to_gdf skips unnamed features; give every polygon a name so all are kept
+        e.setdefault("tags", {}).setdefault("name", f"{e['type']}/{e['id']}")
+    g = osm_json_to_gdf(els)
+    g = g[g.geom_type.isin(["Polygon", "MultiPolygon"])].to_crs(UTM)
+    g["geometry"] = g.buffer(0)
+    groups = gpd.GeoSeries(list(unary_union(g.buffer(1.0).geometry).geoms)
+                           if unary_union(g.buffer(1.0).geometry).geom_type == "MultiPolygon"
+                           else [unary_union(g.buffer(1.0).geometry)], crs=UTM)
+    p = places()
+    pt = p[(p["name"] == "Industrial Area") & (p["kind"] == "suburb")].geometry.iloc[0]
+    best = groups.distance(pt).idxmin()
+    grp = groups.iloc[best]
+    members = g[g.representative_point().within(grp)]
+    return gpd.GeoSeries([unary_union(members.geometry)], crs=UTM), sorted(members["osm_id"].tolist())
+
+
 def q2_gap() -> dict:
     L = load()
-    from src.analysis.layers import places
-    p = places()
-    ind_pt = p[(p["name"] == "Industrial Area") & (p["kind"] == "suburb")].to_crs(WGS84).geometry.iloc[0]
+    cbd = L.wards[L.wards["ward_name"] == CBD_WARD].geometry
+    ind, ind_ids = _industrial_area()
     areas = {
-        "CBD": _circle(*CBD_CENTRE, CBD_RADIUS_M),
-        "Industrial Area": _circle(ind_pt.x, ind_pt.y, INDUSTRIAL_RADIUS_M),
+        "CBD": cbd,
+        "Industrial Area": ind,
         "Karura Forest": place_polygon("Karura Forest", "forest").geometry,
         "Nairobi Arboretum": place_polygon("Nairobi Arboretum", "forest").geometry,
     }
@@ -121,14 +144,16 @@ def q2_gap() -> dict:
     out["industrial_minus_karura_c"] = r1(out["Industrial Area"]["median_c"] - out["Karura Forest"]["median_c"])
     out["cbd_minus_arboretum_c"] = r1(out["CBD"]["median_c"] - out["Nairobi Arboretum"]["median_c"])
     out["definitions"] = dict(
-        CBD=f"{CBD_RADIUS_M} m circle around {CBD_CENTRE[1]}, {CBD_CENTRE[0]}",
-        industrial=f"{INDUSTRIAL_RADIUS_M} m circle around the OSM place 'Industrial Area' ({ind_pt.y:.4f}, {ind_pt.x:.4f})",
+        CBD=f"the {CBD_WARD} ward polygon (IEBC-based ward layer)",
+        industrial=f"{len(ind_ids)} touching OpenStreetMap landuse=industrial polygons merged into one area "
+                   "(the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv)",
         karura="OSM polygon 'Karura Forest' (landuse=forest)",
         arboretum="OSM polygon 'Nairobi Arboretum' (landuse=forest)")
     # Also the gap on the cool-season composite, for the swipe map.
     for k in ("CBD", "Karura Forest"):
         m = polygon_mask(areas[k]) & np.isfinite(L.cool)
         out[k]["cool_season_median_c"] = r1(np.median(L.cool[m]))
+    pd.DataFrame({"osm_id": ind_ids}).to_csv(CHARTS / "industrial_area_osm_ids.csv", index=False)
     gpd.GeoDataFrame({"name": list(areas)}, geometry=[g.union_all() for g in areas.values()], crs=UTM) \
         .to_crs(WGS84).to_file(PROCESSED / "comparison_areas.geojson", driver="GeoJSON")
     return out

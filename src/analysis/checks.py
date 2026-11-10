@@ -92,6 +92,11 @@ def main() -> dict:
     for k, c in checks.items():
         if isinstance(c, dict) and "core" in c:
             c["match"] = abs(float(c["core"]) - float(c["independent"])) <= (0.15 if "pop" not in k else 0.01 * float(c["core"]))
+    # Keep check blocks written by other steps (e.g. "ward_boundaries" from s1b_wards_official).
+    prev = json.loads(OUT.read_text()) if OUT.exists() else {}
+    for k in ("ward_boundaries",):
+        if k in prev:
+            checks[k] = prev[k]
     OUT.write_text(json.dumps(checks, indent=2))
     log.info("Checks: %s", json.dumps(checks))
     return checks

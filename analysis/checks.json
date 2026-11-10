@@ -6,16 +6,16 @@
     "match": true
   },
   "hottest_ward": {
-    "ward": "Ruai",
-    "core": 42.4,
-    "independent": 42.4,
+    "ward": "Embakasi",
+    "core": 42.8,
+    "independent": 42.8,
     "method": "exactextract coverage-weighted median vs cell-centre median",
     "match": true
   },
   "coolest_ward": {
     "ward": "Karen",
-    "core": 32.3,
-    "independent": 32.3,
+    "core": 32.2,
+    "independent": 32.2,
     "method": "exactextract coverage-weighted median vs cell-centre median",
     "match": true
   },
@@ -40,15 +40,88 @@
       "Nairobi Dam": 34.1,
       "City Park": 31.4
     },
-    "cbd": 38.8,
-    "industrial": 41.3,
+    "cbd": 39.1,
+    "industrial": 41.5,
     "all_cooler": true
   },
   "ward_pop_sum": {
-    "ward_sum": 5521712,
+    "ward_sum": 5588514,
     "county": 5657304,
-    "diff_pct": -2.4,
+    "diff_pct": -1.22,
     "within_5pct": true,
     "worldpop_year": 2025
+  },
+  "ward_boundaries": {
+    "n_wards": 85,
+    "n_wards_ok": true,
+    "n_subcounties": 17,
+    "subcounties_match_iebc": true,
+    "names_not_in_iebc_election_layer": [
+      "Ngei"
+    ],
+    "median_area_overlap_with_iebc_election_layer_pct": 33.6,
+    "min_area_overlap_with_iebc_election_layer_pct": 0.0,
+    "county_area_km2": 705.3,
+    "ward_union_area_km2": 695.1,
+    "symmetric_difference_pct_of_county": 4.59,
+    "union_matches_county_ok": true,
+    "kibra_wards": {
+      "Laini Saba": {
+        "area_km2": 0.371,
+        "pop_worldpop2025": 6032,
+        "pop2009_census": 28182
+      },
+      "Lindi": {
+        "area_km2": 0.744,
+        "pop_worldpop2025": 11920,
+        "pop2009_census": 52521
+      },
+      "Makina": {
+        "area_km2": 0.806,
+        "pop_worldpop2025": 19058,
+        "pop2009_census": 35028
+      },
+      "Woodley/Kenyatta Golf Course": {
+        "area_km2": 9.519,
+        "pop_worldpop2025": 133937,
+        "pop2009_census": 35355
+      },
+      "Sarang'ombe": {
+        "area_km2": 1.036,
+        "pop_worldpop2025": 25109,
+        "pop2009_census": 54347
+      }
+    },
+    "kibra_total_worldpop2025": 196056,
+    "kibra_total_census2009": 205433,
+    "rule_small_dense_under_10000": [],
+    "rule_over_60pct_of_subcounty": [
+      {
+        "ward_name": "Woodley/Kenyatta Golf Course",
+        "subcounty": "Kibra",
+        "share_of_subcounty_pct": 68.3
+      }
+    ],
+    "all_under_1km2_with_under_10000": [
+      {
+        "ward_name": "Laini Saba",
+        "area_km2": 0.371,
+        "pop_worldpop2025": 6032.0,
+        "pop2009_census": 28182
+      },
+      {
+        "ward_name": "Nyayo Highrise",
+        "area_km2": 0.39,
+        "pop_worldpop2025": 4365.0,
+        "pop2009_census": 24191
+      }
+    ],
+    "unmatched_names_old_vs_new": [
+      "Matopeni",
+      "Matopeni/Spring Valley",
+      "Woodley/Kenyatta Golf",
+      "Woodley/Kenyatta Golf Course"
+    ],
+    "source": "Administrative Wards in Kenya 1450, American Red Cross via HDX (CC BY); cross-checked against mikelmaron/kenya-election-data (IEBC 2013)"
   }
 }

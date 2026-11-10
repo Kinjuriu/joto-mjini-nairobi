@@ -13,14 +13,42 @@ Every dataset used by Joto Mjini. All were accessed on 10 November 2026 (Africa/
 - **File:** `data/processed/nairobi_boundary.geojson` (area 705.3 km² in UTM 37S)
 - **Citation:** Runfola, D. et al. (2020). geoBoundaries: A global database of political administrative boundaries. PLoS ONE 15(4): e0231866. https://doi.org/10.1371/journal.pone.0231866
 
-### Wards
-- **Name:** geoBoundaries gbOpen, Kenya ADM3 (Ward), boundary ID KEN-ADM3-90231094
-- **Provider:** geoBoundaries; underlying source Benedict Aboki Omare and George Omare, "Kenya County Assembly Boundaries", https://github.com/benaboki/Kenya-County-Assembly-Boundaries
-- **URL:** https://www.geoboundaries.org/api/current/gbOpen/KEN/ADM3/
-- **Licence:** CC BY 4.0
-- **Resolution:** vector; 85 wards selected inside Nairobi County (matches the official count of 85)
-- **File:** `data/processed/nairobi_wards.geojson`. Wards were clipped to the county outline; the clipped wards cover 674.6 km², 4 % less than the county outline, because the two sources do not share exactly the same edges.
-- **Citation:** Omare, B. A. and Omare, G., Kenya County Assembly Boundaries, via geoBoundaries (Runfola et al. 2020), CC BY 4.0.
+### Wards (v2, in use from 10 November 2026)
+- **Name:** Administrative Wards in Kenya 1450 (the 1,450 IEBC county assembly wards, topology cleaned, with DHIS2 ward, sub-county and county ids and 2009 census population per ward)
+- **Provider:** American Red Cross, published on the Humanitarian Data Exchange (HDX); boundaries follow the IEBC delimitation (Legal Notice 14 of 2012)
+- **URL:** https://data.humdata.org/dataset/administrative-wards-in-kenya-1450 (file `kenya_wards.zip`)
+- **Licence:** Creative Commons Attribution International (CC BY)
+- **Resolution:** vector; dataset date 31 March 2016; 85 Nairobi wards in 17 sub-counties (matches the IEBC constituencies)
+- **Date accessed:** 10 November 2026
+- **File:** `data/processed/nairobi_wards.geojson` (clipped to the county outline; built by `src/pipeline/s1b_wards_official.py`; validation in `analysis/checks.json` under `ward_boundaries`). The old geoBoundaries layer is kept in `data/processed/_old/nairobi_wards_geoboundaries.geojson`.
+- **Citation:** American Red Cross (2016). Administrative Wards in Kenya 1450. Humanitarian Data Exchange. CC BY.
+
+### Ward cross-check (names only)
+- **Name:** kenya-election-data, ward results layer (`ward.results.formatted.shp`), built from IEBC 2013 election data
+- **Provider:** Mikel Maron, GitHub
+- **URL:** https://github.com/mikelmaron/kenya-election-data/tree/master/output
+- **Licence:** not stated in the repository; used only to check names, not published
+- **Resolution:** vector; 1,439 wards, 84 in Nairobi (Ngei is missing). Its lines sit about 1 km south-west of where people live (see `outputs/qa/wards/compare_kibra.png`), so it was not used for geometry.
+- **Date accessed:** 10 November 2026
+
+### Wards (v1, replaced)
+- **Name:** geoBoundaries gbOpen, Kenya ADM3 (Ward), boundary ID KEN-ADM3-90231094; underlying source Omare and Omare, "Kenya County Assembly Boundaries"; CC BY 4.0. Used in v1; replaced in v2 (DECISIONS D29).
+
+### Industrial Area outline (v2)
+- **Name:** OpenStreetMap `landuse=industrial` polygons, via the Overpass API
+- **Provider:** OpenStreetMap contributors
+- **URL:** https://overpass-api.de/api/interpreter (query box -1.335, 36.82 to -1.295, 36.90)
+- **Licence:** ODbL 1.0
+- **Resolution:** vector; 10 touching polygons merged, 4.3 km²; OSM ids in `analysis/tables/industrial_area_osm_ids.csv`
+- **Date accessed:** 10 November 2026
+- **Citation:** © OpenStreetMap contributors
+
+### Landsat emissivity (roof check, v2)
+- **Name:** Landsat Collection 2 Level-2 ST_EMIS and ST_EMSD bands (assets `emis`, `emsd`), 12 hot-season scenes
+- **Provider:** USGS, via Microsoft Planetary Computer `landsat-c2-l2`; emissivity derived by USGS from NASA JPL ASTER GED v3 with an NDVI adjustment
+- **Licence:** public domain (USGS)
+- **File:** `data/processed/rasters/emis_hot_season_median.tif`, `analysis/tables/ward_emissivity.csv`
+- **Citation:** Landsat 8-9 Collection 2 Level-2 Science Products courtesy of the U.S. Geological Survey.
 
 ### Place names, parks and forests
 - **Name:** OpenStreetMap, via the Overpass API

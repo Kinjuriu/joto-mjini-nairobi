@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 03:47 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-10 12:10 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -14,21 +14,21 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15).
 - **Confidence:** High. Recomputed independently with a rioxarray clip: 38.7 °C.
 
-### F2. The hottest wards were 7.2 °C hotter than the coolest
+### F2. The hottest wards were 7.3 °C hotter than the coolest
 
-- **Sentence for the story:** Ruai was the hottest ward at the surface (42.4 °C) and Karen the coolest (32.3 °C). The 8 hottest wards averaged 41.8 °C, 7.2 °C more than the 8 coolest (34.6 °C).
-- **Number(s):** hottest wards: Ruai 42.4, Embakasi 42.1, Kangemi 42.0, Viwandani 41.9, Mwiki 41.8, Kawangware 41.6, Dandora Area I 41.4, Babadogo 41.4; coolest wards: Karen 32.3, Karura 33.0, Kitisuru 33.6, Uthiru/Ruthimitu 34.7, Mutuini 35.1, Kileleshwa 35.7, Parklands/Highridge 36.1, Roysambu 36.2 (°C, ward medians)
+- **Sentence for the story:** Embakasi was the hottest ward at the surface (42.8 °C) and Karen the coolest (32.2 °C). The 8 hottest wards averaged 41.9 °C, 7.3 °C more than the 8 coolest (34.6 °C).
+- **Number(s):** hottest wards: Embakasi 42.8, Ruai 42.3, Kangemi 42.1, Mwiki 42.0, Viwandani 41.9, Kabiro 41.6, Baba Dogo 41.4, Dandora Area II 41.3; coolest wards: Karen 32.2, Karura 32.7, Kitisuru 33.3, Uthiru/Ruthimitu 34.7, Mutu-ini 35.1, Kileleshwa 35.8, Kilimani 36.3, Waithaka 36.4 (°C, ward medians)
 - **Method:** Median of 30 m cells whose centre lies in each ward; mean of the top and bottom tenth of wards (8 each)
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/nairobi_wards.geojson
 - **Script:** src/analysis/core.py, ward_table and q1_where_hottest
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Ward medians include all land in the ward (homes, roads, open ground, forest). Ruai and Embakasi contain large open and bare areas (and the airport in Embakasi) as well as homes.
 - **Confidence:** High for the numbers (exactextract coverage-weighted medians give the same ranking, Spearman 1.0). Medium for interpretation, because ward medians mix land uses.
 
-### F3. The city centre and Industrial Area were 12.8 °C hotter than Karura and the Arboretum
+### F3. The city centre and Industrial Area were 13.1 °C hotter than Karura and the Arboretum
 
-- **Sentence for the story:** On hot mornings, the ground in the city centre and Industrial Area (40.5 °C) was 12.8 °C hotter than Karura Forest and the Nairobi Arboretum (27.6 °C).
-- **Number(s):** CBD 38.8 °C; Industrial Area 41.3 °C; Karura Forest 27.5 °C; Nairobi Arboretum 28.8 °C; combined gap 12.8 °C; Industrial Area minus Karura 13.8 °C; CBD minus Arboretum 10.0 °C. Cool season: CBD 36.7 °C, Karura 24.8 °C
-- **Method:** Median of 30 m cells in each area. Areas: CBD = 750 m circle around -1.284, 36.824; Industrial Area = 1000 m circle around the OSM place 'Industrial Area' (-1.3045, 36.8442); Karura = OSM polygon 'Karura Forest' (landuse=forest); Arboretum = OSM polygon 'Nairobi Arboretum' (landuse=forest). Combined values pool the cells of the two areas in each group.
+- **Sentence for the story:** On hot mornings, the ground in the city centre and Industrial Area (40.7 °C) was 13.1 °C hotter than Karura Forest and the Nairobi Arboretum (27.6 °C).
+- **Number(s):** CBD 39.1 °C; Industrial Area 41.5 °C; Karura Forest 27.5 °C; Nairobi Arboretum 28.8 °C; combined gap 13.1 °C; Industrial Area minus Karura 14.0 °C; CBD minus Arboretum 10.3 °C. Cool season: CBD 36.9 °C, Karura 24.8 °C
+- **Method:** Median of 30 m cells in each area. Areas: CBD = the Nairobi Central ward polygon (IEBC-based ward layer); Industrial Area = 10 touching OpenStreetMap landuse=industrial polygons merged into one area (the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv); Karura = OSM polygon 'Karura Forest' (landuse=forest); Arboretum = OSM polygon 'Nairobi Arboretum' (landuse=forest). Combined values pool the cells of the two areas in each group.
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/comparison_areas.geojson (the exact shapes used)
 - **Script:** src/analysis/core.py, q2_gap
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Under a forest canopy the satellite sees the top of the trees, not the ground below.
@@ -66,22 +66,22 @@ Every number that may appear in the story, with where it came from. Generated 20
 
 ### F7. Ten wards where people live on the hottest ground
 
-- **Sentence for the story:** Weighted by where people live, the hottest wards were Viwandani, Kangemi, Kawangware, Dandora Area I, Babadogo, Kayole South, Kiamaiko, Kariobangi North, Dandora Area II and Upper Savannah. Together they are home to about 348,000 people. None of them has more than 12.5 % of its land under trees.
-- **Number(s):** Viwandani 42.2 °C, 49,100 people; Kangemi 42.2 °C, 11,700 people; Kawangware 41.9 °C, 56,500 people; Dandora Area I 41.7 °C, 12,900 people; Babadogo 41.4 °C, 42,500 people; Kayole South 41.4 °C, 38,200 people; Kiamaiko 41.3 °C, 45,700 people; Kariobangi North 41.3 °C, 39,100 people; Dandora Area II 41.2 °C, 28,600 people; Upper Savannah 41.2 °C, 23,200 people
+- **Sentence for the story:** Weighted by where people live, the hottest wards were Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo, Imara Daima, Kayole South, Kariobangi North, Kiamaiko and Kawangware. Together they are home to about 412,000 people. None of them has more than 14.1 % of its land under trees.
+- **Number(s):** Kangemi 42.4 °C, 11,500 people; Viwandani 42.2 °C, 57,100 people; Kabiro 41.8 °C, 40,200 people; Dandora Area I 41.5 °C, 16,200 people; Baba Dogo 41.4 °C, 40,900 people; Imara Daima 41.3 °C, 102,900 people; Kayole South 41.3 °C, 25,700 people; Kariobangi North 41.3 °C, 32,800 people; Kiamaiko 41.3 °C, 54,600 people; Kawangware 41.3 °C, 29,800 people
 - **Method:** Population-weighted mean of hot-season surface temperature over the 30 m cells of each ward (weights: WorldPop 2025 people per cell); populations rounded to the nearest 100
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/population_30m.tif, data/processed/nairobi_wards.geojson
 - **Script:** src/analysis/core.py, q4_exposure (table analysis/tables/top_wards.csv)
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Several of these wards are small; the ward boundaries come from a community-made layer (geoBoundaries ADM3), not from the IEBC directly. Ward populations are modelled, not census counts.
 - **Confidence:** Medium: the ranking is robust (ward totals add to within 2.4 % of the county total) but small differences (0.1 °C) between neighbouring ranks are not meaningful.
 
-### F8. People in the hottest fifth of wards lived on ground 4.4 °C hotter, with a tenth of the tree cover
+### F8. People in the hottest fifth of wards lived on ground 4.7 °C hotter, with a tenth of the tree cover
 
-- **Sentence for the story:** Residents of the hottest fifth of wards lived, on average, on ground 4.4 °C hotter than residents of the coolest fifth (41.1 °C against 36.7 °C). Those hotter wards had 3.3 % tree cover; the cooler wards had 36.1 %.
-- **Number(s):** hottest fifth: 17 wards, about 1,105,000 people, 41.1 °C, tree cover 3.3 %, built-up 34.7 %, 8,700 people per km²; coolest fifth: 17 wards, about 1,333,000 people, 36.7 °C, tree cover 36.1 %, built-up 18.7 %, 3,900 people per km²; gap 4.4 °C; tree cover ratio 10.9
+- **Sentence for the story:** Residents of the hottest fifth of wards lived, on average, on ground 4.7 °C hotter than residents of the coolest fifth (41.4 °C against 36.7 °C). Those hotter wards had 5.0 % tree cover; the cooler wards had 36.1 %.
+- **Number(s):** hottest fifth: 17 wards, about 655,000 people, 41.4 °C, tree cover 5.0 %, built-up 84.1 %, 21,200 people per km²; coolest fifth: 17 wards, about 1,311,000 people, 36.7 °C, tree cover 36.1 %, built-up 18.5 %, 3,800 people per km²; gap 4.7 °C; tree cover ratio 7.2
 - **Method:** Wards ranked by population-weighted surface temperature; top and bottom 17 wards; group temperature weighted by population, tree and built-up shares weighted by ward area
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, tree_fraction_30m.tif, built_fraction_30m.tif, population_30m.tif
 - **Script:** src/analysis/core.py, q7_inequality
-- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). This compares places and the exposure of the people who live there. It says nothing about income or wealth; no open ward-level income data was used. The coolest fifth includes large leafy wards (Karen, Karura, Kitisuru) and some dense central wards. No settlement-level comparison: no open informal-settlement layer could be downloaded (DECISIONS D9). Hottest fifth: Viwandani, Kangemi, Kawangware, Dandora Area I, Babadogo, Kayole South, Kiamaiko, Kariobangi North, Dandora Area II, Upper Savannah, Landimawe, Imara Daima, Kayole Central, Dandora Area III, Harambee, Ruai, Lindi. Coolest fifth: Pangani, Mugumo-Ini, California, Woodley/Kenyatta Golf, Mlango Kubwa, Zimmerman, Eastleigh North, Waithaka, Uthiru/Ruthimitu, Roysambu, Kilimani, Kileleshwa, Parklands/Highridge, Mutuini, Karura, Kitisuru, Karen.
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). This compares places and the exposure of the people who live there. It says nothing about income or wealth; no open ward-level income data was used. The coolest fifth includes large leafy wards (Karen, Karura, Kitisuru) and some dense central wards. No settlement-level comparison: no open informal-settlement layer could be downloaded (DECISIONS D9). Hottest fifth: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo, Imara Daima, Kayole South, Kariobangi North, Kiamaiko, Kawangware, Upper Savannah, Kwa Reuben, Dandora Area II, Lindi, Landimawe, Korogocho, Umoja I. Coolest fifth: Mlango Kubwa, Kware, Mugumo-ini, Pangani, California, Woodley/Kenyatta Golf Course, Eastleigh North, Waithaka, Roysambu, Uthiru/Ruthimitu, Parklands/Highridge, Kilimani, Kileleshwa, Mutu-ini, Karura, Kitisuru, Karen.
 - **Confidence:** Medium: the direction is clear; the size depends on how wards are grouped.
 
 ### F9. Built-up land next to Karura Forest was a little cooler; the difference faded within about 500 m
@@ -107,7 +107,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 ### F11. The same places were hot in both seasons
 
 - **Sentence for the story:** In the cooler June to August months the county median surface temperature was 34.9 °C, against 38.7 °C in January to March. The places that were hot in one season were mostly hot in the other (ward rank correlation 0.75).
-- **Number(s):** cool season county median 34.9 °C; hot season 38.7 °C; Karura cool season 24.8 °C; CBD cool season 36.7 °C; Spearman correlation hot vs cool season: 30 m cells 0.9, ward medians 0.75
+- **Number(s):** cool season county median 34.9 °C; hot season 38.7 °C; Karura cool season 24.8 °C; CBD cool season 36.9 °C; Spearman correlation hot vs cool season: 30 m cells 0.9, ward medians 0.75
 - **Method:** Median of county cells in each composite; Spearman rank correlation between the two composites over every 7th valid county cell and over the 85 ward medians
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/lst_cool_season_median.tif
 - **Script:** src/analysis/core.py, q1_where_hottest and q2_gap
@@ -134,10 +134,10 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). One scene; a September date, so it is outside the January to March season used elsewhere.
 - **Confidence:** High for the number; it is one morning.
 
-### F14. Leafy Kileleshwa and dense Kawangware, 1.3 km apart, differed by 5.9 °C
+### F14. Leafy Kileleshwa and dense Kawangware, 1.2 km apart, differed by 5.1 °C
 
-- **Sentence for the story:** Kawangware, where about 30,300 people live per square kilometre, had a median surface temperature of 41.6 °C on hot mornings and 10 % tree cover. Kileleshwa, 1.3 km away at the nearest point, had 35.7 °C and 48 % tree cover.
-- **Number(s):** Kawangware: 41.6 °C, tree cover 9.9 %, built-up 86.4 %, about 56,500 people on 1.9 km² (30,300 per km²), rank 6 of 85. Kileleshwa: 35.7 °C, tree cover 48.4 %, built-up 46.8 %, about 41,800 people on 9.3 km² (4,500 per km²), rank 80. Gap 5.9 °C; nearest distance between ward boundaries 1.3 km
+- **Sentence for the story:** Kawangware, where about 23,900 people live per square kilometre, had a median surface temperature of 40.9 °C on hot mornings and 14 % tree cover. Kileleshwa, 1.2 km away at the nearest point, had 35.8 °C and 48 % tree cover.
+- **Number(s):** Kawangware: 40.9 °C, tree cover 14.1 %, built-up 77.2 %, about 29,800 people on 1.2 km² (23,900 per km²), rank 21 of 85. Kileleshwa: 35.8 °C, tree cover 48.0 %, built-up 47.2 %, about 41,700 people on 9.0 km² (4,600 per km²), rank 80. Gap 5.1 °C; nearest distance between ward boundaries 1.2 km
 - **Method:** Ward medians and shares as in F2 and F4; distance between ward polygons in UTM 37S
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, tree_fraction_30m.tif, built_fraction_30m.tif, population_30m.tif, nairobi_wards.geojson
 - **Script:** src/analysis/core.py, q9_pair
@@ -153,6 +153,16 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Script:** src/pipeline/s2_landsat.py, src/pipeline/s2b_composites.py, src/analysis/core.py q0_data
 - **Caveats:** Scenes with more than 40 % cloud over the whole scene were not searched.
 - **Confidence:** High.
+
+### F16. The satellite product assumes ordinary emissivity over metal roofs, so dense wards may be hotter than shown
+
+- **Sentence for the story:** Some dense wards with almost no trees, such as Mlango Kubwa, Mabatini, Eastleigh North, look cooler than expected. The satellite product assumes their surfaces give off heat as efficiently as ordinary built-up land. Bare iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can read the surface as cooler than it is. Treat the surface temperature of these wards as a lower bound.
+- **Number(s):** median Landsat emissivity, hot-season scenes: dense low-tree wards (Mlango Kubwa, Mabatini, Eastleigh North, Pangani, Ngei) 0.9655; leafy wards (Karen, Kitisuru, Kileleshwa, Karura, Parklands/Highridge) 0.9778; Nairobi Central 0.9597; county median 0.9647; 5th percentile 0.9421; ward medians range 0.9529 to 0.9801; Spearman correlation of ward emissivity with built-up share -0.12; each 0.01 of emissivity overestimated lowers the retrieved temperature by about 0.72 °C at these temperatures
+- **Method:** Per-cell median of the Landsat Collection 2 ST_EMIS band over the 12 hot-season scenes (cloud-masked), then ward medians. Sensitivity from the Planck-law approximation dT ≈ T/n · dε/ε with n ≈ 4.5 at 10.9 µm. Literature: USGS Collection 2 surface temperature takes emissivity from ASTER GED (2000 to 2008 mean) adjusted with NDVI (USGS, Landsat Collection 2 Surface Temperature; Malakar et al. 2018, IEEE TGRS 56(10)); Nichol, Usman, Fawole and Shults (2025), 'Refining the urban thermal landscape: insights from corrected emissivity over indigenous roof materials', Remote Sensing 17(21), 3545, doi:10.3390/rs17213545, found that lowering metal-roof emissivity from 0.96 to 0.63 raised a Landsat city-wide urban surface temperature from 41 °C to 49 °C in sub-Saharan cities and turned apparent cool islands into heat islands.
+- **Data:** data/processed/rasters/emis_hot_season_median.tif, analysis/tables/ward_emissivity.csv
+- **Script:** src/analysis/emissivity.py
+- **Caveats:** This test shows what the product assumes, not what the roofs are. ASTER GED is a 2000 to 2008 average at about 100 m, older than many roofs, and blends roofs with roads, soil and yards. Painted or rusted sheets have higher emissivity than new galvanised sheets. We have no roof material map, so the size of any bias per ward is unknown.
+- **Confidence:** Medium that a bias is possible (the emissivity used in the dense wards is no lower than elsewhere, so metal roofs are not accounted for); low on its size.
 
 ## Optional findings (prompt 02, 'if time remains')
 
@@ -183,13 +193,14 @@ Not used in the story yet. Written by `src/analysis/extras.py` to `analysis/resu
 Recorded in `analysis/checks.json` by `src/analysis/checks.py`:
 
 - **county_median:** {"core": 38.7, "independent": 38.7, "method": "rioxarray clip of the composite vs rasterio rasterize mask", "match": true}
-- **hottest_ward:** {"ward": "Ruai", "core": 42.4, "independent": 42.4, "method": "exactextract coverage-weighted median vs cell-centre median", "match": true}
-- **coolest_ward:** {"ward": "Karen", "core": 32.3, "independent": 32.3, "method": "exactextract coverage-weighted median vs cell-centre median", "match": true}
+- **hottest_ward:** {"ward": "Embakasi", "core": 42.8, "independent": 42.8, "method": "exactextract coverage-weighted median vs cell-centre median", "match": true}
+- **coolest_ward:** {"ward": "Karen", "core": 32.2, "independent": 32.2, "method": "exactextract coverage-weighted median vs cell-centre median", "match": true}
 - **ward_rank_agreement_spearman:** 1.0
 - **karura_median:** {"core": 27.5, "independent": 27.5, "method": "windowed numpy read with geometry_mask vs full-grid mask", "match": true}
 - **pop_hottest20:** {"core": 827000, "independent": 827000, "method": "xarray clip and threshold vs numpy mask", "match": true}
-- **spot_cool_places:** {"values": {"Karura Forest": 27.5, "Nairobi Arboretum": 28.8, "Nairobi National Park": 37.8, "Nairobi Dam": 34.1, "City Park": 31.4}, "cbd": 38.8, "industrial": 41.3, "all_cooler": true}
-- **ward_pop_sum:** {"ward_sum": 5521712, "county": 5657304, "diff_pct": -2.4, "within_5pct": true, "worldpop_year": 2025}
+- **spot_cool_places:** {"values": {"Karura Forest": 27.5, "Nairobi Arboretum": 28.8, "Nairobi National Park": 37.8, "Nairobi Dam": 34.1, "City Park": 31.4}, "cbd": 39.1, "industrial": 41.5, "all_cooler": true}
+- **ward_pop_sum:** {"ward_sum": 5588514, "county": 5657304, "diff_pct": -1.22, "within_5pct": true, "worldpop_year": 2025}
+- **ward_boundaries:** {"n_wards": 85, "n_wards_ok": true, "n_subcounties": 17, "subcounties_match_iebc": true, "names_not_in_iebc_election_layer": ["Ngei"], "median_area_overlap_with_iebc_election_layer_pct": 33.6, "min_area_overlap_with_iebc_election_layer_pct": 0.0, "county_area_km2": 705.3, "ward_union_area_km2": 695.1, "symmetric_difference_pct_of_county": 4.59, "union_matches_county_ok": true, "kibra_wards": {"Laini Saba": {"area_km2": 0.371, "pop_worldpop2025": 6032, "pop2009_census": 28182}, "Lindi": {"area_km2": 0.744, "pop_worldpop2025": 11920, "pop2009_census": 52521}, "Makina": {"area_km2": 0.806, "pop_worldpop2025": 19058, "pop2009_census": 35028}, "Woodley/Kenyatta Golf Course": {"area_km2": 9.519, "pop_worldpop2025": 133937, "pop2009_census": 35355}, "Sarang'ombe": {"area_km2": 1.036, "pop_worldpop2025": 25109, "pop2009_census": 54347}}, "kibra_total_worldpop2025": 196056, "kibra_total_census2009": 205433, "rule_small_dense_under_10000": [], "rule_over_60pct_of_subcounty": [{"ward_name": "Woodley/Kenyatta Golf Course", "subcounty": "Kibra", "share_of_subcounty_pct": 68.3}], "all_under_1km2_with_under_10000": [{"ward_name": "Laini Saba", "area_km2": 0.371, "pop_worldpop2025": 6032.0, "pop2009_census": 28182}, {"ward_name": "Nyayo Highrise", "area_km2": 0.39, "pop_worldpop2025": 4365.0, "pop2009_census": 24191}], "unmatched_names_old_vs_new": ["Matopeni", "Matopeni/Spring Valley", "Woodley/Kenyatta Golf", "Woodley/Kenyatta Golf Course"], "source": "Administrative Wards in Kenya 1450, American Red Cross via HDX (CC BY); cross-checked against mikelmaron/kenya-election-data (IEBC 2013)"}
 
 ## What the data cannot tell us
 

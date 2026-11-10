@@ -125,5 +125,79 @@
         "tree_pct": 59.9
       }
     ]
+  },
+  "roof_emissivity": {
+    "dense_low_tree": {
+      "wards": [
+        "Mlango Kubwa",
+        "Mabatini",
+        "Eastleigh North",
+        "Pangani",
+        "Ngei"
+      ],
+      "emis_median": 0.9655,
+      "emsd_median": 0.014,
+      "tree_pct": 2.3,
+      "lst_median_c": 38.6
+    },
+    "leafy": {
+      "wards": [
+        "Karen",
+        "Kitisuru",
+        "Kileleshwa",
+        "Karura",
+        "Parklands/Highridge"
+      ],
+      "emis_median": 0.9778,
+      "emsd_median": 0.0104,
+      "tree_pct": 52.1,
+      "lst_median_c": 33.3
+    },
+    "cbd": {
+      "wards": [
+        "Nairobi Central"
+      ],
+      "emis_median": 0.9597,
+      "emsd_median": 0.0106,
+      "tree_pct": 5.9,
+      "lst_median_c": 39.1
+    },
+    "county_emis_median": 0.9647,
+    "county_emis_p05": 0.9421,
+    "by_landcover": {
+      "Tree cover": 0.9787,
+      "Grassland": 0.9621,
+      "Built-up": 0.9633,
+      "Bare or sparse vegetation": 0.9609
+    },
+    "ward_emis_range": [
+      0.9529,
+      0.9801
+    ],
+    "lowest_emis_wards": [
+      {
+        "ward_name": "Kwa Reuben",
+        "emis_median": 0.9529
+      },
+      {
+        "ward_name": "Umoja I",
+        "emis_median": 0.9545
+      },
+      {
+        "ward_name": "Mowlem",
+        "emis_median": 0.9548
+      },
+      {
+        "ward_name": "Nairobi West",
+        "emis_median": 0.9548
+      },
+      {
+        "ward_name": "Umoja II",
+        "emis_median": 0.9555
+      }
+    ],
+    "spearman_emis_vs_built": -0.12,
+    "scenes": 12,
+    "sensitivity_c_per_0p01_emis": 0.72
   }
 }

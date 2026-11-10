@@ -9,15 +9,19 @@
     "n_wards_each_group": 8,
     "hottest_wards": [
       {
-        "ward_name": "Ruai",
-        "lst_median_c": 42.4
+        "ward_name": "Embakasi",
+        "lst_median_c": 42.8
       },
       {
-        "ward_name": "Embakasi",
-        "lst_median_c": 42.1
+        "ward_name": "Ruai",
+        "lst_median_c": 42.3
       },
       {
         "ward_name": "Kangemi",
+        "lst_median_c": 42.1
+      },
+      {
+        "ward_name": "Mwiki",
         "lst_median_c": 42.0
       },
       {
@@ -25,63 +29,59 @@
         "lst_median_c": 41.9
       },
       {
-        "ward_name": "Mwiki",
-        "lst_median_c": 41.8
-      },
-      {
-        "ward_name": "Kawangware",
+        "ward_name": "Kabiro",
         "lst_median_c": 41.6
       },
       {
-        "ward_name": "Dandora Area I",
+        "ward_name": "Baba Dogo",
         "lst_median_c": 41.4
       },
       {
-        "ward_name": "Babadogo",
-        "lst_median_c": 41.4
+        "ward_name": "Dandora Area II",
+        "lst_median_c": 41.3
       }
     ],
     "coolest_wards": [
       {
         "ward_name": "Karen",
-        "lst_median_c": 32.3
+        "lst_median_c": 32.2
       },
       {
         "ward_name": "Karura",
-        "lst_median_c": 33.0
+        "lst_median_c": 32.7
       },
       {
         "ward_name": "Kitisuru",
-        "lst_median_c": 33.6
+        "lst_median_c": 33.3
       },
       {
         "ward_name": "Uthiru/Ruthimitu",
         "lst_median_c": 34.7
       },
       {
-        "ward_name": "Mutuini",
+        "ward_name": "Mutu-ini",
         "lst_median_c": 35.1
       },
       {
         "ward_name": "Kileleshwa",
-        "lst_median_c": 35.7
+        "lst_median_c": 35.8
       },
       {
-        "ward_name": "Parklands/Highridge",
-        "lst_median_c": 36.1
+        "ward_name": "Kilimani",
+        "lst_median_c": 36.3
       },
       {
-        "ward_name": "Roysambu",
-        "lst_median_c": 36.2
+        "ward_name": "Waithaka",
+        "lst_median_c": 36.4
       }
     ],
-    "hottest_wards_mean_c": 41.8,
+    "hottest_wards_mean_c": 41.9,
     "coolest_wards_mean_c": 34.6,
-    "ward_gap_c": 7.2,
-    "hottest_ward": "Ruai",
-    "hottest_ward_c": 42.4,
+    "ward_gap_c": 7.3,
+    "hottest_ward": "Embakasi",
+    "hottest_ward_c": 42.8,
     "coolest_ward": "Karen",
-    "coolest_ward_c": 32.3,
+    "coolest_ward_c": 32.2,
     "cool_season_county_median_c": 34.9,
     "valid_cells_share": 99.6,
     "hot_cool_spearman": 0.9,
@@ -89,17 +89,17 @@
   },
   "q2": {
     "CBD": {
-      "median_c": 38.8,
-      "mean_c": 38.7,
-      "n_cells": 1959,
-      "area_km2": 1.76,
-      "cool_season_median_c": 36.7
+      "median_c": 39.1,
+      "mean_c": 39.0,
+      "n_cells": 3490,
+      "area_km2": 3.15,
+      "cool_season_median_c": 36.9
     },
     "Industrial Area": {
-      "median_c": 41.3,
-      "mean_c": 41.3,
-      "n_cells": 3484,
-      "area_km2": 3.14
+      "median_c": 41.5,
+      "mean_c": 41.5,
+      "n_cells": 4788,
+      "area_km2": 4.3
     },
     "Karura Forest": {
       "median_c": 27.5,
@@ -114,14 +114,14 @@
       "n_cells": 369,
       "area_km2": 0.33
     },
-    "hot_areas_median_c": 40.5,
+    "hot_areas_median_c": 40.7,
     "cool_areas_median_c": 27.6,
-    "gap_c": 12.8,
-    "industrial_minus_karura_c": 13.8,
-    "cbd_minus_arboretum_c": 10.0,
+    "gap_c": 13.1,
+    "industrial_minus_karura_c": 14.0,
+    "cbd_minus_arboretum_c": 10.3,
     "definitions": {
-      "CBD": "750 m circle around -1.284, 36.824",
-      "industrial": "1000 m circle around the OSM place 'Industrial Area' (-1.3045, 36.8442)",
+      "CBD": "the Nairobi Central ward polygon (IEBC-based ward layer)",
+      "industrial": "10 touching OpenStreetMap landuse=industrial polygons merged into one area (the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv)",
       "karura": "OSM polygon 'Karura Forest' (landuse=forest)",
       "arboretum": "OSM polygon 'Nairobi Arboretum' (landuse=forest)"
     }
@@ -215,58 +215,58 @@
     "area_weighted_county_mean_c": 38.1,
     "top10_pop_weighted": [
       {
+        "ward_name": "Kangemi",
+        "pop_weighted_lst_c": 42.4,
+        "pop_total": 11500
+      },
+      {
         "ward_name": "Viwandani",
         "pop_weighted_lst_c": 42.2,
-        "pop_total": 49100
+        "pop_total": 57100
       },
       {
-        "ward_name": "Kangemi",
-        "pop_weighted_lst_c": 42.2,
-        "pop_total": 11700
-      },
-      {
-        "ward_name": "Kawangware",
-        "pop_weighted_lst_c": 41.9,
-        "pop_total": 56500
+        "ward_name": "Kabiro",
+        "pop_weighted_lst_c": 41.8,
+        "pop_total": 40200
       },
       {
         "ward_name": "Dandora Area I",
-        "pop_weighted_lst_c": 41.7,
-        "pop_total": 12900
+        "pop_weighted_lst_c": 41.5,
+        "pop_total": 16200
       },
       {
-        "ward_name": "Babadogo",
+        "ward_name": "Baba Dogo",
         "pop_weighted_lst_c": 41.4,
-        "pop_total": 42500
+        "pop_total": 40900
+      },
+      {
+        "ward_name": "Imara Daima",
+        "pop_weighted_lst_c": 41.3,
+        "pop_total": 102900
       },
       {
         "ward_name": "Kayole South",
-        "pop_weighted_lst_c": 41.4,
-        "pop_total": 38200
-      },
-      {
-        "ward_name": "Kiamaiko",
         "pop_weighted_lst_c": 41.3,
-        "pop_total": 45700
+        "pop_total": 25700
       },
       {
         "ward_name": "Kariobangi North",
         "pop_weighted_lst_c": 41.3,
-        "pop_total": 39100
+        "pop_total": 32800
       },
       {
-        "ward_name": "Dandora Area II",
-        "pop_weighted_lst_c": 41.2,
-        "pop_total": 28600
+        "ward_name": "Kiamaiko",
+        "pop_weighted_lst_c": 41.3,
+        "pop_total": 54600
       },
       {
-        "ward_name": "Upper Savannah",
-        "pop_weighted_lst_c": 41.2,
-        "pop_total": 23200
+        "ward_name": "Kawangware",
+        "pop_weighted_lst_c": 41.3,
+        "pop_total": 29800
       }
     ],
-    "top10_total_pop": 348000,
-    "top10_max_tree_pct": 12.5
+    "top10_total_pop": 412000,
+    "top10_max_tree_pct": 14.1
   },
   "q5": {
     "parks": {
@@ -379,60 +379,60 @@
   "q7": {
     "hottest_fifth": {
       "n_wards": 17,
-      "pop": 1105000,
-      "pop_weighted_lst_c": 41.1,
-      "tree_pct": 3.3,
-      "built_pct": 34.7,
-      "pop_density_per_km2": 8700,
+      "pop": 655000,
+      "pop_weighted_lst_c": 41.4,
+      "tree_pct": 5.0,
+      "built_pct": 84.1,
+      "pop_density_per_km2": 21200,
       "wards": [
-        "Viwandani",
         "Kangemi",
-        "Kawangware",
+        "Viwandani",
+        "Kabiro",
         "Dandora Area I",
-        "Babadogo",
-        "Kayole South",
-        "Kiamaiko",
-        "Kariobangi North",
-        "Dandora Area II",
-        "Upper Savannah",
-        "Landimawe",
+        "Baba Dogo",
         "Imara Daima",
-        "Kayole Central",
-        "Dandora Area III",
-        "Harambee",
-        "Ruai",
-        "Lindi"
+        "Kayole South",
+        "Kariobangi North",
+        "Kiamaiko",
+        "Kawangware",
+        "Upper Savannah",
+        "Kwa Reuben",
+        "Dandora Area II",
+        "Lindi",
+        "Landimawe",
+        "Korogocho",
+        "Umoja I"
       ]
     },
     "coolest_fifth": {
       "n_wards": 17,
-      "pop": 1333000,
+      "pop": 1311000,
       "pop_weighted_lst_c": 36.7,
       "tree_pct": 36.1,
-      "built_pct": 18.7,
-      "pop_density_per_km2": 3900,
+      "built_pct": 18.5,
+      "pop_density_per_km2": 3800,
       "wards": [
-        "Pangani",
-        "Mugumo-Ini",
-        "California",
-        "Woodley/Kenyatta Golf",
         "Mlango Kubwa",
-        "Zimmerman",
+        "Kware",
+        "Mugumo-ini",
+        "Pangani",
+        "California",
+        "Woodley/Kenyatta Golf Course",
         "Eastleigh North",
         "Waithaka",
-        "Uthiru/Ruthimitu",
         "Roysambu",
+        "Uthiru/Ruthimitu",
+        "Parklands/Highridge",
         "Kilimani",
         "Kileleshwa",
-        "Parklands/Highridge",
-        "Mutuini",
+        "Mutu-ini",
         "Karura",
         "Kitisuru",
         "Karen"
       ]
     },
-    "lst_gap_c": 4.4,
-    "tree_ratio": 10.9,
+    "lst_gap_c": 4.7,
+    "tree_ratio": 7.2,
     "settlement_comparison": "not done: no open informal settlement layer could be downloaded (DECISIONS D9)"
   },
   "q8": {
@@ -473,27 +473,27 @@
   },
   "q9": {
     "Kileleshwa": {
-      "lst_median_c": 35.7,
-      "tree_pct": 48.4,
-      "built_pct": 46.8,
-      "pop_total": 41800,
-      "area_km2": 9.3,
-      "pop_density_per_km2": 4500,
+      "lst_median_c": 35.8,
+      "tree_pct": 48.0,
+      "built_pct": 47.2,
+      "pop_total": 41700,
+      "area_km2": 9.0,
+      "pop_density_per_km2": 4600,
       "rank_hottest": 80
     },
     "Kawangware": {
-      "lst_median_c": 41.6,
-      "tree_pct": 9.9,
-      "built_pct": 86.4,
-      "pop_total": 56500,
-      "area_km2": 1.9,
-      "pop_density_per_km2": 30300,
-      "rank_hottest": 6
+      "lst_median_c": 40.9,
+      "tree_pct": 14.1,
+      "built_pct": 77.2,
+      "pop_total": 29800,
+      "area_km2": 1.2,
+      "pop_density_per_km2": 23900,
+      "rank_hottest": 21
     },
-    "lst_gap_c": 5.9,
+    "lst_gap_c": 5.1,
     "share_boundary": false,
-    "distance_km": 1.3,
-    "centroid_distance_km": 4.6
+    "distance_km": 1.2,
+    "centroid_distance_km": 4.7
   },
   "q0": {
     "n_scenes_searched": 205,
