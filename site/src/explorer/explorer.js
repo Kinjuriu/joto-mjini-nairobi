@@ -320,7 +320,15 @@ export async function initExplorer(section) {
       labels: [manifest[left].title, manifest[right].title], start: pos, mapOpts: { scrollZoom: true },
       onMove: (p) => { if (state.compare) { state.compare.pos = Math.round(p); writeHash(); } },
     });
-    const relabel = () => { cmp.labels[0].textContent = manifest[lp.value].title; cmp.labels[1].textContent = manifest[rp.value].title; };
+    // Legend: the left layer (the right one too if it uses different classes); no single date chip.
+    const relabel = () => {
+      cmp.labels[0].textContent = manifest[lp.value].title;
+      cmp.labels[1].textContent = manifest[rp.value].title;
+      const same = JSON.stringify(manifest[lp.value].legend) === JSON.stringify(manifest[rp.value].legend);
+      legend.show(lp.value, { title: `${same ? 'Both sides' : 'Left side'}: ${manifest[lp.value].title}` });
+      chip.set('');
+    };
+    relabel();
     lp.addEventListener('change', () => { cmp.left.setLayers([{ id: lp.value, opacity: defaultOpacity(lp.value) }, ...extra], 0); state.compare.left = lp.value; relabel(); writeHash(); });
     rp.addEventListener('change', () => { cmp.right.setLayers([{ id: rp.value, opacity: defaultOpacity(rp.value) }, ...extra], 0); state.compare.right = rp.value; relabel(); writeHash(); });
     cmp.right.map.on('moveend', () => { map.jumpTo({ center: cmp.right.map.getCenter(), zoom: cmp.right.map.getZoom() }); });
@@ -332,6 +340,7 @@ export async function initExplorer(section) {
     cmpPanel.hidden = true;
     cmpBtn.setAttribute('aria-pressed', 'false');
     cmpBtn.textContent = 'Compare';
+    if (ready) apply();
     writeHash();
   }
   cmpBtn.addEventListener('click', () => (cmp ? closeCompare() : openCompare()));

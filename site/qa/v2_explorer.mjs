@@ -52,7 +52,7 @@ async function open(ctxOpts, hash = '') {
   report.push(`roof caveat shown for Mabatini: ${await page.isVisible('.ward-panel__roof')}`);
   // Compare.
   await page.click('#ex-tab-layers');
-  await page.click('text=Compare');
+  await page.click('.ex-tools button:has-text("Compare")');
   await page.waitForFunction(() => window.__explorer.compare, null, { timeout: 30000 });
   await page.evaluate(() => window.__explorer.ctl.map.jumpTo({ center: [36.86, -1.29], zoom: 10.4 }));
   await idle(page, 'cmp');
@@ -63,7 +63,7 @@ async function open(ctxOpts, hash = '') {
   await page.screenshot({ path: `${OUT}/03_compare_1440.png` });
   const shared = await page.evaluate(() => window.location.hash);
   report.push(`hash in compare mode: ${shared}`);
-  await page.click('text=Close compare');
+  await page.click('.ex-tools button:has-text("Close compare")');
   // Buildings on, zoom 15, click the centre for a popup.
   await page.check('#ex-cb-buildings');
   await page.evaluate(() => window.__explorer.ctl.map.jumpTo({ center: [36.9115, -1.2770], zoom: 15.3 }));
