@@ -47,7 +47,7 @@ function drawTable(el, { rows, cols, value, colour, fmt, describe, rowLabelWidth
           .on('click', () => select_(i, j));
         gEl.append('rect').attr('width', cw - 2).attr('height', ch - 2).attr('fill', fill);
         gEl.append('text').attr('x', (cw - 2) / 2).attr('y', (ch - 2) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')
-          .attr('fill', textOn(fill)).text(v === null ? '' : fmt(c)(v));
+          .style('fill', textOn(fill)).text(v === null ? '' : fmt(c)(v));
       });
     });
     const hl = svg.append('rect').attr('class', 'heatmap__focus').attr('width', cw - 2).attr('height', ch - 2).attr('display', 'none');
@@ -176,5 +176,12 @@ export async function calendar(el) {
     svg.on('focus', () => sel(...cur));
   };
   onResize(el, draw);
+  // Colour key under the calendar: one swatch per class, labelled at the class edges.
+  const key = el.parentElement.querySelector('.calendar-key');
+  if (key) {
+    const labels = ['−3 or cooler', '−3 to −2', '−2 to −1', '−1 to −0.25', 'about normal', '+0.25 to +1', '+1 to +2', '+2 to +3', '+3 or warmer'];
+    key.innerHTML = `<ul>${DIFF_COLOURS.map((c, i) => `<li><span style="background:${c}"></span>${labels[i]}</li>`).join('')}</ul><p>°C difference from the 1991 to 2020 normal</p>`;
+    key.removeAttribute('aria-hidden');
+  }
   return { breaks, colours: DIFF_COLOURS };
 }

@@ -99,3 +99,8 @@
 .chart-svg .grid line { stroke: var(--rule); }
 .chart-svg .grid .domain { display: none; }
 .chart-svg text { fill: var(--ink-2); font-size: 13px; }
+.calendar-key { font-family: var(--sans); font-size: 13.5px; color: var(--ink-2); margin-top: 8px; }
+.calendar-key ul { display: flex; flex-wrap: wrap; gap: 4px 14px; list-style: none; margin: 0; padding: 0; }
+.calendar-key li { display: flex; align-items: center; gap: 5px; }
+.calendar-key span { width: 14px; height: 12px; border: 1px solid rgba(0, 0, 0, 0.12); }
+.calendar-key p { margin: 4px 0 0; }
