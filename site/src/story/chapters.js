@@ -8,8 +8,8 @@
 // Map fields: basemap ('satellite' | 'light'), layers [{id, opacity}], center [lon, lat], zoom (desktop),
 // mobileZoom, chip (date chip text), legend (manifest layer id) and legendTitle, highlight (ward names).
 
-const LIGHT_OP = 0.9;   // data over the light basemap
-const SAT_OP = 0.75;    // data over imagery
+const LIGHT_OP = 0.85;  // data over imagery, county-wide views
+const SAT_OP = 0.75;    // data over imagery, close-up views
 const COUNTY = [36.86, -1.29];
 const base = (extra) => [{ id: 'county-line', opacity: 1 }, ...extra];
 
@@ -17,8 +17,8 @@ export const CHAPTERS = [
   // ---------------------------------------------------------------- Story block A: from space to heat
   {
     id: 'space', block: 'A', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
-    layers: base([{ id: 's2-true', opacity: 1 }]),
-    chip: 'Sentinel-2, January to March 2026', legend: 's2-true',
+    layers: base([]),
+    chip: 'Sentinel-2 cloudless, 2023', legend: null,
     card: {
       title: 'Nairobi from space',
       text: '[[COPY: one sentence on what the reader is looking at: Nairobi County in the dry season, seen by the Sentinel-2 satellites, with the county boundary in white]]',
@@ -30,7 +30,7 @@ export const CHAPTERS = [
     chip: 'Sentinel-2, January to March 2026', legend: 's2-false',
     card: {
       title: 'Where the trees are',
-      text: '[[COPY: explain that in this view living vegetation glows green and roofs, roads and bare ground look purple-grey]]',
+      text: 'This is false colour: the satellite also sees light our eyes cannot. Living plants show bright green. Roofs, roads and bare ground show purple.',
       facts: [['Ground mostly under trees', '{{q3.by_name.tree.share_pct|pct}} of the county']],
     },
   },
@@ -49,7 +49,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'landcover', block: 'A', basemap: 'light', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
+    id: 'landcover', block: 'A', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
     layers: base([{ id: 'landcover', opacity: LIGHT_OP }]),
     chip: '2021', legend: 'landcover',
     card: {
@@ -67,7 +67,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'divide', block: 'A', basemap: 'light', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
+    id: 'divide', block: 'A', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
     layers: base([{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
@@ -146,7 +146,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'pair', block: 'B', basemap: 'light', center: [36.769, -1.274], zoom: 13.0, mobileZoom: 12.0,
+    id: 'pair', block: 'B', basemap: 'satellite', center: [36.769, -1.274], zoom: 13.0, mobileZoom: 12.0,
     layers: [{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }],
     highlight: ['Kileleshwa', 'Kawangware'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
@@ -156,7 +156,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'people', block: 'B', basemap: 'light', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
+    id: 'people', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
     layers: base([{ id: 'population', opacity: LIGHT_OP }, { id: 'ward-labels', opacity: 1 }]),
     chip: '2025 estimate', legend: 'population',
     card: {
@@ -170,7 +170,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'people-heat', block: 'B', basemap: 'light', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
+    id: 'people-heat', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
     layers: base([{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'ward-labels', opacity: 1 }]),
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
@@ -182,7 +182,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'growth', block: 'B', basemap: 'light', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
+    id: 'growth', block: 'B', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
     layers: base([{ id: 'growth-1990-2020', opacity: LIGHT_OP }]),
     chip: '1990 to 2020', legend: 'growth-1990-2020',
     card: {
@@ -191,7 +191,7 @@ export const CHAPTERS = [
     },
   },
   {
-    id: 'wards', block: 'B', basemap: 'light', center: COUNTY, zoom: 10.6, mobileZoom: 9.6,
+    id: 'wards', block: 'B', basemap: 'satellite', center: COUNTY, zoom: 10.6, mobileZoom: 9.6,
     layers: base([{ id: 'wards-fill', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     legendTitle: 'Wards: surface temperature where people live, difference from the city median',

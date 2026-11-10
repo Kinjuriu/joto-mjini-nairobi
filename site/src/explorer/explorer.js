@@ -29,7 +29,8 @@ const el = (tag, props = {}, ...kids) => { const e = Object.assign(document.crea
 export async function initExplorer(section) {
   const frame = section.querySelector('#ex-map');
   const state = parseHash() || defaults();
-  const ctl = await createMap(frame, { basemap: state.basemap, center: state.center || HOME.center, zoom: state.zoom ?? HOME.zoom, scrollZoom: true, scale: true });
+  // cooperativeGestures: the mouse wheel scrolls the page; Ctrl or Cmd plus the wheel zooms the map (two fingers on phones).
+  const ctl = await createMap(frame, { basemap: state.basemap, center: state.center || HOME.center, zoom: state.zoom ?? HOME.zoom, scrollZoom: true, cooperativeGestures: true });
   const { map, manifest } = ctl;
   const legend = new LegendCard(frame, manifest);
   const chip = new DateChip(frame);
@@ -91,8 +92,8 @@ export async function initExplorer(section) {
       cb.addEventListener('change', () => {
         const lid = id === 'ghsl' ? `ghsl-${state.year}` : id;
         if (cb.checked) {
-          if (g.exclusive) state.layers = state.layers.filter((l) => !l.id.startsWith('heat-'));
-          if (id === 'ghsl') state.layers = state.layers.filter((l) => !l.id.startsWith('ghsl-'));
+          // One data layer at a time (so the one you choose is never hidden under another); buildings can sit on top.
+          if (id !== 'buildings') state.layers = state.layers.filter((l) => l.id === 'buildings');
           state.layers.push({ id: lid, opacity: defaultOpacity(lid) });
         } else state.layers = state.layers.filter((l) => (id === 'ghsl' ? !l.id.startsWith('ghsl-') : l.id !== lid));
         apply();
@@ -124,7 +125,7 @@ export async function initExplorer(section) {
   const cmpPanel = el('div', { className: 'ex-compare', hidden: true });
   pane.append(cmpPanel);
 
-  function defaultOpacity(id) { return id.startsWith('s2') ? 1 : (state.basemap === 'satellite' ? 0.75 : 0.9); }
+  function defaultOpacity(id) { return id.startsWith('s2') ? 1 : 0.8; }
 
   function syncPanel() {
     for (const [id, r] of rows) {
@@ -265,7 +266,7 @@ export async function initExplorer(section) {
     const hit = wardsGeo.features.find((f) => inside([e.lngLat.lng, e.lngLat.lat], f.geometry));
     if (hit) choose(hit.properties.ward_id, { fly: false });
   });
-  map.on('moveend', () => { legend.show(topLayer()); chip.set(topLayer() ? manifest[topLayer()]?.chip : ''); writeHash(); });
+  map.on('moveend', () => { legend.show(topLayer()); chip.set(topLayer() ? manifest[topLayer()]?.chip : ''); });
 
   // ---------------------------------------------------------------- tabs and the phone bottom sheet
   const tabs = [...section.querySelectorAll('[role="tab"]')];
@@ -347,7 +348,7 @@ export async function initExplorer(section) {
 
   // ---------------------------------------------------------------- shareable view
   copyBtn.addEventListener('click', async () => {
-    writeHash();
+    writeHash(true);
     try { await navigator.clipboard.writeText(window.location.href); toolMsg.textContent = 'Link copied.'; } catch { toolMsg.textContent = `Copy this link: ${window.location.href}`; }
   });
   resetBtn.addEventListener('click', async () => {
@@ -363,8 +364,10 @@ export async function initExplorer(section) {
   });
 
   let ready = false;
-  function writeHash() {
-    if (!ready) return;
+  // The view goes into the address only when the reader asks for a link (Copy link), so moving the map never
+  // changes the address and a reload does not jump to the explorer.
+  function writeHash(force = false) {
+    if (!ready || !force) return;
     const c = map.getCenter();
     const p = new URLSearchParams();
     p.set('bm', state.basemap);
@@ -380,13 +383,12 @@ export async function initExplorer(section) {
   if (state.ward) choose(state.ward, { fly: !state.center });
   if (state.compare) await openCompare(state.compare.left, state.compare.right, state.compare.pos);
   if (window.location.hash.startsWith('#explore?')) section.scrollIntoView();
-  writeHash();
   window.__explorer = { ctl, state, choose, openCompare, closeCompare, get compare() { return cmp; } };
   return ctl;
 }
 
 function defaults() {
-  return { basemap: 'light', layers: [{ id: 'heat-diff', opacity: 0.9 }], year: 2020, ward: null, compare: null, center: null, zoom: null };
+  return { basemap: 'satellite', layers: [{ id: 'heat-diff', opacity: 0.8 }], year: 2020, ward: null, compare: null, center: null, zoom: null };
 }
 
 function parseHash() {
@@ -398,7 +400,8 @@ function parseHash() {
   if (p.has('l')) s.layers = p.get('l').split(',').filter(Boolean).map((x) => { const [id, op] = x.split('@'); return { id, opacity: Math.max(0, Math.min(1, Number(op) || 0.9)) }; });
   const g = s.layers.find((l) => l.id.startsWith('ghsl-'));
   if (g) s.year = Number(g.id.slice(5));
-  if (p.has('v')) { const [lng, lat, z] = p.get('v').split(',').map(Number); if (Number.isFinite(lng)) { s.center = [lng, lat]; s.zoom = z; } }
+  // Ignore a saved view that is not over Nairobi (an old link could open over the rest of Kenya).
+  if (p.has('v')) { const [lng, lat, z] = p.get('v').split(',').map(Number); if (lng > 36.6 && lng < 37.15 && lat > -1.48 && lat < -1.1 && z >= 9.5) { s.center = [lng, lat]; s.zoom = z; } }
   if (p.has('w')) s.ward = p.get('w');
   if (p.has('c')) { const [left, right, pos] = p.get('c').split(','); s.compare = { left, right, pos: Number(pos) || 50 }; }
   return s;

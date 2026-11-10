@@ -84,7 +84,7 @@ export async function builtupTable(el) {
     colour: () => sc,
     fmt: () => (v) => v.toFixed(0),
     describe: (r, c, v) => `${r.key}, ${c.key}${c.key === 2025 ? ' (JRC projection)' : ''}: ${v.toFixed(1)} % of the ground built up.`,
-    rowLabelWidth: 140, cell: 56,
+    rowLabelWidth: 140, cell: 46, cellH: 26,
   });
 }
 
@@ -107,63 +107,73 @@ export async function wardCoverTable(el) {
     fmt: (c) => (c.key === 'diff_c' ? (v) => sign(v) : (v) => v.toFixed(0)),
     describe: (r, c, v) => `${r.d.ward_name} (${r.d.group === 'hottest' ? 'one of the 10 hottest' : 'one of the 10 coolest'} wards where people live): `
       + `${c.key === 'diff_c' ? `${sign(v)} °C from the city median, where people live` : `${v.toFixed(1)} ${c.unit}`}.`,
-    rowLabelWidth: 190, cell: 60, groupBreak: 10,
+    rowLabelWidth: 170, cell: 48, cellH: 24, groupBreak: 10,
   });
 }
 
-/** Table 3: calendar of daily maximum air temperature, difference from the 1991 to 2020 normal. */
+/** Table 3: month by month since January 2023, average daily high air temperature minus the 1991 to 2020
+ *  normal. One row per year, one column per month, the value printed in each cell (replaces the day-by-day
+ *  calendar, which was too tall to read). El Niño months from May 2026 are bracketed. */
 export async function calendar(el) {
-  const data = await csv(abs('data/daily_tmax_anomaly.csv'), (d) => ({ date: d.date, y: +d.date.slice(0, 4), m: +d.date.slice(5, 7), day: +d.date.slice(8, 10), tmax: +d.tmax_c, a: +d.anomaly_c, en: d.el_nino === 'True' }));
+  const days = await csv(abs('data/daily_tmax_anomaly.csv'), (d) => ({ y: +d.date.slice(0, 4), m: +d.date.slice(5, 7), a: +d.anomaly_c, en: d.el_nino === 'True' }));
   el.querySelectorAll('noscript').forEach((n) => n.remove());
-  const months = [...new Set(data.map((d) => `${d.y}-${String(d.m).padStart(2, '0')}`))];
-  const byKey = new Map(data.map((d) => [`${d.y}-${String(d.m).padStart(2, '0')}|${d.day}`, d]));
+  const groups = new Map();
+  for (const d of days) {
+    const k = `${d.y}-${d.m}`;
+    if (!groups.has(k)) groups.set(k, { y: d.y, m: d.m, sum: 0, n: 0, en: d.en, warm: 0 });
+    const g = groups.get(k);
+    g.sum += d.a; g.n += 1; if (d.a > 0) g.warm += 1;
+  }
+  const cells = [...groups.values()].map((g) => ({ ...g, a: g.sum / g.n, full: g.n >= 28 }));
+  const years = [...new Set(cells.map((c) => c.y))];
+  const at = new Map(cells.map((c) => [`${c.y}-${c.m}`, c]));
   const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const MONTH = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const detail = detailLine(el, 'Tap a day, or focus the calendar and use the arrow keys, to read its value.');
-  // Diverging steps for daily anomalies (°C): narrower than the map's, because daily air temperature varies less.
+  const detail = detailLine(el, 'Tap a month, or focus the table and use the arrow keys, to read its value.');
   const breaks = [-3, -2, -1, -0.25, 0.25, 1, 2, 3];
   const col = (v) => DIFF_COLOURS[breaks.filter((b) => v >= b).length];
-  let cur = [months.length - 1, 0];
+  let cur = [years.length - 1, 0];
   const draw = (width) => {
     select(el).select('svg').remove();
-    const lw = 64;
-    const bw = 92;
-    const cw = Math.max(8, Math.min(20, Math.floor((width - lw - bw) / 31)));
-    const ch = Math.max(9, Math.min(14, cw));
+    const lw = 48;
+    const cw = Math.max(26, Math.min(54, Math.floor((width - lw - 4) / 12)));
+    const ch = 32;
     const top = 22;
-    const W = lw + 31 * cw + bw;
-    const H = top + months.length * ch + 6;
-    const svg = select(el).insert('svg', '.chart-detail').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('class', 'heatmap heatmap--calendar')
-      .attr('role', 'grid').attr('tabindex', 0).attr('aria-label', 'Calendar of daily high air temperature compared with normal, January 2023 to the latest month. Use the arrow keys to move between days.');
-    [1, 10, 20, 31].forEach((d) => svg.append('text').attr('class', 'heatmap__col').attr('x', lw + (d - 0.5) * cw).attr('y', top - 8).attr('text-anchor', 'middle').text(d));
-    months.forEach((mk, i) => {
-      const [y, m] = mk.split('-').map(Number);
-      if (m === 1 || i === 0) svg.append('text').attr('class', 'heatmap__row heatmap__row--year').attr('x', 2).attr('y', top + i * ch + ch / 2).attr('dy', '0.35em').text(y);
-      svg.append('text').attr('class', 'heatmap__row').attr('x', lw - 6).attr('y', top + i * ch + ch / 2).attr('dy', '0.35em').attr('text-anchor', 'end').text(MON[m - 1]);
-      for (let d = 1; d <= 31; d += 1) {
-        const r = byKey.get(`${mk}|${d}`);
-        if (!r) continue;
-        svg.append('rect').attr('x', lw + (d - 1) * cw).attr('y', top + i * ch).attr('width', cw - 1).attr('height', ch - 1).attr('fill', col(r.a))
-          .on('click', () => sel(i, d - 1));
+    const W = lw + 12 * cw + 2;
+    const H = top + years.length * ch + 40;
+    const svg = select(el).insert('svg', '.chart-detail').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('class', 'heatmap heatmap--months')
+      .attr('role', 'grid').attr('tabindex', 0).attr('aria-label', 'Table of monthly daily high air temperature compared with normal, one row per year from 2023. Use the arrow keys to move between months.');
+    MON.forEach((m, j) => svg.append('text').attr('class', 'heatmap__col').attr('x', lw + j * cw + cw / 2).attr('y', top - 8).attr('text-anchor', 'middle').text(cw < 34 ? m[0] : m));
+    years.forEach((y, i) => {
+      svg.append('text').attr('class', 'heatmap__row heatmap__row--year').attr('x', 0).attr('y', top + i * ch + ch / 2).attr('dy', '0.35em').text(y);
+      for (let m = 1; m <= 12; m += 1) {
+        const c = at.get(`${y}-${m}`);
+        if (!c) continue;
+        const g = svg.append('g').attr('transform', `translate(${lw + (m - 1) * cw},${top + i * ch})`).attr('class', 'heatmap__cell').on('click', () => sel(i, m - 1));
+        const fill = col(c.a);
+        g.append('rect').attr('width', cw - 2).attr('height', ch - 2).attr('fill', fill);
+        if (cw >= 34) g.append('text').attr('x', (cw - 2) / 2).attr('y', (ch - 2) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')
+          .attr('fill', textOn(fill)).style('fill', textOn(fill)).text(`${sign(c.a)}${c.full ? '' : '*'}`);
       }
     });
-    // El Niño bracket on the right, from the first El Niño month to the last month.
-    const first = months.findIndex((mk) => data.some((d) => d.en && mk === `${d.y}-${String(d.m).padStart(2, '0')}`));
-    if (first >= 0) {
-      const x = lw + 31 * cw + 8;
-      const y0 = top + first * ch;
-      const y1 = top + months.length * ch - 1;
-      svg.append('path').attr('class', 'heatmap__bracket').attr('d', `M${x},${y0} h6 V${y1} h-6`);
-      svg.append('text').attr('class', 'heatmap__bracket-label').attr('x', x + 12).attr('y', (y0 + y1) / 2).attr('dy', '-0.2em').text('El Niño,');
-      svg.append('text').attr('class', 'heatmap__bracket-label').attr('x', x + 12).attr('y', (y0 + y1) / 2).attr('dy', '1em').text('2026');
+    // El Niño bracket under the 2026 row, from May to the latest month.
+    const en = cells.filter((c) => c.en);
+    if (en.length) {
+      const i = years.indexOf(en[0].y);
+      const x0 = lw + (en[0].m - 1) * cw;
+      const x1 = lw + en.at(-1).m * cw - 2;
+      const yb = top + (i + 1) * ch + 4;
+      svg.append('path').attr('class', 'heatmap__bracket').attr('d', `M${x0},${yb} v6 H${x1} v-6`);
+      svg.append('text').attr('class', 'heatmap__bracket-label').attr('x', (x0 + x1) / 2).attr('y', yb + 22).attr('text-anchor', 'middle')
+        .text(`El Niño, ${MON[en[0].m - 1]} to ${MON[en.at(-1).m - 1]} ${en[0].y}`);
     }
-    const hl = svg.append('rect').attr('class', 'heatmap__focus').attr('width', cw - 1).attr('height', ch - 1).attr('display', 'none');
+    const hl = svg.append('rect').attr('class', 'heatmap__focus').attr('width', cw - 2).attr('height', ch - 2).attr('display', 'none');
     function sel(i, j) {
       cur = [i, j];
-      const r = byKey.get(`${months[i]}|${j + 1}`);
+      const c = at.get(`${years[i]}-${j + 1}`);
       hl.attr('display', null).attr('x', lw + j * cw).attr('y', top + i * ch);
-      if (!r) { detail.set(''); return; }
-      detail.set(`${r.day} ${MONTH[r.m - 1]} ${r.y}: daily high ${r.tmax.toFixed(1)} °C, ${sign(r.a)} °C from the 1991 to 2020 normal for that day${r.en ? ' (El Niño period)' : ''}.`);
+      if (!c) { detail.set(`${MONTH[j]} ${years[i]}: no data yet.`); return; }
+      detail.set(`${MONTH[c.m - 1]} ${c.y}: daily highs averaged ${sign(c.a)} °C from the 1991 to 2020 normal; ${c.warm} of ${c.n} days were warmer than normal${c.en ? ' (El Niño period)' : ''}${c.full ? '' : ' (month not yet complete)'}.`);
     }
     svg.on('keydown', (e) => {
       let [i, j] = cur;
@@ -171,16 +181,15 @@ export async function calendar(el) {
       else if (e.key === 'ArrowRight') j += 1; else if (e.key === 'ArrowLeft') j -= 1;
       else if (e.key === 'Escape') { hl.attr('display', 'none'); detail.reset(); return; } else return;
       e.preventDefault();
-      sel(Math.max(0, Math.min(months.length - 1, i)), Math.max(0, Math.min(30, j)));
+      sel(Math.max(0, Math.min(years.length - 1, i)), Math.max(0, Math.min(11, j)));
     });
     svg.on('focus', () => sel(...cur));
   };
   onResize(el, draw);
-  // Colour key under the calendar: one swatch per class, labelled at the class edges.
   const key = el.parentElement.querySelector('.calendar-key');
   if (key) {
     const labels = ['−3 or cooler', '−3 to −2', '−2 to −1', '−1 to −0.25', 'about normal', '+0.25 to +1', '+1 to +2', '+2 to +3', '+3 or warmer'];
-    key.innerHTML = `<ul>${DIFF_COLOURS.map((c, i) => `<li><span style="background:${c}"></span>${labels[i]}</li>`).join('')}</ul><p>°C difference from the 1991 to 2020 normal</p>`;
+    key.innerHTML = `<ul>${DIFF_COLOURS.map((c, i) => `<li><span style="background:${c}"></span>${labels[i]}</li>`).join('')}</ul><p>°C difference from the 1991 to 2020 normal. *Month not yet complete.</p>`;
     key.removeAttribute('aria-hidden');
   }
   return { breaks, colours: DIFF_COLOURS };

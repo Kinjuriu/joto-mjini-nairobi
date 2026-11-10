@@ -1,12 +1,15 @@
 /* Joto Mjini Nairobi story styles. Palette and type from prompts/03_story_site.md; layout from prompts/v2/DESIGN_BRIEF_v2.md. */
 :root {
-  --paper: #F7F4EE;
-  --ink: #1C1B19;
-  --ink-2: #4A4740;
-  --rule: #D8D2C6;
-  --link: #1F4E6B;
-  --accent: #1D4E6F;
-  --note-bg: #EFEBE3;
+  /* Stephane's palette, 10 November 2026: white page, brand blue rgb(63,121,173) for the header and cards. */
+  --paper: #FFFFFF;
+  --brand: #3F79AD;
+  --brand-dark: #2C5A84;
+  --ink: #1C2530;
+  --ink-2: #4A5563;
+  --rule: #D9DEE4;
+  --link: #2C5A84;
+  --accent: #3F79AD;
+  --note-bg: #F2F5F8;
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
   --col: 680px;
@@ -27,7 +30,7 @@ body {
 }
 
 a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
-a:hover { color: #133246; text-decoration-thickness: 2px; }
+a:hover { color: #1B3D5C; text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
 code { font-size: 0.85em; }
 
@@ -36,18 +39,18 @@ code { font-size: 0.85em; }
 
 /* Reading progress: thin, static, answers "how far along am I". */
 .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 50; background: transparent; }
-.progress__bar { height: 100%; width: 0; background: var(--ink-2); }
+.progress__bar { height: 100%; width: 0; background: var(--brand-dark); }
 
-/* 1. Masthead: one header, not sticky. */
+/* 1. Masthead: one brand-blue bar, not sticky (layout of NASA's dashboard header). */
 .masthead {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px;
-  max-width: var(--wide); margin: 0 auto; padding: 14px 20px 10px;
-  border-bottom: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px;
+  margin: 0; padding: 14px max(20px, calc((100% - var(--wide)) / 2 + 20px));
+  background: var(--brand); color: #FFFFFF;
   font-family: var(--sans);
 }
-.wordmark { font-family: var(--serif); font-weight: 600; font-size: 22px; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
-.wordmark:hover { color: var(--ink); text-decoration: underline; }
-.tagline { font-size: 15px; color: var(--ink-2); }
+.wordmark { font-family: var(--sans); font-weight: 700; font-size: 21px; color: #FFFFFF; text-decoration: none; letter-spacing: 0.01em; }
+.wordmark:hover { color: #FFFFFF; text-decoration: underline; }
+.tagline { font-size: 15px; color: #FFFFFF; }
 
 /* 2. Title block */
 .title-block { padding-top: 22px; padding-bottom: 14px; }
@@ -65,7 +68,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 19px; line-height: 1
 .prose li { margin-bottom: 6px; }
 
 /* Boxed note */
-.note { border-top: 2px solid var(--ink); background: var(--note-bg); padding: 4px 20px 6px; margin: 28px 0 8px; }
+.note { border-top: 3px solid var(--brand); background: var(--note-bg); padding: 4px 20px 6px; margin: 28px 0 8px; }
 .note h3 { margin-top: 14px; }
 .note p { font-size: 17px; }
 
@@ -123,7 +126,7 @@ img { max-width: 100%; height: auto; display: block; }
   border: 0; border-right: 1px solid var(--ink); padding: 8px 12px; cursor: pointer; border-radius: 0;
 }
 .segmented button:last-child { border-right: 0; }
-.segmented button:hover { background: #FFFFFF; }
+.segmented button:hover { background: #F2F5F8; }
 .segmented button[aria-checked="true"] { background: var(--ink); color: var(--paper); }
 
 .combo { position: relative; font-family: var(--sans); min-width: 260px; }
@@ -136,7 +139,7 @@ img { max-width: 100%; height: auto; display: block; }
   list-style: none; background: #FFFFFF; border: 1px solid var(--ink); border-top: 0;
 }
 .combo li { padding: 7px 10px; cursor: pointer; font-size: 16px; }
-.combo li[aria-selected="true"], .combo li:hover { background: #E9E4DA; }
+.combo li[aria-selected="true"], .combo li:hover { background: #E3ECF5; }
 
 /* Plain HTML data table */
 .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 16px; margin: 6px 0 8px; }

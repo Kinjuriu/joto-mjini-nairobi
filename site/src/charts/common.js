@@ -28,4 +28,4 @@ export function detailLine(el, idle) {
   return { set: (t) => { d.textContent = t; }, reset: () => { d.textContent = idle; } };
 }
 
-export const sign = (v, digits = 1) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(digits)}`;
+export const sign = (v, digits = 1) => { const r = Number(v.toFixed(digits)); return `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(r).toFixed(digits)}`; };

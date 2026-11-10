@@ -28,7 +28,7 @@ export async function initStory(blocks) {
   const first = CHAPTERS.find((c) => c.block === block);
   const ctl = await createMap(mapEl, {
     basemap: first.basemap, center: first.center, zoom: MOBILE.matches ? first.mobileZoom : first.zoom,
-    scrollZoom: false, navigation: !MOBILE.matches, scale: false,
+    scrollZoom: false, navigation: !MOBILE.matches,
   });
   const legend = new LegendCard(holder, ctl.manifest);
   const chip = new DateChip(holder);

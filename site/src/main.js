@@ -36,11 +36,11 @@ whenNear(document.getElementById('season-compare'), async (el) => {
   const { LegendCard } = await import('./ui/legend.js');
   const view = { center: [36.86, -1.29], zoom: window.innerWidth < 768 ? 9.3 : 10.4 };
   const cmp = await createCompare(el, {
-    left: { ...view, basemap: 'light', layers: [{ id: 'heat-abs', opacity: 0.9 }, { id: 'county-line', opacity: 1 }] },
-    right: { ...view, basemap: 'light', layers: [{ id: 'heat-cool-abs', opacity: 0.9 }, { id: 'county-line', opacity: 1 }] },
-    labels: ['January to March', 'June to August'],
+    left: { ...view, basemap: 'satellite', layers: [{ id: 'county-line', opacity: 1 }, { id: 'places', opacity: 1 }] },
+    right: { ...view, basemap: 'satellite', layers: [{ id: 'heat-diff', opacity: 0.85 }, { id: 'county-line', opacity: 1 }, { id: 'places', opacity: 1 }] },
+    labels: ['Satellite image', 'Surface temperature'],
   });
-  new LegendCard(el, cmp.right.manifest).show('heat-abs', { title: 'Land surface temperature, same scale on both sides' });
+  new LegendCard(el, cmp.right.manifest).show('heat-diff', { title: 'Right side: difference from the city median, °C' });
   window.__compare = cmp;
 });
 

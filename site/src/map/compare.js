@@ -10,7 +10,7 @@ export async function createCompare(container, { left, right, labels = ['', ''],
   container.append(a, b);
   const common = { center: left.center, zoom: left.zoom, scrollZoom: mapOpts.scrollZoom ?? false, ...mapOpts };
   const [L, R] = await Promise.all([
-    createMap(a, { ...common, basemap: left.basemap, navigation: false }),
+    createMap(a, { ...common, basemap: left.basemap, navigation: false, scale: false }),
     createMap(b, { ...common, basemap: right.basemap }),
   ]);
   L.setLayers(left.layers, 0);

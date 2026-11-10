@@ -31,7 +31,7 @@ The browser already shows a hand cursor on clickable things. Any extra effect ma
 
 ## Scrolling and motion
 
-Native scrolling only. Content is present on arrival. Motion only shows that data changed (150 to 250ms), off under prefers-reduced-motion, no autoplay. Allowed exception: a thin, static reading progress indicator on long stories, because it answers a real reader question (how far into the book am I).
+Native scrolling only. Content is present on arrival. Interface motion only shows that data changed (150 to 250ms) and is off under prefers-reduced-motion. No autoplay for decoration (hero videos, background loops, self-advancing carousels). Data animations are different (rule changed by Stephane, 10 November 2026): a looping map of a quantity changing over time, like NASA's HRRR wind-gust or TEMPO nitrogen dioxide animations, is the content, so it may play muted and loop while on screen. It pauses off screen, has a visible pause button, shows its poster under prefers-reduced-motion until the reader presses play, and bakes in a title, a "Valid:" time stamp, a colour bar with units and a credit, so any single frame reads on its own. Interactive time series (a year slider with a play button) still wait for the reader. Allowed exception: a thin, static reading progress indicator on long stories, because it answers a real reader question (how far into the book am I).
 
 ## Colour and brand
 
@@ -52,3 +52,11 @@ Give it the palette with hex values, typefaces, references (screenshots and why)
 ## Human QA before shipping
 
 Click and tap every control, scroll slowly through transitions (especially sticky headers), check every image and video poster, use the page by keyboard only, test reduced motion, read every word aloud, and ask someone new to say what it is after ten seconds. Then run the pre-ship checklist in the full guide.
+
+## Joto Mjini palette (Stephane, 10 November 2026)
+
+- Page background: white (#FFFFFF). No paper or beige tones.
+- Header bar, card accents, selected controls: rgb(63,121,173), #3F79AD.
+- Data animations: blue-to-red ramp with cool end rgb(62,77,183), #3E4DB7 (close to matplotlib coolwarm).
+- Line charts: line rgb(62,7,81), #3E0751; highlighted period rgb(121,193,233), #79C1E9.
+- Maps: satellite imagery by default, Nairobi County outlined with the surroundings dimmed; scale bar and coordinates on every map.

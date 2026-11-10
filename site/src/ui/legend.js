@@ -27,7 +27,10 @@ export class LegendCard {
     const diverging = classes.length === 9;
     let body = '';
     if (L.type === 'imagery') {
-      body = '<p class="legend-card__unit">Satellite image</p>';
+      body = key === 's2-false'
+        ? '<ul class="legend-card__list"><li><span class="legend-card__sw" style="background:#3FD13F"></span>Living plants</li>'
+          + '<li><span class="legend-card__sw" style="background:#B65BB0"></span>Roofs, roads, bare ground</li></ul>'
+        : '<p class="legend-card__unit">Satellite image</p>';
     } else if (diverging) {
       // Strip with ticks at -6, -2, +2, +6 and words at the ends: no labels can collide.
       const sw = classes.map((c) => `<span style="background:${c.color}"></span>`).join('');
@@ -40,12 +43,12 @@ export class LegendCard {
       body = `<ul class="legend-card__list">${classes.map((c) => `<li><span class="legend-card__sw" style="background:${c.color}"></span>${c.label}</li>`).join('')}</ul>`;
     }
     const unit = L.unit ? `<p class="legend-card__unit">${L.unit}${L.note ? `. ${L.note}` : ''}${opts.note ? `. ${opts.note}` : ''}</p>` : '';
+    // Layout of NASA's legend card: title row with an "i" button and a collapse button, then the colours.
     this.el.innerHTML = `<div class="legend-card__head"><h3 class="legend-card__title">${title}</h3>`
-      + `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${this.id}-info" aria-label="About this layer">i</button></div>`
+      + `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${this.id}-info" aria-label="About this layer">i</button>`
+      + `<button type="button" class="legend-card__toggle" aria-expanded="${!this.collapsed}" aria-controls="${this.id}-body" aria-label="Show or hide the legend"><span aria-hidden="true"></span></button></div>`
       + `<p class="legend-card__info" id="${this.id}-info" hidden>${info}</p>`
-      + `<div class="legend-card__body${this.collapsed && !diverging ? ' is-collapsed' : ''}">${body}${unit}</div>`
-      + (this.collapsed && !diverging && L.type !== 'imagery'
-        ? '<button type="button" class="legend-card__more" aria-expanded="false">Show classes</button>' : '');
+      + `<div class="legend-card__body" id="${this.id}-body"${this.collapsed ? ' hidden' : ''}>${body}${unit}</div>`;
     const btn = this.el.querySelector('.info-btn');
     const inf = this.el.querySelector('.legend-card__info');
     btn.addEventListener('click', () => {
@@ -53,15 +56,12 @@ export class LegendCard {
       btn.setAttribute('aria-expanded', String(open));
       inf.hidden = !open;
     });
-    const more = this.el.querySelector('.legend-card__more');
-    if (more) {
-      more.addEventListener('click', () => {
-        const b = this.el.querySelector('.legend-card__body');
-        const open = b.classList.toggle('is-collapsed') === false;
-        more.setAttribute('aria-expanded', String(open));
-        more.textContent = open ? 'Hide classes' : 'Show classes';
-      });
-    }
+    const tog = this.el.querySelector('.legend-card__toggle');
+    tog.addEventListener('click', () => {
+      this.collapsed = !this.collapsed;
+      tog.setAttribute('aria-expanded', String(!this.collapsed));
+      this.el.querySelector('.legend-card__body').hidden = this.collapsed;
+    });
   }
 }
 

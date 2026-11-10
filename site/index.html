@@ -53,7 +53,7 @@
               <source src="media/hot_mornings.mp4" type="video/mp4">
             </video>
           </div>
-          <figcaption class="caption">Every clear January to March Landsat morning from {{x.animations.mornings.first|date}} to {{x.animations.mornings.last|date}} ({{x.animations.mornings.n_scenes|raw}} mornings), each shown as the difference from that morning's county median. <span class="source">Data: USGS Landsat 8 and 9 Collection 2 via Microsoft Planetary Computer. Background: contains modified Copernicus Sentinel data 2026. Analysis: Joto Mjini Nairobi. <a href="media/hot_mornings.gif">GIF version</a>.</span></figcaption>
+          <figcaption class="caption">Every clear January to March Landsat morning from {{x.animations.mornings.first|date}} to {{x.animations.mornings.last|date}} ({{x.animations.mornings.n_scenes|raw}} mornings), each shown as the difference from that morning's county median. <span class="source">Data: USGS Landsat 8 and 9 Collection 2 via Microsoft Planetary Computer. Graphic: Joto Mjini Nairobi. <a href="media/hot_mornings.gif">GIF version</a>.</span></figcaption>
         </figure>
         <div class="split__text">
           <div class="rule" aria-hidden="true"></div>
@@ -99,12 +99,16 @@
       </div>
 
       <figure class="figure full">
+        <div class="wide">
+          <h3 class="chart-title">What lies under the heat</h3>
+          <p class="chart-subtitle">Drag the line across the map. On the left is the ground as the satellite sees it; on the right, the same ground coloured by how much hotter or cooler it was than the city median on hot mornings.</p>
+        </div>
         <div class="map-frame map-frame--compare" id="season-compare" data-compare>
           <noscript><img src="figures/v2_pair_hot_cool.png" alt="Hot season and cool season surface temperature maps." width="2400" height="1080"></noscript>
         </div>
         <figcaption class="caption wide">
-          <strong>Land surface temperature on clear mornings.</strong> Left of the handle: median of {{q0.n_hot_scenes|raw}} Landsat 8 and 9 scenes, January to March 2023 to 2026. Right: median of {{q0.n_cool_scenes|raw}} scenes, June to August {{q0.cool_first_year|raw}} to 2026. Both sides use the same colour scale.<span class="js-only"> Drag the handle, or focus it and use the arrow keys.</span>
-          <span class="source">Source: USGS Landsat Collection 2 Level-2 via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi. Basemap © Mapbox © OpenStreetMap contributors.</span>
+          The forests (Karura, the Arboretum, Ngong Road) sit in the blue. The built-up centre and east sit in the orange and red.<span class="js-only"> You can also focus the line and use the arrow keys.</span>
+          <span class="source">Surface temperature: median of {{q0.n_hot_scenes|raw}} clear Landsat 8 and 9 scenes, January to March 2023 to 2026, USGS via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi. Imagery: Sentinel-2 cloudless 2023 by EOX (contains modified Copernicus Sentinel data 2023). Labels © Mapbox © OpenStreetMap contributors.</span>
         </figcaption>
       </figure>
     </section>
@@ -127,7 +131,7 @@
               <source src="media/nairobi_grows.mp4" type="video/mp4">
             </video>
           </div>
-          <figcaption class="caption">Share of the ground covered by buildings in each Global Human Settlement Layer epoch, 1975 to 2025; 2025 is a JRC projection. <span class="source">Data: GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0). Background: contains modified Copernicus Sentinel data 2026. Analysis: Joto Mjini Nairobi. <a href="media/nairobi_grows.gif">GIF version</a>.</span></figcaption>
+          <figcaption class="caption">Share of the ground covered by buildings in each Global Human Settlement Layer epoch, 1975 to 2025; 2025 is a JRC projection. <span class="source">Data: GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0). Graphic: Joto Mjini Nairobi. <a href="media/nairobi_grows.gif">GIF version</a>.</span></figcaption>
         </figure>
         <div class="split__text">
           <div class="rule" aria-hidden="true"></div>
@@ -154,12 +158,12 @@
               <source src="media/day_of_heat.mp4" type="video/mp4">
             </video>
           </div>
-          <figcaption class="caption">Land surface temperature every hour from 06:00 to 19:00 Nairobi time on {{x.animations.day.date|date}}: Copernicus hourly land surface temperature (about 3 km), with finer detail added from that morning's Landsat scene. Areas with no colour were under cloud. <span class="source">Data: Copernicus Land Monitoring Service, Global Land Surface Temperature hourly v3, via the Copernicus Data Space Ecosystem; USGS Landsat 9. Background: contains modified Copernicus Sentinel data 2026. Analysis: Joto Mjini Nairobi. <a href="media/day_of_heat.gif">GIF version</a>.</span></figcaption>
+          <figcaption class="caption">Land surface temperature every hour from 06:00 to 19:00 Nairobi time on {{x.animations.day.date|date}}, across Nairobi County (outlined) and the land around it. Each square of colour is about 3 km across, so this shows the region, not neighbourhoods. White areas were under cloud. <span class="source">Data: Copernicus Land Monitoring Service, Global Land Surface Temperature hourly v3, via the Copernicus Data Space Ecosystem. Graphic: Joto Mjini Nairobi. <a href="media/day_of_heat.gif">GIF version</a>.</span></figcaption>
         </figure>
         <div class="split__text">
           <div class="rule" aria-hidden="true"></div>
           <h2>[[COPY: heading for the day of heat]]</h2>
-          <p>[[COPY: two short paragraphs: the ground warms fast after sunrise, peaks around midday, and the same places stay hotter all day. Say that the hourly data is about 3 km and the fine detail comes from one morning's Landsat scene]]</p>
+          <p>[[COPY: two short paragraphs: the ground warms fast after sunrise, peaks around midday, and the same places stay hotter all day. Say that the hourly data is about 3 km, so it shows the region around Nairobi, not neighbourhoods]]</p>
         </div>
       </div>
 
@@ -173,9 +177,9 @@
       </figure>
 
       <figure class="wide figure" id="calendar">
-        <h3 class="chart-title">Every day since January 2023, compared with normal</h3>
-        <p class="chart-subtitle">Daily high air temperature minus the 1991 to 2020 normal for that day of the year, °C. Blue: cooler than normal; orange and red: warmer.</p>
-        <div class="chart chart--table" data-chart="calendar" data-title="Calendar of daily highs compared with normal">
+        <h3 class="chart-title">Four in five days since January 2023 were warmer than normal</h3>
+        <p class="chart-subtitle">Nairobi's daily high air temperature, averaged for each month, minus the 1991 to 2020 normal for the same days, °C. Orange and red: warmer than normal; blue: cooler. Only two months, March and April 2026, were clearly cooler than normal.</p>
+        <div class="chart chart--table" data-chart="calendar" data-title="Monthly daily highs compared with normal">
           <noscript><p>The calendar needs JavaScript. The data is in <a href="data/daily_tmax_anomaly.csv">daily_tmax_anomaly.csv</a>.</p></noscript>
         </div>
         <div class="calendar-key" aria-hidden="true"></div>

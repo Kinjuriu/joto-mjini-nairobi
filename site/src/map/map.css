@@ -1,5 +1,5 @@
 /* Map furniture: legend card, date chip, notices. Square geometry, Source Sans 3, hairline borders. */
-.map-frame { position: relative; overflow: hidden; background: #E9E6DF; }
+.map-frame { position: relative; overflow: hidden; background: #FFFFFF; }
 .map-frame .mapboxgl-map { position: absolute; inset: 0; font-family: var(--sans); }
 
 .map-notice {
@@ -15,36 +15,48 @@
 }
 
 .legend-card {
-  position: absolute; right: 14px; bottom: 30px; z-index: 4; width: 264px; max-height: calc(100% - 90px); overflow: auto;
-  background: #FFFFFF; color: var(--ink); border-radius: 2px; padding: 12px 14px 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25); font: 14px/1.35 var(--sans);
+  position: absolute; right: 14px; bottom: 34px; z-index: 4; width: 280px; max-height: calc(100% - 90px); overflow: auto;
+  background: #FFFFFF; color: var(--ink); border-radius: 2px; border-top: 3px solid var(--brand); padding: 10px 12px 10px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28); font: 14px/1.35 var(--sans);
 }
-.legend-card__head { display: flex; align-items: flex-start; gap: 8px; }
-.legend-card__title { flex: 1; margin: 0 0 8px; font: 600 15px/1.3 var(--sans); }
+.legend-card__head { display: flex; align-items: center; gap: 6px; }
+.legend-card__title { flex: 1; margin: 0; font: 700 15px/1.3 var(--sans); }
+.legend-card__body { margin-top: 8px; }
 .info-btn {
   flex: none; width: 22px; height: 22px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
-  background: #2B2A27; color: #FFFFFF; font: 600 13px/22px Georgia, serif; text-align: center;
+  background: #4A5563; color: #FFFFFF; font: 600 13px/22px Georgia, serif; text-align: center;
 }
-.info-btn:hover, .info-btn[aria-expanded="true"] { background: var(--accent); }
-.legend-card__info { margin: 0 0 10px; font-size: 13.5px; color: var(--ink-2); }
-.legend-card__list { list-style: none; margin: 0; padding: 0; }
-.legend-card__list li { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
-.legend-card__sw { flex: none; width: 18px; height: 12px; border: 1px solid rgba(0, 0, 0, 0.15); }
-.legend-card__strip { display: flex; height: 12px; border: 1px solid rgba(0, 0, 0, 0.15); }
+.legend-card__toggle { flex: none; width: 26px; height: 26px; border: 0; padding: 0; background: none; cursor: pointer; position: relative; }
+.legend-card__toggle span { position: absolute; left: 8px; top: 6px; width: 9px; height: 9px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); }
+.legend-card__toggle[aria-expanded="false"] span { top: 10px; transform: rotate(-135deg); }
+.legend-card__toggle:hover { background: #F2F5F8; }
+.legend-card__info { margin: 8px 0 0; font-size: 13.5px; color: var(--ink-2); }
+.legend-card__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; }
+.legend-card__list li { display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 1.25; }
+.legend-card__sw { flex: none; width: 16px; height: 12px; border: 1px solid rgba(0, 0, 0, 0.15); }
+.legend-card__strip { display: flex; height: 14px; border: 1px solid rgba(0, 0, 0, 0.15); }
 .legend-card__strip span { flex: 1; }
 .legend-card__ticks { position: relative; height: 18px; font-size: 13px; }
 .legend-card__ticks span { position: absolute; top: 2px; transform: translateX(-50%); }
 .legend-card__ends { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-2); }
 .legend-card__unit { margin: 6px 0 0; font-size: 13px; color: var(--ink-2); }
-.legend-card__body.is-collapsed .legend-card__list, .legend-card__body.is-collapsed .legend-card__unit { display: none; }
-.legend-card__more { margin-top: 4px; padding: 2px 0; border: 0; background: none; color: var(--link); font: 13.5px var(--sans); text-decoration: underline; cursor: pointer; }
+
+/* Scale bar and coordinates, bottom left (as on NASA's dashboard maps). */
+.mapboxgl-ctrl-bottom-left { display: flex; flex-direction: column-reverse; align-items: flex-start; }
+.map-coords {
+  margin: 0 0 4px 10px !important; padding: 2px 6px; background: rgba(255, 255, 255, 0.9); color: var(--ink);
+  font: 12px/1.3 var(--sans); font-variant-numeric: tabular-nums; border-radius: 2px; pointer-events: none;
+}
+.mapboxgl-ctrl-scale { background: rgba(255, 255, 255, 0.9) !important; border-color: var(--ink) !important; color: var(--ink) !important; font-size: 11px !important; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .mapboxgl-ctrl-attrib, .mapboxgl-ctrl-scale { font-family: var(--sans) !important; }
 
 @media (max-width: 767px) {
-  .legend-card { width: 200px; right: 8px; bottom: 24px; padding: 9px 10px 8px; }
-  .legend-card__title { font-size: 14px; margin-bottom: 6px; }
+  .legend-card { width: 210px; right: 8px; bottom: 28px; padding: 8px 8px 8px 10px; }
+  .legend-card__title { font-size: 14px; }
+  .legend-card__list { grid-template-columns: 1fr; }
+  .map-coords { display: none; }
   .date-chip { top: 10px; font-size: 13px; max-width: calc(100% - 100px); }
 }

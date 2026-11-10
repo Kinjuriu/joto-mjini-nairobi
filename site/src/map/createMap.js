@@ -6,17 +6,21 @@
 //   - knows our layers from tiles/manifest.json (raster XYZ folders) plus a few vector overlays;
 //   - cross-fades layer opacity (about 400 ms) and flies between chapters (about 1.8 s),
 //     with instant changes under prefers-reduced-motion;
-//   - re-adds our sources and layers after a basemap switch, because setStyle drops them.
+//   - switches between imagery and the light map by showing or hiding one imagery layer (no style reload);
+//   - dims everything outside Nairobi County and shows a scale bar and the coordinates under the pointer.
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { ACCENT, MAPBOX_TOKEN, REDUCED_MOTION, SATELLITE, abs, absTemplate, diffStep, getManifest } from '../config.js';
 
 export const BASEMAPS = {
-  satellite: { url: 'mapbox://styles/mapbox/satellite-streets-v12', imagery: true, label: 'Satellite' },
-  light: { url: 'mapbox://styles/mapbox/light-v11', imagery: false, label: 'Light' },
-  dark: { url: 'mapbox://styles/mapbox/dark-v11', imagery: false, label: 'Dark' },
+  satellite: { imagery: true, label: 'Satellite' },
+  light: { imagery: false, label: 'Light' },
 };
-
+// One Mapbox style for every map. "Satellite" and "Light" are the same style with an imagery layer shown or
+// hidden, so switching never reloads the style (reloading made the story map blank out and redraw).
+const STYLE = 'mapbox://styles/mapbox/light-v11';
+// Keep every map on Nairobi and its surroundings, so nobody gets lost over the rest of Kenya.
+const BOUNDS = [[36.2, -1.95], [37.55, -0.6]];
 const FADE_MS = 400;
 const FLY_MS = 1800;
 const FONT = ['DIN Pro Medium', 'Arial Unicode MS Regular'];
@@ -28,31 +32,54 @@ const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-labe
 export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'growth-1990-2020',
   'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
   'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
-  'wards-line', 'county-line'];
+  'county-mask', 'wards-line', 'county-line'];
 
 const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity' };
 
 export class MissingTokenError extends Error {}
 
-// Mapbox satellite raster tiles can be refused (HTTP 429 was seen on 10 November 2026). Probe one tile once
-// per session; if imagery is refused, "Satellite" becomes Mapbox Light with our own Sentinel-2 true-colour
-// composite (10 m, January to March 2026) beneath its roads and labels. DECISIONS D33.
+// Imagery. Mapbox satellite is sharpest, but its tiles were refused for this account (HTTP 429 on every
+// request, 10 November 2026). We probe one tile once per session: if it is refused we use Sentinel-2
+// cloudless 2023 by EOX (10 m, cloud-free, natural colour, covers the whole region). DECISIONS D42.
 let satProbe;
 export function satelliteAvailable() {
   if (SATELLITE === 'sentinel2') return Promise.resolve(false);
   if (SATELLITE === 'mapbox') return Promise.resolve(true);
   if (!satProbe) {
-    const cached = sessionStorage.getItem('joto-sat');
+    let cached = null;
+    try { cached = sessionStorage.getItem('joto-sat'); } catch { /* storage blocked */ }
     satProbe = cached !== null ? Promise.resolve(cached === '1')
-      : fetch(`https://api.mapbox.com/v4/mapbox.satellite/10/616/515.webp?access_token=${MAPBOX_TOKEN}`)
+      : fetch(`https://api.mapbox.com/v4/mapbox.satellite/12/2463/2063.webp?access_token=${MAPBOX_TOKEN}`)
         .then((r) => r.ok).catch(() => false)
-        .then((ok) => { sessionStorage.setItem('joto-sat', ok ? '1' : '0'); return ok; });
+        .then((ok) => { try { sessionStorage.setItem('joto-sat', ok ? '1' : '0'); } catch { /* ignore */ } return ok; });
   }
   return satProbe;
 }
-async function styleUrl(name, manifest) {
-  if (name === 'satellite' && !(await satelliteAvailable()) && manifest['s2-true']) return { url: BASEMAPS.light.url, s2: true };
-  return { url: BASEMAPS[name].url, s2: false };
+const EOX = {
+  type: 'raster', tileSize: 256, maxzoom: 15,
+  tiles: ['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/{z}/{y}/{x}.jpg'],
+  attribution: '<a href="https://s2maps.eu" target="_blank" rel="noopener">Sentinel-2 cloudless 2023 by EOX</a> (contains modified Copernicus Sentinel data 2023)',
+};
+const MAPBOX_SAT = { type: 'raster', url: 'mapbox://mapbox.satellite', tileSize: 256 };
+
+/** Latitude and longitude under the pointer (or the map centre on touch), like NASA's dashboard. */
+class CoordControl {
+  onAdd(map) {
+    this.map = map;
+    this.el = document.createElement('div');
+    this.el.className = 'mapboxgl-ctrl map-coords';
+    this.el.setAttribute('aria-hidden', 'true');
+    const fmt = ({ lng, lat }) => `${Math.abs(lat).toFixed(4)}° ${lat < 0 ? 'S' : 'N'}, ${Math.abs(lng).toFixed(4)}° ${lng < 0 ? 'W' : 'E'}`;
+    const centre = () => { this.el.textContent = fmt(map.getCenter()); };
+    map.on('mousemove', (e) => { this.el.textContent = fmt(e.lngLat); });
+    map.on('mouseout', centre);
+    map.on('move', () => { if (!this.hover) centre(); });
+    map.getCanvasContainer().addEventListener('mouseenter', () => { this.hover = true; });
+    map.getCanvasContainer().addEventListener('mouseleave', () => { this.hover = false; centre(); });
+    centre();
+    return this.el;
+  }
+  onRemove() { this.el.remove(); }
 }
 
 /** Show a plain notice in a map container when the map cannot load. */
@@ -70,15 +97,17 @@ export async function createMap(container, opts = {}) {
   }
   mapboxgl.accessToken = MAPBOX_TOKEN;
   const manifest = await getManifest();
-  const basemap = opts.basemap || 'light';
-  const first = await styleUrl(basemap, manifest);
+  const basemap = opts.basemap || 'satellite';
+  const mapboxSat = await satelliteAvailable();
   const map = new mapboxgl.Map({
     container,
-    style: first.url,
+    style: STYLE,
     center: opts.center || [36.86, -1.29],
     zoom: opts.zoom ?? 10.3,
-    minZoom: 8,
+    minZoom: opts.minZoom ?? 9,
     maxZoom: 17.5,
+    maxBounds: opts.maxBounds === false ? undefined : BOUNDS,
+    cooperativeGestures: !!opts.cooperativeGestures,
     projection: 'mercator',
     scrollZoom: opts.scrollZoom ?? true,
     dragRotate: false,
@@ -92,9 +121,13 @@ export async function createMap(container, opts = {}) {
   map.keyboard.disableRotation();
   map.addControl(new mapboxgl.AttributionControl({ compact: true, customAttribution: opts.attribution || '' }), 'bottom-left');
   if (opts.navigation !== false) map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), opts.navPosition || 'top-right');
-  if (opts.scale) map.addControl(new mapboxgl.ScaleControl({ unit: 'metric' }), 'bottom-left');
+  if (opts.scale !== false) {
+    const pos = opts.furniturePosition || 'bottom-left';
+    map.addControl(new mapboxgl.ScaleControl({ unit: 'metric', maxWidth: 110 }), pos);
+    map.addControl(new CoordControl(), pos);
+  }
   const ctl = new MapController(map, manifest, basemap, opts);
-  ctl.s2Imagery = first.s2;
+  ctl.imagerySource = mapboxSat ? MAPBOX_SAT : EOX;
   await ctl.ready;
   return ctl;
 }
@@ -130,7 +163,9 @@ export class MapController {
   _install() {
     this._installed = true;
     this._styleLabels();
-    if (this.s2Imagery) this._addS2Imagery();
+    this._addImagery();
+    this.use('county-mask');
+    this._applyBasemap();
     // Re-add every layer we know about, at its current opacity, without transition.
     for (const id of this.specs.keys()) this._addToMap(id);
     for (const [id, op] of this.state) this._applyOpacity(id, op, 0);
@@ -138,21 +173,43 @@ export class MapController {
     this.listeners.forEach((fn) => fn('style'));
   }
 
-  /** Fallback imagery: our Sentinel-2 true colour beneath the first road layer of the light style. */
-  _addS2Imagery() {
+  /** The imagery layer sits just above the style's background, beneath roads, boundaries and labels. */
+  _addImagery() {
     const { map } = this;
-    const m = this.manifest['s2-true'];
-    if (map.getLayer('basemap-s2')) return;
-    if (!map.getSource('src-basemap-s2')) {
-      map.addSource('src-basemap-s2', { type: 'raster', tiles: [absTemplate(m.tiles)], tileSize: 256, minzoom: m.minzoom,
-        maxzoom: m.maxzoom, bounds: m.bounds, attribution: m.source });
+    if (map.getLayer('basemap-imagery')) return;
+    if (!map.getSource('src-basemap-imagery')) map.addSource('src-basemap-imagery', this.imagerySource);
+    const layers = map.getStyle().layers;
+    const above = layers.find((l) => l.type !== 'background');
+    map.addLayer({ id: 'basemap-imagery', type: 'raster', source: 'src-basemap-imagery', layout: { visibility: 'none' },
+      paint: { 'raster-fade-duration': 0, 'raster-resampling': 'linear' } }, above ? above.id : undefined);
+    // Style layers that would cover the imagery (land use fills, water, hillshade, building fills).
+    this.coverIds = layers.filter((l) => (l.type === 'fill' || l.type === 'hillshade' || l.type === 'fill-extrusion')).map((l) => l.id);
+    this.roadIds = layers.filter((l) => l.type === 'line' && /^(road|bridge|tunnel|aeroway)/.test(l.id)).map((l) => l.id);
+  }
+
+  /** Show or hide the imagery and restyle our outlines for the basemap, without reloading the style. */
+  _applyBasemap() {
+    const { map } = this;
+    const img = this.imagery;
+    if (map.getLayer('basemap-imagery')) map.setLayoutProperty('basemap-imagery', 'visibility', img ? 'visible' : 'none');
+    for (const id of this.coverIds || []) if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', img ? 'none' : 'visible');
+    for (const id of this.roadIds || []) if (map.getLayer(id)) map.setPaintProperty(id, 'line-opacity', img ? 0.45 : 1);
+    for (const [id, sp] of this.specs) {
+      const o = OVERLAYS[id];
+      if (!o?.rebuild) continue;
+      const fresh = o.layers(this);
+      sp.layers.forEach((l, i) => {
+        const f = fresh[i];
+        if (!f) return;
+        for (const [k, v] of Object.entries(f.paint || {})) {
+          if (k.endsWith('opacity')) continue;
+          l.paint[k] = v;
+          if (map.getLayer(l.id)) map.setPaintProperty(l.id, k, v);
+        }
+        if (f.maxOpacity !== undefined) l.maxOpacity = f.maxOpacity;
+      });
     }
-    const before = map.getStyle().layers.find((l) => /^(tunnel|road|bridge|admin|building)/.test(l.id));
-    map.addLayer({ id: 'basemap-s2', type: 'raster', source: 'src-basemap-s2', paint: { 'raster-resampling': 'linear', 'raster-fade-duration': 0 } },
-      before ? before.id : this.firstSymbolId());
-    for (const l of map.getStyle().layers) {
-      if (l.type === 'fill' && /^(landuse|national-park|building)/.test(l.id)) map.setLayoutProperty(l.id, 'visibility', 'none');
-    }
+    if (this.specs.has('county-mask')) this._applyOpacity('county-mask', 1, 0);
   }
 
   /** Dark text with a white halo on every basemap label: readable over imagery and data. */
@@ -245,28 +302,23 @@ export class MapController {
   setLayers(layers, ms = FADE_MS) {
     const want = new Map(layers.map((l) => (typeof l === 'string' ? [l, 1] : [l.id, l.opacity ?? 1])));
     // The ward highlight is controlled by highlightWards(), not by the chapter's layer list.
-    for (const id of [...this.state.keys()]) if (id !== 'ward-highlight' && !want.has(id) && this.state.get(id) > 0) this.setLayerOpacity(id, 0, ms);
+    for (const id of [...this.state.keys()]) if (id !== 'ward-highlight' && id !== 'county-mask' && !want.has(id) && this.state.get(id) > 0) this.setLayerOpacity(id, 0, ms);
     for (const [id, op] of want) this.setLayerOpacity(id, op, ms);
     this.reorder(DEFAULT_ORDER);
   }
 
-  async setBasemap(name) {
+  /** Switch between imagery and the light map. Instant: no style reload, our layers stay where they are. */
+  setBasemap(name) {
     if (!BASEMAPS[name] || name === this.basemap) return;
     this.basemap = name;
-    // Overlays styled per basemap (outline colours) are rebuilt from their specs on style.load.
-    for (const [id, sp] of this.specs) if (OVERLAYS[id]?.rebuild) {
-      sp.layers = OVERLAYS[id].layers(this).map((l) => ({ ...l, source: sp.sourceId, layout: { ...(l.layout || {}), visibility: 'none' } }));
-    }
-    const st = await styleUrl(name, this.manifest);
-    this.s2Imagery = st.s2;
-    await new Promise((resolve) => { this.map.once('style.load', () => setTimeout(resolve, 0)); this.map.setStyle(st.url, { diff: false }); });
+    this._applyBasemap();
     this.listeners.forEach((fn) => fn('basemap'));
   }
 
   /** Move to a chapter: basemap, layers, camera. */
   async setChapter(ch, { instant = false } = {}) {
     const quick = instant || this.reduced;
-    if (ch.basemap && ch.basemap !== this.basemap) await this.setBasemap(ch.basemap);
+    if (ch.basemap) this.setBasemap(ch.basemap);
     if (ch.highlight !== undefined) this.highlightWards(ch.highlight || []);
     this.setLayers(ch.layers || [], quick ? 0 : FADE_MS);
     if (ch.center) {
@@ -306,13 +358,39 @@ const vec = (name) => (c) => ({
   type: 'vector', tiles: [absTemplate(c.manifest[name].tiles)], minzoom: c.manifest[name].minzoom, maxzoom: c.manifest[name].maxzoom,
   bounds: c.manifest[name].bounds, attribution: c.manifest[name].source,
 });
-const lineColour = (c) => (c.imagery ? 'rgba(255,255,255,0.85)' : 'rgba(28,27,25,0.55)');
+const lineColour = (c) => (c.imagery ? 'rgba(255,255,255,0.8)' : 'rgba(28,27,25,0.5)');
+
+// Everything outside Nairobi County, as one polygon with the county cut out (to dim the surroundings).
+let maskData;
+function countyMask() {
+  if (!maskData) {
+    maskData = fetch(abs('data/county.geojson')).then((r) => r.json()).then((g) => {
+      const holes = [];
+      for (const f of g.features || [g]) {
+        const geom = f.geometry || f;
+        const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+        polys.forEach((p) => holes.push(p[0].slice().reverse()));
+      }
+      return { type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[[20, -15], [50, -15], [50, 15], [20, 15], [20, -15]], ...holes] } };
+    });
+  }
+  return maskData;
+}
 
 export const OVERLAYS = {
+  'county-mask': {
+    source: (c) => {
+      const src = { type: 'geojson', data: { type: 'FeatureCollection', features: [] } };
+      countyMask().then((f) => c.map.getSource('src-county-mask')?.setData(f));
+      return src;
+    },
+    rebuild: true,
+    layers: (c) => [{ id: 'county-mask', type: 'fill', paint: { 'fill-color': c.imagery ? '#0B1620' : '#FFFFFF' }, maxOpacity: c.imagery ? 0.42 : 0.55 }],
+  },
   'county-line': {
     source: () => ({ type: 'geojson', data: abs('data/county.geojson') }),
     rebuild: true,
-    layers: (c) => [{ id: 'county-line', type: 'line', paint: { 'line-color': c.imagery ? '#FFFFFF' : '#1C1B19', 'line-width': 1.6 } }],
+    layers: (c) => [{ id: 'county-line', type: 'line', paint: { 'line-color': c.imagery ? '#FFFFFF' : '#1C1B19', 'line-width': 2.2 } }],
   },
   'wards-line': {
     sourceId: 'src-wards', source: vec('wards'), rebuild: true,
@@ -351,7 +429,7 @@ export const OVERLAYS = {
   },
   places: {
     source: vec('places'), beforeLabels: false,
-    layers: () => [{ id: 'places', type: 'symbol', 'source-layer': 'places', minzoom: 10.5, filter: ['==', ['get', 'is_green'], true],
+    layers: () => [{ id: 'places', type: 'symbol', 'source-layer': 'places', minzoom: 10, filter: ['==', ['get', 'is_green'], true],
       layout: { 'text-field': ['get', 'name'], 'text-font': FONT, 'text-size': 12.5, 'text-max-width': 8 },
       paint: { 'text-color': '#1F4D2E', 'text-halo-color': 'rgba(255,255,255,0.95)', 'text-halo-width': 1.8 } }],
   },

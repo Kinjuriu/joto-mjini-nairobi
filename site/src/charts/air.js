@@ -5,8 +5,9 @@ import { axisBottom, axisLeft, bisector, csv, extent, line, max, min, scaleLinea
 import { abs, fmtC } from '../config.js';
 import { detailLine, onResize } from './common.js';
 
-const LINE = '#2B2A27';
-const SHADE = '#C9DDE9';
+// Stephane's chart colours: line rgb(62,7,81), highlighted period rgb(121,193,233).
+const LINE = '#3E0751';
+const SHADE = '#79C1E9';
 
 export async function airChart(el) {
   const data = (await csv(abs('data/daily_tmax_anomaly.csv'))).map((d) => ({
@@ -30,7 +31,7 @@ export async function airChart(el) {
       .attr('class', 'chart-svg').attr('role', 'img').attr('tabindex', 0)
       .attr('aria-label', `Line chart of Nairobi's daily high air temperature from ${fmtDay(data[0].date)} to ${fmtDay(data.at(-1).date)}. The El Niño period from May 2026 is shaded. Highest: ${fmtC(rec.tmax)} on ${fmtDay(rec.date)}. Use the arrow keys to read each day.`);
     if (enStart) {
-      svg.append('rect').attr('x', x(enStart)).attr('width', x(data.at(-1).date) - x(enStart)).attr('y', m.top).attr('height', height - m.top - m.bottom).attr('fill', SHADE);
+      svg.append('rect').attr('x', x(enStart)).attr('width', x(data.at(-1).date) - x(enStart)).attr('y', m.top).attr('height', height - m.top - m.bottom).attr('fill', SHADE).attr('fill-opacity', 0.4);
       svg.append('text').attr('class', 'label-strong').attr('x', x(enStart) + 6).attr('y', m.top - 10).text('El Niño, 2026');
     }
     svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.left},0)`)
@@ -39,10 +40,10 @@ export async function airChart(el) {
     svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${height - m.bottom})`)
       .call(axisBottom(x).ticks(timeMonth.every(narrow ? 12 : 6)).tickFormat(timeFormat(narrow ? '%Y' : '%b %Y')).tickSize(4))
       .call((g) => g.select('.domain').attr('stroke', '#D8D2C6'));
-    svg.append('path').datum(data).attr('fill', 'none').attr('stroke', LINE).attr('stroke-width', 1.1)
+    svg.append('path').datum(data).attr('fill', 'none').attr('stroke', LINE).attr('stroke-width', 1.2)
       .attr('d', line().x((d) => x(d.date)).y((d) => y(d.tmax)));
     // Direct label for the record day.
-    svg.append('rect').attr('x', x(rec.date) - 3).attr('y', y(rec.tmax) - 3).attr('width', 6).attr('height', 6).attr('fill', '#A1201A');
+    svg.append('rect').attr('x', x(rec.date) - 3).attr('y', y(rec.tmax) - 3).attr('width', 6).attr('height', 6).attr('fill', LINE);
     const lx = x(rec.date) < width - 200 ? x(rec.date) + 8 : x(rec.date) - 8;
     svg.append('text').attr('class', 'label-strong').attr('x', lx).attr('y', y(rec.tmax)).attr('dy', '0.35em')
       .attr('text-anchor', x(rec.date) < width - 200 ? 'start' : 'end').text(`Highest: ${fmtC(rec.tmax)}, ${timeFormat('%-d %b %Y')(rec.date)}`);

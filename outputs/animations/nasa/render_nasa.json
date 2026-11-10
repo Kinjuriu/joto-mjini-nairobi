@@ -1,0 +1,25 @@
+{
+ "growth": {
+  "frames": 69,
+  "fps": 4,
+  "sizes_mb": {
+   ".mp4": 1.5,
+   ".webm": 0.34,
+   ".gif": 2.29,
+   ".png": 0.37
+  }
+ },
+ "mornings": {
+  "frames": 39,
+  "fps": 2,
+  "sizes_mb": {
+   ".mp4": 6.67,
+   ".webm": 1.43,
+   ".gif": 4.13,
+   ".png": 0.65
+  },
+  "n_scenes": 35,
+  "first": "2014-02-03",
+  "last": "2026-02-12"
+ }
+}

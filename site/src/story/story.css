@@ -7,7 +7,7 @@
 .intro .aside { font-family: var(--sans); font-size: 16px; line-height: 1.5; color: var(--ink-2); border-left: 3px solid var(--accent); padding-left: 12px; }
 
 /* Story block: the map is sticky and fills the screen; cards scroll over it. */
-.story { position: relative; background: #DCD8D0; }
+.story { position: relative; background: #FFFFFF; }
 .story__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; width: 100%; overflow: hidden; z-index: 0; }
 .story__frame, .story__frame > .story-map, .story-map > .story-map__map { position: absolute; inset: 0; }
 .story-map.map-frame { border: 0; }
@@ -21,8 +21,8 @@
   background: #FFFFFF; color: var(--ink); border-radius: 2px; padding: 22px 26px 18px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28); font-family: var(--sans); font-size: 17px; line-height: 1.5;
 }
-.card__rule, .rule { width: 32px; height: 3px; background: var(--accent); margin: 0 0 14px; }
-.card__title { font: 600 25px/1.2 var(--sans); margin: 0 0 12px; color: #1F2933; }
+.card__rule, .rule { width: 40px; height: 4px; background: var(--brand); margin: 0 0 14px; }
+.card__title { font: 700 24px/1.2 var(--sans); margin: 0 0 12px; color: var(--ink); }
 .card__text { margin: 0 0 10px; }
 .card__facts { margin: 0 0 10px; padding-left: 1.15em; }
 .card__facts li { margin: 0 0 5px; }
@@ -33,7 +33,7 @@
 /* Interludes between the story blocks (NASA: figure beside text, paired maps, wide swipe map) */
 .interlude { padding: 56px 0 24px; background: var(--paper); }
 .interlude .split { margin-bottom: 56px; align-items: center; }
-.interlude h2 { margin-top: 0; font-family: var(--sans); font-size: 30px; color: #1F2933; }
+.interlude h2 { margin-top: 0; font-family: var(--sans); font-size: 30px; color: var(--ink); }
 .interlude .facts { font-family: var(--sans); font-size: 17px; padding-left: 1.15em; }
 .interlude .facts li { margin-bottom: 6px; }
 .interlude .split__text p { font-size: 18px; }
@@ -75,13 +75,13 @@
   position: absolute; right: 10px; bottom: 10px; z-index: 2; min-width: 64px; padding: 5px 12px;
   font: 600 14px/1.2 var(--sans); color: var(--ink); background: #FFFFFF; border: 1px solid var(--ink); border-radius: 2px; cursor: pointer;
 }
-.anim__btn:hover { background: #F0ECE4; }
+.anim__btn:hover { background: #F2F5F8; }
 .interlude .split { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
 .interlude .split--table { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); }
 
 /* Heatmap tables and the calendar */
-.chart--table { overflow-x: auto; }
-.heatmap { display: block; max-width: 100%; height: auto; font-family: var(--sans); }
+.chart--table { overflow-x: auto; min-height: 0; }
+.chart .heatmap { display: block; width: auto; max-width: 100%; height: auto; font-family: var(--sans); }
 .heatmap text { font-size: 13px; fill: var(--ink); }
 .heatmap .heatmap__col { font-weight: 600; fill: var(--ink-2); }
 .heatmap .heatmap__row { font-size: 13.5px; }

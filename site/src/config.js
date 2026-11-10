@@ -9,7 +9,7 @@ export const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 // Imagery for the "Satellite" basemap: 'sentinel2' (our own composite under Mapbox roads and labels; the
 // default while Mapbox refuses satellite tiles for this token, DECISIONS D33), 'mapbox' (Satellite Streets),
 // or 'auto' (probe one Mapbox satellite tile per session). Set VITE_SATELLITE in site/.env.local.
-export const SATELLITE = import.meta.env.VITE_SATELLITE || 'sentinel2';
+export const SATELLITE = import.meta.env.VITE_SATELLITE || 'auto';
 export const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // Difference from the city median (°C): the default heat view.
