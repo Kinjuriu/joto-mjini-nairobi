@@ -48,5 +48,82 @@
       }
     ],
     "caveat": "The cool-season composite has only 4 scenes from four different years, so differences partly reflect the weather on those days."
+  },
+  "kisumu": {
+    "study_area": "Land area of Kisumu County's 35 wards (DECISIONS D28)",
+    "hot_season_scenes": 54,
+    "hot_season_first_year": 2023,
+    "valid_share_pct": 100.0,
+    "county_median_c": 35.6,
+    "p10_c": 31.7,
+    "p90_c": 39.9,
+    "mostly_built_median_c": 39.0,
+    "mostly_tree_median_c": 33.9,
+    "pop_total": 1327000,
+    "pop_weighted_lst_c": 36.7,
+    "hottest_wards": [
+      {
+        "ward_name": "Kondele",
+        "lst_median_c": 41.4,
+        "pop_total": 39500,
+        "tree_pct": 13.8
+      },
+      {
+        "ward_name": "Manyatta 'B'",
+        "lst_median_c": 40.6,
+        "pop_total": 22100,
+        "tree_pct": 21.2
+      },
+      {
+        "ward_name": "East Kano/Wawidhi",
+        "lst_median_c": 39.7,
+        "pop_total": 32700,
+        "tree_pct": 13.3
+      },
+      {
+        "ward_name": "Migosi",
+        "lst_median_c": 39.4,
+        "pop_total": 18100,
+        "tree_pct": 17.3
+      },
+      {
+        "ward_name": "Kobura",
+        "lst_median_c": 39.3,
+        "pop_total": 47800,
+        "tree_pct": 12.2
+      }
+    ],
+    "coolest_wards": [
+      {
+        "ward_name": "Nyalenda 'A'",
+        "lst_median_c": 33.0,
+        "pop_total": 21300,
+        "tree_pct": 22.0
+      },
+      {
+        "ward_name": "Kajulu",
+        "lst_median_c": 32.9,
+        "pop_total": 84600,
+        "tree_pct": 53.5
+      },
+      {
+        "ward_name": "Kabonyo/Kanyagwal",
+        "lst_median_c": 32.2,
+        "pop_total": 16200,
+        "tree_pct": 22.3
+      },
+      {
+        "ward_name": "North West Kisumu",
+        "lst_median_c": 31.6,
+        "pop_total": 34100,
+        "tree_pct": 38.7
+      },
+      {
+        "ward_name": "Kisumu North",
+        "lst_median_c": 31.5,
+        "pop_total": 40200,
+        "tree_pct": 59.9
+      }
+    ]
   }
 }

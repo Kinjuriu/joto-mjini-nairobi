@@ -84,6 +84,15 @@ All temperatures are land surface temperature on clear January to March mornings
 2. **Strengthen the people side.** Bring in census ward populations and the informal-settlement layer if you can get them. Re-run the analysis, and the site updates itself.
 3. **Prepare for the talk and for publishing.** Make slides from `docs/presentation_outline.md`, publish to GitHub Pages (set `BASE` in `site/vite.config.js`), and send the work to Tony for review.
 
+## Optional work done after the main run
+
+These were done after the main run, in the order of the "if time remains" lists in the prompts. None of it is in the story yet.
+
+- **Season difference (prompt 02):** `outputs/figures/map_hot_minus_cool.png` and finding E1. 98.9 % of the county's ground was hotter in January to March than in June to August, by 3.6 °C at the median. A few wards changed by less than 1 °C.
+- **Kisumu (prompts 01 and 02):** the same pipeline run with `JOTO_CITY=kisumu` (D28). Outputs are in `data/processed/kisumu/` and the summary is finding E2. Half of Kisumu's land was hotter than 35.6 °C; built-up ground was 39.0 °C against 33.9 °C under trees. Nyalenda 'A' comes out among the coolest wards, probably because it sits next to the lake and wetland. Check this before using it. Nairobi's results were re-run after the change and are identical.
+- **Print and slides (prompt 03):** the story now prints cleanly, with maps replaced by a note. `site/slides.html` has eight static slides; open it at http://localhost:5173/joto-mjini/slides.html. A PDF is at `outputs/slides.pdf`.
+- **Not possible:** the Cool Cities Lab comparison (no downloadable layer) and CLMS sharpening (no credentials).
+
 ## 8. Time used (Africa/Nairobi)
 
 | Phase | Start | End | Time |
@@ -94,4 +103,4 @@ All temperatures are land surface temperature on clear January to March mornings
 | 3. Story site | 02:25 | 02:46 | 21 min |
 | 4. QA and report | 02:46 | 02:58 | 12 min |
 
-The run took much less than the 9.5 hours budgeted. Disk use: `data/raw` 497 MB, `data/interim` 909 MB, `site/public/data` 74 MB, `.git` 283 MB.
+Optional work ran from 02:58 to about 03:50; most of it was waiting for the Kisumu Landsat run (838 scenes). The whole night took much less than the 9.5 hours budgeted. Disk use: `data/raw` 497 MB, `data/interim` 909 MB, `site/public/data` 74 MB, `.git` 283 MB.

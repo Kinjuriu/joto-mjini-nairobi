@@ -1,1 +1,14 @@
 Tue Nov 10 03:01:02 EAT 2026
+Downloading: 0 rows [00:00, ? rows/s]Downloading: 4219 rows [01:47, 39.07 rows/s]Downloading: 115621 rows [01:48, 1510.73 rows/s]Downloading: 225725 rows [01:54, 3202.59 rows/s]Downloading: 339442 rows [01:54, 5924.19 rows/s]Downloading: 465319 rows [01:54, 10201.11 rows/s]Downloading: 586350 rows [01:54, 16022.57 rows/s]Downloading: 607057 rows [02:10, 16022.57 rows/s]Downloading: 608061 rows [02:22, 5981.42 rows/s] Downloading: 683235 rows [02:22, 8491.96 rows/s]Downloading: 796358 rows [02:22, 13866.32 rows/s]Downloading: 915170 rows [02:22, 21821.76 rows/s]Downloading: 1021584 rows [02:23, 31828.47 rows/s]Downloading: 1138243 rows [02:23, 47131.37 rows/s]Downloading: 1250745 rows [02:23, 67457.65 rows/s]Downloading: 1372624 rows [02:23, 97367.63 rows/s]Downloading: 1387138 rows [02:23, 9670.53 rows/s] 
+State saved to data/raw/kisumu/overture_buildings.parquet.state
+overture exit 0
+2026-11-10 03:04:12 INFO WorldCover county share Built-up: 1.9%
+2026-11-10 03:04:12 INFO WorldCover county share Bare / sparse vegetation: 0.1%
+2026-11-10 03:04:12 INFO WorldCover county share Permanent water bodies: 0.6%
+2026-11-10 03:04:14 INFO WorldPop 2025 county total: native 100 m 1326762, on 30 m grid 1327239 (0.04% diff)
+2026-11-10 03:04:16 INFO GHSL 2010 built fraction saved
+2026-11-10 03:04:16 INFO GHSL 2020 built fraction saved
+2026-11-10 03:04:16 INFO GHSL 2025 built fraction saved
+2026-11-10 03:04:19 INFO Overture buildings in bbox: 1387138; columns ['id', 'names', 'sources', 'level', 'height', 'min_height', 'is_underground', 'num_floors', 'num_floors_underground', 'min_floor', 'subtype', 'class', 'facade_color', 'facade_material', 'roof_material', 'roof_shape', 'roof_direction', 'roof_orientation', 'roof_color', 'roof_height', 'geometry', 'has_parts', 'version']
+2026-11-10 03:04:34 INFO Buildings inside the county: 695434; sources {'OpenStreetMap': 466848, 'Google Open Buildings': 183092, 'Microsoft ML Buildings': 45494}
+Tue Nov 10 03:04:34 EAT 2026

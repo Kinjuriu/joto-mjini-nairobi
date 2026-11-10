@@ -124,3 +124,14 @@ Searched 10 November 2026.
 - **WRI Global Intra-Urban Land Use (GIULU), irregular settlements** (Guzder-Williams et al. 2023, CC BY 4.0): available as a Google Earth Engine asset (`projects/wri-datalab/cities/urban_land_use/V1`), which needs an Earth Engine account. No direct download found, so not used tonight. See QUESTIONS.md.
 - **ESA "Climate analysis in African cities"** (https://climate.esa.int/en/supporting-the-paris-agreement/climate-analysis-in-african-cities/data): about 300 m indicators for more than 50 African cities; the public page does not list the cities, a licence or download links. Nairobi not confirmed. Reference only.
 - **Other relevant work found** (reference only, not data inputs): IIED issue paper on heat in informal settlements in Nairobi, Dar es Salaam and Kariba (2026), https://www.iied.org/sites/default/files/pdfs/2026-02/22697iied.pdf ; Kimutai, J. (2022), heat thresholds for Nairobi, Mombasa and Kisumu, https://preparecenter.org/wp-content/uploads/2022/12/Kenya-Heat-Tresholds-Research-by-J.Kimutai-2022.pdf ; NASA SEDAC Global Urban Heat Island data set 2013, https://doi.org/10.7927/H4H70CRF
+
+## Kisumu (optional comparison, run with `JOTO_CITY=kisumu`)
+
+Same datasets, licences and citations as Nairobi, accessed 10 November 2026, with these differences:
+
+- **Boundary and wards:** geoBoundaries KEN ADM1 (Kisumu) and ADM3 (35 wards). The study area is the union of the 35 wards (2,060 km², land only), because the county polygon includes part of Lake Victoria; the original outline is kept as `data/processed/kisumu/kisumu_boundary_with_lake.geojson`.
+- **Landsat:** WRS-2 paths and rows 169/060, 169/061 and 170/060 (UTM 36N, relabelled to UTM 36S, EPSG:32736); 838 daytime scenes found, 836 catalogued (2 failed with HTTP 403 after the signing token expired), 460 usable under the coverage rule in DECISIONS D28. Hot-season composite 54 scenes and cool-season composite 58 scenes, both 2023 to 2026.
+- **ESA WorldCover 2021:** tiles S03E033 and N00E033, mosaicked.
+- **WorldPop 2025:** same Kenya file; Kisumu study-area total 1,326,762.
+- **GHSL:** same tile R10_C22; a thin strip north of the equator lies on tile R9 and is not filled.
+- **Buildings:** Overture release 2026-10-21.0; 695,434 footprints (OpenStreetMap 466,848; Google 183,092; Microsoft 45,494). File not committed (79 MB).

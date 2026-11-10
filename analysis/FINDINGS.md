@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:59 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-10 03:47 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -167,6 +167,16 @@ Not used in the story yet. Written by `src/analysis/extras.py` to `analysis/resu
 - **Script:** src/analysis/extras.py, season_difference
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). The cool-season composite has only 4 scenes from four different years, so differences partly reflect the weather on those days. A small seasonal change can mean a place stays hot all year, or that it was relatively cool in the hot season; read it with F2 and F8.
 - **Confidence:** Medium: the direction is clear; the size per ward rests on 4 cool-season scenes.
+
+### E2. Kisumu: half of the ground was hotter than 35.6 °C on hot-season mornings
+
+- **Sentence for the story:** In Kisumu, half of the land was hotter than 35.6 °C at the surface on clear January to March mornings. Mostly built-up ground was 39.0 °C and ground mostly under trees 33.9 °C.
+- **Number(s):** median 35.6 °C; 10th percentile 31.7 °C; 90th 39.9 °C; 54 scenes from 2023; 100.0 % of cells with a value; population about 1,327,000; people-weighted 36.7 °C; hottest wards: Kondele 41.4 °C, Manyatta 'B' 40.6 °C, East Kano/Wawidhi 39.7 °C, Migosi 39.4 °C, Kobura 39.3 °C; coolest: Nyalenda 'A' 33.0 °C, Kajulu 32.9 °C, Kabonyo/Kanyagwal 32.2 °C, North West Kisumu 31.6 °C, Kisumu North 31.5 °C
+- **Method:** Same pipeline as Nairobi with JOTO_CITY=kisumu (DECISIONS D28); medians over the land area of the 35 wards
+- **Data:** data/processed/kisumu/rasters/*.tif, data/processed/kisumu/kisumu_wards.geojson
+- **Script:** src/pipeline/*.py with JOTO_CITY=kisumu; src/analysis/extras.py, kisumu_summary
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Kisumu is mostly rural outside the city, so county-wide numbers are not comparable with Nairobi's directly; scenes come from three Landsat paths on different days.
+- **Confidence:** Medium: first pass, not yet checked by an independent method.
 
 ## Checks
 
