@@ -32,3 +32,4 @@ Times are local, Africa/Nairobi (UTC+3).
   - Fixed during QA: table overflow at 360 px; JavaScript-only controls hidden without JavaScript; swipe zoom buttons hidden on phones; overpass time aligned to 10:43 in FINDINGS.
   - Notebooks 01 and 02 re-executed cleanly. `site/SITE_REPORT.md` has QA results and the pre-ship checklist. `docs/presentation_outline.md` and `MORNING_REPORT.md` written.
   - Next: only the optional "if time remains" items, in prompt order.
+- 2026-11-10 03:05 **Optional work ("if time remains").** Prompt 01: Kisumu steps 1 to 3 running with `JOTO_CITY=kisumu` (D28; logs `logs/kisumu_*`); CLMS skipped (no credentials). Prompt 02: Cool Cities comparison not possible (no download); hot minus cool season difference map done (`src/analysis/extras.py`, `outputs/figures/map_hot_minus_cool.png`, FINDINGS E1). Prompt 03: print stylesheet (maps replaced by a note in print) and `site/slides.html` (eight static slides, PDF at `outputs/slides.pdf`).

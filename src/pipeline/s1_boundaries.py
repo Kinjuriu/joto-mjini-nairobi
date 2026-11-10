@@ -11,7 +11,7 @@ import geopandas as gpd
 import pandas as pd
 import requests
 
-from src.config import BOUNDARY, PLACES, RAW, UTM, WARDS, WGS84, get_logger, should_skip
+from src.config import BOUNDARY, CITY, CITY_NAME, PLACES, RAW, UTM, WARDS, WGS84, get_logger, should_skip
 
 log = get_logger("s1_boundaries")
 
@@ -35,13 +35,13 @@ def boundary(force: bool = False) -> gpd.GeoDataFrame:
     if should_skip(BOUNDARY, force):
         return gpd.read_file(BOUNDARY)
     adm1 = _gb_download("ADM1")
-    nbo = adm1[adm1["shapeName"].str.contains("Nairobi", case=False)].copy()
+    nbo = adm1[adm1["shapeName"].str.contains(CITY_NAME, case=False)].copy()
     if len(nbo) != 1:
-        raise RuntimeError(f"Expected one Nairobi feature, got {len(nbo)}")
+        raise RuntimeError(f"Expected one {CITY_NAME} feature, got {len(nbo)}")
     nbo = nbo[["shapeName", "shapeID", "geometry"]].rename(columns={"shapeName": "name"}).to_crs(WGS84)
     nbo.to_file(BOUNDARY, driver="GeoJSON")
     area = nbo.to_crs(UTM).area.iloc[0] / 1e6
-    log.info("Nairobi boundary saved, area %.1f km2", area)
+    log.info("%s boundary saved, area %.1f km2", CITY_NAME, area)
     return nbo
 
 
@@ -55,13 +55,14 @@ def wards(county: gpd.GeoDataFrame, force: bool = False) -> gpd.GeoDataFrame:
     pts["geometry"] = adm3.representative_point()
     inside = gpd.sjoin(pts, c[["geometry"]], predicate="within").index
     w = adm3.loc[inside].copy()
-    log.info("Wards inside Nairobi County: %d", len(w))
+    log.info("Wards inside %s County: %d", CITY_NAME, len(w))
     # Clip to the county outline so ward edges match the boundary exactly.
     w = gpd.clip(w, c)
     w = w[w.area > 1000]
     w["ward_name"] = w["shapeName"].str.strip().str.title().map(_fix_case)
     w = w.sort_values("ward_name").reset_index(drop=True)
-    w["ward_id"] = [f"NBO-{i + 1:03d}" for i in range(len(w))]
+    prefix = "NBO" if CITY == "nairobi" else CITY[:3].upper()
+    w["ward_id"] = [f"{prefix}-{i + 1:03d}" for i in range(len(w))]
     w["area_km2"] = (w.area / 1e6).round(3)
     w = w[["ward_id", "ward_name", "shapeID", "area_km2", "geometry"]].to_crs(WGS84)
     w.to_file(WARDS, driver="GeoJSON")

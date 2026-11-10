@@ -48,18 +48,23 @@ def worldcover(force: bool = False) -> None:
                                     modifier=planetary_computer.sign_inplace)
     items = [i for i in cat.search(collections=["esa-worldcover"], bbox=list(_study_bounds_wgs84())).items()
              if "2021" in i.id]
-    if len(items) != 1:
-        raise RuntimeError(f"Expected one WorldCover 2021 tile, got {[i.id for i in items]}")
-    log.info("WorldCover item %s", items[0].id)
+    if not items:
+        raise RuntimeError("No WorldCover 2021 tile found")
+    log.info("WorldCover items %s", [i.id for i in items])
     gt, gw, gh = read_grid()
-    # 10 m grid nested exactly in the 30 m grid (3 x 3 sub-cells).
+    # 10 m grid nested exactly in the 30 m grid (3 x 3 sub-cells). Several tiles are mosaicked
+    # (Nairobi needs one; Kisumu crosses the equator and needs two).
     t10 = Affine(10, 0, gt.c, 0, -10, gt.f)
     wc10 = np.zeros((gh * 3, gw * 3), dtype="uint8")
-    with rasterio.open(items[0].assets["map"].href) as src:
-        win = from_bounds(*_study_bounds_wgs84(), transform=src.transform).round_offsets().round_lengths()
-        data = src.read(1, window=win)
-        reproject(data, wc10, src_transform=src.window_transform(win), src_crs=src.crs,
-                  dst_transform=t10, dst_crs=UTM, resampling=Resampling.nearest, src_nodata=0, dst_nodata=0)
+    for it in items:
+        part = np.zeros_like(wc10)
+        with rasterio.open(it.assets["map"].href) as src:
+            win = from_bounds(*_study_bounds_wgs84(), transform=src.transform).round_offsets().round_lengths()
+            win = win.intersection(rasterio.windows.Window(0, 0, src.width, src.height))
+            data = src.read(1, window=win)
+            reproject(data, part, src_transform=src.window_transform(win), src_crs=src.crs,
+                      dst_transform=t10, dst_crs=UTM, resampling=Resampling.nearest, src_nodata=0, dst_nodata=0)
+        wc10 = np.where(wc10 == 0, part, wc10)
     write_cog(out, wc10, t10, nodata=0, dtype="uint8")
     blocks = wc10.reshape(gh, 3, gw, 3)
     valid = (blocks > 0).sum(axis=(1, 3))
@@ -85,6 +90,9 @@ def population(force: bool = False) -> None:
         return
     url = WORLDPOP_URL.format(y=WORLDPOP_YEAR)
     raw = RAW / url.rsplit("/", 1)[1]
+    shared = RAW.parent / raw.name if RAW.name != "raw" else raw   # national file shared between cities
+    if not raw.exists() and shared.exists():
+        raw = shared
     if not raw.exists():
         log.info("Downloading %s", url)
         with requests.get(url, stream=True, timeout=600) as r:
@@ -129,6 +137,8 @@ def ghsl(force: bool = False) -> None:
         if should_skip(out, force):
             continue
         z = RAW / f"ghsl_built_s_{y}_R10_C22.zip"
+        if not z.exists() and RAW.name != "raw" and (RAW.parent / z.name).exists():
+            z = RAW.parent / z.name   # same JRC tile covers Nairobi and Kisumu
         if not z.exists():
             url = GHSL_URL.format(y=y)
             log.info("Downloading %s", url)
@@ -137,7 +147,7 @@ def ghsl(force: bool = False) -> None:
             z.write_bytes(r.content)
         with zipfile.ZipFile(z) as zf:
             name = [n for n in zf.namelist() if n.endswith(".tif")][0]
-            tif = RAW / name
+            tif = z.parent / name
             if not tif.exists():
                 tif.write_bytes(zf.read(name))
         with rasterio.open(tif) as src:
@@ -158,7 +168,8 @@ def ghsl(force: bool = False) -> None:
 
 
 def buildings(force: bool = False) -> None:
-    out = PROCESSED / "nairobi_buildings.parquet"
+    from src.config import CITY
+    out = PROCESSED / f"{CITY}_buildings.parquet"
     if should_skip(out, force):
         return
     src = RAW / "overture_buildings.parquet"
@@ -184,7 +195,7 @@ def buildings(force: bool = False) -> None:
     keep = ["id", "footprint_m2", "height", "num_floors", "source", "geometry"]
     b = b[[c for c in keep if c in b.columns]]
     b.to_parquet(out)
-    log.info("Buildings inside Nairobi County: %d; sources %s", len(b), b["source"].value_counts().to_dict())
+    log.info("Buildings inside the county: %d; sources %s", len(b), b["source"].value_counts().to_dict())
 
 
 def main(force: bool = False, only: str | None = None) -> None:

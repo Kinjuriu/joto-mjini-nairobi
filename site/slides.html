@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joto Mjini: slides</title>
+  <link rel="icon" href="data:,">
+  <script type="module" src="/src/slides.js"></script>
+</head>
+<body class="slides">
+  <!-- Eight static slides. Move with Page Down / Page Up or the arrow keys; print to PDF for one slide per page. -->
+  <section class="slide slide--title">
+    <p class="kicker">Joto Mjini</p>
+    <h1>On hot mornings, central Nairobi's ground is {{q2.gap_c|c}} hotter than its forests</h1>
+    <p class="dek">Mapping urban heat and cooling inequality across Nairobi with open satellite data</p>
+    <p class="byline">Stephane [surname], data analyst, Nairobi<br>Land, Food and Heat Resilience in Africa's Arid Regions, Nairobi, 26 November 2026</p>
+  </section>
+
+  <section class="slide">
+    <h2>The ground in the centre was {{q2.gap_c|c}} hotter than under Karura's trees</h2>
+    <div class="slide__body">
+      <img src="figures/hero_map_hot_season.png" alt="Map of Nairobi County coloured by land surface temperature on January to March mornings">
+      <ul class="facts">
+        <li><strong>{{q1.county_median_c|c}}</strong> half of the county's ground was hotter than this</li>
+        <li><strong>{{q2.hot_areas_median_c|c}}</strong> city centre and Industrial Area</li>
+        <li><strong>{{q2.cool_areas_median_c|c}}</strong> Karura Forest and the Arboretum</li>
+        <li class="note">Land surface temperature, not air temperature. Clear mornings, January to March 2023 to 2026.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>Where there are trees, the ground is cooler</h2>
+    <div class="slide__body">
+      <img src="figures/chart_tree_cover_bands.png" alt="Chart: surface temperature falls as tree cover rises">
+      <ul class="facts">
+        <li><strong>{{q3.built_minus_tree_c|c}}</strong> hotter: mostly built-up ground against ground mostly under trees</li>
+        <li><strong>{{q3.tree_band_0_10_mean_c|c}}</strong> under 10 % tree cover</li>
+        <li><strong>{{q3.tree_band_90_100_mean_c|c}}</strong> over 90 % tree cover</li>
+        <li class="note">An association. Dry grass and bare ground were as hot as built-up land in these months.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>About {{q4.pop_in_hottest20|int}} people live on the hottest fifth of the ground</h2>
+    <div class="slide__body">
+      <img src="figures/table_top_wards.png" alt="Table of the ten wards where people live on the hottest ground">
+      <ul class="facts">
+        <li><strong>{{q7.lst_gap_c|c}}</strong> hotter ground for residents of the hottest fifth of wards than the coolest fifth</li>
+        <li><strong>{{q7.hottest_fifth.tree_pct|pct}}</strong> tree cover in the hottest fifth of wards, against <strong>{{q7.coolest_fifth.tree_pct|pct}}</strong></li>
+        <li class="note">This measures exposure: where people live on hot ground with little tree cover.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>Islands of cool: Karura Forest and the Arboretum</h2>
+    <div class="slide__body">
+      <img src="figures/slides/cool_islands.png" alt="Tree cover map around Karura Forest and the Arboretum">
+      <ul class="facts">
+        <li><strong>{{q2.Karura Forest.median_c|c}}</strong> Karura Forest canopy</li>
+        <li><strong>{{q2.Nairobi Arboretum.median_c|c}}</strong> Nairobi Arboretum</li>
+        <li><strong>{{q5.parks.Karura Forest.near_minus_far_c|absc}}</strong> cooler: built-up land within 100 m of Karura against 700 to 1,000 m away</li>
+        <li class="note">A small and noisy edge effect. Read it as a hint.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>A growing city: built-up land rose from {{q6.built_km2.1990|km2}} to {{q6.built_km2.2020|km2}}</h2>
+    <div class="slide__body">
+      <img src="figures/slides/growth.png" alt="Swipe map of built-up surface in 1990 and 2020">
+      <ul class="facts">
+        <li><strong>{{q6.built_ratio_2020_1990|d1}} times</strong> as much built-up land in 2020 as in 1990</li>
+        <li class="note">The satellite record of surface temperature is too patchy to show a warming trend (Mann-Kendall p = {{q6.mann_kendall_p|raw}}).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>Find your ward</h2>
+    <div class="slide__body">
+      <img src="figures/slides/explorer.png" alt="Screenshot of the ward explorer with Viwandani selected">
+      <ul class="facts">
+        <li>All {{q0.n_wards|raw}} wards: surface temperature, difference from the city median, rank, people, tree cover</li>
+        <li>Five layers, including buildings coloured by the surface temperature around them</li>
+        <li>Shareable link for any ward and layer</li>
+        <li class="note">Next: rainfall, flooding and El Niño.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide slide--sources">
+    <h2>Data and credits</h2>
+    <ul class="sources">
+      <li>Landsat 8 and 9 Collection 2 Level-2: U.S. Geological Survey, via Microsoft Planetary Computer</li>
+      <li>Land cover: ESA WorldCover 2021 (Zanaga et al. 2022), CC BY 4.0</li>
+      <li>Population: WorldPop 2025, R2025A (Bondarenko et al. 2025), CC BY 4.0</li>
+      <li>Built-up area: GHS-BUILT-S R2023A, European Commission JRC, CC BY 4.0</li>
+      <li>Buildings: Overture Maps Foundation; © OpenStreetMap contributors (ODbL)</li>
+      <li>Wards: Omare and Omare via geoBoundaries, CC BY 4.0</li>
+      <li>Air temperature: Open-Meteo, ERA5 (Copernicus, ECMWF), CC BY 4.0; El Niño index: NOAA CPC</li>
+      <li>Basemap: © OpenStreetMap contributors, Protomaps</li>
+    </ul>
+    <p class="byline">Story and code: [URL] | [repository link]</p>
+  </section>
+</body>
+</html>

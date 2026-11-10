@@ -249,12 +249,22 @@ img { max-width: 100%; height: auto; display: block; }
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
 
-/* Print: the story as a readable document */
+/* Print: the story as a readable document. WebGL maps do not print reliably, so they are replaced by a
+   note; text, charts (SVG) and tables print as they are. */
+.print-only { display: none; }
 @media print {
-  .progress, .compare__handle, .explorer__controls, .maplibregl-control-container { display: none !important; }
-  body { background: #FFFFFF; font-size: 11pt; }
-  .scrolly__graphic { position: static; height: 60vh; }
-  .step { margin-bottom: 8px; break-inside: avoid; }
+  @page { margin: 16mm 14mm; }
+  .progress, .compare__handle, .explorer__controls, .maplibregl-control-container, .map-frame,
+  .scrolly__graphic, .legend, .js-only, .explorer__panel, .tooltip { display: none !important; }
+  .print-only { display: block; font-family: var(--sans); font-size: 10pt; color: var(--ink-2); border: 1px solid var(--rule); padding: 8px 10px; }
+  body { background: #FFFFFF; font-size: 11pt; line-height: 1.45; }
+  .masthead { border-bottom: 1px solid var(--ink); }
+  .split { display: block; }
+  .scrolly__body { display: block; }
   .scrolly__steps { padding: 0; }
+  .step { margin: 0 0 8px; break-inside: avoid; border: 0; border-left: 2px solid var(--ink); }
+  h2, h3 { break-after: avoid; }
+  .figure, .data-table, .note { break-inside: avoid; }
   a { color: var(--ink); }
+  .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; color: var(--ink-2); word-break: break-all; }
 }

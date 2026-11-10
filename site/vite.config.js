@@ -69,7 +69,10 @@ function findingsNumbers() {
 export default defineConfig({
   base: BASE,
   plugins: [findingsNumbers()],
-  build: { target: 'es2022', assetsInlineLimit: 0, chunkSizeWarningLimit: 1500 },
+  build: {
+    target: 'es2022', assetsInlineLimit: 0, chunkSizeWarningLimit: 1500,
+    rollupOptions: { input: { main: resolve(import.meta.dirname, 'index.html'), slides: resolve(import.meta.dirname, 'slides.html') } },
+  },
   server: { port: 5173 },
   preview: { port: 4173 },
 });

@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:50 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-10 02:59 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -153,6 +153,20 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Script:** src/pipeline/s2_landsat.py, src/pipeline/s2b_composites.py, src/analysis/core.py q0_data
 - **Caveats:** Scenes with more than 40 % cloud over the whole scene were not searched.
 - **Confidence:** High.
+
+## Optional findings (prompt 02, 'if time remains')
+
+Not used in the story yet. Written by `src/analysis/extras.py` to `analysis/results_extra.json`.
+
+### E1. The ground was hotter in January to March almost everywhere; a few wards changed by under 1 °C
+
+- **Sentence for the story:** Almost all of Nairobi's ground (98.9 %) was hotter on January to March mornings than on June to August mornings, by 3.6 °C at the median. The smallest change was in wards such as Ngei, Eastleigh North, Mlango Kubwa, where it was under 1 °C.
+- **Number(s):** county median difference 3.6 °C; 98.9 % of cells hotter in the hot season; 64.8 % more than 3 °C hotter; largest ward differences: Kangemi 5.4 °C, Mountain View 5.2 °C, Ruai 5.0 °C, Uthiru/Ruthimitu 4.7 °C, Mwiki 4.4 °C; smallest: Mabatini 0.9 °C, Pumwani 0.7 °C, Mlango Kubwa 0.7 °C, Eastleigh North 0.6 °C, Ngei 0.1 °C
+- **Method:** Hot-season composite minus cool-season composite, cell by cell; ward medians of the difference
+- **Data:** data/processed/rasters/lst_hot_minus_cool.tif (figure outputs/figures/map_hot_minus_cool.png)
+- **Script:** src/analysis/extras.py, season_difference
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). The cool-season composite has only 4 scenes from four different years, so differences partly reflect the weather on those days. A small seasonal change can mean a place stays hot all year, or that it was relatively cool in the hot season; read it with F2 and F8.
+- **Confidence:** Medium: the direction is clear; the size per ward rests on 4 cool-season scenes.
 
 ## Checks
 

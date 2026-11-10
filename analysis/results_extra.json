@@ -1,0 +1,52 @@
+{
+  "season_difference": {
+    "county_median_diff_c": 3.6,
+    "share_hotter_in_hot_season_pct": 98.9,
+    "share_more_than_3c_hotter_pct": 64.8,
+    "largest_diff_wards": [
+      {
+        "ward_name": "Kangemi",
+        "diff_median_c": 5.4
+      },
+      {
+        "ward_name": "Mountain View",
+        "diff_median_c": 5.2
+      },
+      {
+        "ward_name": "Ruai",
+        "diff_median_c": 5.0
+      },
+      {
+        "ward_name": "Uthiru/Ruthimitu",
+        "diff_median_c": 4.7
+      },
+      {
+        "ward_name": "Mwiki",
+        "diff_median_c": 4.4
+      }
+    ],
+    "smallest_diff_wards": [
+      {
+        "ward_name": "Mabatini",
+        "diff_median_c": 0.9
+      },
+      {
+        "ward_name": "Pumwani",
+        "diff_median_c": 0.7
+      },
+      {
+        "ward_name": "Mlango Kubwa",
+        "diff_median_c": 0.7
+      },
+      {
+        "ward_name": "Eastleigh North",
+        "diff_median_c": 0.6
+      },
+      {
+        "ward_name": "Ngei",
+        "diff_median_c": 0.1
+      }
+    ],
+    "caveat": "The cool-season composite has only 4 scenes from four different years, so differences partly reflect the weather on those days."
+  }
+}

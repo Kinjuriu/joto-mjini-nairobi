@@ -310,6 +310,51 @@ def main() -> None:
         "src/pipeline/s2_landsat.py, src/pipeline/s2b_composites.py, src/analysis/core.py q0_data",
         "Scenes with more than 40 % cloud over the whole scene were not searched.", "High."))
 
+    extra_path = ROOT / "analysis" / "results_extra.json"
+    if extra_path.exists():
+        ex = json.loads(extra_path.read_text())
+        out.append("## Optional findings (prompt 02, 'if time remains')\n\nNot used in the story yet. Written by "
+                   "`src/analysis/extras.py` to `analysis/results_extra.json`.\n")
+        sd = ex.get("season_difference")
+        if sd:
+            lo = sd["smallest_diff_wards"]
+            hi = sd["largest_diff_wards"]
+            out.append(finding(
+                "E1", "The ground was hotter in January to March almost everywhere; a few wards changed by under 1 °C",
+                f"Almost all of Nairobi's ground ({sd['share_hotter_in_hot_season_pct']:.1f} %) was hotter on January to "
+                f"March mornings than on June to August mornings, by {c(sd['county_median_diff_c'])} at the median. The "
+                f"smallest change was in wards such as {', '.join(w['ward_name'] for w in lo[::-1][:3])}, where it was "
+                f"under 1 °C.",
+                f"county median difference {c(sd['county_median_diff_c'])}; {sd['share_hotter_in_hot_season_pct']} % of "
+                f"cells hotter in the hot season; {sd['share_more_than_3c_hotter_pct']} % more than 3 °C hotter; largest "
+                f"ward differences: " + ", ".join(f"{w['ward_name']} {c(w['diff_median_c'])}" for w in hi) +
+                "; smallest: " + ", ".join(f"{w['ward_name']} {c(w['diff_median_c'])}" for w in lo),
+                "Hot-season composite minus cool-season composite, cell by cell; ward medians of the difference",
+                "data/processed/rasters/lst_hot_minus_cool.tif (figure outputs/figures/map_hot_minus_cool.png)",
+                "src/analysis/extras.py, season_difference",
+                CAVEAT_LST + " " + sd["caveat"] + " A small seasonal change can mean a place stays hot all year, or that "
+                "it was relatively cool in the hot season; read it with F2 and F8.",
+                "Medium: the direction is clear; the size per ward rests on 4 cool-season scenes."))
+        k = ex.get("kisumu")
+        if k:
+            out.append(finding(
+                "E2", f"Kisumu: half of the ground was hotter than {c(k['county_median_c'])} on hot-season mornings",
+                f"In Kisumu, half of the land was hotter than {c(k['county_median_c'])} at the surface on clear "
+                f"January to March mornings. Mostly built-up ground was {c(k['mostly_built_median_c'])} and ground mostly "
+                f"under trees {c(k['mostly_tree_median_c'])}." if k.get("mostly_built_median_c") and k.get("mostly_tree_median_c")
+                else f"In Kisumu, half of the land was hotter than {c(k['county_median_c'])} at the surface on clear January to March mornings.",
+                f"median {c(k['county_median_c'])}; 10th percentile {c(k['p10_c'])}; 90th {c(k['p90_c'])}; "
+                f"{k['hot_season_scenes']} scenes from {k['hot_season_first_year']}; {k['valid_share_pct']} % of cells "
+                f"with a value; population about {n(k['pop_total'])}; people-weighted {k['pop_weighted_lst_c']} °C; hottest "
+                f"wards: " + ", ".join(f"{w['ward_name']} {c(w['lst_median_c'])}" for w in k["hottest_wards"]) +
+                "; coolest: " + ", ".join(f"{w['ward_name']} {c(w['lst_median_c'])}" for w in k["coolest_wards"]),
+                "Same pipeline as Nairobi with JOTO_CITY=kisumu (DECISIONS D28); medians over the land area of the 35 wards",
+                "data/processed/kisumu/rasters/*.tif, data/processed/kisumu/kisumu_wards.geojson",
+                "src/pipeline/*.py with JOTO_CITY=kisumu; src/analysis/extras.py, kisumu_summary",
+                CAVEAT_LST + " Kisumu is mostly rural outside the city, so county-wide numbers are not comparable with "
+                "Nairobi's directly; scenes come from three Landsat paths on different days.",
+                "Medium: first pass, not yet checked by an independent method."))
+
     out.append("""## Checks
 
 Recorded in `analysis/checks.json` by `src/analysis/checks.py`:

@@ -1,4 +1,4 @@
-"""Step 2: Landsat 8 and 9 surface temperature and NDVI over Nairobi.
+"""Step 2: Landsat 8 and 9 surface temperature and NDVI over the study county (Nairobi by default).
 
 Source: USGS Landsat Collection 2 Level-2, via Microsoft Planetary Computer (no login).
 All Nairobi scenes are WRS-2 path 168 row 061, delivered in UTM 37N (EPSG:32637).
@@ -36,6 +36,7 @@ SCENES = INTERIM / "landsat"
 CATALOGUE = PROCESSED / "landsat_scene_catalogue.csv"
 QA_MASK_BITS = 0b11111  # bits 0 fill, 1 dilated cloud, 2 cirrus, 3 cloud, 4 cloud shadow
 USABLE_CLEAR = 0.80
+MIN_COVERAGE = 0.30   # share of the county inside the scene footprint (always 1.0 for Nairobi)
 
 
 def search(end: str) -> list:
@@ -64,7 +65,7 @@ def make_grid(items: list, force: bool = False) -> tuple[Affine, int, int]:
     w, h = int(round((right - left) / 30)), int(round((top - bottom) / 30))
     transform = Affine(30, 0, left, 0, -30, top)
     write_cog(GRID, np.zeros((h, w), dtype="uint8"), transform, nodata=None, dtype="uint8")
-    log.info("Grid %d x %d cells, origin (%.0f, %.0f) EPSG:32737", w, h, left, top)
+    log.info("Grid %d x %d cells, origin (%.0f, %.0f) %s", w, h, left, top, UTM)
     return transform, w, h
 
 
@@ -96,7 +97,12 @@ def process_item(item, grid, cmask: np.ndarray, force: bool) -> dict:
     bad = (st_dn == 0) | ((qa & QA_MASK_BITS) != 0) | (lst < 0) | (lst > 70)
     lst[bad] = np.nan
     clear = (~bad) & cmask
-    clear_frac = clear.sum() / cmask.sum()
+    # Clear share is measured over the part of the county the scene covers. For Nairobi every scene
+    # covers the whole county, so this equals the share of the county; for Kisumu (three path/rows)
+    # a scene must also cover at least MIN_COVERAGE of the county.
+    footprint = (st_dn != 0) & cmask
+    coverage = footprint.sum() / cmask.sum()
+    clear_frac = clear.sum() / max(footprint.sum(), 1)
     vals = lst[clear]
     dt_utc = item.datetime
     row = dict(scene_id=sid, platform=item.properties["platform"],
@@ -105,11 +111,12 @@ def process_item(item, grid, cmask: np.ndarray, force: bool) -> dict:
                date=dt_utc.astimezone(NAIROBI_TZ).strftime("%Y-%m-%d"),
                scene_cloud_cover=item.properties.get("eo:cloud_cover"),
                sun_elevation=item.properties.get("view:sun_elevation"),
+               coverage_county=round(float(coverage), 4),
                clear_fraction_county=round(float(clear_frac), 4),
                lst_median_c=round(float(np.median(vals)), 2) if vals.size else np.nan,
                lst_p10_c=round(float(np.percentile(vals, 10)), 2) if vals.size else np.nan,
                lst_p90_c=round(float(np.percentile(vals, 90)), 2) if vals.size else np.nan,
-               usable=bool(clear_frac >= USABLE_CLEAR))
+               usable=bool(clear_frac >= USABLE_CLEAR and coverage >= MIN_COVERAGE))
     if row["usable"] and (force or not (lst_path.exists() and ndvi_path.exists())):
         red = _read_band(a["red"].href, transform, w, h).astype("float32") * rf["scale"] + rf["offset"]
         nf = a["nir08"].extra_fields["raster:bands"][0]
