@@ -126,3 +126,50 @@ Human-eye review of the screenshots (by me; Stephane should repeat it):
 - [x] Keyboard-only use and reduced motion both work (see QA results). Not tested with a screen reader.
 - [x] Works with JavaScript off at its default state (`no_javascript_1440.png`).
 - [ ] A human has QA'd every page and every interaction. **This one is Stephane's to do.**
+
+---
+
+# v2 (10 November 2026): NASA-style story dashboard
+
+Sections 1 to 7 above describe v1 (kept in `site/_v1/`). This part describes v2. Look and layout: `prompts/v2/DESIGN_BRIEF_v2.md`.
+
+## v2 effects and the hand-coding test
+
+| Effect | Kept? | Reason |
+|---|---|---|
+| Full-screen sticky map with cards scrolling over it | Yes | The map gets the whole screen, as in NASA's story; native scrolling, nothing is hijacked. |
+| flyTo between neighbouring chapters (1.8 s), cross-fade of layers (400 ms) | Yes | Shows the reader where they are going and what changed; jumps and reduced motion move instantly. |
+| Animated maps that play by themselves | Yes, agreed exception (D37) | Moving satellite mornings show "the same places, morning after morning" faster than any static figure; muted, on-screen only, Pause/Play, poster under reduced motion. |
+| Swipe compare | Yes | Direct comparison of two seasons or layers in the same place; mouse, touch and arrow keys. |
+| Built-up year player in the explorer | Yes, paused by default | Steps through six real epochs; the reader starts it. |
+| Legend "i" buttons, calendar and table read-outs | Yes | Tap, click and keyboard; nothing is hover-only. |
+| Reading progress bar | Yes | Allowed exception in DESIGN_RULES.md. |
+
+## v2 QA results (chunk 6)
+
+- **Build:** `npm run build` works. The only warning was Mapbox GL's own bundle (1.9 MB minified, 528 kB gzipped); the warning limit is now 2,000 kB. Built site 302 MB, of which tiles are 245 MB (about 37,000 files, none over 500 kB) and media 35 MB.
+- **Whole page, scrolled slowly at 375 and 1440 px** (`site/qa/v2_full.mjs`): no console errors, no failed requests, 0 tile 404s (368 and 1,020 tile requests). Map instances created: **4** (story, two for the season swipe, explorer); Compare mode in the explorer adds two more only when opened.
+- **Widths 360, 768, 1280, 1600 px** (`site/qa/v2_widths.mjs`): no horizontal overflow, no errors. Fixed: at 768 px cards hid the place they describe (narrower tablet cards and a lower zoom).
+- **Story** (`site/qa/v2_story.mjs`): all 15 chapters show the right map state at 375 and 1440 px; End key and jumps land correctly.
+- **Interludes** (`site/qa/v2_interludes.mjs`): videos play on screen, pause off screen and by button; under reduced motion they wait for Play; tables and chart answer the keyboard.
+- **Explorer** (`site/qa/v2_explorer.mjs`): combobox by keyboard, roof caveat, compare by keys, building popup, year player, shared link restored, phone bottom sheet; no errors.
+- **Without JavaScript:** intro, all 15 cards, figures and methods are present; maps, tables and the chart show a note with a CSV link.
+- **Walkthrough video:** `outputs/demo/joto-mjini-walkthrough.webm` (1440 × 900, 64 MB, git-ignored because it is over 50 MB).
+
+## v2 pre-ship checklist
+
+- [x] Palette and typefaces are those of prompt 03 and the v2 brief (paper `#F7F4EE`, ink `#1C1B19`, Source Serif 4 and Source Sans 3, the brief's map ramps). Purple appears only as the brief's population ramp and in the Sentinel-2 false-colour image, where it is data.
+- [x] Every effect passes the hand-coding test (table above).
+- [x] Nothing from the banned list remains. Autoplay is the stated exception (D37).
+- [x] Hover only darkens or strengthens buttons; nothing disappears.
+- [x] Nothing important is hover-only (legends, tables, chart and calendar all work by tap and keyboard).
+- [x] Native scrolling; no reveal animations; one header.
+- [x] Body text meets WCAG AA (ink `#1C1B19` and secondary `#4A4740` on paper and white, unchanged from v1 checks).
+- [x] No stock icons or emoji; the "i" is a typed letter.
+- [x] Images and posters are sharp and match their videos (posters are frames of their own video).
+- [ ] The first screen states the key finding and defines the measure, but the hero map is no longer on it: the v2 brief asks for a short intro, then the full-screen map. At 1440 × 900 the top of the map shows at the bottom of the first screen.
+- [x] Every chart and map has a title or chip, subtitle or legend, source and date.
+- [x] Works at 360, 768, 1280 and 1600 px (automated; not yet on a real phone).
+- [x] Keyboard-only use and reduced motion work (automated checks on the controls listed above).
+- [x] Works with JavaScript off at its default state (cards, figures and methods; interactive parts show notes).
+- [ ] **A human has QA'd every page and every interaction:** this is Stephane's to do.

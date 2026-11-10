@@ -12,7 +12,8 @@ const MOBILE = window.matchMedia('(max-width: 767px)');
 
 const padding = () => (MOBILE.matches
   ? { top: 120, bottom: Math.round(window.innerHeight * 0.44), left: 0, right: 0 }
-  : { top: 0, bottom: 0, left: 480, right: 0 });
+  // Desktop and tablet: keep the place clear of the card (card width plus its 40 px margin and a gap).
+  : { top: 0, bottom: 0, left: Math.min(480, (document.querySelector('.story .card')?.offsetWidth || 440) + 60), right: 0 });
 
 export async function initStory(blocks) {
   const byId = new Map(CHAPTERS.map((c) => [c.id, c]));
@@ -52,7 +53,7 @@ export async function initStory(blocks) {
       chip.set(ch.chip);
       await ctl.setChapter({
         basemap: ch.basemap, layers: ch.layers, highlight: ch.highlight || [],
-        center: ch.center, zoom: MOBILE.matches ? ch.mobileZoom : ch.zoom, padding: padding(),
+        center: ch.center, zoom: MOBILE.matches ? ch.mobileZoom : (window.innerWidth < 1100 ? ch.zoom - 0.6 : ch.zoom), padding: padding(),
       }, { instant: !near });
     }
     busy = false;

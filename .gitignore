@@ -34,3 +34,7 @@ data/processed/kisumu/kisumu_buildings.parquet
 
 # Sentinel-2 composites (over or near 50 MB; rebuild with src/pipeline/s8_sentinel2.py)
 data/processed/rasters/s2_*.tif
+
+# Walkthrough video (64 MB, over the 50 MB limit); rebuild with site/qa/v2_full.mjs video
+outputs/demo/*.webm
+outputs/demo/_raw/
