@@ -20,7 +20,7 @@ const GROUPS = [
 ];
 // Bottom to top.
 const STACK = ['s2-true', 's2-false', 'landcover', 'trees', 'population', ...EPOCHS.map((y) => `ghsl-${y}`),
-  'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'buildings'];
+  'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'buildings'];   // for the legend: topmost active layer
 const ROOF = 'Bare iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can read the surface as cooler than it is. Treat the surface temperature of this ward as a lower bound.';
 const MOBILE = window.matchMedia('(max-width: 767px)');
 
@@ -144,7 +144,6 @@ export async function initExplorer(section) {
 
   function apply() {
     ctl.setLayers([...state.layers, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }, { id: 'county-line', opacity: 1 }], 250);
-    ctl.reorder(STACK);
     const top = topLayer();
     legend.show(top);
     chip.set(top ? manifest[top]?.chip : '');

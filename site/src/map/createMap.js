@@ -24,6 +24,12 @@ const FONT_BOLD = ['DIN Pro Bold', 'Arial Unicode MS Bold'];
 // Basemap label layers that add clutter over data.
 const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-label', 'water-point-label'];
 
+// Default stacking of our data layers, bottom to top (all beneath the basemap labels).
+export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'growth-1990-2020',
+  'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
+  'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
+  'wards-line', 'county-line'];
+
 const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity' };
 
 export class MissingTokenError extends Error {}
@@ -128,6 +134,7 @@ export class MapController {
     // Re-add every layer we know about, at its current opacity, without transition.
     for (const id of this.specs.keys()) this._addToMap(id);
     for (const [id, op] of this.state) this._applyOpacity(id, op, 0);
+    this.reorder(DEFAULT_ORDER);
     this.listeners.forEach((fn) => fn('style'));
   }
 
@@ -237,8 +244,10 @@ export class MapController {
   /** Show exactly these layers (others fade out). layers: [{id, opacity}] or ids. */
   setLayers(layers, ms = FADE_MS) {
     const want = new Map(layers.map((l) => (typeof l === 'string' ? [l, 1] : [l.id, l.opacity ?? 1])));
-    for (const id of [...this.state.keys()]) if (!want.has(id) && this.state.get(id) > 0) this.setLayerOpacity(id, 0, ms);
+    // The ward highlight is controlled by highlightWards(), not by the chapter's layer list.
+    for (const id of [...this.state.keys()]) if (id !== 'ward-highlight' && !want.has(id) && this.state.get(id) > 0) this.setLayerOpacity(id, 0, ms);
     for (const [id, op] of want) this.setLayerOpacity(id, op, ms);
+    this.reorder(DEFAULT_ORDER);
   }
 
   async setBasemap(name) {
@@ -286,6 +295,7 @@ export class MapController {
       l.filter = f;
       if (this.map.getLayer(l.id)) this.map.setFilter(l.id, f);
     }
+    this.setLayerOpacity('ward-highlight', 1, 0);
   }
 
   onChange(fn) { this.listeners.push(fn); }
@@ -317,8 +327,8 @@ export const OVERLAYS = {
   },
   'ward-labels': {
     source: vec('ward-labels'), beforeLabels: false,
-    layers: () => [{ id: 'ward-labels', type: 'symbol', 'source-layer': 'ward-labels', minzoom: 11,
-      layout: { 'text-field': ['get', 'ward_name'], 'text-font': FONT_BOLD, 'text-size': ['interpolate', ['linear'], ['zoom'], 11, 11.5, 14, 14.5],
+    layers: () => [{ id: 'ward-labels', type: 'symbol', 'source-layer': 'ward-labels', minzoom: 10,
+      layout: { 'text-field': ['get', 'ward_name'], 'text-font': FONT_BOLD, 'text-size': ['interpolate', ['linear'], ['zoom'], 10, 10, 11, 11.5, 14, 14.5],
         'text-transform': 'uppercase', 'text-letter-spacing': 0.04, 'text-max-width': 7, 'symbol-sort-key': ['-', ['get', 'area_km2']],
         'text-padding': 3 },
       paint: { 'text-color': '#1C1B19', 'text-halo-color': 'rgba(255,255,255,0.95)', 'text-halo-width': 2 } }],

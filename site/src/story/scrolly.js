@@ -11,7 +11,7 @@ import { CHAPTERS } from './chapters.js';
 const MOBILE = window.matchMedia('(max-width: 767px)');
 
 const padding = () => (MOBILE.matches
-  ? { top: 40, bottom: Math.round(window.innerHeight * 0.44), left: 0, right: 0 }
+  ? { top: 120, bottom: Math.round(window.innerHeight * 0.44), left: 0, right: 0 }
   : { top: 0, bottom: 0, left: 480, right: 0 });
 
 export async function initStory(blocks) {
@@ -59,7 +59,8 @@ export async function initStory(blocks) {
   };
 
   const update = () => {
-    const mid = window.innerHeight / 2;
+    // Trigger line: the middle of the screen on desktop; lower on phones, where cards sit at the bottom.
+    const mid = window.innerHeight * (MOBILE.matches ? 0.72 : 0.5);
     // The block with most of itself on screen holds the map.
     let best = null;
     let bestVis = 0;

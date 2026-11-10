@@ -28,7 +28,7 @@ for (const w of which === 'both' ? ['1440', '375'] : [which]) {
     await page.evaluate((cid) => {
       const c = document.getElementById(`ch-${cid}`);
       const r = c.getBoundingClientRect();
-      window.scrollBy(0, (r.top + r.bottom) / 2 - window.innerHeight / 2);
+      window.scrollBy(0, (r.top + r.bottom) / 2 - window.innerHeight * (window.innerWidth < 768 ? 0.72 : 0.5));
     }, id);
     await page.waitForFunction((cid) => window.__story.chapter === cid, id, { timeout: 30000 }).catch(() => {});
     await page.waitForTimeout(2300);
