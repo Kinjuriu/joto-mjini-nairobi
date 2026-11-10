@@ -194,6 +194,7 @@ def q3_landcover() -> dict:
     built_med, tree_med = np.median(L.hot[mostly_built]), np.median(L.hot[mostly_tree])
     return dict(
         by_class=lc.to_dict("records"),
+        by_name={r["landcover"].split(" ")[0].lower(): r for r in lc.to_dict("records")},
         mostly_built_median_c=r1(built_med), mostly_tree_median_c=r1(tree_med),
         built_minus_tree_c=r1(built_med - tree_med),
         mostly_built_cells=int(mostly_built.sum()), mostly_tree_cells=int(mostly_tree.sum()),

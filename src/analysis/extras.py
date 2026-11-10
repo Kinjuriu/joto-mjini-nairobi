@@ -70,7 +70,7 @@ def season_difference() -> dict:
     fig.text(0.04, 0.895, f"Hot-season minus cool-season median land surface temperature. County median difference "
              f"{np.median(v):.1f} °C.", size=11.5, color=INK2, va="top")
     fig.text(0.04, 0.025, "Source: USGS Landsat 8 and 9 via Microsoft Planetary Computer; hot season 12 scenes 2023 to "
-             "2026, cool season 4 scenes 2018 to 2026; analysis Joto Mjini.", size=9, color=INK2)
+             "2026, cool season 4 scenes 2018 to 2026; analysis: Joto Mjini Nairobi.", size=9, color=INK2)
     _save(fig, "map_hot_minus_cool")
     return dict(county_median_diff_c=r1(np.median(v)), share_hotter_in_hot_season_pct=r1(100 * (v > 0).mean()),
                 share_more_than_3c_hotter_pct=r1(100 * (v > 3).mean()),

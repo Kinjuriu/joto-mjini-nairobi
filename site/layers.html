@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layer test page · Joto Mjini Nairobi</title>
+  <link rel="icon" href="data:,">
+  <meta name="robots" content="noindex">
+  <script type="module" src="/src/pages/layers.js"></script>
+</head>
+<body class="layers-page">
+  <!-- A plain test page: one full-screen map, every layer and basemap, and fixed views for checking legibility. -->
+  <div class="layers-page__map map-frame" id="map"></div>
+  <aside class="layers-page__panel" aria-label="Layer test controls">
+    <h1>Layer test page</h1>
+    <p>Joto Mjini Nairobi. For checking every layer at zooms 10, 12 and 14.</p>
+    <fieldset><legend>Basemap</legend><div id="basemaps"></div></fieldset>
+    <fieldset><legend>Data layer</legend><div id="rasters"></div></fieldset>
+    <fieldset><legend>Overlays</legend><div id="overlays"></div></fieldset>
+    <fieldset><legend>Opacity</legend><label><input type="range" id="opacity" min="0" max="1" step="0.05" value="0.9"> <output id="opacity-out">0.90</output></label></fieldset>
+    <fieldset><legend>Views</legend><div id="views"></div></fieldset>
+    <p id="status" class="layers-page__status" aria-live="polite"></p>
+  </aside>
+</body>
+</html>

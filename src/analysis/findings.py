@@ -170,7 +170,8 @@ def main() -> None:
 
     h, cc = q7["hottest_fifth"], q7["coolest_fifth"]
     out.append(finding(
-        "F8", f"People in the hottest fifth of wards lived on ground {q7['lst_gap_c']:.1f} °C hotter, with a tenth of the tree cover",
+        "F8", f"People in the hottest fifth of wards lived on ground {q7['lst_gap_c']:.1f} °C hotter, with about "
+              f"one {['', '', 'half', 'third', 'quarter', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth'][min(12, max(2, round(q7['tree_ratio'])))]} of the tree cover",
         f"Residents of the hottest fifth of wards lived, on average, on ground {c(q7['lst_gap_c'])} hotter than residents "
         f"of the coolest fifth ({c(h['pop_weighted_lst_c'])} against {c(cc['pop_weighted_lst_c'])}). Those hotter wards "
         f"had {h['tree_pct']:.1f} % tree cover; the cooler wards had {cc['tree_pct']:.1f} %.",
@@ -343,6 +344,77 @@ def main() -> None:
             "ward is unknown.",
             "Medium that a bias is possible (the emissivity used in the dense wards is no lower than elsewhere, so metal "
             "roofs are not accounted for); low on its size."))
+    tv, an = ex.get("tables_v2"), ex.get("animations", {})
+    if tv:
+        b, w, dt = tv["builtup_by_subcounty"], tv["ward_cover_extremes"], tv["daily_tmax"]
+        out.append(finding(
+            "T1", "How Nairobi filled in: built-up share of each sub-county, 1975 to 2025",
+            f"{b['most_built_2020']} was the most built-up sub-county in 2020 ({b['most_built_2020_pct']:.1f} % of its ground "
+            f"covered by buildings); {b['least_built_2020']}, which includes part of Nairobi National Park, the least "
+            f"({b['least_built_2020_pct']:.1f} %).",
+            f"largest rise 1975 to 2020: {b['largest_rise_1975_2020']}, +{b['largest_rise_1975_2020_points']} percentage points; "
+            "full table in analysis/tables/builtup_by_subcounty.csv",
+            "GHSL built-up surface (km²) summed over the 90 m cells inside each sub-county (the 17 IEBC constituencies, "
+            "dissolved from the ward layer), divided by the sub-county's area",
+            "data/processed/rasters/ghsl_built_<year>.tif, data/processed/nairobi_wards.geojson",
+            "src/analysis/tables_v2.py, builtup_by_subcounty",
+            "GHSL measures the share of the ground under buildings, not all paved land; 2025 is a JRC projection.",
+            "High for the arithmetic; medium for GHSL in dense informal areas."))
+        out.append(finding(
+            "T2", "The hottest wards had about one "
+                  + ['', '', 'half', 'third', 'quarter', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh',
+                     'twelfth'][min(12, max(2, round(w['coolest_mean_tree_pct'] / w['hottest_mean_tree_pct'])))]
+                  + " of the coolest wards' tree cover",
+            f"The ten hottest wards where people live had {w['hottest_mean_tree_pct']:.1f} % tree cover on average; the ten "
+            f"coolest had {w['coolest_mean_tree_pct']:.1f} %.",
+            f"built-up share: hottest ten {w['hottest_mean_built_pct']:.1f} %, coolest ten {w['coolest_mean_built_pct']:.1f} %; "
+            "per-ward values in analysis/tables/ward_cover_extremes.csv",
+            "Wards ranked by population-weighted hot-season surface temperature; WorldCover 2021 class shares per ward "
+            "(mean of the 30 m fractions); difference from the county median",
+            "tree_fraction_30m.tif, grass_fraction_30m.tif, built_fraction_30m.tif, bare_fraction_30m.tif, ward_stats.csv",
+            "src/analysis/tables_v2.py, ward_cover_extremes",
+            CAVEAT_LST + " Association only. WorldPop may misplace people in Kibra (QUESTIONS 7).", "Medium."))
+        out.append(finding(
+            "T3", "Daily highs since January 2023 compared with normal",
+            f"Since May 2026, {dt['el_nino_share_days_above_normal_pct']:.1f} % of days had a daily high air temperature "
+            f"above the 1991 to 2020 normal for that day. The highest daily maximum since January 2023 was "
+            f"{dt['record_tmax_c']:.1f} °C on {_date(dt['record_day'])}.",
+            f"mean difference from normal: since May 2026 {dt['el_nino_mean_anomaly_c']} °C, January 2023 to April 2026 "
+            f"{dt['before_mean_anomaly_c']} °C; data {_date(dt['first'])} to {_date(dt['last'])}",
+            dt["normal_method"], "data/processed/nairobi_daily_air_temp.csv (Open-Meteo, ERA5)",
+            "src/analysis/tables_v2.py, daily_anomaly",
+            "Air temperature from a reanalysis for one point in central Nairobi, not measured surface temperature. The "
+            "period before El Niño was also warmer than normal, so the El Niño months are not unusual on their own.",
+            "High for the arithmetic; low for any link to El Niño."))
+    if an.get("day"):
+        d_ = an["day"]
+        v = d_["validation_at_overpass"]
+        out.append(finding(
+            "A3", f"A day of heat: {_date(d_['date'])}",
+            f"On {_date(d_['date'])}, the county's median land surface temperature in the Copernicus hourly data rose from "
+            f"{d_['county_median_c_by_hour'][0]:.1f} °C at {d_['hours_local'][0]:02d}:00 to "
+            f"{max(x for x in d_['county_median_c_by_hour'] if x is not None):.1f} °C around midday.",
+            "county median by hour (Nairobi time " + ", ".join(f"{h:02d}:00" for h in d_["hours_local"]) + "): "
+            + ", ".join("cloud" if x is None else f"{x:.1f}" for x in d_["county_median_c_by_hour"])
+            + f" °C; check at the Landsat overpass hour ({d_['overpass_hour_local']:02d}:00): CLMS minus Landsat averaged to "
+            f"the CLMS cells, bias {v['bias_c']} °C, RMSE {v['rmse_c']} °C, r {v['r']}, {v['n_cells']} cells",
+            "CLMS Global LST hourly v3 (~3 km) via the Sentinel Hub Process API; sharpened to 30 m by adding the same "
+            "morning's Landsat residual scaled by the day's heating (own implementation after Zlinszky 2026, Zenodo, "
+            "doi:10.5281/zenodo.22944001; the record could not be retrieved, so only the general idea is followed)",
+            f"data/raw/clms_lst/{d_['date']}/, Landsat scene {d_['landsat_scene']}",
+            "src/pipeline/s9_clms_hourly.py, src/animations/render.py day()",
+            "Land surface temperature, not air temperature. The hourly data is about 3 km; the fine pattern in the "
+            "animation comes from one morning's Landsat scene and is assumed to scale with the day's heating. Cloud "
+            "hides parts of the afternoon.", "Medium for the daily curve; low for fine detail away from the overpass time."))
+    if an.get("mornings"):
+        m_ = an["mornings"]
+        out.append(finding(
+            "A1", "Every clear hot-season morning, 2014 to 2026",
+            f"The animation shows {m_['n_scenes']} clear January to March Landsat mornings from {_date(m_['first'])} to "
+            f"{_date(m_['last'])}, each as a difference from that morning's county median.",
+            f"{m_['n_scenes']} scenes; {m_['fps']} frames a second", "Usable scenes (at least 80 % of the county clear), months 1 to 3",
+            "data/processed/landsat_scene_catalogue.csv, data/interim/landsat/*_lst_c.tif",
+            "src/animations/render.py mornings()", CAVEAT_LST, "High."))
     if ex:
         out.append("## Optional findings (prompt 02, 'if time remains')\n\nNot used in the story yet. Written by "
                    "`src/analysis/extras.py` to `analysis/results_extra.json`.\n")

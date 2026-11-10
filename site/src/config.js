@@ -1,35 +1,26 @@
-// Shared paths, layer registry and the fixed colour ramps from prompts/03_story_site.md.
+// Shared paths, formatting and the fixed colour ramps from prompts/v2/DESIGN_BRIEF_v2.md.
 
 export const BASE = import.meta.env.BASE_URL;
 export const abs = (path) => new URL(`${BASE}${path}`, window.location.href).href;
-// For URL templates such as {fontstack}/{range}: `new URL` would percent-encode the braces.
+// For URL templates such as {z}/{x}/{y}: `new URL` would percent-encode the braces.
 export const absTemplate = (path) => `${new URL(BASE, window.location.href).href}${path}`;
 
+export const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
+// Imagery for the "Satellite" basemap: 'sentinel2' (our own composite under Mapbox roads and labels; the
+// default while Mapbox refuses satellite tiles for this token, DECISIONS D33), 'mapbox' (Satellite Streets),
+// or 'auto' (probe one Mapbox satellite tile per session). Set VITE_SATELLITE in site/.env.local.
+export const SATELLITE = import.meta.env.VITE_SATELLITE || 'sentinel2';
 export const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-export const HEAT = ['#FFF5E6', '#FDD9A8', '#F9B06A', '#EE7D3B', '#D2481E', '#A3200F', '#6B0F0A'];
-export const LST_BREAKS = [24, 28, 32, 35, 38, 41, 44, 48];
+// Difference from the city median (°C): the default heat view.
+export const DIFF_BREAKS = [-6, -4, -2, -0.5, 0.5, 2, 4, 6];
+export const DIFF_COLOURS = ['#1D4E6F', '#3B7CA6', '#8DBAD6', '#C9DDE9', '#F2EFE9', '#F6CBA6', '#F4A26B', '#D9542B', '#A1201A'];
+export const ACCENT = '#1D4E6F';
 
-const LANDSAT = 'Landsat: USGS';
-const OSM = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
-// Raster layers are pre-coloured PMTiles made by src/analysis/web.py; legends come from data/legends.json.
-export const RASTERS = {
-  lst_hot_season: { file: 'data/lst_hot_season.pmtiles', attribution: LANDSAT },
-  lst_cool_season: { file: 'data/lst_cool_season.pmtiles', attribution: LANDSAT },
-  lst_anomaly: { file: 'data/lst_anomaly.pmtiles', attribution: LANDSAT },
-  tree_fraction: { file: 'data/tree_fraction.pmtiles', attribution: 'Tree cover: ESA WorldCover 2021' },
-  population: { file: 'data/population.pmtiles', attribution: 'Population: WorldPop 2025' },
-  ghsl_built_1990: { file: 'data/ghsl_built_1990.pmtiles', attribution: 'Built-up: GHSL, EC JRC' },
-  ghsl_built_2020: { file: 'data/ghsl_built_2020.pmtiles', attribution: 'Built-up: GHSL, EC JRC' },
-};
-
-export const ATTRIBUTION = `${OSM}, <a href="https://protomaps.com">Protomaps</a>`;
-
-// MapLibre step expression that colours a numeric property with the surface temperature ramp.
-export function heatStep(prop) {
-  const expr = ['step', ['to-number', ['get', prop], 0], HEAT[0]];
-  for (let i = 1; i < HEAT.length; i += 1) expr.push(LST_BREAKS[i], HEAT[i]);
+/** Mapbox step expression colouring a numeric value with the diverging ramp. */
+export function diffStep(valueExpr) {
+  const expr = ['step', valueExpr, DIFF_COLOURS[0]];
+  DIFF_BREAKS.forEach((b, i) => expr.push(b, DIFF_COLOURS[i + 1]));
   return expr;
 }
 
@@ -37,17 +28,18 @@ export const fmtC = (v) => `${Number(v).toFixed(1)} °C`;
 export const fmtSignedC = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(Number(v)).toFixed(1)} °C`;
 export const fmtInt = (v) => new Intl.NumberFormat('en-GB').format(Math.round(Number(v)));
 export const fmtPct = (v) => `${Number(v).toFixed(1)} %`;
+export const fmtPct0 = (v) => `${Math.round(Number(v))} %`;
+export const ordinal = (n) => {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return `${n}${s[(v - 20) % 10] || s[v] || s[0]}`;
+};
 
-let cache = {};
+const cache = {};
 export async function getJSON(path) {
   if (!cache[path]) cache[path] = fetch(abs(path)).then((r) => { if (!r.ok) throw new Error(`${path}: ${r.status}`); return r.json(); });
   return cache[path];
 }
 
-export async function countyBounds() {
-  const gj = await getJSON('data/county.geojson');
-  let [x0, y0, x1, y1] = [180, 90, -180, -90];
-  const walk = (c) => { if (typeof c[0] === 'number') { x0 = Math.min(x0, c[0]); y0 = Math.min(y0, c[1]); x1 = Math.max(x1, c[0]); y1 = Math.max(y1, c[1]); } else c.forEach(walk); };
-  gj.features.forEach((f) => walk(f.geometry.coordinates));
-  return [[x0, y0], [x1, y1]];
-}
+/** The layer manifest written by src/web/tiles.py: tiles, zooms, legends, sources and date chips. */
+export const getManifest = () => getJSON('tiles/manifest.json').then((m) => m.layers);

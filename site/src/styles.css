@@ -1,10 +1,11 @@
-/* Joto Mjini story styles. Palette, type and geometry are fixed in prompts/03_story_site.md. */
+/* Joto Mjini Nairobi story styles. Palette and type from prompts/03_story_site.md; layout from prompts/v2/DESIGN_BRIEF_v2.md. */
 :root {
   --paper: #F7F4EE;
   --ink: #1C1B19;
   --ink-2: #4A4740;
   --rule: #D8D2C6;
   --link: #1F4E6B;
+  --accent: #1D4E6F;
   --note-bg: #EFEBE3;
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
@@ -77,17 +78,6 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 19px; line-height: 1
 .placeholder { font-family: var(--sans); font-size: 15px; color: var(--ink-2); padding: 24px; margin: 0; }
 img { max-width: 100%; height: auto; display: block; }
 
-/* Maps */
-.map-frame { position: relative; border: 1px solid var(--rule); background: #EDEAE4; overflow: hidden; }
-.map-frame--hero { height: min(62vh, 620px); min-height: 340px; }
-.map-frame:not(.map-frame--hero):not(.map-frame--scrolly):not(.explorer__map) { height: min(70vh, 640px); min-height: 360px; }
-.map, .compare { position: absolute; inset: 0; }
-.compare .map { position: absolute; inset: 0; }
-.compare noscript img, .map noscript img { width: 100%; height: 100%; object-fit: contain; background: var(--paper); }
-.maplibregl-ctrl-attrib { font-family: var(--sans); font-size: 12px; }
-.maplibregl-ctrl-group { border-radius: 2px !important; }
-.maplibregl-ctrl-group button { border-radius: 0 !important; }
-
 /* Compare control: a plain vertical rule with a square grip */
 .compare__clip { position: absolute; inset: 0; }
 .compare__handle {
@@ -109,30 +99,12 @@ img { max-width: 100%; height: auto; display: block; }
 .compare__label--left { left: 10px; }
 .compare__label--right { right: 52px; }
 
-/* Legends: square swatches with hairline borders, values labelled directly */
-.legend { font-family: var(--sans); font-size: 14px; color: var(--ink); margin-top: 10px; }
-.legend__title { font-weight: 600; margin-bottom: 4px; }
-.legend__row { display: flex; flex-wrap: wrap; align-items: flex-end; }
-.legend__item { display: flex; flex-direction: column; min-width: 54px; }
-.legend__swatch { height: 14px; border: 1px solid var(--rule); border-right-width: 0; }
-.legend__item:last-child .legend__swatch { border-right-width: 1px; }
-.legend__label { font-size: 13px; color: var(--ink-2); padding-top: 2px; white-space: nowrap; transform: translateX(-50%); }
-.legend__item:first-child .legend__label { transform: none; }
-.legend > .legend__label, .legend--overlay > .legend__label { transform: none; }
-.legend--overlay {
-  position: absolute; left: 10px; bottom: 28px; z-index: 3; margin: 0;
-  background: rgba(247, 244, 238, 0.96); border: 1px solid var(--rule); padding: 8px 10px; max-width: calc(100% - 20px);
-}
-.legend--overlay .legend__item { min-width: 44px; }
-
 /* Side by side figure and text */
 .split {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 40px;
   max-width: var(--wide); margin: 0 auto; padding: 0 20px; align-items: start;
 }
-.split__figure { margin-top: 64px; }
-.split--reverse .split__text { order: 2; }
-.split--reverse .split__figure { order: 1; }
+.split__media { margin: 0; }
 .chart { position: relative; width: 100%; min-height: 300px; }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--sans); }
 .chart text { fill: var(--ink-2); font-size: 13px; }
@@ -144,39 +116,6 @@ img { max-width: 100%; height: auto; display: block; }
   position: absolute; pointer-events: none; z-index: 6; font-family: var(--sans); font-size: 14px;
   background: var(--paper); border: 1px solid var(--ink); padding: 4px 8px; white-space: nowrap;
 }
-
-/* Scrollytelling: native scroll, sticky map, cards pass beside it */
-.scrolly { margin-top: 40px; }
-.scrolly__body { position: relative; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); gap: 32px; max-width: var(--wide); margin: 0 auto; padding: 0 20px; }
-.scrolly__graphic { position: sticky; top: 12px; height: calc(100vh - 24px); align-self: start; order: 1; }
-.map-frame--scrolly { height: 100%; }
-.scrolly__steps { order: 2; padding: 30vh 0 40vh; }
-.step {
-  margin-bottom: 70vh; background: var(--paper); border: 1px solid var(--rule); border-left: 3px solid var(--rule); padding: 14px 18px 4px;
-}
-.step.is-active { border-left-color: var(--ink); }
-.step h3 { margin-top: 0; }
-.step__count { font-family: var(--sans); font-size: 13px; color: var(--ink-2); margin: 0 0 4px; }
-.step__number { font-family: var(--sans); font-weight: 600; font-size: 30px; line-height: 1.1; margin: 0 0 8px; }
-.step p { font-size: 17px; }
-.scrolly__source { margin-top: 0; }
-
-/* Explorer */
-.explorer { margin-top: 20px; }
-.explorer__layout {
-  display: grid; grid-template-columns: minmax(0, 1fr) 300px; grid-template-areas: "controls controls" "map panel";
-  gap: 14px 20px; max-width: var(--wide); margin: 0 auto 28px; padding: 0 20px;
-}
-.explorer__controls { grid-area: controls; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; }
-.explorer__map { grid-area: map; height: min(70vh, 640px); min-height: 380px; }
-.explorer__panel { grid-area: panel; font-family: var(--sans); font-size: 16px; border-top: 2px solid var(--ink); padding-top: 6px; }
-.explorer__panel h3 { font-family: var(--serif); font-size: 22px; margin: 4px 0 10px; }
-.explorer__panel dl { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 0 0 14px; }
-.explorer__panel dt { color: var(--ink-2); }
-.explorer__panel dd { margin: 0; font-weight: 600; text-align: right; }
-.explorer__panel ol { padding-left: 1.3em; margin: 6px 0 12px; }
-.explorer__panel .muted { color: var(--ink-2); font-size: 14px; }
-.explorer__panel button.linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
 
 .segmented { display: flex; flex-wrap: wrap; border: 1px solid var(--ink); }
 .segmented button {
@@ -211,29 +150,16 @@ img { max-width: 100%; height: auto; display: block; }
 .footer { font-family: var(--sans); font-size: 14px; color: var(--ink-2); border-top: 1px solid var(--rule); margin-top: 56px; padding-top: 14px; padding-bottom: 40px; }
 
 /* Without JavaScript: hide controls that cannot work; static images and the table remain. */
-.no-js .js-only, .no-js .explorer__controls, .no-js .legend, .no-js .explorer__map .legend--overlay { display: none !important; }
-.no-js .explorer__map { height: auto; min-height: 0; }
+.no-js .js-only { display: none !important; }
 
 /* Narrow screens */
 @media (max-width: 860px) {
   body { font-size: 18px; }
   .split { grid-template-columns: 1fr; gap: 0; }
-  .split__figure { margin-top: 8px; }
-  .split--reverse .split__text, .split--reverse .split__figure { order: initial; }
-  .scrolly__body { display: block; padding: 0; }
-  /* The map stays at the top of the screen; cards scroll under it in normal flow. */
-  .scrolly__graphic { position: sticky; top: 0; height: 46vh; z-index: 2; padding: 0 0 6px; background: var(--paper); }
-  .scrolly__steps { padding: 4vh 16px 30vh; position: relative; z-index: 1; }
-  .step { margin-bottom: 55vh; }
-  .legend--overlay { bottom: 24px; padding: 6px 8px; }
-  .legend--overlay .legend__item { min-width: 46px; }
-  .legend--overlay .legend__label { font-size: 12px; }
-  .explorer__layout { grid-template-columns: 1fr; grid-template-areas: "controls" "map" "panel"; }
-  .explorer__map { height: 60vh; min-height: 320px; }
+  .split__media { margin-bottom: 16px; }
   .segmented button { flex: 1 1 auto; border-bottom: 1px solid var(--ink); }
-  .map-frame--hero { height: 52vh; min-height: 300px; }
   /* Phones pinch to zoom; the buttons would collide with the swipe labels. */
-  .compare .maplibregl-ctrl-top-right { display: none; }
+  .compare .mapboxgl-ctrl-top-right { display: none; }
   .compare__label--right { right: 10px; }
   h2 { font-size: 25px; margin-top: 44px; }
 }
@@ -254,17 +180,30 @@ img { max-width: 100%; height: auto; display: block; }
 .print-only { display: none; }
 @media print {
   @page { margin: 16mm 14mm; }
-  .progress, .compare__handle, .explorer__controls, .maplibregl-control-container, .map-frame,
-  .scrolly__graphic, .legend, .js-only, .explorer__panel, .tooltip { display: none !important; }
+  .progress, .compare__handle, .mapboxgl-control-container, .map-frame, .story__sticky,
+  .js-only, .explorer, .tooltip, video, .anim__controls { display: none !important; }
   .print-only { display: block; font-family: var(--sans); font-size: 10pt; color: var(--ink-2); border: 1px solid var(--rule); padding: 8px 10px; }
   body { background: #FFFFFF; font-size: 11pt; line-height: 1.45; }
   .masthead { border-bottom: 1px solid var(--ink); }
   .split { display: block; }
-  .scrolly__body { display: block; }
-  .scrolly__steps { padding: 0; }
-  .step { margin: 0 0 8px; break-inside: avoid; border: 0; border-left: 2px solid var(--ink); }
+  .story__steps { margin: 0 !important; }
+  .step { min-height: 0 !important; display: block !important; padding: 0 !important; margin: 0 0 8px; }
+  .card { box-shadow: none !important; border-left: 2px solid var(--ink); break-inside: avoid; width: auto !important; }
   h2, h3 { break-after: avoid; }
   .figure, .data-table, .note { break-inside: avoid; }
   a { color: var(--ink); }
   .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; color: var(--ink-2); word-break: break-all; }
 }
+
+/* Layer test page (layers.html): full-screen map with a plain control panel. */
+.layers-page { margin: 0; height: 100vh; overflow: hidden; }
+.layers-page .layers-page__map { position: fixed; inset: 0 300px 0 0; }
+.layers-page__panel { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; overflow: auto; padding: 12px 14px; background: var(--paper); border-left: 1px solid var(--rule); font: 14px/1.4 var(--sans); }
+.layers-page__panel h1 { font: 600 18px/1.2 var(--sans); margin: 0 0 4px; }
+.layers-page__panel p { margin: 0 0 8px; color: var(--ink-2); }
+.layers-page__panel fieldset { border: 0; border-top: 1px solid var(--rule); margin: 8px 0 0; padding: 6px 0 0; }
+.layers-page__panel legend { font-weight: 600; padding: 0; }
+.layers-page__panel label { display: block; padding: 1px 0; }
+.layers-page__view { display: flex; gap: 6px; align-items: center; padding: 2px 0; }
+.layers-page__view span { width: 90px; }
+.layers-page__view button { font: 13px var(--sans); padding: 2px 8px; border: 1px solid var(--ink-2); background: #FFF; border-radius: 2px; cursor: pointer; }

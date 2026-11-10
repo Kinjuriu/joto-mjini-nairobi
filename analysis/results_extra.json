@@ -199,5 +199,128 @@
     "spearman_emis_vs_built": -0.12,
     "scenes": 12,
     "sensitivity_c_per_0p01_emis": 0.72
+  },
+  "tables_v2": {
+    "builtup_by_subcounty": {
+      "most_built_2020": "Embakasi Central",
+      "most_built_2020_pct": 39.9,
+      "least_built_2020": "Langata",
+      "least_built_2020_pct": 6.1,
+      "largest_rise_1975_2020": "Embakasi Central",
+      "largest_rise_1975_2020_points": 22.0
+    },
+    "ward_cover_extremes": {
+      "hottest_mean_tree_pct": 5.7,
+      "coolest_mean_tree_pct": 46.3,
+      "hottest_mean_built_pct": 85.2,
+      "coolest_mean_built_pct": 35.6
+    },
+    "daily_tmax": {
+      "first": "2023-01-01",
+      "last": "2026-11-09",
+      "record_day": "2026-01-25",
+      "record_tmax_c": 31.4,
+      "el_nino_mean_anomaly_c": 1.7,
+      "el_nino_share_days_above_normal_pct": 81.3,
+      "before_mean_anomaly_c": 1.4,
+      "normal_method": "1991 to 2020 mean for each day of the year, smoothed with a 31-day circular window"
+    }
+  },
+  "animations": {
+    "mornings": {
+      "frames": 39,
+      "fps": 2,
+      "sizes_mb": {
+        "hot_mornings.mp4": 9.82,
+        "hot_mornings.webm": 1.97,
+        "hot_mornings.gif": 6.31,
+        "hot_mornings_poster.png": 1.63
+      },
+      "gif_width": 800,
+      "n_scenes": 35,
+      "first": "2014-02-03",
+      "last": "2026-02-12"
+    },
+    "growth": {
+      "frames": 69,
+      "fps": 4,
+      "sizes_mb": {
+        "nairobi_grows.mp4": 2.21,
+        "nairobi_grows.webm": 0.34,
+        "nairobi_grows.gif": 4.0,
+        "nairobi_grows_poster.png": 1.57
+      },
+      "gif_width": 1000
+    },
+    "day": {
+      "frames": 18,
+      "fps": 2,
+      "sizes_mb": {
+        "day_of_heat.mp4": 2.61,
+        "day_of_heat.webm": 0.39,
+        "day_of_heat.gif": 3.92,
+        "day_of_heat_poster.png": 1.55
+      },
+      "gif_width": 1000,
+      "date": "2026-01-27",
+      "landsat_scene": "LC09_L2SP_168061_20260127_02_T1",
+      "hours_local": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "county_median_c_by_hour": [
+        14.5,
+        15.3,
+        20.1,
+        26.5,
+        33.2,
+        37.7,
+        40.7,
+        38.4,
+        39.4,
+        null,
+        33.0,
+        28.8,
+        23.3,
+        21.2
+      ],
+      "residual_scale_by_hour": [
+        0.0,
+        0.03,
+        0.24,
+        0.52,
+        0.8,
+        1.0,
+        1.13,
+        1.03,
+        1.07,
+        null,
+        0.8,
+        0.61,
+        0.38,
+        0.29
+      ],
+      "overpass_hour_local": 11,
+      "validation_at_overpass": {
+        "n_cells": 190,
+        "bias_c": -1.75,
+        "rmse_c": 2.69,
+        "r": 0.88,
+        "note": "CLMS hour nearest the Landsat overpass minus Landsat averaged to the CLMS cells"
+      },
+      "method": "sharpened(x) = CLMS_h(x) + k_h * Landsat residual(x); see src/animations/render.py day()"
+    }
   }
 }

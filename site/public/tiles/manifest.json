@@ -1,0 +1,899 @@
+{
+ "generated": "2026-11-10 13:30",
+ "total_size_mb": 171.1,
+ "layers": {
+  "heat-diff": {
+   "id": "heat-diff",
+   "kind": "raster",
+   "title": "Surface temperature: difference from the city median",
+   "tiles": "tiles/heat-diff/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "°C difference from the city median",
+    "note": "City median 38.7 °C (January to March mornings, 2023 to 2026)",
+    "classes": [
+     {
+      "color": "#1D4E6F",
+      "label": "−6 or cooler"
+     },
+     {
+      "color": "#3B7CA6",
+      "label": "−6 to −4"
+     },
+     {
+      "color": "#8DBAD6",
+      "label": "−4 to −2"
+     },
+     {
+      "color": "#C9DDE9",
+      "label": "−2 to −0.5"
+     },
+     {
+      "color": "#F2EFE9",
+      "label": "about the same"
+     },
+     {
+      "color": "#F6CBA6",
+      "label": "+0.5 to +2"
+     },
+     {
+      "color": "#F4A26B",
+      "label": "+2 to +4"
+     },
+     {
+      "color": "#D9542B",
+      "label": "+4 to +6"
+     },
+     {
+      "color": "#A1201A",
+      "label": "+6 or hotter"
+     }
+    ]
+   },
+   "description": "How much hotter or cooler the ground was than the county median (38.7 °C) on clear January to March mornings, 2023 to 2026. Land surface temperature measured by Landsat at about 100 m; it is the heat of the ground, roofs and roads, not of the air.",
+   "source": "Landsat 8 and 9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi",
+   "chip": "January to March mornings, 2023 to 2026",
+   "n_tiles": 1547,
+   "size_mb": 4.2,
+   "median_c": 38.7
+  },
+  "heat-abs": {
+   "id": "heat-abs",
+   "kind": "raster",
+   "title": "Land surface temperature",
+   "tiles": "tiles/heat-abs/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "°C",
+    "note": "Breaks at the county's deciles",
+    "classes": [
+     {
+      "color": "#FFF7D6",
+      "label": "under 31.6"
+     },
+     {
+      "color": "#FEE391",
+      "label": "31.6 to 34.7"
+     },
+     {
+      "color": "#FEC44F",
+      "label": "34.7 to 37.7"
+     },
+     {
+      "color": "#FB9A29",
+      "label": "37.7 to 39.6"
+     },
+     {
+      "color": "#EC7014",
+      "label": "39.6 to 41.6"
+     },
+     {
+      "color": "#CC4C02",
+      "label": "41.6 to 43.3"
+     },
+     {
+      "color": "#8C2D04",
+      "label": "43.3 or more"
+     }
+    ]
+   },
+   "description": "Median land surface temperature on clear January to March mornings, 2023 to 2026, from 12 Landsat 8 and 9 scenes. Colour breaks sit at the county's deciles, so each colour covers a similar share of the city.",
+   "source": "Landsat 8 and 9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi",
+   "chip": "January to March mornings, 2023 to 2026",
+   "n_tiles": 1547,
+   "size_mb": 3.0
+  },
+  "heat-hottest-day": {
+   "id": "heat-hottest-day",
+   "kind": "raster",
+   "title": "Hottest clear morning: difference from that day's median",
+   "tiles": "tiles/heat-hottest-day/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "°C difference from the city median",
+    "note": "City median 46.6 °C (2022-09-29)",
+    "classes": [
+     {
+      "color": "#1D4E6F",
+      "label": "−6 or cooler"
+     },
+     {
+      "color": "#3B7CA6",
+      "label": "−6 to −4"
+     },
+     {
+      "color": "#8DBAD6",
+      "label": "−4 to −2"
+     },
+     {
+      "color": "#C9DDE9",
+      "label": "−2 to −0.5"
+     },
+     {
+      "color": "#F2EFE9",
+      "label": "about the same"
+     },
+     {
+      "color": "#F6CBA6",
+      "label": "+0.5 to +2"
+     },
+     {
+      "color": "#F4A26B",
+      "label": "+2 to +4"
+     },
+     {
+      "color": "#D9542B",
+      "label": "+4 to +6"
+     },
+     {
+      "color": "#A1201A",
+      "label": "+6 or hotter"
+     }
+    ]
+   },
+   "description": "Land surface temperature on the hottest clear morning in the record (2022-09-29), as a difference from that morning's county median (46.6 °C).",
+   "source": "Landsat 8 and 9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi",
+   "chip": "29 September 2022, 10:43",
+   "n_tiles": 1547,
+   "size_mb": 4.1
+  },
+  "heat-cool-season": {
+   "id": "heat-cool-season",
+   "kind": "raster",
+   "title": "Cool season: difference from its median",
+   "tiles": "tiles/heat-cool-season/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "°C difference from the city median",
+    "note": "City median 34.9 °C (June to August mornings)",
+    "classes": [
+     {
+      "color": "#1D4E6F",
+      "label": "−6 or cooler"
+     },
+     {
+      "color": "#3B7CA6",
+      "label": "−6 to −4"
+     },
+     {
+      "color": "#8DBAD6",
+      "label": "−4 to −2"
+     },
+     {
+      "color": "#C9DDE9",
+      "label": "−2 to −0.5"
+     },
+     {
+      "color": "#F2EFE9",
+      "label": "about the same"
+     },
+     {
+      "color": "#F6CBA6",
+      "label": "+0.5 to +2"
+     },
+     {
+      "color": "#F4A26B",
+      "label": "+2 to +4"
+     },
+     {
+      "color": "#D9542B",
+      "label": "+4 to +6"
+     },
+     {
+      "color": "#A1201A",
+      "label": "+6 or hotter"
+     }
+    ]
+   },
+   "description": "Median land surface temperature on clear June to August mornings (4 scenes, 2018 to 2026), as a difference from its own county median (34.9 °C).",
+   "source": "Landsat 8 and 9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi",
+   "chip": "June to August mornings, 2018 to 2026",
+   "n_tiles": 1547,
+   "size_mb": 3.9
+  },
+  "landcover": {
+   "id": "landcover",
+   "kind": "raster",
+   "title": "Land cover",
+   "tiles": "tiles/landcover/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "nearest",
+   "legend": {
+    "type": "categorical",
+    "unit": "",
+    "classes": [
+     {
+      "color": "#2E6B3F",
+      "label": "Tree cover"
+     },
+     {
+      "color": "#8FB573",
+      "label": "Shrubland"
+     },
+     {
+      "color": "#E3D9A0",
+      "label": "Grassland"
+     },
+     {
+      "color": "#D8A657",
+      "label": "Cropland"
+     },
+     {
+      "color": "#C8423A",
+      "label": "Built-up"
+     },
+     {
+      "color": "#B9B0A2",
+      "label": "Bare or sparse"
+     },
+     {
+      "color": "#3E6FA8",
+      "label": "Water"
+     },
+     {
+      "color": "#6FA9A8",
+      "label": "Wetland"
+     }
+    ]
+   },
+   "description": "What covers the ground at 10 m, from the European Space Agency's WorldCover map for 2021.",
+   "source": "ESA WorldCover 10 m 2021 v200 (CC BY 4.0)",
+   "chip": "2021",
+   "n_tiles": 1547,
+   "size_mb": 1.8
+  },
+  "trees": {
+   "id": "trees",
+   "kind": "raster",
+   "title": "Tree cover",
+   "tiles": "tiles/trees/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#D9EBC7",
+      "label": "10 to 25 %"
+     },
+     {
+      "color": "#9CC98A",
+      "label": "25 to 50 %"
+     },
+     {
+      "color": "#5A9E5C",
+      "label": "50 to 75 %"
+     },
+     {
+      "color": "#2E6B3F",
+      "label": "75 % or more"
+     }
+    ]
+   },
+   "description": "Share of each 30 m cell covered by trees, from ESA WorldCover 2021 (10 m).",
+   "source": "ESA WorldCover 10 m 2021 v200 (CC BY 4.0); analysis: Joto Mjini Nairobi",
+   "chip": "2021",
+   "n_tiles": 1547,
+   "size_mb": 4.9
+  },
+  "population": {
+   "id": "population",
+   "kind": "raster",
+   "title": "Where people live",
+   "tiles": "tiles/population/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "people per km²",
+    "note": "Breaks at fifths of populated cells",
+    "classes": [
+     {
+      "color": "#F2F0F7",
+      "label": "under 800"
+     },
+     {
+      "color": "#CBC9E2",
+      "label": "800 to 2,900"
+     },
+     {
+      "color": "#9E9AC8",
+      "label": "2,900 to 7,500"
+     },
+     {
+      "color": "#756BB1",
+      "label": "7,500 to 19,100"
+     },
+     {
+      "color": "#54278F",
+      "label": "19,100 or more"
+     }
+    ]
+   },
+   "description": "Estimated people per square kilometre in 2025, from WorldPop's constrained 100 m model. A modelled estimate that may undercount the densest settlements.",
+   "source": "WorldPop 2025, constrained, R2025A (CC BY 4.0)",
+   "chip": "2025 estimate",
+   "n_tiles": 1547,
+   "size_mb": 2.0
+  },
+  "growth-1990-2020": {
+   "id": "growth-1990-2020",
+   "kind": "raster",
+   "title": "Built-up land, 1990 and 2020",
+   "tiles": "tiles/growth-1990-2020/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "categorical",
+    "unit": "",
+    "note": "A cell counts as built-up from 25 % built surface",
+    "classes": [
+     {
+      "color": "#6B6B6B",
+      "label": "Built-up by 1990"
+     },
+     {
+      "color": "#C8423A",
+      "label": "Built-up between 1990 and 2020"
+     }
+    ]
+   },
+   "description": "Where the city was already built up in 1990 (grey) and where it became built up by 2020 (red), from the Global Human Settlement Layer's built-up surface.",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "1990 to 2020",
+   "n_tiles": 1547,
+   "size_mb": 1.4
+  },
+  "ghsl-1975": {
+   "id": "ghsl-1975",
+   "kind": "raster",
+   "title": "Built-up surface, 1975",
+   "tiles": "tiles/ghsl-1975/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 14,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground built up",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#EBC2B2",
+      "label": "10 to 30 %"
+     },
+     {
+      "color": "#D77A62",
+      "label": "30 to 60 %"
+     },
+     {
+      "color": "#B5362B",
+      "label": "60 % or more"
+     }
+    ]
+   },
+   "description": "Share of the ground covered by buildings in 1975, from the Global Human Settlement Layer.",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "1975",
+   "n_tiles": 413,
+   "size_mb": 0.5
+  },
+  "ghsl-1990": {
+   "id": "ghsl-1990",
+   "kind": "raster",
+   "title": "Built-up surface, 1990",
+   "tiles": "tiles/ghsl-1990/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 14,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground built up",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#EBC2B2",
+      "label": "10 to 30 %"
+     },
+     {
+      "color": "#D77A62",
+      "label": "30 to 60 %"
+     },
+     {
+      "color": "#B5362B",
+      "label": "60 % or more"
+     }
+    ]
+   },
+   "description": "Share of the ground covered by buildings in 1990, from the Global Human Settlement Layer.",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "1990",
+   "n_tiles": 413,
+   "size_mb": 0.6
+  },
+  "ghsl-2000": {
+   "id": "ghsl-2000",
+   "kind": "raster",
+   "title": "Built-up surface, 2000",
+   "tiles": "tiles/ghsl-2000/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 14,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground built up",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#EBC2B2",
+      "label": "10 to 30 %"
+     },
+     {
+      "color": "#D77A62",
+      "label": "30 to 60 %"
+     },
+     {
+      "color": "#B5362B",
+      "label": "60 % or more"
+     }
+    ]
+   },
+   "description": "Share of the ground covered by buildings in 2000, from the Global Human Settlement Layer.",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "2000",
+   "n_tiles": 413,
+   "size_mb": 0.7
+  },
+  "ghsl-2010": {
+   "id": "ghsl-2010",
+   "kind": "raster",
+   "title": "Built-up surface, 2010",
+   "tiles": "tiles/ghsl-2010/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 14,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground built up",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#EBC2B2",
+      "label": "10 to 30 %"
+     },
+     {
+      "color": "#D77A62",
+      "label": "30 to 60 %"
+     },
+     {
+      "color": "#B5362B",
+      "label": "60 % or more"
+     }
+    ]
+   },
+   "description": "Share of the ground covered by buildings in 2010, from the Global Human Settlement Layer.",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "2010",
+   "n_tiles": 413,
+   "size_mb": 0.7
+  },
+  "ghsl-2020": {
+   "id": "ghsl-2020",
+   "kind": "raster",
+   "title": "Built-up surface, 2020",
+   "tiles": "tiles/ghsl-2020/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 14,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground built up",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#EBC2B2",
+      "label": "10 to 30 %"
+     },
+     {
+      "color": "#D77A62",
+      "label": "30 to 60 %"
+     },
+     {
+      "color": "#B5362B",
+      "label": "60 % or more"
+     }
+    ]
+   },
+   "description": "Share of the ground covered by buildings in 2020, from the Global Human Settlement Layer.",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "2020",
+   "n_tiles": 413,
+   "size_mb": 0.8
+  },
+  "ghsl-2025": {
+   "id": "ghsl-2025",
+   "kind": "raster",
+   "title": "Built-up surface, 2025",
+   "tiles": "tiles/ghsl-2025/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 14,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "% of the ground built up",
+    "note": "Under 10 % not coloured",
+    "classes": [
+     {
+      "color": "#EBC2B2",
+      "label": "10 to 30 %"
+     },
+     {
+      "color": "#D77A62",
+      "label": "30 to 60 %"
+     },
+     {
+      "color": "#B5362B",
+      "label": "60 % or more"
+     }
+    ]
+   },
+   "description": "Share of the ground covered by buildings in 2025, from the Global Human Settlement Layer (2025 is a JRC projection, not an observation).",
+   "source": "GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0)",
+   "chip": "2025 (projection)",
+   "n_tiles": 413,
+   "size_mb": 0.8
+  },
+  "wards": {
+   "id": "wards",
+   "kind": "vector",
+   "source_layer": "wards",
+   "title": "Wards",
+   "bounds": [
+    36.64987,
+    -1.45406,
+    37.11452,
+    -1.15011
+   ],
+   "tiles": "tiles/wards/{z}/{x}/{y}.pbf",
+   "minzoom": 8,
+   "maxzoom": 14,
+   "description": "Nairobi's 85 county assembly wards (IEBC boundaries, via the American Red Cross on HDX), with each ward's numbers.",
+   "source": "Wards: IEBC via American Red Cross, HDX (CC BY)",
+   "chip": "",
+   "legend": {},
+   "n_tiles": 489,
+   "size_mb": 0.4
+  },
+  "ward-labels": {
+   "id": "ward-labels",
+   "kind": "vector",
+   "source_layer": "ward-labels",
+   "title": "Ward names",
+   "bounds": [
+    36.64987,
+    -1.45406,
+    37.11452,
+    -1.15011
+   ],
+   "tiles": "tiles/ward-labels/{z}/{x}/{y}.pbf",
+   "minzoom": 8,
+   "maxzoom": 14,
+   "description": "",
+   "source": "Wards: IEBC via American Red Cross, HDX (CC BY)",
+   "chip": "",
+   "legend": {},
+   "n_tiles": 489,
+   "size_mb": 0.1
+  },
+  "places": {
+   "id": "places",
+   "kind": "vector",
+   "source_layer": "places",
+   "title": "Parks, forests and places",
+   "bounds": [
+    36.64987,
+    -1.45406,
+    37.11452,
+    -1.15011
+   ],
+   "tiles": "tiles/places/{z}/{x}/{y}.pbf",
+   "minzoom": 8,
+   "maxzoom": 14,
+   "description": "",
+   "source": "© OpenStreetMap contributors",
+   "chip": "",
+   "legend": {},
+   "n_tiles": 489,
+   "size_mb": 0.0
+  },
+  "buildings": {
+   "id": "buildings",
+   "kind": "vector",
+   "source_layer": "buildings",
+   "title": "Buildings by surface temperature",
+   "bounds": [
+    36.64987,
+    -1.45406,
+    37.11452,
+    -1.15011
+   ],
+   "tiles": "tiles/buildings/{z}/{x}/{y}.pbf",
+   "minzoom": 13,
+   "maxzoom": 16,
+   "description": "Each building footprint coloured by how much hotter or cooler its surroundings were than the city median on hot mornings. The value describes the area of about 100 m around the building, not the roof itself.",
+   "source": "Buildings: Overture Maps Foundation (ODbL and CDLA); Landsat 8 and 9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi",
+   "chip": "January to March mornings, 2023 to 2026",
+   "legend": {
+    "type": "classes",
+    "unit": "°C difference from the city median",
+    "note": "City median 38.7 °C (January to March mornings, 2023 to 2026)",
+    "classes": [
+     {
+      "color": "#1D4E6F",
+      "label": "−6 or cooler"
+     },
+     {
+      "color": "#3B7CA6",
+      "label": "−6 to −4"
+     },
+     {
+      "color": "#8DBAD6",
+      "label": "−4 to −2"
+     },
+     {
+      "color": "#C9DDE9",
+      "label": "−2 to −0.5"
+     },
+     {
+      "color": "#F2EFE9",
+      "label": "about the same"
+     },
+     {
+      "color": "#F6CBA6",
+      "label": "+0.5 to +2"
+     },
+     {
+      "color": "#F4A26B",
+      "label": "+2 to +4"
+     },
+     {
+      "color": "#D9542B",
+      "label": "+4 to +6"
+     },
+     {
+      "color": "#A1201A",
+      "label": "+6 or hotter"
+     }
+    ]
+   },
+   "n_tiles": 6533,
+   "size_mb": 68.7
+  },
+  "heat-cool-abs": {
+   "id": "heat-cool-abs",
+   "kind": "raster",
+   "title": "Land surface temperature, cool season (hot-season scale)",
+   "tiles": "tiles/heat-cool-abs/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "°C",
+    "note": "Same colours as the hot-season map",
+    "classes": [
+     {
+      "color": "#FFF7D6",
+      "label": "under 31.6"
+     },
+     {
+      "color": "#FEE391",
+      "label": "31.6 to 34.7"
+     },
+     {
+      "color": "#FEC44F",
+      "label": "34.7 to 37.7"
+     },
+     {
+      "color": "#FB9A29",
+      "label": "37.7 to 39.6"
+     },
+     {
+      "color": "#EC7014",
+      "label": "39.6 to 41.6"
+     },
+     {
+      "color": "#CC4C02",
+      "label": "41.6 to 43.3"
+     },
+     {
+      "color": "#8C2D04",
+      "label": "43.3 or more"
+     }
+    ]
+   },
+   "description": "Median land surface temperature on clear June to August mornings (4 Landsat scenes, 2018 to 2026), coloured with the same breaks as the January to March map so the two can be compared directly.",
+   "source": "Landsat 8 and 9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi",
+   "chip": "June to August mornings, 2018 to 2026",
+   "n_tiles": 1547,
+   "size_mb": 2.3
+  },
+  "s2-true": {
+   "id": "s2-true",
+   "kind": "raster",
+   "title": "Sentinel-2 true colour",
+   "tiles": "tiles/s2-true/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 16,
+   "bounds": [
+    36.64952,
+    -1.45412,
+    37.11481,
+    -1.1501
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "imagery",
+    "unit": "",
+    "classes": []
+   },
+   "description": "Nairobi as the eye would see it from space: a cloud-free median of Sentinel-2 images from January to March 2026, at 10 m.",
+   "source": "Contains modified Copernicus Sentinel data 2026, processed by Joto Mjini Nairobi",
+   "chip": "Sentinel-2, January to March 2026",
+   "n_tiles": 6579,
+   "size_mb": 37.8
+  },
+  "s2-false": {
+   "id": "s2-false",
+   "kind": "raster",
+   "title": "Sentinel-2 false colour (vegetation in green)",
+   "tiles": "tiles/s2-false/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 16,
+   "bounds": [
+    36.64952,
+    -1.45412,
+    37.11481,
+    -1.1501
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "imagery",
+    "unit": "",
+    "classes": []
+   },
+   "description": "The same images shown with shortwave infrared, near infrared and red light (bands 12, 8A and 4). Living vegetation shows bright green; roofs, roads and bare ground show purple-grey and pink.",
+   "source": "Contains modified Copernicus Sentinel data 2026, processed by Joto Mjini Nairobi",
+   "chip": "Sentinel-2, January to March 2026",
+   "n_tiles": 6579,
+   "size_mb": 32.4
+  }
+ }
+}

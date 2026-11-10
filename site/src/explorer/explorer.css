@@ -1,0 +1,73 @@
+/* Explorer dashboard (chunk 5): left panel about 320 px and the map filling the rest at about 80 % of the
+   screen height; on phones the map fills the width and the panel becomes a bottom sheet with two tabs. */
+.explorer { padding: 48px 0 24px; background: var(--paper); }
+.explorer__head h2 { margin: 0 0 4px; font-family: var(--sans); font-size: 30px; color: #1F2933; }
+.explorer__lede { font-family: var(--sans); font-size: 17px; color: var(--ink-2); margin: 0 0 14px; }
+.explorer__body { display: grid; grid-template-columns: 320px minmax(0, 1fr); height: 80vh; height: 80svh; min-height: 520px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.explorer__panel { position: relative; overflow-y: auto; padding: 14px 16px 18px; background: #FFFFFF; border-right: 1px solid var(--rule); font-family: var(--sans); font-size: 15px; line-height: 1.4; }
+.explorer__map { position: relative; height: 100%; }
+.explorer__sheet-toggle { display: none; }
+.explorer__source { margin-top: 8px; }
+
+.explorer .combo { min-width: 0; margin-bottom: 12px; }
+.explorer .combo label { font-size: 14px; }
+.explorer .combo input { font-size: 16px; padding: 7px 9px; border-radius: 2px; }
+.explorer .combo ul { border-radius: 0 0 2px 2px; }
+
+.explorer__tabs { display: flex; border-bottom: 1px solid var(--ink); margin-bottom: 10px; }
+.explorer__tabs [role="tab"] { flex: 1; padding: 7px 8px; font: 600 15px var(--sans); background: none; border: 0; border-bottom: 3px solid transparent; color: var(--ink-2); cursor: pointer; }
+.explorer__tabs [role="tab"][aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.explorer__tabs [role="tab"]:hover { color: var(--ink); background: #F5F2EC; }
+
+.ex-group { border: 0; padding: 0; margin: 0 0 12px; }
+.ex-group legend { font: 600 13px var(--sans); text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-2); padding: 0; margin-bottom: 4px; }
+.ex-basemaps { display: flex; gap: 16px; }
+.ex-layer { padding: 5px 0 6px; border-bottom: 1px solid #EEEAE2; }
+.ex-layer__top { display: flex; align-items: center; gap: 8px; }
+.ex-layer__top label { flex: 1; cursor: pointer; }
+.ex-layer input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); margin: 0; }
+.ex-opacity { width: calc(100% - 26px); margin: 4px 0 0 25px; accent-color: var(--accent); }
+.ex-opacity:disabled { opacity: 0.35; }
+.ex-desc { margin: 4px 0 2px 25px; font-size: 13.5px; color: var(--ink-2); }
+.ex-year { display: flex; gap: 8px; margin: 6px 0 0 25px; }
+.ex-year select { font: 15px var(--sans); padding: 3px 4px; border: 1px solid var(--ink-2); border-radius: 2px; background: #FFF; }
+.ex-btn { font: 600 14px var(--sans); padding: 5px 10px; color: var(--ink); background: #FFFFFF; border: 1px solid var(--ink); border-radius: 2px; cursor: pointer; }
+.ex-btn:hover { background: #F0ECE4; }
+.ex-btn[aria-pressed="true"] { background: var(--ink); color: #FFFFFF; }
+.ex-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.ex-msg { min-height: 1.3em; margin: 6px 0 0; font-size: 14px; color: var(--ink-2); word-break: break-all; }
+.ex-compare { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); }
+.ex-compare label { display: block; margin: 0 0 6px; font-weight: 600; font-size: 14px; }
+.ex-cmp-select { display: block; width: 100%; font: 14px var(--sans); padding: 4px; margin-top: 2px; }
+.ex-cmp-help { margin: 0 0 8px; font-size: 13.5px; color: var(--ink-2); }
+.ex-compare-maps { position: absolute; inset: 0; z-index: 3; }
+
+.ward-panel h3 { font: 600 22px/1.2 var(--serif); margin: 2px 0 2px; }
+.ward-panel__sub { margin: 0 0 8px; color: var(--ink-2); }
+.ward-panel__ranks { margin: 0 0 10px; padding-left: 1.1em; font-weight: 600; }
+.ward-panel__facts { display: grid; grid-template-columns: 1fr auto; gap: 5px 12px; margin: 0 0 10px; }
+.ward-panel__facts dt { color: var(--ink-2); }
+.ward-panel__facts dd { margin: 0; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.ward-panel__label { margin: 8px 0 4px; }
+.ward-panel__top { margin: 0 0 8px; padding-left: 1.3em; }
+.ward-panel__note, .ward-panel__notes p { font-size: 13.5px; color: var(--ink-2); margin: 6px 0; }
+.ward-panel__roof { border-left: 3px solid #D9542B; padding-left: 8px; color: var(--ink) !important; }
+.ward-panel__back { margin-top: 6px; }
+.linklike { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+
+.ex-popup .mapboxgl-popup-content { font: 14px/1.4 var(--sans); border-radius: 2px; padding: 10px 26px 10px 12px; }
+.ex-popup span { color: var(--ink-2); font-size: 13px; }
+
+@media (max-width: 767px) {
+  .explorer__body { display: block; position: relative; height: 88svh; min-height: 480px; }
+  .explorer__map { position: absolute; inset: 0; height: auto; }
+  .explorer__panel {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 44%; border-right: 0; border-top: 1px solid var(--ink);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); padding-top: 10px;
+  }
+  .explorer.is-sheet-open .explorer__panel { height: 82%; }
+  .explorer__sheet-toggle { display: block; position: absolute; top: 8px; right: 10px; z-index: 1; font: 600 13px var(--sans); padding: 3px 8px; background: #FFF; border: 1px solid var(--ink-2); border-radius: 2px; }
+  .explorer .combo { margin-right: 84px; }
+  .explorer__map .legend-card { top: 46px; bottom: auto; }
+  .explorer__map .mapboxgl-ctrl-top-right { display: none; }
+}

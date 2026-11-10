@@ -14,11 +14,8 @@
   "dependencies": {
     "@fontsource/source-sans-3": "5.3.1",
     "@fontsource/source-serif-4": "5.3.1",
-    "@protomaps/basemaps": "5.7.2",
     "d3": "7.9.2",
-    "maplibre-gl": "6.17.0",
-    "pmtiles": "4.5.0",
-    "scrollama": "3.2.0"
+    "mapbox-gl": "3.34.2"
   },
   "devDependencies": {
     "@playwright/test": "1.65.0",

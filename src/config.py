@@ -1,4 +1,4 @@
-"""Shared paths, constants and helpers for the Joto Mjini pipeline."""
+"""Shared paths, constants and helpers for the Joto Mjini Nairobi pipeline."""
 from __future__ import annotations
 
 import logging

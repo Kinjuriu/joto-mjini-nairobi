@@ -1,0 +1,21 @@
+group,ward_name,tree_pct,grass_pct,built_pct,bare_pct,diff_c,pop_weighted_lst_c
+hottest,Kangemi,11.2,0.5,85.5,0.7,3.7,42.4
+hottest,Viwandani,2.2,18.2,74.5,2.4,3.5,42.2
+hottest,Kabiro,5.7,0.5,92.0,1.1,3.1,41.8
+hottest,Dandora Area I,4.9,3.4,89.9,1.0,2.8,41.5
+hottest,Baba Dogo,8.1,6.6,73.4,4.2,2.7,41.4
+hottest,Imara Daima,3.7,3.7,87.0,2.3,2.6,41.3
+hottest,Kayole South,0.0,0.3,97.7,2.0,2.6,41.3
+hottest,Kariobangi North,4.6,5.0,82.0,2.6,2.6,41.3
+hottest,Kiamaiko,2.3,2.7,92.5,1.5,2.6,41.3
+hottest,Kawangware,14.1,2.7,77.2,1.0,2.6,41.3
+coolest,Waithaka,30.5,4.8,50.2,0.2,-1.3,37.4
+coolest,Roysambu,34.8,7.5,38.6,0.9,-1.6,37.1
+coolest,Uthiru/Ruthimitu,49.9,4.4,29.6,0.1,-1.7,37.0
+coolest,Parklands/Highridge,26.5,1.6,69.3,0.5,-2.0,36.7
+coolest,Kilimani,44.3,3.4,48.9,0.4,-2.1,36.6
+coolest,Kileleshwa,48.0,2.1,47.2,0.5,-2.3,36.4
+coolest,Mutu-ini,45.4,8.0,28.7,0.4,-2.7,36.0
+coolest,Karura,66.4,3.0,15.7,0.4,-4.3,34.4
+coolest,Kitisuru,59.8,7.2,15.0,0.9,-4.5,34.2
+coolest,Karen,57.8,13.8,12.8,0.3,-4.8,33.9

@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 12:10 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-10 13:02 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -74,7 +74,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Several of these wards are small; the ward boundaries come from a community-made layer (geoBoundaries ADM3), not from the IEBC directly. Ward populations are modelled, not census counts.
 - **Confidence:** Medium: the ranking is robust (ward totals add to within 2.4 % of the county total) but small differences (0.1 °C) between neighbouring ranks are not meaningful.
 
-### F8. People in the hottest fifth of wards lived on ground 4.7 °C hotter, with a tenth of the tree cover
+### F8. People in the hottest fifth of wards lived on ground 4.7 °C hotter, with about one seventh of the tree cover
 
 - **Sentence for the story:** Residents of the hottest fifth of wards lived, on average, on ground 4.7 °C hotter than residents of the coolest fifth (41.4 °C against 36.7 °C). Those hotter wards had 5.0 % tree cover; the cooler wards had 36.1 %.
 - **Number(s):** hottest fifth: 17 wards, about 655,000 people, 41.4 °C, tree cover 5.0 %, built-up 84.1 %, 21,200 people per km²; coolest fifth: 17 wards, about 1,311,000 people, 36.7 °C, tree cover 36.1 %, built-up 18.5 %, 3,800 people per km²; gap 4.7 °C; tree cover ratio 7.2
@@ -163,6 +163,56 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Script:** src/analysis/emissivity.py
 - **Caveats:** This test shows what the product assumes, not what the roofs are. ASTER GED is a 2000 to 2008 average at about 100 m, older than many roofs, and blends roofs with roads, soil and yards. Painted or rusted sheets have higher emissivity than new galvanised sheets. We have no roof material map, so the size of any bias per ward is unknown.
 - **Confidence:** Medium that a bias is possible (the emissivity used in the dense wards is no lower than elsewhere, so metal roofs are not accounted for); low on its size.
+
+### T1. How Nairobi filled in: built-up share of each sub-county, 1975 to 2025
+
+- **Sentence for the story:** Embakasi Central was the most built-up sub-county in 2020 (39.9 % of its ground covered by buildings); Langata, which includes part of Nairobi National Park, the least (6.1 %).
+- **Number(s):** largest rise 1975 to 2020: Embakasi Central, +22.0 percentage points; full table in analysis/tables/builtup_by_subcounty.csv
+- **Method:** GHSL built-up surface (km²) summed over the 90 m cells inside each sub-county (the 17 IEBC constituencies, dissolved from the ward layer), divided by the sub-county's area
+- **Data:** data/processed/rasters/ghsl_built_<year>.tif, data/processed/nairobi_wards.geojson
+- **Script:** src/analysis/tables_v2.py, builtup_by_subcounty
+- **Caveats:** GHSL measures the share of the ground under buildings, not all paved land; 2025 is a JRC projection.
+- **Confidence:** High for the arithmetic; medium for GHSL in dense informal areas.
+
+### T2. The hottest wards had about one eighth of the coolest wards' tree cover
+
+- **Sentence for the story:** The ten hottest wards where people live had 5.7 % tree cover on average; the ten coolest had 46.3 %.
+- **Number(s):** built-up share: hottest ten 85.2 %, coolest ten 35.6 %; per-ward values in analysis/tables/ward_cover_extremes.csv
+- **Method:** Wards ranked by population-weighted hot-season surface temperature; WorldCover 2021 class shares per ward (mean of the 30 m fractions); difference from the county median
+- **Data:** tree_fraction_30m.tif, grass_fraction_30m.tif, built_fraction_30m.tif, bare_fraction_30m.tif, ward_stats.csv
+- **Script:** src/analysis/tables_v2.py, ward_cover_extremes
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Association only. WorldPop may misplace people in Kibra (QUESTIONS 7).
+- **Confidence:** Medium.
+
+### T3. Daily highs since January 2023 compared with normal
+
+- **Sentence for the story:** Since May 2026, 81.3 % of days had a daily high air temperature above the 1991 to 2020 normal for that day. The highest daily maximum since January 2023 was 31.4 °C on 25 January 2026.
+- **Number(s):** mean difference from normal: since May 2026 1.7 °C, January 2023 to April 2026 1.4 °C; data 1 January 2023 to 9 November 2026
+- **Method:** 1991 to 2020 mean for each day of the year, smoothed with a 31-day circular window
+- **Data:** data/processed/nairobi_daily_air_temp.csv (Open-Meteo, ERA5)
+- **Script:** src/analysis/tables_v2.py, daily_anomaly
+- **Caveats:** Air temperature from a reanalysis for one point in central Nairobi, not measured surface temperature. The period before El Niño was also warmer than normal, so the El Niño months are not unusual on their own.
+- **Confidence:** High for the arithmetic; low for any link to El Niño.
+
+### A3. A day of heat: 27 January 2026
+
+- **Sentence for the story:** On 27 January 2026, the county's median land surface temperature in the Copernicus hourly data rose from 14.5 °C at 06:00 to 40.7 °C around midday.
+- **Number(s):** county median by hour (Nairobi time 06:00, 07:00, 08:00, 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00): 14.5, 15.3, 20.1, 26.5, 33.2, 37.7, 40.7, 38.4, 39.4, cloud, 33.0, 28.8, 23.3, 21.2 °C; check at the Landsat overpass hour (11:00): CLMS minus Landsat averaged to the CLMS cells, bias -1.75 °C, RMSE 2.69 °C, r 0.88, 190 cells
+- **Method:** CLMS Global LST hourly v3 (~3 km) via the Sentinel Hub Process API; sharpened to 30 m by adding the same morning's Landsat residual scaled by the day's heating (own implementation after Zlinszky 2026, Zenodo, doi:10.5281/zenodo.22944001; the record could not be retrieved, so only the general idea is followed)
+- **Data:** data/raw/clms_lst/2026-01-27/, Landsat scene LC09_L2SP_168061_20260127_02_T1
+- **Script:** src/pipeline/s9_clms_hourly.py, src/animations/render.py day()
+- **Caveats:** Land surface temperature, not air temperature. The hourly data is about 3 km; the fine pattern in the animation comes from one morning's Landsat scene and is assumed to scale with the day's heating. Cloud hides parts of the afternoon.
+- **Confidence:** Medium for the daily curve; low for fine detail away from the overpass time.
+
+### A1. Every clear hot-season morning, 2014 to 2026
+
+- **Sentence for the story:** The animation shows 35 clear January to March Landsat mornings from 3 February 2014 to 12 February 2026, each as a difference from that morning's county median.
+- **Number(s):** 35 scenes; 2 frames a second
+- **Method:** Usable scenes (at least 80 % of the county clear), months 1 to 3
+- **Data:** data/processed/landsat_scene_catalogue.csv, data/interim/landsat/*_lst_c.tif
+- **Script:** src/animations/render.py mornings()
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15).
+- **Confidence:** High.
 
 ## Optional findings (prompt 02, 'if time remains')
 

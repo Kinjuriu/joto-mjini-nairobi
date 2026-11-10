@@ -36,7 +36,7 @@ plt.rcParams.update({
 })
 TABLES = ROOT / "analysis" / "tables"
 SITE_FIG = ROOT / "site" / "public" / "figures"
-SOURCE_LST = "Source: USGS Landsat 8 and 9 Collection 2 via Microsoft Planetary Computer; analysis Joto Mjini."
+SOURCE_LST = "Source: USGS Landsat 8 and 9 Collection 2 via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi."
 
 
 def _head(fig, title: str, subtitle: str, source: str, top: float = 0.95):

@@ -1,4 +1,4 @@
-# Presentation outline: Joto Mjini (10 minutes)
+# Presentation outline: Joto Mjini Nairobi (10 minutes)
 
 For the workshop "Land, Food and Heat Resilience in Africa's Arid Regions", Sankara Hotel, Nairobi, 26 November 2026. Structure: Context, Action, Metric, Impact. Every number below is in `analysis/FINDINGS.md`; the finding number is in brackets. Bring the static figures in `outputs/figures/` and the screenshots in `outputs/screenshots/` in case there is no internet; the site also runs offline from a laptop with `cd site && npm run build && npx vite preview`.
 
@@ -15,7 +15,7 @@ Timing: about 1 minute per slide, with 1 minute spare for the live explorer.
 ## Slide 2. Action: what I built (1 minute)
 
 - **On screen:** the story's first screen (`outputs/screenshots/first_screen_1440.png`) beside the explorer (`outputs/screenshots/explorer_ward_1440.png`).
-- **Say:** Joto Mjini is an open data story and a ward explorer. Anyone can find their ward, see its surface temperature, tree cover and population, and compare it with the rest of the city. The structure follows NASA Earthdata's story on the 2025 Los Angeles fires.
+- **Say:** Joto Mjini Nairobi is an open data story and a ward explorer. Anyone can find their ward, see its surface temperature, tree cover and population, and compare it with the rest of the city. The structure follows NASA Earthdata's story on the 2025 Los Angeles fires.
 
 ## Slide 3. Action: which open data, and how (1 minute)
 

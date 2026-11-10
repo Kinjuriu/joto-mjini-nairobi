@@ -3,7 +3,7 @@ import nbformat as nbf
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
 cells = [
-md("""# 01. Data pipeline for Joto Mjini
+md("""# 01. Data pipeline for Joto Mjini Nairobi
 
 This notebook runs the pipeline in `src/pipeline/` step by step and shows a quick look at each output. Each step skips work that is already done, so running the notebook again is fast. To rebuild a step from scratch, run its script with `--force`, for example `uv run python -m src.pipeline.s2_landsat --force`.
 

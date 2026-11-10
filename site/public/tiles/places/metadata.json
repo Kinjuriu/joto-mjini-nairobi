@@ -1,0 +1,16 @@
+{
+"name": "/Users/stephanengugi/Desktop/joto-mjini/site/public/tiles/places",
+"description": "/Users/stephanengugi/Desktop/joto-mjini/site/public/tiles/places",
+"version": "2",
+"minzoom": "8",
+"maxzoom": "14",
+"center": "36.793213,-1.285293,14",
+"bounds": "36.704970,-1.386250,36.995330,-1.202840",
+"antimeridian_adjusted_bounds": "36.704970,-1.386250,36.995330,-1.202840",
+"type": "overlay",
+"tippecanoe_decisions": "{\"basezoom\":14,\"droprate\":1,\"retain_points_multiplier\":1}",
+"format": "pbf",
+"generator": "tippecanoe v2.79.0",
+"generator_options": "tippecanoe --output-to-directory /Users/stephanengugi/Desktop/joto-mjini/site/public/tiles/places --no-tile-compression --force -q -P -l places -Z8 -z14 -r1 --no-feature-limit /Users/stephanengugi/Desktop/joto-mjini/data/interim/tmppghq5dqb/places.geojson",
+"json": "{\"vector_layers\":[{\"id\":\"places\",\"description\":\"\",\"minzoom\":8,\"maxzoom\":14,\"fields\":{\"is_green\":\"Boolean\",\"kind\":\"String\",\"name\":\"String\"}}],\"tilestats\":{\"layerCount\":1,\"layers\":[{\"layer\":\"places\",\"count\":47,\"geometry\":\"Point\",\"attributeCount\":3,\"attributes\":[{\"attribute\":\"is_green\",\"count\":2,\"type\":\"boolean\",\"values\":[false,true]},{\"attribute\":\"kind\",\"count\":7,\"type\":\"string\",\"values\":[\"forest\",\"nature_reserve\",\"neighbourhood\",\"park\",\"quarter\",\"suburb\",\"water\"]},{\"attribute\":\"name\",\"count\":47,\"type\":\"string\",\"values\":[\"Buruburu\",\"Central Park\",\"City Park\",\"Dandora\",\"Eastleigh\",\"Gigiri\",\"Githurai\",\"Hurlingham\",\"Huruma\",\"Industrial Area\",\"Kangemi\",\"Karen\",\"Kariobangi\",\"Karura Forest\",\"Kasarani\",\"Kawangware\",\"Kayole\",\"Kibera\",\"Kileleshwa\",\"Kilimani\",\"Langata\",\"Lavington\",\"Mathare North\",\"Mukuru Kayaba Village\",\"Mukuru Kwa Njenga\",\"Mukuru Kwa Ruben\",\"Muthaiga\",\"Nairobi Arboretum\",\"Nairobi Dam\",\"Nairobi National Park\",\"Ngara\",\"Ngong Road Forest - Section 1\",\"Njiru\",\"Pangani\",\"Parklands\",\"Pumwani\",\"Riruta\",\"Roysambu\",\"Ruai\",\"Runda\",\"South B\",\"South C\",\"Uhuru Park\",\"Umoja\",\"Upper Hill\",\"Utawala\",\"Westlands\"]}]}]}}"
+}

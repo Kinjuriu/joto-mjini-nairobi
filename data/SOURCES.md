@@ -1,6 +1,6 @@
 # Data sources
 
-Every dataset used by Joto Mjini. All were accessed on 10 November 2026 (Africa/Nairobi) unless noted. Licences are as stated by the provider on that date; check them again before publishing.
+Every dataset used by Joto Mjini Nairobi. All were accessed on 10 November 2026 (Africa/Nairobi) unless noted. Licences are as stated by the provider on that date; check them again before publishing.
 
 ## Boundaries and places
 

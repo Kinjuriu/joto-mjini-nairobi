@@ -31,3 +31,6 @@ data/processed/kisumu/kisumu_buildings.parquet
 
 # macOS FUSE leftovers
 .fuse_hidden*
+
+# Sentinel-2 composites (over or near 50 MB; rebuild with src/pipeline/s8_sentinel2.py)
+data/processed/rasters/s2_*.tif

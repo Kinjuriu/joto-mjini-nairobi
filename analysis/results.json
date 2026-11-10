@@ -192,6 +192,71 @@
         "p75_c": 31.1
       }
     ],
+    "by_name": {
+      "bare": {
+        "code": 60,
+        "landcover": "Bare or sparse vegetation",
+        "n_cells": 8174,
+        "share_pct": 1.0,
+        "median_c": 41.4,
+        "p25_c": 39.7,
+        "p75_c": 43.1
+      },
+      "cropland": {
+        "code": 40,
+        "landcover": "Cropland",
+        "n_cells": 38202,
+        "share_pct": 4.9,
+        "median_c": 41.0,
+        "p25_c": 39.1,
+        "p75_c": 42.9
+      },
+      "grassland": {
+        "code": 30,
+        "landcover": "Grassland",
+        "n_cells": 235778,
+        "share_pct": 30.2,
+        "median_c": 40.1,
+        "p25_c": 37.9,
+        "p75_c": 43.3
+      },
+      "built-up": {
+        "code": 50,
+        "landcover": "Built-up",
+        "n_cells": 247452,
+        "share_pct": 31.7,
+        "median_c": 39.7,
+        "p25_c": 38.1,
+        "p75_c": 41.0
+      },
+      "shrubland": {
+        "code": 20,
+        "landcover": "Shrubland",
+        "n_cells": 82182,
+        "share_pct": 10.5,
+        "median_c": 36.8,
+        "p25_c": 34.7,
+        "p75_c": 39.2
+      },
+      "tree": {
+        "code": 10,
+        "landcover": "Tree cover",
+        "n_cells": 163907,
+        "share_pct": 21.0,
+        "median_c": 32.6,
+        "p25_c": 30.0,
+        "p75_c": 35.3
+      },
+      "water": {
+        "code": 80,
+        "landcover": "Water",
+        "n_cells": 4813,
+        "share_pct": 0.6,
+        "median_c": 28.3,
+        "p25_c": 26.5,
+        "p75_c": 31.1
+      }
+    },
     "mostly_built_median_c": 39.8,
     "mostly_tree_median_c": 31.9,
     "built_minus_tree_c": 7.8,
