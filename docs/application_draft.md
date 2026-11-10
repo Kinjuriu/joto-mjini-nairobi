@@ -11,9 +11,9 @@ This form is an application to attend. It does not ask you to submit a project; 
 5. **Type of organisation:** choose the one that is true for you. If you are independent, "Other" with "Independent data analyst" is the honest choice.
 6. **Areas of work:** Urban heat resilience and cooling; Policy, data or finance.
 7. **Countries of operation:** Kenya.
-8. **Brief description (99 words):**
+8. **Brief description (100 words):**
 
-   > Joto Mjini is an open data story, now in development, that maps urban heat and cooling inequality across Nairobi. It combines Landsat satellite land surface temperature with land cover, tree cover, building footprints and WorldPop population data to show which wards heat up most on hot days, how many people live in them, and how much cooler tree-covered areas such as Karura Forest stay. An interactive map will let residents, county planners and NGOs find their own ward and compare it with the rest of the city. The code, data sources and methods will be published openly on GitHub.
+   > Joto Mjini Nairobi is an open data story, now in development, that maps urban heat and cooling inequality across Nairobi. It combines Landsat satellite land surface temperature with land cover, tree cover, building footprints and WorldPop population data to show which wards heat up most on hot days, how many people live in them, and how much cooler tree-covered areas such as Karura Forest stay. An interactive map will let residents, county planners and NGOs find their own ward and compare it with the rest of the city. The code, data sources and methods will be published openly on GitHub.
 
    The description says "now in development" and "will", because the work is not finished yet. Update it if the prototype is live before you submit.
 

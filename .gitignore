@@ -25,3 +25,9 @@ site/dist/
 logs/*.log
 data/processed/nairobi_buildings.parquet
 data/processed/kisumu/kisumu_buildings.parquet
+
+# Local secrets (Mapbox token lives in site/.env.local)
+*.local
+
+# macOS FUSE leftovers
+.fuse_hidden*

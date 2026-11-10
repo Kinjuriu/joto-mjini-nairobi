@@ -1,10 +1,10 @@
-# Joto Mjini
+# Joto Mjini Nairobi
 
 **Mapping urban heat and cooling inequality across Nairobi.**
 
 A data story about urban heat in Nairobi: which parts of the city get hottest on hot days, who lives there, and how trees, open ground and roofs relate to that heat. It ends with an interactive map where anyone can find their ward and compare it with the rest of the city. Built for the Earthna and CIFF workshop "Land, Food and Heat Resilience in Africa's Arid Regions", Nairobi, 26 November 2026.
 
-"Joto Mjini" is the working name (Swahili for "heat in the city"). Other names considered: Nairobi's Heat Divide (kept as the story's headline frame), Nairobi Heat Atlas, Joto Atlas, Joto Map, Nairobi Joto Lab. To rename, search the project for "Joto Mjini" and replace it.
+"Joto Mjini Nairobi" is the working name (Swahili for "heat in the city"). Other names considered: Nairobi's Heat Divide (kept as the story's headline frame), Nairobi Heat Atlas, Joto Atlas, Joto Map, Nairobi Joto Lab. To rename, search the project for "Joto Mjini Nairobi" and replace it.
 
 This is a separate project from the El Niño urban overlay. The El Niño project can later reuse this pipeline's boundary, buildings and basemap and add rainfall.
 
@@ -24,7 +24,7 @@ This is a separate project from the El Niño urban overlay. The El Niño project
 5. **Install the permissions file.** Run this once in Terminal (the remote tools are not allowed to write into a `.claude` folder, so the file waits in `setup/`):
 
    ```
-   mkdir -p ~/Desktop/joto-mjini/.claude && mv ~/Desktop/joto-mjini/setup/claude-settings.json ~/Desktop/joto-mjini/.claude/settings.json
+   mkdir -p ~/Desktop/joto-mjini-nairobi/.claude && mv ~/Desktop/joto-mjini-nairobi/setup/claude-settings.json ~/Desktop/joto-mjini-nairobi/.claude/settings.json
    ```
 
    The file `.claude/settings.json` lets Opus run the data, Python and site commands without stopping to ask, and blocks `git push`, deleting files, `sudo` and reading `.env`. A few commands may still ask for approval; if the run stalls on one in the morning, approve it and tell Opus to continue.

@@ -1,10 +1,10 @@
-# CLAUDE.md: project rules for Joto Mjini
+# CLAUDE.md: project rules for Joto Mjini Nairobi
 
 Read this file in full at the start of every session. It overrides your defaults.
 
 ## What this project is
 
-**Joto Mjini** (Swahili for "heat in the city"), subtitle "Mapping urban heat and cooling inequality across Nairobi", is a data story about urban heat in Nairobi, Kenya. It maps which parts of the city get hottest on hot days, who lives there, and how trees, open ground and roofs relate to that heat. It ends with an interactive map where anyone can find their own ward and compare it with cooler parts of the city.
+**Joto Mjini Nairobi** (Swahili for "heat in the city"), subtitle "Mapping urban heat and cooling inequality across Nairobi", is a data story about urban heat in Nairobi, Kenya. It maps which parts of the city get hottest on hot days, who lives there, and how trees, open ground and roofs relate to that heat. It ends with an interactive map where anyone can find their own ward and compare it with cooler parts of the city.
 
 - **Owner:** Stephane, a data analyst and researcher based in Nairobi. She writes Python and reads code, and she will review everything you produce in the morning.
 - **Reviewer:** Tony Widjarnaso, a colleague with urban analysis experience, may review the work later. Never write that he has reviewed anything; that is for Stephane to add once it happens.
@@ -57,6 +57,8 @@ You are often running overnight with nobody watching. So:
 ## Design rules
 
 `DESIGN_RULES.md` is mandatory for any UI. Read it before writing UI code. The palette, typefaces and layout for this project are fixed in `prompts/03_story_site.md`; do not substitute your own.
+
+From v2 on, `prompts/v2/DESIGN_BRIEF_v2.md` defines the look and layout; where it conflicts with `prompts/03_story_site.md`, the v2 brief wins.
 
 ## Environment
 
