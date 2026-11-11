@@ -52,7 +52,7 @@ COOLWARM = LinearSegmentedColormap.from_list("joto_coolwarm", [
     (0.0, "#3E4DB7"), (0.17, "#6788EE"), (0.34, "#9ABBFF"), (0.5, "#EDEDED"),
     (0.66, "#F7A889"), (0.83, "#E26952"), (1.0, "#B40426")])
 COOLWARM.set_bad("#FFFFFF", 0)
-BUILT = LinearSegmentedColormap.from_list("joto_built", ["#FFFFFF", "#C8CDEE", "#8A93D8", "#3E4DB7", "#1E2766"])
+BUILT = LinearSegmentedColormap.from_list("joto_built", ["#EEF0F4", "#C8CDEE", "#8A93D8", "#3E4DB7", "#1E2766"])
 BUILT.set_bad("#FFFFFF", 0)
 LABELS = ["Westlands", "Karura Forest", "Industrial Area", "Kibera", "Karen", "Kasarani", "Dandora", "Ruai",
           "Nairobi National Park"]

@@ -210,3 +210,10 @@ img { max-width: 100%; height: auto; display: block; }
 .layers-page__view { display: flex; gap: 6px; align-items: center; padding: 2px 0; }
 .layers-page__view span { width: 90px; }
 .layers-page__view button { font: 13px var(--sans); padding: 2px 8px; border: 1px solid var(--ink-2); background: #FFF; border-radius: 2px; cursor: pointer; }
+
+/* Section links in the header bar: plain links, underline on hover (standard navigation). */
+.masthead__nav { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-left: auto; }
+.masthead__nav a { color: #FFFFFF; font: 600 15px/1.4 var(--sans); text-decoration: none; padding: 2px 0; border-bottom: 2px solid transparent; }
+.masthead__nav a:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+.masthead__nav a:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+@media (max-width: 760px) { .masthead__nav { margin-left: 0; width: 100%; } }

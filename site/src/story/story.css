@@ -111,3 +111,22 @@
   .card { width: 330px; padding: 18px 20px 14px; font-size: 16px; }
   .card__title { font-size: 22px; }
 }
+
+/* 11 November 2026: animations and the season pair at full width, text underneath (Stephane's request). */
+.interlude .split.split--stack { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.split--stack .split__text { max-width: 760px; }
+#seasons .split__text { order: 2; }
+#seasons .split__media { order: 1; }
+
+/* The hottest and coolest wards, one chart under the other. */
+.ward-blocks { display: grid; gap: 28px; }
+.ward-blocks img { width: 100%; height: auto; border: 1px solid var(--rule); }
+
+/* Story opening, written by Stephane. */
+.story-lede { margin: 28px 0 22px; padding-top: 16px; border-top: 3px solid var(--brand); }
+.story-lede__title { font-family: var(--sans); font-size: 26px; margin: 0 0 10px; }
+
+/* Resources */
+.resources { padding-top: 8px; }
+.resources__list { padding-left: 1.1em; font-family: var(--sans); font-size: 17px; }
+.resources__list li { margin-bottom: 8px; }

@@ -53,3 +53,12 @@ Choices made during unattended runs, with the reason. Newest at the bottom.
 - **D46 Look.** White page; brand blue rgb(63,121,173) for the header bar, card rules, legend card top border and selected buttons; NASA-style legend card with a collapse button. Line chart rgb(62,7,81) with the El Niño period in rgb(121,193,233). The swipe map now compares the satellite image with the heat layer ("What lies under the heat"), because the season pair already sits above it with numbers.
 - **D47 Animations.** Re-rendered with `src/animations/render_nasa.py` as plain data plots in the style of NASA's HRRR and TEMPO animations: title, "Valid:" time stamp, latitude and longitude axes, county and ward outlines, colour bar with units, credit; blue-to-red ramp with cool end rgb(62,77,183). The day of heat now shows the raw CLMS hourly values (about 3 km) over the Nairobi region, without Landsat sharpening. The day-by-day calendar was replaced with a month-by-year table (47 cells, value printed in each) that keeps the El Niño bracket. Heatmap tables no longer stretch to the page width. The autoplay rule in DESIGN_RULES.md now allows looping data animations (Stephane's change).
 - Old source files and media are in `_trash/v2_before_claude_fixes/` and `_trash/media_v2/`.
+
+## D48 (2026-11-11). Layout changes after Stephane's second review
+
+- The season pair image and the three animations now span the full width, with their text underneath.
+- "How Nairobi filled in" is sideways: one row per year, one column per sub-county, column names at 45 degrees.
+- New ward block charts (`src/animations/ward_blocks.py`): the ten hottest and ten coolest wards where people live, each ward drawn as its own block filled with 30 m hot-season land surface temperature, one shared purple-to-yellow scale (matplotlib "plasma"), 1 km or 500 m bar per block. Placed before the land cover table, which covers the same 20 wards.
+- Header bar has section links (Story, Explore the map, Resources, Methods); a story opening placeholder sits under the intro; a new Resources section lists every download, the animations and the GitHub repository.
+- "Nairobi grows": land inside the county with no buildings is now pale grey instead of white, so early years no longer look blank.
+- Preconnect hints for the Mapbox and EOX tile hosts, so imagery starts loading sooner.

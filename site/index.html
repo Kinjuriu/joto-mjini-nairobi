@@ -6,6 +6,8 @@
   <title>Joto Mjini Nairobi: Nairobi's heat divide</title>
   <meta name="description" content="On hot mornings, the ground in central Nairobi is {{q2.gap_c|c}} hotter than in its forests. A data story about land surface temperature, trees and people across Nairobi's 85 wards.">
   <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://api.mapbox.com" crossorigin>
+  <link rel="preconnect" href="https://tiles.maps.eox.at" crossorigin>
   <script>document.documentElement.classList.remove('no-js');</script>
   <script type="module" src="/src/main.js"></script>
 </head>
@@ -15,11 +17,17 @@
   <header class="masthead">
     <a class="wordmark" href="#top">Joto Mjini Nairobi</a>
     <span class="tagline">Mapping urban heat and cooling inequality across Nairobi</span>
+    <nav class="masthead__nav" aria-label="Sections">
+      <a href="#story">Story</a>
+      <a href="#explore">Explore the map</a>
+      <a href="#resources">Resources</a>
+      <a href="#methods">Methods</a>
+    </nav>
   </header>
 
   <main id="top">
     <!-- 1. Short intro (NASA: frontmatter and opening prose). Nothing else above the first map. -->
-    <section class="intro col">
+    <section class="intro col" id="story">
       <p class="kicker">Nairobi's heat divide</p>
       <h1>On hot mornings, central Nairobi's ground is {{q2.gap_c|c}} hotter than its forests</h1>
       <p class="dek">Land surface temperature measured by the Landsat 8 and 9 satellites on clear mornings, January to March, 2023 to 2026</p>
@@ -27,6 +35,10 @@
       <div class="prose">
         <p>On clear January to March mornings, half of Nairobi County's ground was hotter than {{q1.county_median_c|c}} at the surface. The hottest tenth of the land averaged {{q1.hottest10pct_land_mean_c|c}}; the coolest tenth averaged {{q1.coolest10pct_land_mean_c|c}}.</p>
         <p>We checked {{q0.n_scenes_searched|raw}} Landsat 8 and 9 passes over Nairobi between {{q0.first_scene|date}} and {{q0.last_scene|date}}; {{q0.n_scenes_usable|raw}} were clear enough to use. The satellites pass at about {{q0.overpass_local|raw}} in the morning, Nairobi time.</p>
+        <div class="story-lede" id="story-text">
+          <h2 class="story-lede__title">[[COPY: section heading for the story, for example "Why Nairobi's heat is uneven"]]</h2>
+          <p>[[COPY: the opening of the story in your own words: two or three short paragraphs on who feels Nairobi's heat, where, and why it matters now]]</p>
+        </div>
         <p class="aside"><strong>Surface temperature or air temperature?</strong> [[COPY: four sentences explaining that satellites measure how hot the ground, roofs and roads are, which is different from the air temperature people feel]]</p>
       </div>
     </section>
@@ -45,7 +57,7 @@
 
     <!-- 3. Interlude 1: animation and land cover table (chunk 4), paired maps beside bullets, swipe map -->
     <section class="interlude" id="interlude-1" aria-label="The same places, morning after morning">
-      <div class="split wide" id="anim-mornings">
+      <div class="split split--stack wide" id="anim-mornings">
         <figure class="anim split__media">
           <div class="anim__frame">
             <video controls muted loop playsinline preload="none" poster="media/hot_mornings_poster.png" width="1600" height="1000" aria-label="Animated map of every clear hot-season morning from 2014 to 2026, coloured by difference from that morning's county median">
@@ -62,6 +74,14 @@
           <p>The hottest clear Landsat morning since 2013 was {{composites.hottest_clear_day.date|date}}, when the county median surface temperature was {{composites.hottest_clear_day.county_median_c|c}}.</p>
         </div>
       </div>
+
+      <figure class="wide figure" id="ward-blocks">
+        <div class="ward-blocks">
+          <img src="figures/wards_hottest.png" alt="Ten small maps, one per ward, of the ten hottest wards where people live: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo, Imara Daima, Kariobangi North, Kawangware, Kayole South and Kiamaiko. Almost all of their ground is orange and yellow, 41 to 42 °C where people live, with tree cover between 0 and 14 percent." width="1760" height="1243" loading="lazy">
+          <img src="figures/wards_coolest.png" alt="Ten small maps of the ten coolest wards where people live: Karen, Kitisuru, Karura, Mutu-ini, Kileleshwa, Kilimani, Parklands/Highridge, Uthiru/Ruthimitu, Roysambu and Waithaka. Most of their ground is purple, 34 to 37 °C where people live, with tree cover between 26 and 66 percent." width="1760" height="1243" loading="lazy">
+        </div>
+        <figcaption class="caption">Each ward is drawn at its own scale, with a 1 km or 500 m bar. Both charts use the same colour scale, so a purple patch in Karen and a purple patch in Kangemi are the same temperature. Ranked by surface temperature where people live (weighted by WorldPop 2025 population). <span class="source">Data: USGS Landsat 8 and 9 via Microsoft Planetary Computer; WorldPop 2025; ESA WorldCover 2021; IEBC ward boundaries via American Red Cross, HDX. Graphic: Joto Mjini Nairobi.</span></figcaption>
+      </figure>
 
       <div class="split wide split--table" id="landcover-table">
         <div class="split__text">
@@ -80,7 +100,7 @@
         </figure>
       </div>
 
-      <div class="split wide">
+      <div class="split split--stack wide" id="seasons">
         <div class="split__text">
           <div class="rule" aria-hidden="true"></div>
           <h2>The same places were hot in both seasons</h2>
@@ -123,7 +143,7 @@
 
     <!-- 5. Interlude 2: animations, heatmap tables and the highlighted chart (chunk 4) -->
     <section class="interlude" id="interlude-2" aria-label="Growth, a day of heat and the 2026 season">
-      <div class="split wide" id="anim-growth">
+      <div class="split split--stack wide" id="anim-growth">
         <figure class="anim split__media">
           <div class="anim__frame">
             <video controls muted loop playsinline preload="none" poster="media/nairobi_grows_poster.png" width="1600" height="1000" aria-label="Animated map of Nairobi's built-up surface from 1975 to 2025">
@@ -143,14 +163,14 @@
 
       <figure class="wide figure" id="builtup-table">
         <h3 class="chart-title">How Nairobi filled in, 1975 to 2025</h3>
-        <p class="chart-subtitle">Share of each sub-county's ground covered by buildings (%), Global Human Settlement Layer. *2025 is a projection.</p>
+        <p class="chart-subtitle">Share of each sub-county's ground covered by buildings (%), Global Human Settlement Layer. One row per year, one column per sub-county. *2025 is a projection.</p>
         <div class="chart chart--table" data-chart="builtup" data-title="Built-up share of each sub-county, 1975 to 2025">
           <noscript><p>The table needs JavaScript. The same numbers are in <a href="data/builtup_by_subcounty.csv">builtup_by_subcounty.csv</a>.</p></noscript>
         </div>
         <figcaption class="caption">{{x.tables_v2.builtup_by_subcounty.most_built_2020|raw}} was the most built-up sub-county in 2020 ({{x.tables_v2.builtup_by_subcounty.most_built_2020_pct|pct}} of its ground); {{x.tables_v2.builtup_by_subcounty.least_built_2020|raw}}, which includes part of Nairobi National Park, the least ({{x.tables_v2.builtup_by_subcounty.least_built_2020_pct|pct}}). <span class="source">Source: GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0); sub-counties: IEBC constituencies via American Red Cross, HDX. Analysis: Joto Mjini Nairobi. <a href="data/builtup_by_subcounty.csv">Download the data</a>.</span></figcaption>
       </figure>
 
-      <div class="split wide" id="anim-day">
+      <div class="split split--stack wide" id="anim-day">
         <figure class="anim split__media">
           <div class="anim__frame">
             <video controls muted loop playsinline preload="none" poster="media/day_of_heat_poster.png" width="1600" height="1000" aria-label="Animated map of land surface temperature hour by hour on 27 January 2026">
@@ -229,6 +249,32 @@
     </section>
 
     <!-- 7. Methods and credits -->
+    <section class="col prose resources" id="resources" aria-labelledby="resources-title">
+      <h2 id="resources-title">Resources</h2>
+      <p>Everything behind this story is free to download and reuse with credit.</p>
+      <h3>Data tables and maps</h3>
+      <ul class="resources__list">
+        <li><a href="data/wards.geojson" download>wards.geojson</a>: every ward's surface temperature, population, tree cover and ranks (GeoJSON, for QGIS or any web map)</li>
+        <li><a href="data/top_wards.csv" download>top_wards.csv</a>: the hottest wards where people live (CSV)</li>
+        <li><a href="data/ward_cover_extremes.csv" download>ward_cover_extremes.csv</a>: land cover in the 10 hottest and 10 coolest wards (CSV)</li>
+        <li><a href="data/builtup_by_subcounty.csv" download>builtup_by_subcounty.csv</a>: built-up share of each sub-county, 1975 to 2025 (CSV)</li>
+        <li><a href="data/lst_by_landcover.csv" download>lst_by_landcover.csv</a> and <a href="data/lst_by_tree_band.csv" download>lst_by_tree_band.csv</a>: surface temperature by land cover and by tree cover (CSV)</li>
+        <li><a href="data/park_rings.csv" download>park_rings.csv</a>: surface temperature of built-up land at set distances from parks and forests (CSV)</li>
+        <li><a href="data/daily_tmax_anomaly.csv" download>daily_tmax_anomaly.csv</a>: Nairobi's daily high air temperature and the 1991 to 2020 normal since January 2023 (CSV)</li>
+      </ul>
+      <h3>Animations and figures</h3>
+      <ul class="resources__list">
+        <li>Every clear hot-season morning: <a href="media/hot_mornings.gif" download>GIF</a>, <a href="media/hot_mornings.mp4" download>MP4</a></li>
+        <li>Nairobi grows, 1975 to 2025: <a href="media/nairobi_grows.gif" download>GIF</a>, <a href="media/nairobi_grows.mp4" download>MP4</a></li>
+        <li>A day of heat, 27 January 2026: <a href="media/day_of_heat.gif" download>GIF</a>, <a href="media/day_of_heat.mp4" download>MP4</a></li>
+        <li>The hottest and coolest wards: <a href="figures/wards_hottest.png" download>hottest (PNG)</a>, <a href="figures/wards_coolest.png" download>coolest (PNG)</a></li>
+      </ul>
+      <h3>Code</h3>
+      <p>The data pipeline, the analysis and this site are open source on GitHub: <a href="https://github.com/Kinjuriu/joto-mjini-nairobi">github.com/Kinjuriu/joto-mjini-nairobi</a>.</p>
+      <h3>Sources</h3>
+      <p>The full list of data sources, licences and the method is in <a href="#methods">Methods, data and credits</a> below.</p>
+    </section>
+
     <section class="col prose methods" id="methods">
       <h2>Methods, data and credits</h2>
       <h3>How a satellite reads heat</h3>
@@ -262,12 +308,12 @@
         <li>Industrial Area outline, parks and forests: © OpenStreetMap contributors (ODbL).</li>
         <li>Daily air temperature: Open-Meteo historical weather API (Zippenfenig 2023, <a href="https://doi.org/10.5281/zenodo.7970649">doi:10.5281/zenodo.7970649</a>), ERA5 reanalysis (Hersbach et al. 2020), Copernicus Climate Change Service. CC BY 4.0.</li>
         <li>El Niño index: Relative Oceanic Niño Index, NOAA Climate Prediction Center.</li>
-        <li>Basemaps: © Mapbox © OpenStreetMap contributors. Satellite imagery © Mapbox and its providers.</li>
+        <li>Basemaps: © Mapbox © OpenStreetMap contributors. Satellite imagery: <a href="https://s2maps.eu">Sentinel-2 cloudless 2023 by EOX IT Services GmbH</a> (contains modified Copernicus Sentinel data 2023), CC BY-NC-SA 4.0; Mapbox satellite imagery when available.</li>
       </ul>
       <h3>How to cite this story</h3>
       <p>Stephane [surname] (2026). Joto Mjini Nairobi: Mapping urban heat and cooling inequality across Nairobi. [URL]. Accessed [date].</p>
       <h3>Code</h3>
-      <p>The data pipeline and this site are open source: [repository link].</p>
+      <p>The data pipeline and this site are open source: <a href="https://github.com/Kinjuriu/joto-mjini-nairobi">github.com/Kinjuriu/joto-mjini-nairobi</a>.</p>
       <h3>Acknowledgements</h3>
       <p>This story was prepared for the workshop "Land, Food and Heat Resilience in Africa's Arid Regions" in Nairobi on 26 November 2026, hosted by the Earthna Center for a Sustainable Future with the Children's Investment Fund Foundation. The hosts did not commission or review this work. The structure of the story follows NASA Earthdata's "Fanning the Flames" story on the 2025 Los Angeles wildfires.</p>
     </section>

@@ -14,7 +14,7 @@ const diffColour = (v) => DIFF_COLOURS[DIFF_BREAKS.filter((b) => v >= b).length]
 /**
  * Generic table: rows x cols, value(row, col) -> number, colour(col) -> scale fn, fmt(col) -> string fn.
  */
-function drawTable(el, { rows, cols, value, colour, fmt, describe, rowLabelWidth = 150, cell = 52, cellH = 30, groupBreak }) {
+function drawTable(el, { rows, cols, value, colour, fmt, describe, rowLabelWidth = 150, cell = 52, cellH = 30, groupBreak, rotate = false }) {
   el.querySelectorAll('noscript').forEach((n) => n.remove());
   const detail = detailLine(el, 'Tap a cell, or focus the table and use the arrow keys, to read a value.');
   let cur = [0, 0];
@@ -23,17 +23,22 @@ function drawTable(el, { rows, cols, value, colour, fmt, describe, rowLabelWidth
     const lw = width < 520 ? Math.min(rowLabelWidth, 112) : rowLabelWidth;
     const cw = Math.max(34, Math.min(cell, Math.floor((width - lw - 4) / cols.length)));
     const ch = width < 520 ? Math.max(24, cellH - 4) : cellH;
-    const headH = 44;
+    const headH = rotate ? 112 : 44;
     const gap = groupBreak !== undefined ? 14 : 0;
     const height = headH + rows.length * ch + gap + 4;
-    const W = lw + cols.length * cw + 2;
+    const W = lw + cols.length * cw + 2 + (rotate ? 96 : 0);
     const svg = select(el).insert('svg', '.chart-detail').attr('viewBox', `0 0 ${W} ${height}`).attr('width', W)
       .attr('class', 'heatmap').attr('role', 'grid').attr('tabindex', 0)
       .attr('aria-label', `${el.dataset.title || 'Table'}. Use the arrow keys to move between cells.`);
     const yOf = (i) => headH + i * ch + (groupBreak !== undefined && i >= groupBreak ? gap : 0);
     cols.forEach((c, j) => {
-      svg.append('text').attr('class', 'heatmap__col').attr('x', lw + j * cw + cw / 2).attr('y', headH - 10)
-        .attr('text-anchor', 'middle').text(c.label);
+      if (rotate) {
+        svg.append('text').attr('class', 'heatmap__col').attr('text-anchor', 'start')
+          .attr('transform', `translate(${lw + j * cw + cw / 2 - 2},${headH - 8}) rotate(-45)`).text(c.label);
+      } else {
+        svg.append('text').attr('class', 'heatmap__col').attr('x', lw + j * cw + cw / 2).attr('y', headH - 10)
+          .attr('text-anchor', 'middle').text(c.label);
+      }
       if (c.label2) svg.append('text').attr('class', 'heatmap__col heatmap__col--2').attr('x', lw + j * cw + cw / 2).attr('y', headH - 26).attr('text-anchor', 'middle').text(c.label2);
     });
     rows.forEach((r, i) => {
@@ -77,14 +82,15 @@ export async function builtupTable(el) {
   const subs = [...new Set(data.map((d) => d.subcounty))];
   const get = new Map(data.map((d) => [`${d.subcounty}|${d.epoch}`, d.built_pct]));
   const sc = scaleQuantize().domain([0, 42]).range(NEUTRAL_TO_RED);
+  // Sideways (11 November 2026): one row per year, one column per sub-county, so the table fills the width.
   drawTable(el, {
-    rows: subs.map((s) => ({ label: s, key: s })),
-    cols: epochs.map((e) => ({ label: e === 2025 ? '2025*' : String(e), key: e })),
-    value: (r, c) => get.get(`${r.key}|${c.key}`),
+    rows: epochs.map((e) => ({ label: e === 2025 ? '2025*' : String(e), key: e })),
+    cols: subs.map((s) => ({ label: s, key: s })),
+    value: (r, c) => get.get(`${c.key}|${r.key}`),
     colour: () => sc,
     fmt: () => (v) => v.toFixed(0),
-    describe: (r, c, v) => `${r.key}, ${c.key}${c.key === 2025 ? ' (JRC projection)' : ''}: ${v.toFixed(1)} % of the ground built up.`,
-    rowLabelWidth: 140, cell: 46, cellH: 26,
+    describe: (r, c, v) => `${c.key}, ${r.key}${r.key === 2025 ? ' (JRC projection)' : ''}: ${v.toFixed(1)} % of the ground built up.`,
+    rowLabelWidth: 56, cell: 64, cellH: 34, rotate: true,
   });
 }
 
