@@ -115,6 +115,17 @@ export async function wardCoverTable(el) {
       + `${c.key === 'diff_c' ? `${sign(v)} °C from the city median, where people live` : `${v.toFixed(1)} ${c.unit}`}.`,
     rowLabelWidth: 170, cell: 48, cellH: 24, groupBreak: 10,
   });
+  // Colour key under the table (12 November 2026).
+  const ramp = (cols) => cols.map((c) => `<span style="background:${c}"></span>`).join('');
+  const key = document.createElement('div');
+  key.className = 'table-key';
+  key.innerHTML = `<div><span class="table-key__name">Trees</span><span class="table-key__ramp">${ramp(GREENS)}</span></div>`
+    + `<div><span class="table-key__name">Grass, bare ground</span><span class="table-key__ramp">${ramp(SANDS)}</span></div>`
+    + `<div><span class="table-key__name">Built-up</span><span class="table-key__ramp">${ramp(NEUTRAL_TO_RED)}</span></div>`
+    + '<p class="table-key__ends"><span>0 %</span><span>share of the ward\'s land</span><span>100 %</span></p>'
+    + `<div><span class="table-key__name">vs median</span><span class="table-key__ramp">${ramp(DIFF_COLOURS)}</span></div>`
+    + '<p class="table-key__ends"><span>cooler</span><span>°C from the city median</span><span>hotter</span></p>';
+  el.after(key);
 }
 
 /** Table 3: month by month since January 2023, average daily high air temperature minus the 1991 to 2020

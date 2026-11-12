@@ -103,19 +103,30 @@
       <div class="split split--stack wide" id="seasons">
         <div class="split__text">
           <div class="rule" aria-hidden="true"></div>
-          <h2>The same places were hot in both seasons</h2>
-          <ul class="facts">
-            <li><strong>January to March:</strong> county median {{q1.county_median_c|c}}</li>
-            <li><strong>June to August:</strong> county median {{q1.cool_season_county_median_c|c}}</li>
-            <li><strong>Ward rank correlation between the seasons:</strong> {{q1.hot_cool_ward_spearman|raw}}</li>
-            <li><strong>Cool season:</strong> {{q0.n_cool_scenes|raw}} clear scenes from {{q0.cool_first_year|raw}} to 2026</li>
-          </ul>
-          <p>In the cooler June to August months the county median surface temperature was {{q1.cool_season_county_median_c|c}}, against {{q1.county_median_c|c}} in January to March. The places that were hot in one season were mostly hot in the other.</p>
+          <h2>The same neighbourhoods are the hottest in both dry seasons</h2>
+          <p>Nairobi has two dry seasons: a hot one from January to March and a cool one from June to August. In the cool season the whole city's ground is cooler (county median {{q1.cool_season_county_median_c|c}}, against {{q1.county_median_c|c}} in the hot season). But look at where the red is in the two maps below: the centre, the east and Ruai are hot in both, and Karura, Karen and the forests are cool in both. Ranked by surface temperature, the wards fall in a similar order in both seasons (rank correlation {{q1.hot_cool_ward_spearman|raw}}, where 1 would be the same order and 0 no link).</p>
         </div>
-        <figure class="split__media figure">
-          <img src="figures/v2_pair_hot_cool.png" alt="Two maps of Nairobi County on one colour scale. In January to March most of the east and centre is dark orange; in June to August the same places are the warmest, but the colours are lighter." width="2400" height="1080" loading="lazy">
-          <figcaption class="caption">Land surface temperature on clear mornings, median of the clear Landsat scenes in each season, on one colour scale. <span class="source">Source: USGS Landsat 8 and 9 Collection 2 via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi.</span></figcaption>
-        </figure>
+        <div class="season-pair">
+          <figure class="anim">
+            <div class="anim__frame">
+              <video controls muted loop playsinline preload="none" poster="media/seasons_hot_poster.png" width="1600" height="1000" aria-label="Animated map, one frame per year from 2023 to 2026, of the hot dry season, January to March, as the difference from that season's county median">
+                <source src="media/seasons_hot.webm" type="video/webm">
+                <source src="media/seasons_hot.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="caption"><strong>Hot dry season, January to March,</strong> 2023 to 2026. 2024 had one clear morning.</figcaption>
+          </figure>
+          <figure class="anim">
+            <div class="anim__frame">
+              <video controls muted loop playsinline preload="none" poster="media/seasons_cool_poster.png" width="1600" height="1000" aria-label="Animated map, one frame per year from 2018 to 2026, of the cool dry season, June to August, as the difference from that season's county median">
+                <source src="media/seasons_cool.webm" type="video/webm">
+                <source src="media/seasons_cool.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="caption"><strong>Cool dry season, June to August,</strong> 2018 to 2026. Only 2018, 2020, 2024 and 2026 had a clear morning; the other years show an empty map.</figcaption>
+          </figure>
+        </div>
+        <p class="caption"><span class="source">Data: USGS Landsat 8 and 9 Collection 2 Level-2 via Microsoft Planetary Computer. Each map is the median of that season's clear mornings, shown as the difference from that season's county median, so the colours show which places are hotter or cooler than the rest of the city. Graphic: Joto Mjini Nairobi. GIFs: <a href="media/seasons_hot.gif">hot season</a>, <a href="media/seasons_cool.gif">cool season</a>.</span></p>
       </div>
 
       <figure class="figure full">
@@ -171,19 +182,18 @@
       </figure>
 
       <div class="split split--stack wide" id="anim-day">
-        <figure class="anim split__media">
-          <div class="anim__frame">
-            <video controls muted loop playsinline preload="none" poster="media/day_of_heat_poster.png" width="1600" height="1000" aria-label="Animated map of land surface temperature hour by hour on 27 January 2026">
-              <source src="media/day_of_heat.webm" type="video/webm">
-              <source src="media/day_of_heat.mp4" type="video/mp4">
-            </video>
+        <figure class="split__media figure">
+          <h3 class="chart-title">On 27 January 2026, Nairobi's ground warmed by about 26 °C between sunrise and noon</h3>
+          <p class="chart-subtitle">Land surface temperature each hour, Nairobi time: the median inside Nairobi County and the median of the land around it. Open circles: hours when more than half of the area was under cloud, so fewer readings went into the median.</p>
+          <div class="chart" data-chart="day-heat" data-title="A day of heat, hour by hour">
+            <noscript><p>The chart needs JavaScript. The data is in <a href="data/day_of_heat_hourly.csv">day_of_heat_hourly.csv</a>.</p></noscript>
           </div>
-          <figcaption class="caption">Land surface temperature every hour from 06:00 to 19:00 Nairobi time on {{x.animations.day.date|date}}, across Nairobi County (outlined) and the land around it. Each square of colour is about 3 km across, so this shows the region, not neighbourhoods. White areas were under cloud. <span class="source">Data: Copernicus Land Monitoring Service, Global Land Surface Temperature hourly v3, via the Copernicus Data Space Ecosystem. Graphic: Joto Mjini Nairobi. <a href="media/day_of_heat.gif">GIF version</a>.</span></figcaption>
+          <figcaption class="caption">Each reading covers a square about 3 km across, so this shows the city and the plains around it, not single neighbourhoods. At noon the dry plains around Nairobi were hotter than the county itself. <span class="source">Data: Copernicus Land Monitoring Service, Global Land Surface Temperature hourly v3, via the Copernicus Data Space Ecosystem. Graphic: Joto Mjini Nairobi. <a href="data/day_of_heat_hourly.csv">Download the data</a>; <a href="media/day_of_heat.gif">map version (GIF)</a>.</span></figcaption>
         </figure>
         <div class="split__text">
           <div class="rule" aria-hidden="true"></div>
           <h2>[[COPY: heading for the day of heat]]</h2>
-          <p>[[COPY: two short paragraphs: the ground warms fast after sunrise, peaks around midday, and the same places stay hotter all day. Say that the hourly data is about 3 km, so it shows the region around Nairobi, not neighbourhoods]]</p>
+          <p>[[COPY: two short paragraphs: the ground warms fast after sunrise, peaks around midday, and cools after 15:00. Say that the hourly data is about 3 km, so it shows the region around Nairobi, not neighbourhoods]]</p>
         </div>
       </div>
 

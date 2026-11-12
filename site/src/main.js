@@ -53,6 +53,7 @@ const charts = {
   builtup: async (el) => (await import('./charts/heatmap.js')).builtupTable(el),
   calendar: async (el) => (await import('./charts/heatmap.js')).calendar(el),
   air: async (el) => (await import('./charts/air.js')).airChart(el),
+  'day-heat': async (el) => (await import('./charts/dayheat.js')).dayHeat(el),
 };
 document.querySelectorAll('[data-chart]').forEach((el) => whenNear(el, charts[el.dataset.chart] || (async () => {})));
 

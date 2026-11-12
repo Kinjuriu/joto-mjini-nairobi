@@ -10,6 +10,15 @@ import { CHAPTERS } from './chapters.js';
 
 const MOBILE = window.matchMedia('(max-width: 767px)');
 
+/** "Hottest tenth of the land: 44.9 °C" -> {text, value} from the chapter's own card, so numbers are never typed twice. */
+function fact(chId, name) {
+  const li = [...document.querySelectorAll(`#ch-${chId} .card__facts li`)].find((x) => x.querySelector('strong')?.textContent.startsWith(name));
+  if (!li) return null;
+  const value = li.textContent.slice(li.querySelector('strong').textContent.length).trim();
+  const m = value.match(/−?-?\d+(\.\d+)?\s*°C/);
+  return { name, value, c: m ? Number(m[0].replace('−', '-').replace(/[^\d.-]/g, '')) : null };
+}
+
 const padding = () => (MOBILE.matches
   ? { top: 120, bottom: Math.round(window.innerHeight * 0.44), left: 0, right: 0 }
   // Desktop and tablet: keep the place clear of the card (card width plus its 40 px margin and a gap).
@@ -49,10 +58,14 @@ export async function initStory(blocks) {
       const near = prev && prev.block === ch.block && Math.abs(CHAPTERS.indexOf(prev) - CHAPTERS.indexOf(ch)) === 1;
       applied = id;
       cards.forEach((c) => c.classList.toggle('is-active', c.dataset.chapter === id));
-      legend.show(ch.legend, { title: ch.legendTitle });
+      const markers = (ch.legendMarkers || []).map((n) => fact(ch.id, n)).filter((f) => f && f.c !== null)
+        .map((f) => ({ c: f.c, label: `${f.name}: ${f.value}` }));
+      legend.show(ch.legend, { title: ch.legendTitle, markers });
       chip.set(ch.chip);
       await ctl.setChapter({
         basemap: ch.basemap, layers: ch.layers, highlight: ch.highlight || [],
+        groups: ch.groups, labelWards: ch.labelWards, top: ch.top,
+        pulses: (ch.pulses || []).map((p) => { const f = fact(ch.id, p.fact); return { ...p, label: f ? `${f.name}: ${f.value}<br><small>${p.place}</small>` : p.fact }; }),
         center: ch.center, zoom: MOBILE.matches ? ch.mobileZoom : (window.innerWidth < 1100 ? ch.zoom - 0.6 : ch.zoom), padding: padding(),
       }, { instant: !near });
     }

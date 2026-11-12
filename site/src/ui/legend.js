@@ -3,6 +3,22 @@
 
 let uid = 0;
 
+// Position of a difference (°C from the city median) on the 9-class diverging strip, in percent.
+const BREAKS = [-6, -4, -2, -0.5, 0.5, 2, 4, 6];
+function stripPos(d) {
+  const edges = [-8, ...BREAKS, 8];
+  const i = Math.max(0, Math.min(8, edges.findIndex((e, k) => d >= e && d < edges[k + 1])));
+  return ((i + (d - edges[i]) / (edges[i + 1] - edges[i])) / 9) * 100;
+}
+/** Marks on the colour bar for averages that are not places (for example the average resident's ground). */
+function markersHTML(markers, median) {
+  if (!markers?.length || median == null) return '';
+  return `<ul class="legend-card__markers">${markers.map((mk, i) => {
+    const pos = Math.max(2, Math.min(98, stripPos(mk.c - median)));
+    return `<li style="--pos:${pos}%" class="legend-card__marker legend-card__marker--${i}"><span class="legend-card__marker-tick"></span>${mk.label}</li>`;
+  }).join('')}</ul>`;
+}
+
 /** Card with layer name, an "i" button for the description and source, swatches and units. */
 export class LegendCard {
   constructor(container, manifest) {
@@ -38,6 +54,7 @@ export class LegendCard {
         + '<div class="legend-card__ticks" aria-hidden="true"><span style="left:11.1%">−6</span><span style="left:33.3%">−2</span>'
         + '<span style="left:50%">0</span><span style="left:66.7%">+2</span><span style="left:88.9%">+6</span></div>'
         + '<div class="legend-card__ends" aria-hidden="true"><span>Cooler</span><span>Hotter</span></div>'
+        + markersHTML(opts.markers, m.median_c)
         + `<ul class="sr-only">${classes.map((c) => `<li>${c.label}</li>`).join('')}</ul>`;
     } else {
       body = `<ul class="legend-card__list">${classes.map((c) => `<li><span class="legend-card__sw" style="background:${c.color}"></span>${c.label}</li>`).join('')}</ul>`;

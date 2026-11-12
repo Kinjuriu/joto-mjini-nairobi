@@ -32,7 +32,10 @@ const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-labe
 export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'growth-1990-2020',
   'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
   'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
-  'county-mask', 'wards-line', 'county-line'];
+  'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'forests'];
+
+// Chapter-level styling added 12 November 2026: only some ward names, ward groups, pulsing circles.
+const inNames = (names) => ['in', ['get', 'ward_name'], ['literal', names]];
 
 const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity' };
 
@@ -302,7 +305,7 @@ export class MapController {
   setLayers(layers, ms = FADE_MS) {
     const want = new Map(layers.map((l) => (typeof l === 'string' ? [l, 1] : [l.id, l.opacity ?? 1])));
     // The ward highlight is controlled by highlightWards(), not by the chapter's layer list.
-    for (const id of [...this.state.keys()]) if (id !== 'ward-highlight' && id !== 'county-mask' && !want.has(id) && this.state.get(id) > 0) this.setLayerOpacity(id, 0, ms);
+    for (const id of [...this.state.keys()]) if (!['ward-highlight', 'highlight-labels', 'county-mask'].includes(id) && !want.has(id) && this.state.get(id) > 0) this.setLayerOpacity(id, 0, ms);
     for (const [id, op] of want) this.setLayerOpacity(id, op, ms);
     this.reorder(DEFAULT_ORDER);
   }
@@ -320,7 +323,15 @@ export class MapController {
     const quick = instant || this.reduced;
     if (ch.basemap) this.setBasemap(ch.basemap);
     if (ch.highlight !== undefined) this.highlightWards(ch.highlight || []);
+    this.setGroups(ch.groups || null);
     this.setLayers(ch.layers || [], quick ? 0 : FADE_MS);
+    this.setLabelFilter(ch.labelWards || null);
+    for (const id of ch.top || []) {   // chapter-specific stacking, for example tree cover above the ward groups
+      const sp = this.specs.get(id);
+      const before = this.map.getLayer('ward-dim') ? 'ward-dim' : this.firstSymbolId();
+      if (sp) sp.layers.forEach((l) => this.map.getLayer(l.id) && this.map.moveLayer(l.id, before));
+    }
+    this.setPulses(ch.pulses || []);
     if (ch.center) {
       const cam = { center: ch.center, zoom: ch.zoom, bearing: 0, pitch: 0, padding: ch.padding || { top: 0, bottom: 0, left: 0, right: 0 } };
       if (quick) this.map.jumpTo(cam);
@@ -338,9 +349,49 @@ export class MapController {
     }
   }
 
+  /** Show only these ward names (null: all). */
+  setLabelFilter(names) {
+    const f = names ? inNames(names) : null;
+    const sp = this.specs.get('ward-labels');
+    if (!sp) return;
+    sp.layers.forEach((l) => { l.filter = f; if (this.map.getLayer(l.id)) this.map.setFilter(l.id, f); });
+  }
+
+  /** Colour two groups of wards (for example the five hottest and five coolest) and dim the rest. */
+  setGroups(g) {
+    this.groups = g;
+    const names = g ? [...g.hot, ...g.cool] : [];
+    for (const id of ['ward-groups', 'ward-dim']) {
+      if (!g && !this.specs.has(id)) continue;
+      this.use(id);
+      const f = id === 'ward-dim' ? ['!', inNames(names)] : inNames(names);
+      this.specs.get(id).layers.forEach((l) => { l.filter = f; if (this.map.getLayer(l.id)) this.map.setFilter(l.id, f); });
+      if (this.map.getLayer('ward-groups')) {
+        this.map.setPaintProperty('ward-groups', 'fill-color', g ? ['case', inNames(g.hot), '#C2311F', '#2F6E99'] : '#000000');
+      }
+    }
+  }
+
+  /** Pulsing circles with a label (heat divide chapter). Still under reduced motion (CSS). */
+  setPulses(list) {
+    (this.pulses || []).forEach((m) => m.remove());
+    this.pulses = list.map((p) => {
+      const el = document.createElement('div');
+      el.className = `pulse pulse--${p.tone}`;
+      el.innerHTML = `<span class="pulse__ring"></span><span class="pulse__ring pulse__ring--2"></span><span class="pulse__dot"></span>`
+        + `<span class="pulse__label">${p.label}</span>`;
+      el.setAttribute('aria-hidden', 'true');
+      return new mapboxgl.Marker({ element: el, anchor: 'center' }).setLngLat(p.at).addTo(this.map);
+    });
+  }
+
   highlightWards(names) {
     this.highlight = names;
-    if (!names.length) { if (this.state.get('ward-highlight')) this.setLayerOpacity('ward-highlight', 0, 0); return; }
+    if (!names.length) {
+      if (this.state.get('ward-highlight')) this.setLayerOpacity('ward-highlight', 0, 0);
+      if (this.state.get('highlight-labels')) this.setLayerOpacity('highlight-labels', 0, 0);
+      return;
+    }
     this.use('ward-highlight');
     const f = ['in', ['get', 'ward_name'], ['literal', names]];
     for (const l of this.specs.get('ward-highlight').layers) {
@@ -348,6 +399,9 @@ export class MapController {
       if (this.map.getLayer(l.id)) this.map.setFilter(l.id, f);
     }
     this.setLayerOpacity('ward-highlight', 1, 0);
+    this.use('highlight-labels');
+    this.specs.get('highlight-labels').layers.forEach((l) => { l.filter = f; if (this.map.getLayer(l.id)) this.map.setFilter(l.id, f); });
+    this.setLayerOpacity('highlight-labels', 1, 0);
   }
 
   onChange(fn) { this.listeners.push(fn); }
@@ -415,9 +469,45 @@ export const OVERLAYS = {
     sourceId: 'src-wards', source: vec('wards'), beforeLabels: false,
     layers: () => [
       { id: 'ward-highlight-halo', type: 'line', 'source-layer': 'wards', filter: ['in', ['get', 'ward_name'], ['literal', []]],
-        paint: { 'line-color': '#FFFFFF', 'line-width': 5 } },
+        paint: { 'line-color': '#FFFFFF', 'line-width': 9 } },
       { id: 'ward-highlight', type: 'line', 'source-layer': 'wards', filter: ['in', ['get', 'ward_name'], ['literal', []]],
-        paint: { 'line-color': ACCENT, 'line-width': 2.5 } }],
+        paint: { 'line-color': '#1C2530', 'line-width': 4.5 } }],
+  },
+  'highlight-labels': {
+    source: vec('ward-labels'), beforeLabels: false,
+    layers: () => [{ id: 'highlight-labels', type: 'symbol', 'source-layer': 'ward-labels', filter: ['in', ['get', 'ward_name'], ['literal', []]],
+      layout: { 'text-field': ['get', 'ward_name'], 'text-font': FONT_BOLD, 'text-size': 22, 'text-transform': 'uppercase',
+        'text-letter-spacing': 0.05, 'text-allow-overlap': true, 'text-ignore-placement': true },
+      paint: { 'text-color': '#1C2530', 'text-halo-color': '#FFFFFF', 'text-halo-width': 3 } }],
+  },
+  'ward-groups': {
+    sourceId: 'src-wards', source: vec('wards'),
+    layers: () => [{ id: 'ward-groups', type: 'fill', 'source-layer': 'wards', maxOpacity: 0.55, filter: ['in', ['get', 'ward_name'], ['literal', []]],
+      paint: { 'fill-color': '#000000' } }],
+  },
+  'ward-dim': {
+    sourceId: 'src-wards', source: vec('wards'),
+    layers: () => [{ id: 'ward-dim', type: 'fill', 'source-layer': 'wards', maxOpacity: 0.72, paint: { 'fill-color': '#0B1620' } }],
+  },
+  'forest-mask': {
+    source: (c) => {
+      const src = { type: 'geojson', data: { type: 'FeatureCollection', features: [] } };
+      fetch(abs('data/forests.geojson')).then((r) => r.json()).then((g) => {
+        const holes = g.features.filter((f) => f.properties.kind === 'forest').map((f) => f.geometry.coordinates[0].slice().reverse());
+        c.map.getSource('src-forest-mask')?.setData({ type: 'Feature', properties: {},
+          geometry: { type: 'Polygon', coordinates: [[[20, -15], [50, -15], [50, 15], [20, 15], [20, -15]], ...holes] } });
+      });
+      return src;
+    },
+    layers: () => [{ id: 'forest-mask', type: 'fill', maxOpacity: 0.62, paint: { 'fill-color': '#0B1620' } }],
+  },
+  forests: {
+    source: () => ({ type: 'geojson', data: abs('data/forests.geojson') }), beforeLabels: false,
+    layers: () => [
+      { id: 'forests-line', type: 'line', filter: ['==', ['get', 'kind'], 'forest'], paint: { 'line-color': '#FFFFFF', 'line-width': 3 } },
+      { id: 'forests-label', type: 'symbol', filter: ['==', ['get', 'kind'], 'label'],
+        layout: { 'text-field': ['get', 'name'], 'text-font': FONT_BOLD, 'text-size': 20, 'text-allow-overlap': true, 'text-max-width': 9 },
+        paint: { 'text-color': '#123B22', 'text-halo-color': '#FFFFFF', 'text-halo-width': 3 } }],
   },
   buildings: {
     source: vec('buildings'),

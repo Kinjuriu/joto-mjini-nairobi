@@ -115,8 +115,6 @@
 /* 11 November 2026: animations and the season pair at full width, text underneath (Stephane's request). */
 .interlude .split.split--stack { grid-template-columns: minmax(0, 1fr); gap: 18px; }
 .split--stack .split__text { max-width: 760px; }
-#seasons .split__text { order: 2; }
-#seasons .split__media { order: 1; }
 
 /* The hottest and coolest wards, one chart under the other. */
 .ward-blocks { display: grid; gap: 28px; }
@@ -130,3 +128,23 @@
 .resources { padding-top: 8px; }
 .resources__list { padding-left: 1.1em; font-family: var(--sans); font-size: 17px; }
 .resources__list li { margin-bottom: 8px; }
+
+/* Small bars inside a card (A growing city). */
+.card__bars { margin: 10px 0 4px; }
+.card__bar { display: grid; grid-template-columns: 42px 1fr auto; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 15px; }
+.card__bar-label { font-weight: 600; }
+.card__bar-track { height: 14px; background: #EEF0F4; }
+.card__bar-fill { display: block; height: 100%; background: #B5362B; }
+.card__bar-value { font-variant-numeric: tabular-nums; }
+
+/* Colour key under the ward cover table. */
+.table-key { font-family: var(--sans); font-size: 13.5px; color: var(--ink-2); max-width: 420px; margin: 10px 0 4px; }
+.table-key > div { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 8px; margin-bottom: 4px; }
+.table-key__name { color: var(--ink); font-weight: 600; }
+.table-key__ramp { display: flex; height: 12px; border: 1px solid rgba(0, 0, 0, 0.12); }
+.table-key__ramp span { flex: 1; }
+.table-key__ends { display: flex; justify-content: space-between; margin: 0 0 8px 138px; font-size: 12.5px; }
+
+/* The two dry seasons side by side (stacked on phones). */
+.season-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 860px) { .season-pair { grid-template-columns: 1fr; } }

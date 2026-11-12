@@ -60,3 +60,31 @@
   .map-coords { display: none; }
   .date-chip { top: 10px; font-size: 13px; max-width: calc(100% - 100px); }
 }
+
+/* Averages marked on the colour bar (12 November 2026). Arrows line up with the strip above. */
+.legend-card__markers { list-style: none; margin: 4px 0 0; padding: 0; }
+.legend-card__marker { position: relative; padding-top: 11px; margin-bottom: 4px; font-size: 12.5px; line-height: 1.3; color: var(--ink); }
+.legend-card__marker-tick { position: absolute; top: 0; left: var(--pos); transform: translateX(-50%); width: 0; height: 0;
+  border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 9px solid #1C2530; }
+.legend-card__marker--1 .legend-card__marker-tick { border-bottom-color: #3F79AD; }
+.legend-card__marker--1 { color: #2C5A84; }
+
+/* Pulsing circles (heat divide). The pulse shows where the card's numbers are on the map; it stops under
+   reduced motion. Hand-built: two rings growing and fading, as in the Ebola tracker. */
+.pulse { position: relative; width: 22px; height: 22px; pointer-events: none; }
+.pulse__dot { position: absolute; inset: 4px; border-radius: 50%; border: 2.5px solid #FFFFFF; }
+.pulse--hot .pulse__dot { background: #A1201A; }
+.pulse--cool .pulse__dot { background: #1D4E6F; }
+.pulse__ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid #FFFFFF; animation: pulse-ring 2.2s ease-out infinite; }
+.pulse__ring--2 { animation-delay: 1.1s; }
+@keyframes pulse-ring { from { transform: scale(1); opacity: 0.95; } to { transform: scale(4.2); opacity: 0; } }
+.pulse__label {
+  position: absolute; bottom: 46px; left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center;
+  background: #FFFFFF; color: var(--ink); font: 600 14px/1.3 var(--sans); padding: 6px 10px; border: 2px solid; border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.pulse__label small { font-weight: 400; color: var(--ink-2); font-size: 12.5px; }
+.pulse--hot .pulse__label { border-color: #A1201A; }
+.pulse--cool .pulse__label { border-color: #1D4E6F; }
+@media (prefers-reduced-motion: reduce) { .pulse__ring { animation: none; transform: scale(2.2); opacity: 0.6; } .pulse__ring--2 { display: none; } }
+@media (max-width: 767px) { .pulse__label { font-size: 12px; bottom: 40px; } }

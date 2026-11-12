@@ -62,3 +62,16 @@ Choices made during unattended runs, with the reason. Newest at the bottom.
 - Header bar has section links (Story, Explore the map, Resources, Methods); a story opening placeholder sits under the intro; a new Resources section lists every download, the animations and the GitHub repository.
 - "Nairobi grows": land inside the county with no buildings is now pale grey instead of white, so early years no longer look blank.
 - Preconnect hints for the Mapbox and EOX tile hosts, so imagery starts loading sooner.
+
+## D49 (2026-11-12). Third review round
+
+- Forests chapter: the three forests (Karura, the Nairobi Arboretum, Ngong Road Forest sections 1 to 4) are outlined from OSM polygons (`site/public/data/forests.geojson`), labelled, and everything else is dimmed.
+- Heat divide: pulsing circles on the largest patch of the hottest tenth (near Ruai, mostly open dry ground) and coolest tenth (Karura Forest) of the land, found in the hot-season median with a 1.2 km moving window; labels read their numbers from the card. Rings stop under reduced motion. Approved from a sketch on 12 November.
+- Ward cover table has a colour key.
+- Season pair replaced with two animations, one frame per year: hot dry season 2023 to 2026 (2024 had one clear morning) and cool dry season 2018 to 2026 (clear mornings only in 2018, 2020, 2024, 2026; other years shown empty). Each frame is the difference from that season's county median, so the pattern can be compared. Title states the finding; rank correlation 0.75 described as "a similar order".
+- Leafy and dense: Kawangware and Kileleshwa outlined thickly with large labels; other ward names hidden.
+- Who lives on the hottest ground (and the heat view after it): only the ten hottest wards where people live are named. The two averages (average resident 39.4 °C, all county land 38.1 °C) are arrows on the legend colour bar, since they are averages, not places.
+- A growing city: two steps, 1990 and 2020, on the same GHSL scale, with small bars (66 and 101 km²); the sentence about yearly temperature readings was dropped.
+- Ward by ward: only the five hottest (red) and five coolest (blue) wards where people live, tree cover in green, other wards dimmed and unnamed. New numbers in `analysis/results_extra.json` (`wards_top5`): hottest five 41.9 °C, tree cover 6 %; coolest five 35.0 °C, 56 %.
+- Day of heat: the 3 km map animation (which looked broken because of cloud gaps) is replaced by an hour-by-hour line chart, county median against the land around it (`site/public/data/day_of_heat_hourly.csv`); hours with under half the area clear are open circles. At midday the dry plains around the county were hotter than the county itself.
+- Hot mornings animation: a soft calendar (month grid, day circled in brand blue) replaces the "Valid:" date; time and county median sit under it. Approved from a sketch, softened at Stephane's request.

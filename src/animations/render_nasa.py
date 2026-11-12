@@ -94,7 +94,7 @@ class Frame:
     """One figure reused for every frame: only the image, the time stamp and the counter change."""
 
     def __init__(self, title, subtitle, credit, bounds, cmap, vmin, vmax, cb_label, cb_ticks, cb_ticklabels=None,
-                 extend="both", interpolation="bilinear", labels=LABELS, wards=True, nodata_note=None):
+                 extend="both", interpolation="bilinear", labels=LABELS, wards=True, nodata_note=None, calendar=False):
         self.fig = plt.figure(figsize=(W / DPI, H / DPI), dpi=DPI, facecolor="white")
         f = self.fig
         f.text(0.035, 0.945, title, fontsize=27, fontweight="semibold", color=INK, va="baseline")
@@ -102,7 +102,9 @@ class Frame:
         self.valid = f.text(0.965, 0.945, "", fontsize=24, fontweight="semibold", color=INK, ha="right", va="baseline")
         self.sub = f.text(0.965, 0.905, "", fontsize=18, color=INK, ha="right", va="baseline", fontweight="semibold")
         f.text(0.035, 0.016, credit, fontsize=12.5, color=INK2, va="baseline")
-        ax = f.add_axes([0.06, 0.17, 0.88, 0.70])
+        # With a calendar (12 November 2026), the map moves left and a date picker sits on the right.
+        ax = f.add_axes([0.035, 0.17, 0.70, 0.70] if calendar else [0.06, 0.17, 0.88, 0.70])
+        self.cal = f.add_axes([0.77, 0.47, 0.195, 0.40]) if calendar else None
         x0, y0, x1, y1 = bounds
         self.im = ax.imshow(np.full((10, 10), np.nan), extent=(x0, x1, y0, y1), origin="upper", cmap=cmap, vmin=vmin,
                             vmax=vmax, interpolation=interpolation, zorder=1)
@@ -141,8 +143,34 @@ class Frame:
             f.text(0.773, 0.116, nodata_note, fontsize=13, color=INK2, va="center")
         self.counter = f.text(0.965, 0.87, "", fontsize=17, color=INK, ha="right", va="baseline", fontweight="semibold")
 
-    def render(self, data, valid, sub="", counter="") -> np.ndarray:
+    def draw_calendar(self, ts):
+        """A friendly date picker: soft rounded card, light blue header, the day in a brand-blue circle."""
+        import calendar as cal
+        from matplotlib.patches import Circle, FancyBboxPatch
+        c = self.cal
+        c.clear(); c.set_xlim(0, 7); c.set_ylim(0, 8.6); c.axis("off")
+        c.add_patch(FancyBboxPatch((0.12, -0.05), 6.9, 8.4, boxstyle="round,pad=0,rounding_size=0.55", fc="#E6EBF1", ec="none"))
+        c.add_patch(FancyBboxPatch((0.05, 0.05), 6.9, 8.4, boxstyle="round,pad=0,rounding_size=0.55", fc="white", ec="#DCE3EA", lw=1))
+        c.add_patch(FancyBboxPatch((0.05, 6.95), 6.9, 1.5, boxstyle="round,pad=0,rounding_size=0.55", fc="#E3EDF7", ec="none"))
+        c.add_patch(FancyBboxPatch((0.05, 6.95), 6.9, 0.7, boxstyle="square,pad=0", fc="#E3EDF7", ec="none"))
+        c.text(3.5, 7.75, f"{cal.month_name[ts.month]} {ts.year}", fontsize=19, fontweight="semibold", color="#2C5A84", ha="center", va="center")
+        for i, wd in enumerate("SMTWTFS"):
+            c.text(i + 0.5, 6.35, wd, fontsize=11.5, color="#8A94A2", ha="center", va="center")
+        for r, wk in enumerate(cal.Calendar(firstweekday=6).monthdayscalendar(ts.year, ts.month)):
+            for i, day in enumerate(wk):
+                if not day:
+                    continue
+                yy = 5.45 - r * 1.0
+                on = day == ts.day
+                if on:
+                    c.add_patch(Circle((i + 0.5, yy), 0.43, fc="#3F79AD", ec="none"))
+                c.text(i + 0.5, yy, str(day), fontsize=13, color="white" if on else "#4A5563", ha="center", va="center",
+                       fontweight="semibold" if on else "normal")
+
+    def render(self, data, valid, sub="", counter="", date=None) -> np.ndarray:
         self.im.set_data(data)
+        if self.cal is not None and date is not None:
+            self.draw_calendar(date)
         self.valid.set_text(valid)
         self.sub.set_text(sub)
         self.counter.set_text(counter)
@@ -219,7 +247,10 @@ def mornings() -> dict:
                "Land surface temperature on each clear January to March morning, difference from that morning's county median",
                "Data: USGS Landsat 8 and 9 Collection 2 Level-2, via Microsoft Planetary Computer. Graphic: Joto Mjini Nairobi.",
                bounds, COOLWARM, -8, 8, "Difference from the county median that morning (°C)", [-8, -6, -4, -2, 0, 2, 4, 6, 8],
-               ["−8", "−6", "−4", "−2", "0", "+2", "+4", "+6", "+8"], nodata_note="No data (cloud)")
+               ["−8", "−6", "−4", "−2", "0", "+2", "+4", "+6", "+8"], nodata_note="No data (cloud)", calendar=True)
+    # The time and the county median sit under the calendar.
+    fr.valid.set_position((0.8675, 0.43)); fr.valid.set_ha("center"); fr.valid.set_fontsize(22)
+    fr.sub.set_position((0.8675, 0.395)); fr.sub.set_ha("center"); fr.sub.set_fontsize(15)
     frames, dates = [], []
     for _, r in sel.iterrows():
         p = ROOT / "data" / "interim" / "landsat" / f"{r.scene_id}_lst_c.tif"
@@ -231,7 +262,7 @@ def mornings() -> dict:
             continue
         d = np.where(ok, v - np.nanmedian(v[ok]), np.nan)
         ts = pd.Timestamp(r.datetime_nairobi)
-        frames.append(fr.render(d, f"Valid: {ts.day} {ts:%b %Y}, {ts:%H:%M} EAT", f"County median {np.nanmedian(v[ok]):.1f} °C"))
+        frames.append(fr.render(d, f"{ts:%H:%M} EAT", f"County median that morning {np.nanmedian(v[ok]):.1f} °C", date=ts))
         dates.append(r.date)
     poster = dates.index("2026-01-27") if "2026-01-27" in dates else len(frames) - 1
     info = write("hot_mornings", frames, fps=2, poster=poster)
@@ -276,7 +307,53 @@ def growth() -> dict:
     return info
 
 
+# ---------------------------------------------------------------- 4. the two seasons, year by year
+def seasons() -> dict:
+    """One frame per year for each dry season, as the difference from that season's county median, so the
+    pattern (which places are hottest) can be compared across years and seasons. Years with no clear Landsat
+    morning get an empty frame that says so."""
+    cat = pd.read_csv(ROOT / "data" / "processed" / "landsat_scene_catalogue.csv")
+    cat["m"] = cat["date"].str[5:7].astype(int)
+    cat["y"] = cat["date"].str[:4].astype(int)
+    bounds = (36.64, -1.46, 37.12, -1.155)
+    w, h = 900, 572
+    county = to_grid_mask(bounds, w, h)
+    out = {}
+    for key, months, years, name, label in [
+            ("hot", [1, 2, 3], range(2023, 2027), "seasons_hot", "Hot dry season, January to March"),
+            ("cool", [6, 7, 8], range(2018, 2027), "seasons_cool", "Cool dry season, June to August")]:
+        fr = Frame(f"{label}, year by year",
+                   "Land surface temperature on clear mornings, difference from that season's county median",
+                   "Data: USGS Landsat 8 and 9 Collection 2 Level-2, via Microsoft Planetary Computer. Graphic: Joto Mjini Nairobi.",
+                   bounds, COOLWARM, -8, 8, "Difference from the county median (°C)", [-8, -4, 0, 4, 8],
+                   ["−8", "−4", "0", "+4", "+8"], nodata_note="No data (cloud)")
+        frames, log = [], []
+        for y in years:
+            sel = cat[cat["usable"] & cat["m"].isin(months) & (cat["y"] == y)]
+            stack = []
+            for _, r in sel.iterrows():
+                pth = ROOT / "data" / "interim" / "landsat" / f"{r.scene_id}_lst_c.tif"
+                if pth.exists():
+                    stack.append(to_grid(pth, bounds, w, h))
+            if stack:
+                v = np.nanmedian(np.stack(stack), axis=0)
+                ok = county & np.isfinite(v)
+                d = np.where(ok, v - np.nanmedian(v[ok]), np.nan)
+                sub = f"{len(stack)} clear morning{'s' if len(stack) > 1 else ''}, county median {np.nanmedian(v[ok]):.1f} °C"
+            else:
+                d = np.full((h, w), np.nan)
+                sub = "No clear morning this season"
+            frames += [fr.render(d, f"Valid: {y}", sub)] * 3      # each year held for 1.5 s at 2 fps
+            log.append(dict(year=y, n=len(stack)))
+        valid_idx = [i for i, l in enumerate(log) if l["n"]]
+        out[key] = write(name, frames, fps=2, poster=3 * valid_idx[-1]) | {"years": log}
+        plt.close(fr.fig)
+    return out
+
+
 if __name__ == "__main__":
     todo = sys.argv[1:] or ["day", "mornings", "growth"]
-    res = {k: {"day": day, "mornings": mornings, "growth": growth}[k]() for k in todo}
-    (OUT / "render_nasa.json").write_text(json.dumps(res, indent=1, default=str))
+    res = {k: {"day": day, "mornings": mornings, "growth": growth, "seasons": seasons}[k]() for k in todo}
+    log = OUT / "render_nasa.json"
+    prev = json.loads(log.read_text()) if log.exists() else {}
+    log.write_text(json.dumps(prev | res, indent=1, default=str))

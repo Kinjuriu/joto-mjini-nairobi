@@ -12,6 +12,11 @@ const LIGHT_OP = 0.85;  // data over imagery, county-wide views
 const SAT_OP = 0.75;    // data over imagery, close-up views
 const COUNTY = [36.86, -1.29];
 const base = (extra) => [{ id: 'county-line', opacity: 1 }, ...extra];
+// The ten hottest wards where people live (analysis/results.json q4.top10_pop_weighted).
+const TOP10 = ['Kangemi', 'Viwandani', 'Kabiro', 'Dandora Area I', 'Baba Dogo', 'Imara Daima', 'Kayole South', 'Kariobangi North', 'Kiamaiko', 'Kawangware'];
+// Five hottest and five coolest wards where people live (analysis/results_extra.json wards_top5).
+const HOT5 = ['Kangemi', 'Viwandani', 'Kabiro', 'Dandora Area I', 'Baba Dogo'];
+const COOL5 = ['Kileleshwa', 'Mutu-ini', 'Karura', 'Kitisuru', 'Karen'];
 
 export const CHAPTERS = [
   // ---------------------------------------------------------------- Story block A: from space to heat
@@ -36,7 +41,8 @@ export const CHAPTERS = [
   },
   {
     id: 'trees-nw', block: 'A', basemap: 'satellite', center: [36.79, -1.268], zoom: 11.6, mobileZoom: 10.8,
-    layers: base([{ id: 's2-false', opacity: 1 }, { id: 'places', opacity: 1 }]),
+    // The three forests outlined and named, everything else dimmed (Stephane, 11 November 2026).
+    layers: base([{ id: 's2-false', opacity: 1 }, { id: 'forest-mask', opacity: 1 }, { id: 'forests', opacity: 1 }]),
     chip: 'Sentinel-2, January to March 2026', legend: 's2-false',
     card: {
       title: 'Karura, the Arboretum and Ngong Road Forest',
@@ -69,6 +75,12 @@ export const CHAPTERS = [
   {
     id: 'divide', block: 'A', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
     layers: base([{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
+    // Pulsing circles on the largest patch of the hottest and of the coolest tenth of the land (found in the
+    // hot-season median raster with a 1.2 km moving window; the labels read their numbers from this card).
+    pulses: [
+      { at: [37.063, -1.237], tone: 'hot', fact: 'Hottest tenth of the land', place: 'largest patch near Ruai' },
+      { at: [36.829, -1.240], tone: 'cool', fact: 'Coolest tenth', place: 'largest patch in Karura Forest' },
+    ],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
       title: 'The heat divide',
@@ -147,7 +159,7 @@ export const CHAPTERS = [
   },
   {
     id: 'pair', block: 'B', basemap: 'satellite', center: [36.769, -1.274], zoom: 13.0, mobileZoom: 12.0,
-    layers: [{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }],
+    layers: [{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'wards-line', opacity: 1 }],
     highlight: ['Kileleshwa', 'Kawangware'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
@@ -158,6 +170,7 @@ export const CHAPTERS = [
   {
     id: 'people', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
     layers: base([{ id: 'population', opacity: LIGHT_OP }, { id: 'ward-labels', opacity: 1 }]),
+    labelWards: TOP10,
     chip: '2025 estimate', legend: 'population',
     card: {
       title: 'Who lives on the hottest ground',
@@ -172,6 +185,9 @@ export const CHAPTERS = [
   {
     id: 'people-heat', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
     layers: base([{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'ward-labels', opacity: 1 }]),
+    labelWards: TOP10,
+    // The two averages are marked on the legend's colour bar (they are averages, not places on the map).
+    legendMarkers: ['Ground under the average resident', 'Average for all county land'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
       title: 'The same places, by surface temperature',
@@ -181,27 +197,45 @@ export const CHAPTERS = [
       ],
     },
   },
+  // A growing city, in two steps on the same colour scale so the 1990 and 2020 footprints can be compared
+  // (Stephane, 11 November 2026). The county boundary is the same in both; the city filled in inside it.
   {
     id: 'growth', block: 'B', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
-    layers: base([{ id: 'growth-1990-2020', opacity: LIGHT_OP }]),
-    chip: '1990 to 2020', legend: 'growth-1990-2020',
+    layers: base([{ id: 'ghsl-1990', opacity: 0.9 }]),
+    chip: '1990', legend: 'ghsl-1990', legendTitle: 'Built-up land in 1990',
     card: {
-      title: 'A growing city',
-      text: 'Between 1990 and 2020, built-up surface in Nairobi County grew from about {{q6.built_km2.1990|km2}} to about {{q6.built_km2.2020|km2}}. The yearly satellite readings of hot-season surface temperature jump up and down with the weather and do not show a clear trend.',
+      title: 'Nairobi in 1990',
+      text: 'In 1990, buildings covered about {{q6.built_km2.1990|km2}} of Nairobi County. The white line is the county boundary, which has not changed.',
+      bars: [['1990', '{{q6.built_km2.1990|int}}', '{{q6.built_km2.2020|int}}', 'km² built up']],
+    },
+  },
+  {
+    id: 'growth-2020', block: 'B', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
+    layers: base([{ id: 'ghsl-2020', opacity: 0.9 }]),
+    chip: '2020', legend: 'ghsl-2020', legendTitle: 'Built-up land in 2020',
+    card: {
+      title: 'Nairobi in 2020',
+      text: 'By 2020, buildings covered about {{q6.built_km2.2020|km2}}, around {{q6.built_ratio_2020_1990|d1}} times as much. The city did not spread past its boundary; it filled in the open land inside it.',
+      bars: [['1990', '{{q6.built_km2.1990|int}}', '{{q6.built_km2.2020|int}}', 'km² built up'], ['2020', '{{q6.built_km2.2020|int}}', '{{q6.built_km2.2020|int}}', 'km² built up']],
     },
   },
   {
     id: 'wards', block: 'B', basemap: 'satellite', center: COUNTY, zoom: 10.6, mobileZoom: 9.6,
-    layers: base([{ id: 'wards-fill', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
-    chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
-    legendTitle: 'Wards: surface temperature where people live, difference from the city median',
+    // Only the five hottest (red) and five coolest (blue) wards where people live; green is tree cover; the
+    // other wards are dimmed and unnamed (Stephane, 11 November 2026).
+    layers: base([{ id: 'ward-groups', opacity: 1 }, { id: 'trees', opacity: 0.95 }, { id: 'ward-dim', opacity: 1 },
+      { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
+    groups: { hot: HOT5, cool: COOL5 }, labelWards: [...HOT5, ...COOL5], top: ['trees'],
+    chip: 'January to March mornings, 2023 to 2026', legend: 'trees',
+    legendTitle: 'Green: tree cover. Red: the five hottest wards where people live; blue: the five coolest',
     card: {
-      title: 'The whole city, ward by ward',
+      title: 'Five hot wards, five cool wards',
       facts: [
-        ['Hottest fifth of wards, where people live', '{{q7.hottest_fifth.pop_weighted_lst_c|c}}, tree cover {{q7.hottest_fifth.tree_pct|pct}}'],
-        ['Coolest fifth of wards', '{{q7.coolest_fifth.pop_weighted_lst_c|c}}, tree cover {{q7.coolest_fifth.tree_pct|pct}}'],
-        ['Difference', '{{q7.lst_gap_c|c}}'],
+        ['Five hottest wards, where people live', '{{x.wards_top5.hot_lst_c|c}}, tree cover {{x.wards_top5.hot_tree_pct|pct0}}'],
+        ['Five coolest wards', '{{x.wards_top5.cool_lst_c|c}}, tree cover {{x.wards_top5.cool_tree_pct|pct0}}'],
+        ['Difference', '{{x.wards_top5.gap_c|c}}'],
       ],
+      note: 'Red outlines: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo. Blue: Kileleshwa, Mutu-ini, Karura, Kitisuru, Karen.',
       link: ['#explore', 'Find your own ward below'],
     },
   },
@@ -216,6 +250,11 @@ export function cardHTML(ch, i, n) {
     + `<div class="card__rule" aria-hidden="true"></div><h3 class="card__title">${esc(c.title)}</h3>`;
   if (c.text) h += `<p class="card__text">${esc(c.text)}</p>`;
   if (c.facts) h += `<ul class="card__facts">${c.facts.map(([k, v]) => `<li><strong>${esc(k)}:</strong> ${esc(v)}</li>`).join('')}</ul>`;
+  if (c.bars) {
+    h += `<div class="card__bars">${c.bars.map(([k, v, max, unit]) => `<div class="card__bar"><span class="card__bar-label">${esc(k)}</span>`
+      + `<span class="card__bar-track"><span class="card__bar-fill" style="width: calc(${v} / ${max} * 100%)"></span></span>`
+      + `<span class="card__bar-value">${esc(v)} ${esc(unit)}</span></div>`).join('')}</div>`;
+  }
   if (c.note) h += `<p class="card__note">${esc(c.note)}</p>`;
   if (c.link) h += `<p class="card__link"><a href="${c.link[0]}">${esc(c.link[1])}</a></p>`;
   return `${h}</article>`;
