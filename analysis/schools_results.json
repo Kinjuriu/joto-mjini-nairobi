@@ -1,0 +1,114 @@
+{
+  "schools": {
+    "n_schools": 3712,
+    "n_on_hottest_fifth": 567,
+    "share_on_hottest_fifth_pct": 15.3,
+    "share_hotter_than_county_median_pct": 72.6,
+    "median_school_lst_c": 39.9,
+    "n_by_level": {
+      "primary": 2057,
+      "pre-primary": 768,
+      "secondary": 536,
+      "unknown": 336,
+      "pre-primary and primary and secondary": 14,
+      "pre-primary and primary": 1
+    },
+    "n_by_ownership": {
+      "unknown": 1378,
+      "private": 1211,
+      "community, faith or NGO": 607,
+      "public": 516
+    },
+    "n_places_other_level_excluded": 83,
+    "n_without_temperature": 2,
+    "county_median_c": 38.7,
+    "hottest_fifth_threshold_c": 41.6,
+    "radius_m": 100.0,
+    "top10_wards_by_schools_on_hottest_fifth": [
+      {
+        "ward": "Kangemi",
+        "schools": 127,
+        "on_hottest_fifth": 92,
+        "share_pct": 72.4
+      },
+      {
+        "ward": "Baba Dogo",
+        "schools": 78,
+        "on_hottest_fifth": 47,
+        "share_pct": 60.3
+      },
+      {
+        "ward": "Mountain View",
+        "schools": 123,
+        "on_hottest_fifth": 43,
+        "share_pct": 35.0
+      },
+      {
+        "ward": "Imara Daima",
+        "schools": 59,
+        "on_hottest_fifth": 35,
+        "share_pct": 59.3
+      },
+      {
+        "ward": "Korogocho",
+        "schools": 79,
+        "on_hottest_fifth": 34,
+        "share_pct": 43.0
+      },
+      {
+        "ward": "Viwandani",
+        "schools": 40,
+        "on_hottest_fifth": 33,
+        "share_pct": 82.5
+      },
+      {
+        "ward": "Kiamaiko",
+        "schools": 57,
+        "on_hottest_fifth": 26,
+        "share_pct": 45.6
+      },
+      {
+        "ward": "Kariobangi North",
+        "schools": 39,
+        "on_hottest_fifth": 19,
+        "share_pct": 48.7
+      },
+      {
+        "ward": "Hospital",
+        "schools": 72,
+        "on_hottest_fifth": 17,
+        "share_pct": 23.6
+      },
+      {
+        "ward": "Lindi",
+        "schools": 89,
+        "on_hottest_fifth": 16,
+        "share_pct": 18.0
+      }
+    ],
+    "n_wards_with_schools": 85,
+    "sensitivity_openstreetmap_located_only": {
+      "n_schools": 2233,
+      "n_on_hottest_fifth": 384,
+      "share_on_hottest_fifth_pct": 17.2,
+      "share_hotter_than_county_median_pct": 74.2,
+      "median_school_lst_c": 40.0
+    },
+    "sensitivity_official_list_only": {
+      "n_schools": 1479,
+      "n_on_hottest_fifth": 183,
+      "share_on_hottest_fifth_pct": 12.4,
+      "share_hotter_than_county_median_pct": 70.3,
+      "median_school_lst_c": 39.8
+    },
+    "note": "Surface temperature of the 100 m around each school, hot-season median (January to March 2023 to 2026), Landsat overpass about 10:43, during the school day. Ground, roofs and roads, not classroom air temperature. Counts are schools for children (level 'other' excluded).",
+    "provenance": {
+      "script": "src/analysis/schools.py",
+      "schools": "data/processed/nairobi_schools.geojson (src/pipeline/s10_schools.py)",
+      "raster": "data/processed/rasters/lst_hot_season_median.tif",
+      "table": "analysis/tables/schools_heat.csv",
+      "by_ward": "site/public/data/schools_heat_by_ward.csv",
+      "generated": "2026-11-14 15:08"
+    }
+  }
+}

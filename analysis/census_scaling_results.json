@@ -1,0 +1,90 @@
+{
+  "growth_rate_pct_per_year": 3.43,
+  "growth_factor_2019_to_mid_2025": 1.2181,
+  "growth_source": "Intercensal geometric rate for Nairobi City County, KNBS census counts 2009 (3,138,369) and 2019 (4,397,073), both on the night of 24/25 August",
+  "county_census_2019": 4397073,
+  "county_grown_mid_2025": 5356025,
+  "county_worldpop2025_ward_sum": 5588514,
+  "factors_by_census_subcounty": {
+    "DAGORETTI": 1.032,
+    "EMBAKASI": 1.237,
+    "KAMUKUNJI": 1.369,
+    "KASARANI": 0.953,
+    "KIBRA": 1.154,
+    "LANG'ATA": 1.053,
+    "MAKADARA": 0.792,
+    "MATHARE": 1.193,
+    "NJIRU": 0.588,
+    "STAREHE": 0.903,
+    "WESTLANDS": 1.05
+  },
+  "woodley": {
+    "worldpop2025": 133937,
+    "scaled": 154593,
+    "census2019_woodley_division": 36115
+  },
+  "top10_pop_weighted_wards": {
+    "names": [
+      "Kangemi",
+      "Viwandani",
+      "Kabiro",
+      "Dandora Area I",
+      "Baba Dogo",
+      "Imara Daima",
+      "Kayole South",
+      "Kariobangi North",
+      "Kiamaiko",
+      "Kawangware"
+    ],
+    "worldpop2025": 411659,
+    "scaled": 433510,
+    "by_ward": {
+      "Kangemi": [
+        11503,
+        12077
+      ],
+      "Viwandani": [
+        57070,
+        45187
+      ],
+      "Kabiro": [
+        40246,
+        41521
+      ],
+      "Dandora Area I": [
+        16191,
+        9526
+      ],
+      "Baba Dogo": [
+        40912,
+        39007
+      ],
+      "Imara Daima": [
+        102879,
+        127291
+      ],
+      "Kayole South": [
+        25677,
+        31770
+      ],
+      "Kariobangi North": [
+        32828,
+        31299
+      ],
+      "Kiamaiko": [
+        54588,
+        65124
+      ],
+      "Kawangware": [
+        29765,
+        30708
+      ]
+    }
+  },
+  "wards_by_confidence": {
+    "high": 73,
+    "medium": 12
+  },
+  "table": "analysis/tables/ward_population_scaled.csv",
+  "script": "src/analysis/census_scaling.py"
+}

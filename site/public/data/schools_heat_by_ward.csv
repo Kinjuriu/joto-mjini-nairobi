@@ -1,0 +1,86 @@
+ward_id,ward_name,schools,schools_on_hottest_fifth,median_school_lst_c,share_on_hottest_fifth_pct
+NBO-021,Kangemi,127,92,42.4,72.4
+NBO-002,Baba Dogo,78,47,42.0,60.3
+NBO-053,Mountain View,123,43,40.5,35.0
+NBO-017,Imara Daima,59,35,41.9,59.3
+NBO-036,Korogocho,79,34,41.5,43.0
+NBO-081,Viwandani,40,33,42.5,82.5
+NBO-031,Kiamaiko,57,26,41.5,45.6
+NBO-023,Kariobangi North,39,19,41.6,48.7
+NBO-015,Hospital,72,17,40.8,23.6
+NBO-042,Lindi,89,16,41.0,18.0
+NBO-018,Kabiro,45,16,41.4,35.6
+NBO-034,Kitisuru,107,12,37.0,11.2
+NBO-070,Riruta,74,12,40.2,16.2
+NBO-027,Kawangware,40,12,40.5,30.0
+NBO-030,Kayole South,27,12,41.0,44.4
+NBO-046,Makina,69,11,40.3,15.9
+NBO-020,Kahawa West,34,9,39.8,26.5
+NBO-012,Gatina,33,9,41.1,27.3
+NBO-006,Dandora Area II,19,9,41.4,47.4
+NBO-041,Landimawe,20,8,41.5,40.0
+NBO-048,Maringo/Hamza,54,7,40.2,13.0
+NBO-072,Ruai,49,7,40.4,14.3
+NBO-014,Harambee,41,5,40.9,12.2
+NBO-076,Umoja II,22,5,40.5,22.7
+NBO-077,Upper Savannah,20,5,41.3,25.0
+NBO-078,Utalii,100,4,39.3,4.0
+NBO-051,Mihango,26,4,40.6,15.4
+NBO-075,Umoja I,22,4,40.9,18.2
+NBO-029,Kayole North,21,4,40.8,19.0
+NBO-038,Kwa Reuben,19,4,40.6,21.1
+NBO-005,Dandora Area I,13,4,41.1,30.8
+NBO-035,Komarock,59,3,40.6,5.1
+NBO-043,Lower Savannah,24,3,40.3,12.5
+NBO-024,Kariobangi South,14,3,40.2,21.4
+NBO-010,Eastleigh South,13,3,39.5,23.1
+NBO-033,Kilimani,98,2,37.1,2.0
+NBO-083,Woodley/Kenyatta Golf Course,73,2,38.4,2.7
+NBO-057,Mwiki,52,2,39.9,3.8
+NBO-060,Nairobi West,36,2,38.0,5.6
+NBO-028,Kayole Central,35,2,40.4,5.7
+NBO-026,Kasarani,33,2,39.2,6.1
+NBO-001,Airbase,32,2,38.5,6.2
+NBO-013,Githurai,23,2,40.2,8.7
+NBO-061,Ngando,17,2,39.9,11.8
+NBO-064,Njiru,12,2,39.2,16.7
+NBO-054,Mowlem,10,2,40.3,20.0
+NBO-073,Sarang'ombe,183,1,39.9,0.5
+NBO-040,Laini Saba,86,1,40.7,1.2
+NBO-055,Mugumo-ini,71,1,38.7,1.4
+NBO-044,Lucky Summer,58,1,40.0,1.7
+NBO-084,Zimmerman,39,1,38.8,2.6
+NBO-066,Pangani,38,1,38.4,2.6
+NBO-068,Pipeline,20,1,38.4,5.0
+NBO-007,Dandora Area III,10,1,40.7,10.0
+NBO-022,Karen,92,0,35.0,0.0
+NBO-052,Mlango Kubwa,81,0,37.9,0.0
+NBO-059,Nairobi South,80,0,40.3,0.0
+NBO-016,Huruma,74,0,38.6,0.0
+NBO-049,Mathare North,61,0,40.2,0.0
+NBO-067,Parklands/Highridge,56,0,37.6,0.0
+NBO-045,Mabatini,53,0,38.8,0.0
+NBO-063,Ngei,53,0,39.9,0.0
+NBO-025,Karura,47,0,36.6,0.0
+NBO-071,Roysambu,41,0,36.9,0.0
+NBO-082,Waithaka,39,0,38.9,0.0
+NBO-004,Clay City,38,0,38.8,0.0
+NBO-019,Kahawa,36,0,39.4,0.0
+NBO-032,Kileleshwa,36,0,36.5,0.0
+NBO-062,Ngara,32,0,39.0,0.0
+NBO-080,Uthiru/Ruthimitu,32,0,35.2,0.0
+NBO-058,Nairobi Central,27,0,40.1,0.0
+NBO-065,Nyayo Highrise,23,0,39.9,0.0
+NBO-008,Dandora Area IV,20,0,39.4,0.0
+NBO-011,Embakasi,18,0,40.3,0.0
+NBO-037,Kwa Njenga,16,0,40.4,0.0
+NBO-079,Utawala,15,0,39.4,0.0
+NBO-039,Kware,14,0,40.6,0.0
+NBO-056,Mutu-ini,14,0,35.0,0.0
+NBO-009,Eastleigh North,13,0,38.5,0.0
+NBO-069,Pumwani,13,0,38.5,0.0
+NBO-047,Makongeni,12,0,39.3,0.0
+NBO-074,South C,12,0,39.2,0.0
+NBO-050,Matopeni/Spring Valley,4,0,40.7,0.0
+NBO-085,Ziwani/Kariokor,4,0,39.7,0.0
+NBO-003,California,2,0,36.2,0.0

@@ -41,6 +41,98 @@ def finding(code, title, sentence, numbers, method, data, script, caveats, confi
             f"- **Confidence:** {confidence}\n")
 
 
+def v3_findings(ex: dict) -> list[str]:
+    """Schools, census roofs and census-scaled population (prompt v3). Not used in the story yet."""
+    import string
+    import pandas as pd
+    from scipy.stats import spearmanr
+    name = lambda x: string.capwords(x.lower())   # LANG'ATA -> Lang'ata
+    out = []
+    s = ex.get("schools")
+    if s:
+        top = s["top10_wards_by_schools_on_hottest_fifth"]
+        out.append("## Schools, census roofs and census population (prompt v3)\n\nNot used in the story yet.\n")
+        out.append(finding(
+            "S1", "About one school in seven sat on the hottest fifth of Nairobi's ground",
+            f"Of {n(s['n_schools'])} schools for children with a value, {n(s['n_on_hottest_fifth'])} "
+            f"({s['share_on_hottest_fifth_pct']} %) were on the hottest fifth of the county's land on hot-season mornings, "
+            f"and {s['share_hotter_than_county_median_pct']} % were on ground hotter than the county median.",
+            f"{n(s['n_schools'])} schools; {n(s['n_on_hottest_fifth'])} on the hottest fifth "
+            f"({s['share_on_hottest_fifth_pct']} %); threshold {c(s['hottest_fifth_threshold_c'])} (county 80th "
+            f"percentile, as q4); county median {c(s['county_median_c'])}; median school surroundings "
+            f"{c(s['median_school_lst_c'])}; {s['n_places_other_level_excluded']} adult, vocational and tertiary places "
+            f"excluded; {s['n_without_temperature']} schools without a value",
+            f"Median of the 30 m hot-season cells within {s['radius_m']:.0f} m of each school (DECISIONS D53)",
+            "data/processed/nairobi_schools.geojson; analysis/tables/schools_heat.csv; data/processed/rasters/"
+            "lst_hot_season_median.tif; sources in data/SOURCES.md (Ministry of Education list via the World Bank, "
+            "CC BY 4.0; OpenStreetMap, ODbL)",
+            "src/pipeline/s10_schools.py; src/analysis/schools.py",
+            "Surface temperature of the 100 m around each school at about 10:43, during the school day; ground, roofs "
+            "and roads, not classroom air temperature. The school list is a broad map of school sites, not a register: "
+            "about 1,480 schools found only in official lists may be placed up to about 300 m off, and up to about 142 "
+            "duplicates may remain. With OpenStreetMap-placed schools only, the share is 17.2 %.",
+            "Medium: the temperature step was rechecked independently; the school list is incomplete in places."))
+        out.append(finding(
+            "S2", f"{top[0]['ward']} had the most schools on the hottest ground",
+            f"{top[0]['ward']} had {top[0]['on_hottest_fifth']} of its {top[0]['schools']} schools on the hottest fifth "
+            f"of the land, more than any other ward.",
+            "; ".join(f"{w['ward']} {w['on_hottest_fifth']} of {w['schools']} ({w['share_pct']} %)" for w in top),
+            "Schools counted by the ward they fall in; on the hottest fifth as in S1",
+            "site/public/data/schools_heat_by_ward.csv", "src/analysis/schools.py",
+            "As S1. Ward counts depend on how completely each area's schools are mapped.", "Medium."))
+    roofs = ROOT / "site" / "public" / "data" / "roofs_by_subcounty.csv"
+    rvh = ROOT / "analysis" / "tables" / "roofs_vs_ward_heat.csv"
+    if roofs.exists() and rvh.exists():
+        r_ = pd.read_csv(roofs)
+        cty = r_[r_.level == "county"].iloc[0]
+        sc = r_[r_.level != "county"].sort_values("iron_sheets_pct")
+        v = pd.read_csv(rvh).dropna(subset=["ward_median_lst_c_area_weighted"])
+        rho, p = spearmanr(v.iron_sheets_pct, v.ward_median_lst_c_area_weighted)
+        out.append(finding(
+            "R1", "Half of Nairobi's households lived under iron sheet roofs in 2019",
+            f"In the 2019 census, {cty['iron_sheets_pct']} % of Nairobi's {n(cty['conventional_households'])} conventional households "
+            f"had iron sheet roofs, from {sc.iloc[0]['iron_sheets_pct']} % in {name(sc.iloc[0]['census_subcounty'])} to "
+            f"{sc.iloc[-1]['iron_sheets_pct']} % in {name(sc.iloc[-1]['census_subcounty'])}.",
+            "; ".join(f"{name(x['census_subcounty'])} {x['iron_sheets_pct']} %" for _, x in sc.iterrows()) +
+            f". Across the 11 census sub-counties, iron sheet share against the area-weighted mean of ward hot-season "
+            f"medians: Spearman rho {rho:.2f}, p {p:.2f} ({int(v.wards_matched.sum())} of 85 wards linked by name)",
+            "KNBS Volume IV table 2.12, per cent of conventional households by dominant roofing material; wards linked "
+            "to census sub-counties by name (DECISIONS D54)",
+            "site/public/data/roofs_by_subcounty.csv; analysis/tables/roofs_vs_ward_heat.csv; "
+            "analysis/tables/ward_census_subcounty_match.csv; census CSVs from github.com/Kinjuriu/kenya-2019-census-csv",
+            "src/analysis/roofs_census.py",
+            "Census sub-counties are large and mixed, so this cannot test the roof caveat (F16) ward by ward. The "
+            "census neither supports nor refutes it: the sub-counties with the most iron sheet roofs (Dagoretti, Kibra) "
+            "are not the hottest, and the hottest (Embakasi, Njiru) have more concrete roofs and much open dry ground. "
+            "2019 data.",
+            "High for the census shares; low for any link to temperature."))
+    cs = ROOT / "analysis" / "census_scaling_results.json"
+    if cs.exists():
+        k = json.loads(cs.read_text())
+        w = k["woodley"]
+        t = k["top10_pop_weighted_wards"]
+        out.append(finding(
+            "P1", "The census puts far fewer people in Woodley/Kenyatta Golf Course than WorldPop does",
+            f"The 2019 census counted {n(w['census2019_woodley_division'])} people in Woodley division, which covers "
+            f"almost the same 9.6 km² as Woodley/Kenyatta Golf Course ward; WorldPop 2025 puts {n(w['worldpop2025'])} "
+            f"there.",
+            f"Woodley: WorldPop 2025 {n(w['worldpop2025'])}; scaled to census sub-counties {n(w['scaled'])}; census "
+            f"2019 Woodley division {n(w['census2019_woodley_division'])}. Growth {k['growth_rate_pct_per_year']} % a "
+            f"year ({k['growth_source']}); county grown to mid-2025 {n(k['county_grown_mid_2025'])} against WorldPop "
+            f"ward sum {n(k['county_worldpop2025_ward_sum'])}. Ten hottest wards where people live (F7): WorldPop "
+            f"{n(t['worldpop2025'])}, scaled {n(t['scaled'])}",
+            "WorldPop ward totals multiplied, per census sub-county, by (census total grown to mid-2025 / WorldPop "
+            "total of its wards); wards assigned to census sub-counties by name (DECISIONS D55)",
+            "analysis/tables/ward_population_scaled.csv; analysis/census_scaling_results.json; census CSVs from "
+            "github.com/Kinjuriu/kenya-2019-census-csv",
+            "src/analysis/census_scaling.py",
+            "Scaling to census sub-counties fixes how many people each sub-county holds, not how WorldPop spreads them "
+            "inside it, so it raises Woodley further. A uniform county growth rate understates growth on the fringe "
+            "(Njiru) and overstates it in the centre. Not used on the site.",
+            "High for the census counts; the scaled ward numbers are an intermediate step."))
+    return out
+
+
 def main() -> None:
     r = json.loads(RES.read_text())
     chk = json.loads(CHK.read_text())
@@ -86,17 +178,23 @@ def main() -> None:
         f"{chk['ward_rank_agreement_spearman']}). Medium for interpretation, because ward medians mix land uses."))
 
     out.append(finding(
-        "F3", f"The city centre and Industrial Area were {q2['gap_c']:.1f} °C hotter than Karura and the Arboretum",
-        f"On hot mornings, the ground in the city centre and Industrial Area ({c(q2['hot_areas_median_c'])}) was "
-        f"{c(q2['gap_c'])} hotter than Karura Forest and the Nairobi Arboretum ({c(q2['cool_areas_median_c'])}).",
+        "F3", f"The Industrial Area was {q2['industrial_gap_c']:.1f} °C and the city centre {q2['cbd_gap_c']:.1f} °C "
+              f"hotter than Karura and the Arboretum",
+        f"On hot mornings, the ground in the Industrial Area ({c(q2['Industrial Area']['median_c'])}) was "
+        f"{c(q2['industrial_gap_c'])} hotter than Karura Forest and the Nairobi Arboretum ({c(q2['cool_areas_median_c'])}). "
+        f"The ground in the city centre ({c(q2['CBD']['median_c'])}) was {c(q2['cbd_gap_c'])} hotter.",
         f"CBD {c(q2['CBD']['median_c'])}; Industrial Area {c(q2['Industrial Area']['median_c'])}; Karura Forest "
-        f"{c(q2['Karura Forest']['median_c'])}; Nairobi Arboretum {c(q2['Nairobi Arboretum']['median_c'])}; combined gap "
-        f"{c(q2['gap_c'])}; Industrial Area minus Karura {c(q2['industrial_minus_karura_c'])}; CBD minus Arboretum "
-        f"{c(q2['cbd_minus_arboretum_c'])}. Cool season: CBD {c(q2['CBD']['cool_season_median_c'])}, Karura "
-        f"{c(q2['Karura Forest']['cool_season_median_c'])}",
+        f"{c(q2['Karura Forest']['median_c'])}; Nairobi Arboretum {c(q2['Nairobi Arboretum']['median_c'])}; forests "
+        f"together {c(q2['cool_areas_median_c'])}; CBD gap {c(q2['cbd_gap_c'])}; Industrial Area gap "
+        f"{c(q2['industrial_gap_c'])}; Industrial Area minus Karura {c(q2['industrial_minus_karura_c'])}; CBD minus "
+        f"Arboretum {c(q2['cbd_minus_arboretum_c'])}. Still in results.json for the page until its text changes: "
+        f"pooled hot areas {c(q2['hot_areas_median_c'])}, pooled gap {c(q2['gap_c'])}. Cool season: CBD "
+        f"{c(q2['CBD']['cool_season_median_c'])}, Karura {c(q2['Karura Forest']['cool_season_median_c'])}",
         f"Median of 30 m cells in each area. Areas: CBD = {q2['definitions']['CBD']}; Industrial Area = "
         f"{q2['definitions']['industrial']}; Karura = {q2['definitions']['karura']}; Arboretum = "
-        f"{q2['definitions']['arboretum']}. Combined values pool the cells of the two areas in each group.",
+        f"{q2['definitions']['arboretum']}. Each hot area is compared with the pooled cells of the two forests. The two "
+        f"hot areas are reported separately (D52) because pooling them weights the result by area, and the Industrial "
+        f"Area has about four times as many cells as the city centre.",
         HOT + ", data/processed/comparison_areas.geojson (the exact shapes used)", "src/analysis/core.py, q2_gap",
         CAVEAT_LST + " Under a forest canopy the satellite sees the top of the trees, not the ground below.",
         f"High. Karura recomputed by a windowed read: {chk['karura_median']['independent']} °C."))
@@ -457,6 +555,8 @@ def main() -> None:
                 CAVEAT_LST + " Kisumu is mostly rural outside the city, so county-wide numbers are not comparable with "
                 "Nairobi's directly; scenes come from three Landsat paths on different days.",
                 "Medium: first pass, not yet checked by an independent method."))
+
+    out += v3_findings(ex)
 
     out.append("""## Checks
 

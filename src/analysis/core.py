@@ -142,7 +142,11 @@ def q2_gap() -> dict:
     cool_mean = np.median(np.concatenate([L.hot[polygon_mask(areas[k]) & np.isfinite(L.hot)] for k in ("Karura Forest", "Nairobi Arboretum")]))
     out["hot_areas_median_c"] = r1(hot_mean)
     out["cool_areas_median_c"] = r1(cool_mean)
-    out["gap_c"] = r1(hot_mean - cool_mean)
+    out["gap_c"] = r1(hot_mean - cool_mean)   # pooled; kept for the page until the copy moves to the two gaps below
+    # Each hot area against the two forests (D52): reported separately because the pooled median is weighted by
+    # area, and the Industrial Area has about four times as many cells as the downtown grid.
+    out["cbd_gap_c"] = r1(out["CBD"]["median_c"] - cool_mean)
+    out["industrial_gap_c"] = r1(out["Industrial Area"]["median_c"] - cool_mean)
     out["industrial_minus_karura_c"] = r1(out["Industrial Area"]["median_c"] - out["Karura Forest"]["median_c"])
     out["cbd_minus_arboretum_c"] = r1(out["CBD"]["median_c"] - out["Nairobi Arboretum"]["median_c"])
     out["definitions"] = dict(
