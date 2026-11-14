@@ -40,9 +40,9 @@
       "Nairobi Dam": 34.1,
       "City Park": 31.4
     },
-    "cbd": 39.1,
+    "cbd": 37.8,
     "industrial": 41.5,
-    "all_cooler": true
+    "all_cooler": false
   },
   "ward_pop_sum": {
     "ward_sum": 5588514,

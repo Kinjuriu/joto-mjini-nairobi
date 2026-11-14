@@ -102,7 +102,7 @@ export const CHAPTERS = [
     chip: 'Satellite image', legend: null,
     card: {
       title: 'City centre and Industrial Area',
-      text: '[[COPY: introduce the two outlined areas: the Nairobi Central ward, and the Industrial Area as mapped in OpenStreetMap]]',
+      text: '[[COPY: introduce the two outlined areas: the downtown grid (inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue), and the Industrial Area as mapped in OpenStreetMap]]',
     },
   },
   {

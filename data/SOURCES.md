@@ -43,6 +43,15 @@ Every dataset used by Joto Mjini Nairobi. All were accessed on 10 November 2026 
 - **Date accessed:** 10 November 2026
 - **Citation:** © OpenStreetMap contributors
 
+### City centre outline (D51)
+- **Name:** OpenStreetMap road centrelines (Uhuru Highway, University Way, Moi Avenue, Tom Mboya Street, Haile Selassie Avenue), via the Overpass API
+- **Provider:** OpenStreetMap contributors
+- **URL:** https://overpass-api.de/api/interpreter (named `highway` ways in the box -1.300, 36.805 to -1.270, 36.840); raw file `data/raw/osm_cbd/cbd_roads.json`
+- **Licence:** ODbL 1.0
+- **Resolution:** vector; enclosed downtown block 1.08 km² (`data/processed/city_centre.geojson`); OSM way ids in `analysis/tables/city_centre_osm_road_ids.csv`
+- **Date accessed:** 14 November 2026
+- **Citation:** © OpenStreetMap contributors
+
 ### Landsat emissivity (roof check, v2)
 - **Name:** Landsat Collection 2 Level-2 ST_EMIS and ST_EMSD bands (assets `emis`, `emsd`), 12 hot-season scenes
 - **Provider:** USGS, via Microsoft Planetary Computer `landsat-c2-l2`; emissivity derived by USGS from NASA JPL ASTER GED v3 with an NDVI adjustment

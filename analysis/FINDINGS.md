@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-10 13:56 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-14 12:25 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -24,11 +24,11 @@ Every number that may appear in the story, with where it came from. Generated 20
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Ward medians include all land in the ward (homes, roads, open ground, forest). Ruai and Embakasi contain large open and bare areas (and the airport in Embakasi) as well as homes.
 - **Confidence:** High for the numbers (exactextract coverage-weighted medians give the same ranking, Spearman 1.0). Medium for interpretation, because ward medians mix land uses.
 
-### F3. The city centre and Industrial Area were 13.1 °C hotter than Karura and the Arboretum
+### F3. The city centre and Industrial Area were 13.5 °C hotter than Karura and the Arboretum
 
-- **Sentence for the story:** On hot mornings, the ground in the city centre and Industrial Area (40.7 °C) was 13.1 °C hotter than Karura Forest and the Nairobi Arboretum (27.6 °C).
-- **Number(s):** CBD 39.1 °C; Industrial Area 41.5 °C; Karura Forest 27.5 °C; Nairobi Arboretum 28.8 °C; combined gap 13.1 °C; Industrial Area minus Karura 14.0 °C; CBD minus Arboretum 10.3 °C. Cool season: CBD 36.9 °C, Karura 24.8 °C
-- **Method:** Median of 30 m cells in each area. Areas: CBD = the Nairobi Central ward polygon (IEBC-based ward layer); Industrial Area = 10 touching OpenStreetMap landuse=industrial polygons merged into one area (the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv); Karura = OSM polygon 'Karura Forest' (landuse=forest); Arboretum = OSM polygon 'Nairobi Arboretum' (landuse=forest). Combined values pool the cells of the two areas in each group.
+- **Sentence for the story:** On hot mornings, the ground in the city centre and Industrial Area (41.1 °C) was 13.5 °C hotter than Karura Forest and the Nairobi Arboretum (27.6 °C).
+- **Number(s):** CBD 37.8 °C; Industrial Area 41.5 °C; Karura Forest 27.5 °C; Nairobi Arboretum 28.8 °C; combined gap 13.5 °C; Industrial Area minus Karura 14.0 °C; CBD minus Arboretum 9.0 °C. Cool season: CBD 36.4 °C, Karura 24.8 °C
+- **Method:** Median of 30 m cells in each area. Areas: CBD = the downtown grid inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue, traced from OpenStreetMap road centrelines (src/pipeline/s1c_city_centre.py; road ids in analysis/tables/city_centre_osm_road_ids.csv); Industrial Area = 10 touching OpenStreetMap landuse=industrial polygons merged into one area (the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv); Karura = OSM polygon 'Karura Forest' (landuse=forest); Arboretum = OSM polygon 'Nairobi Arboretum' (landuse=forest). Combined values pool the cells of the two areas in each group.
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/comparison_areas.geojson (the exact shapes used)
 - **Script:** src/analysis/core.py, q2_gap
 - **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). Under a forest canopy the satellite sees the top of the trees, not the ground below.
@@ -107,7 +107,7 @@ Every number that may appear in the story, with where it came from. Generated 20
 ### F11. The same places were hot in both seasons
 
 - **Sentence for the story:** In the cooler June to August months the county median surface temperature was 34.9 °C, against 38.7 °C in January to March. The places that were hot in one season were mostly hot in the other (ward rank correlation 0.75).
-- **Number(s):** cool season county median 34.9 °C; hot season 38.7 °C; Karura cool season 24.8 °C; CBD cool season 36.9 °C; Spearman correlation hot vs cool season: 30 m cells 0.9, ward medians 0.75
+- **Number(s):** cool season county median 34.9 °C; hot season 38.7 °C; Karura cool season 24.8 °C; CBD cool season 36.4 °C; Spearman correlation hot vs cool season: 30 m cells 0.9, ward medians 0.75
 - **Method:** Median of county cells in each composite; Spearman rank correlation between the two composites over every 7th valid county cell and over the 85 ward medians
 - **Data:** data/processed/rasters/lst_hot_season_median.tif, data/processed/rasters/lst_cool_season_median.tif
 - **Script:** src/analysis/core.py, q1_where_hottest and q2_gap
@@ -248,7 +248,7 @@ Recorded in `analysis/checks.json` by `src/analysis/checks.py`:
 - **ward_rank_agreement_spearman:** 1.0
 - **karura_median:** {"core": 27.5, "independent": 27.5, "method": "windowed numpy read with geometry_mask vs full-grid mask", "match": true}
 - **pop_hottest20:** {"core": 827000, "independent": 827000, "method": "xarray clip and threshold vs numpy mask", "match": true}
-- **spot_cool_places:** {"values": {"Karura Forest": 27.5, "Nairobi Arboretum": 28.8, "Nairobi National Park": 37.8, "Nairobi Dam": 34.1, "City Park": 31.4}, "cbd": 39.1, "industrial": 41.5, "all_cooler": true}
+- **spot_cool_places:** {"values": {"Karura Forest": 27.5, "Nairobi Arboretum": 28.8, "Nairobi National Park": 37.8, "Nairobi Dam": 34.1, "City Park": 31.4}, "cbd": 37.8, "industrial": 41.5, "all_cooler": false}
 - **ward_pop_sum:** {"ward_sum": 5588514, "county": 5657304, "diff_pct": -1.22, "within_5pct": true, "worldpop_year": 2025}
 - **ward_boundaries:** {"n_wards": 85, "n_wards_ok": true, "n_subcounties": 17, "subcounties_match_iebc": true, "names_not_in_iebc_election_layer": ["Ngei"], "median_area_overlap_with_iebc_election_layer_pct": 33.6, "min_area_overlap_with_iebc_election_layer_pct": 0.0, "county_area_km2": 705.3, "ward_union_area_km2": 695.1, "symmetric_difference_pct_of_county": 4.59, "union_matches_county_ok": true, "kibra_wards": {"Laini Saba": {"area_km2": 0.371, "pop_worldpop2025": 6032, "pop2009_census": 28182}, "Lindi": {"area_km2": 0.744, "pop_worldpop2025": 11920, "pop2009_census": 52521}, "Makina": {"area_km2": 0.806, "pop_worldpop2025": 19058, "pop2009_census": 35028}, "Woodley/Kenyatta Golf Course": {"area_km2": 9.519, "pop_worldpop2025": 133937, "pop2009_census": 35355}, "Sarang'ombe": {"area_km2": 1.036, "pop_worldpop2025": 25109, "pop2009_census": 54347}}, "kibra_total_worldpop2025": 196056, "kibra_total_census2009": 205433, "rule_small_dense_under_10000": [], "rule_over_60pct_of_subcounty": [{"ward_name": "Woodley/Kenyatta Golf Course", "subcounty": "Kibra", "share_of_subcounty_pct": 68.3}], "all_under_1km2_with_under_10000": [{"ward_name": "Laini Saba", "area_km2": 0.371, "pop_worldpop2025": 6032.0, "pop2009_census": 28182}, {"ward_name": "Nyayo Highrise", "area_km2": 0.39, "pop_worldpop2025": 4365.0, "pop2009_census": 24191}], "unmatched_names_old_vs_new": ["Matopeni", "Matopeni/Spring Valley", "Woodley/Kenyatta Golf", "Woodley/Kenyatta Golf Course"], "source": "Administrative Wards in Kenya 1450, American Red Cross via HDX (CC BY); cross-checked against mikelmaron/kenya-election-data (IEBC 2013)"}
 

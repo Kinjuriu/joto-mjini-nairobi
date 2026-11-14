@@ -89,11 +89,11 @@
   },
   "q2": {
     "CBD": {
-      "median_c": 39.1,
-      "mean_c": 39.0,
-      "n_cells": 3490,
-      "area_km2": 3.15,
-      "cool_season_median_c": 36.9
+      "median_c": 37.8,
+      "mean_c": 37.9,
+      "n_cells": 1205,
+      "area_km2": 1.08,
+      "cool_season_median_c": 36.4
     },
     "Industrial Area": {
       "median_c": 41.5,
@@ -114,13 +114,13 @@
       "n_cells": 369,
       "area_km2": 0.33
     },
-    "hot_areas_median_c": 40.7,
+    "hot_areas_median_c": 41.1,
     "cool_areas_median_c": 27.6,
-    "gap_c": 13.1,
+    "gap_c": 13.5,
     "industrial_minus_karura_c": 14.0,
-    "cbd_minus_arboretum_c": 10.3,
+    "cbd_minus_arboretum_c": 9.0,
     "definitions": {
-      "CBD": "the Nairobi Central ward polygon (IEBC-based ward layer)",
+      "CBD": "the downtown grid inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue, traced from OpenStreetMap road centrelines (src/pipeline/s1c_city_centre.py; road ids in analysis/tables/city_centre_osm_road_ids.csv)",
       "industrial": "10 touching OpenStreetMap landuse=industrial polygons merged into one area (the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv)",
       "karura": "OSM polygon 'Karura Forest' (landuse=forest)",
       "arboretum": "OSM polygon 'Nairobi Arboretum' (landuse=forest)"

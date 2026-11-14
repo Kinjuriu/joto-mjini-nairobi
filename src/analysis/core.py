@@ -27,10 +27,12 @@ CHARTS = ROOT / "analysis" / "tables"
 CHARTS.mkdir(parents=True, exist_ok=True)
 
 # Comparison areas for Q2 (v2), stated exactly so the numbers can be reproduced.
-# City centre = the IEBC-based Nairobi Central ward polygon. Industrial Area = the connected group of
-# OpenStreetMap landuse=industrial polygons (touching ones merged) that contains or is nearest to the
-# OSM place=suburb point "Industrial Area". The v1 circles are kept in data/processed/_old/.
-CBD_WARD = "Nairobi Central"
+# City centre = the downtown grid inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie
+# Avenue, traced from OpenStreetMap roads by src/pipeline/s1c_city_centre.py (D51; it replaced the Nairobi
+# Central ward, D30). Industrial Area = the connected group of OpenStreetMap landuse=industrial polygons
+# (touching ones merged) that contains or is nearest to the OSM place=suburb point "Industrial Area".
+# The v1 circles are kept in data/processed/_old/.
+CITY_CENTRE = PROCESSED / "city_centre.geojson"
 OSM_INDUSTRIAL = ROOT / "data" / "raw" / "osm_industrial" / "industrial.json"
 WC_NAMES = {10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland", 50: "Built-up",
             60: "Bare or sparse vegetation", 80: "Water", 90: "Herbaceous wetland"}
@@ -123,7 +125,7 @@ def _industrial_area() -> tuple[gpd.GeoSeries, list[str]]:
 
 def q2_gap() -> dict:
     L = load()
-    cbd = L.wards[L.wards["ward_name"] == CBD_WARD].geometry
+    cbd = gpd.read_file(CITY_CENTRE).to_crs(UTM).geometry
     ind, ind_ids = _industrial_area()
     areas = {
         "CBD": cbd,
@@ -144,7 +146,9 @@ def q2_gap() -> dict:
     out["industrial_minus_karura_c"] = r1(out["Industrial Area"]["median_c"] - out["Karura Forest"]["median_c"])
     out["cbd_minus_arboretum_c"] = r1(out["CBD"]["median_c"] - out["Nairobi Arboretum"]["median_c"])
     out["definitions"] = dict(
-        CBD=f"the {CBD_WARD} ward polygon (IEBC-based ward layer)",
+        CBD="the downtown grid inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue, "
+            "traced from OpenStreetMap road centrelines (src/pipeline/s1c_city_centre.py; road ids in "
+            "analysis/tables/city_centre_osm_road_ids.csv)",
         industrial=f"{len(ind_ids)} touching OpenStreetMap landuse=industrial polygons merged into one area "
                    "(the group at the OSM place 'Industrial Area'; ids in analysis/tables/industrial_area_osm_ids.csv)",
         karura="OSM polygon 'Karura Forest' (landuse=forest)",
