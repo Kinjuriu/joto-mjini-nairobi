@@ -31,6 +31,7 @@ for f in ("SourceSans3-Regular.ttf", "SourceSans3-Semibold.ttf"):
 plt.rcParams.update({"font.family": "Source Sans 3"})
 SITE = ROOT / "site" / "public"
 LST = ROOT / "data" / "processed" / "rasters" / "lst_hot_season_median.tif"
+S2 = ROOT / "data" / "processed" / "rasters" / "s2_true_rgb.tif"
 VMIN, VMAX = 28, 48
 CMAP = plt.get_cmap("plasma").copy()
 CMAP.set_bad("#FFFFFF", 0)
@@ -50,16 +51,33 @@ def bounds_of(geom, pad=0.08):
     return cx - half, cy - half, cx + half, cy + half
 
 
+def smooth(a, k=7):
+    """Light box blur that ignores missing cells (no scipy needed), to soften the 100 m thermal squares."""
+    v = np.nan_to_num(a); w = np.isfinite(a).astype("float32")
+    for axis in (0, 1):
+        v = sum(np.roll(v, i, axis) for i in range(-(k // 2), k // 2 + 1))
+        w = sum(np.roll(w, i, axis) for i in range(-(k // 2), k // 2 + 1))
+    out = v / np.where(w > 0, w, np.nan)
+    return np.where(np.isfinite(a), out, np.nan)
+
+
 def panel(ax, f):
+    """14 November 2026: the real Sentinel-2 photo around the ward for context, and inside it the surface
+    temperature, resampled with a smooth spline and lightly blurred so the 100 m thermal squares do not
+    read as pixels. Same numbers, smoother picture."""
     p, g = f["properties"], f["geometry"]
     b = bounds_of(g)
-    n = 300
-    a = to_grid(LST, b, n, n, resampling=Resampling.bilinear)
+    n = 600
     inside = rasterize([(g, 1)], out_shape=(n, n), transform=from_bounds(*b, n, n), fill=0) == 1
+    rgb = np.stack([to_grid(S2, b, n, n, band=k, resampling=Resampling.bilinear) for k in (1, 2, 3)], -1)
+    rgb = np.where(np.isfinite(rgb), rgb, 255) / 255.0
+    rgb = 0.55 * rgb + 0.45          # fade the photo so the ward stands out
+    ax.imshow(np.clip(rgb, 0, 1), extent=(b[0], b[2], b[1], b[3]), origin="upper", interpolation="bilinear")
+    a = smooth(to_grid(LST, b, n, n, resampling=Resampling.cubic_spline), k=9)
     a = np.where(inside, a, np.nan)
-    im = ax.imshow(a, extent=(b[0], b[2], b[1], b[3]), origin="upper", cmap=CMAP, vmin=VMIN, vmax=VMAX, interpolation="bilinear")
+    im = ax.imshow(a, extent=(b[0], b[2], b[1], b[3]), origin="upper", cmap=CMAP, vmin=VMIN, vmax=VMAX, interpolation="bicubic")
     for r in rings(g):
-        ax.plot(r[:, 0], r[:, 1], color=INK, lw=1.2)
+        ax.plot(r[:, 0], r[:, 1], color="white", lw=3.2); ax.plot(r[:, 0], r[:, 1], color=INK, lw=1.4)
     ax.set_xlim(b[0], b[2]); ax.set_ylim(b[1], b[3]); ax.set_aspect("equal")
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
@@ -92,8 +110,8 @@ def figure(feats, title, subtitle, out):
     cb = fig.colorbar(im, cax=cax, orientation="horizontal", extend="both", ticks=range(VMIN, VMAX + 1, 4))
     cb.set_label("Land surface temperature, clear January to March mornings, 2023 to 2026 (°C)", fontsize=13, color=INK)
     cb.ax.tick_params(labelsize=12)
-    fig.text(0.03, 0.14 / H, "Data: USGS Landsat 8 and 9 via Microsoft Planetary Computer; WorldPop 2025; ESA WorldCover 2021; IEBC ward boundaries. "
-             "Each ward drawn at its own scale. Graphic: Joto Mjini Nairobi.", fontsize=11, color=INK2)
+    fig.text(0.03, 0.14 / H, "Data: USGS Landsat 8 and 9 via Microsoft Planetary Computer; WorldPop 2025; ESA WorldCover 2021; IEBC wards. "
+             "Photo: Sentinel-2 (contains modified Copernicus Sentinel data 2026). Each ward at its own scale. Graphic: Joto Mjini Nairobi.", fontsize=11, color=INK2)
     for d in (ROOT / "outputs" / "figures", SITE / "figures"):
         d.mkdir(parents=True, exist_ok=True)
         fig.savefig(d / out, dpi=110, facecolor="white")

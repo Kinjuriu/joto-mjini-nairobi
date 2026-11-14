@@ -332,6 +332,7 @@ export class MapController {
       if (sp) sp.layers.forEach((l) => this.map.getLayer(l.id) && this.map.moveLayer(l.id, before));
     }
     this.setPulses(ch.pulses || []);
+    this.setQuiet(!!ch.quiet);
     if (ch.center) {
       const cam = { center: ch.center, zoom: ch.zoom, bearing: 0, pitch: 0, padding: ch.padding || { top: 0, bottom: 0, left: 0, right: 0 } };
       if (quick) this.map.jumpTo(cam);
@@ -346,6 +347,17 @@ export class MapController {
       const sp = this.specs.get(id);
       if (!sp || !sp.beforeLabels) continue;
       for (const l of sp.layers) if (this.map.getLayer(l.id)) this.map.moveLayer(l.id, before);
+    }
+  }
+
+  /** Hide the basemap's place and road names, so only the chapter's own labels show. */
+  setQuiet(on) {
+    if (this.quiet === on) return;
+    this.quiet = on;
+    for (const l of this.map.getStyle().layers) {
+      if (l.type !== 'symbol' || !/^(settlement|road-label|road-number|water|natural|poi|state|country)/.test(l.id)) continue;
+      if (HIDE.some((h) => l.id.startsWith(h))) continue;
+      this.map.setLayoutProperty(l.id, 'visibility', on ? 'none' : 'visible');
     }
   }
 
@@ -504,10 +516,11 @@ export const OVERLAYS = {
   forests: {
     source: () => ({ type: 'geojson', data: abs('data/forests.geojson') }), beforeLabels: false,
     layers: () => [
-      { id: 'forests-line', type: 'line', filter: ['==', ['get', 'kind'], 'forest'], paint: { 'line-color': '#FFFFFF', 'line-width': 3 } },
+      // Bright green outline and white names on a dark halo (no white border with white words).
+      { id: 'forests-line', type: 'line', filter: ['==', ['get', 'kind'], 'forest'], paint: { 'line-color': '#9BEA6A', 'line-width': 3 } },
       { id: 'forests-label', type: 'symbol', filter: ['==', ['get', 'kind'], 'label'],
         layout: { 'text-field': ['get', 'name'], 'text-font': FONT_BOLD, 'text-size': 20, 'text-allow-overlap': true, 'text-max-width': 9 },
-        paint: { 'text-color': '#123B22', 'text-halo-color': '#FFFFFF', 'text-halo-width': 3 } }],
+        paint: { 'text-color': '#FFFFFF', 'text-halo-color': '#0B1F12', 'text-halo-width': 2.5 } }],
   },
   buildings: {
     source: vec('buildings'),

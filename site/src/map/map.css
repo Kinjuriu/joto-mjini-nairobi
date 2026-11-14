@@ -75,7 +75,11 @@
 .pulse__dot { position: absolute; inset: 4px; border-radius: 50%; border: 2.5px solid #FFFFFF; }
 .pulse--hot .pulse__dot { background: #A1201A; }
 .pulse--cool .pulse__dot { background: #1D4E6F; }
-.pulse__ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid #FFFFFF; animation: pulse-ring 2.2s ease-out infinite; }
+.pulse__ring { position: absolute; inset: 0; border-radius: 50%; border: 4px solid; animation: pulse-ring 2.2s ease-out infinite;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.85), inset 0 0 0 1.5px rgba(255, 255, 255, 0.85); }
+/* Rings in the colour of the ground they sit on: blue on the cool side, red on the hot side. */
+.pulse--hot .pulse__ring { border-color: #A1201A; }
+.pulse--cool .pulse__ring { border-color: #1D4E6F; }
 .pulse__ring--2 { animation-delay: 1.1s; }
 @keyframes pulse-ring { from { transform: scale(1); opacity: 0.95; } to { transform: scale(4.2); opacity: 0; } }
 .pulse__label {

@@ -138,13 +138,21 @@
 .card__bar-value { font-variant-numeric: tabular-nums; }
 
 /* Colour key under the ward cover table. */
-.table-key { font-family: var(--sans); font-size: 13.5px; color: var(--ink-2); max-width: 420px; margin: 10px 0 4px; }
-.table-key > div { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 8px; margin-bottom: 4px; }
+.table-with-key { display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: flex-start; }
+.table-with-key > .chart { flex: 1 1 400px; max-width: 520px; }
+.table-key { flex: 0 1 250px; font-family: var(--sans); font-size: 13.5px; color: var(--ink-2); margin: 40px 0 4px;
+  padding: 10px 12px; border: 1px solid var(--rule); }
+.table-key__title { margin: 0 0 8px; font-weight: 700; color: var(--ink); font-size: 14px; }
+.table-key > div { display: grid; grid-template-columns: 1fr; gap: 3px; margin-bottom: 6px; }
 .table-key__name { color: var(--ink); font-weight: 600; }
 .table-key__ramp { display: flex; height: 12px; border: 1px solid rgba(0, 0, 0, 0.12); }
 .table-key__ramp span { flex: 1; }
-.table-key__ends { display: flex; justify-content: space-between; margin: 0 0 8px 138px; font-size: 12.5px; }
+.table-key__ends { display: flex; justify-content: space-between; margin: 0 0 10px; font-size: 12px; }
 
 /* The two dry seasons side by side (stacked on phones). */
 .season-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 860px) { .season-pair { grid-template-columns: 1fr; } }
+/* Wider media column for the ward cover table, so the key fits beside it. */
+.interlude .split--table { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr); }
+.table-with-key > .chart { flex: 1 1 380px; max-width: 470px; }
+.table-key { flex: 0 1 220px; }

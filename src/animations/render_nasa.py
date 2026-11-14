@@ -247,10 +247,8 @@ def mornings() -> dict:
                "Land surface temperature on each clear January to March morning, difference from that morning's county median",
                "Data: USGS Landsat 8 and 9 Collection 2 Level-2, via Microsoft Planetary Computer. Graphic: Joto Mjini Nairobi.",
                bounds, COOLWARM, -8, 8, "Difference from the county median that morning (°C)", [-8, -6, -4, -2, 0, 2, 4, 6, 8],
-               ["−8", "−6", "−4", "−2", "0", "+2", "+4", "+6", "+8"], nodata_note="No data (cloud)", calendar=True)
-    # The time and the county median sit under the calendar.
-    fr.valid.set_position((0.8675, 0.43)); fr.valid.set_ha("center"); fr.valid.set_fontsize(22)
-    fr.sub.set_position((0.8675, 0.395)); fr.sub.set_ha("center"); fr.sub.set_fontsize(15)
+               ["−8", "−6", "−4", "−2", "0", "+2", "+4", "+6", "+8"], nodata_note="No data (cloud)")
+    # 14 November 2026: the calendar stamp was removed (Stephane found it distracting); plain date again.
     frames, dates = [], []
     for _, r in sel.iterrows():
         p = ROOT / "data" / "interim" / "landsat" / f"{r.scene_id}_lst_c.tif"
@@ -262,7 +260,7 @@ def mornings() -> dict:
             continue
         d = np.where(ok, v - np.nanmedian(v[ok]), np.nan)
         ts = pd.Timestamp(r.datetime_nairobi)
-        frames.append(fr.render(d, f"{ts:%H:%M} EAT", f"County median that morning {np.nanmedian(v[ok]):.1f} °C", date=ts))
+        frames.append(fr.render(d, f"{ts.day} {ts:%B %Y}, {ts:%H:%M} EAT", f"County median that morning {np.nanmedian(v[ok]):.1f} °C"))
         dates.append(r.date)
     poster = dates.index("2026-01-27") if "2026-01-27" in dates else len(frames) - 1
     info = write("hot_mornings", frames, fps=2, poster=poster)
@@ -343,7 +341,7 @@ def seasons() -> dict:
             else:
                 d = np.full((h, w), np.nan)
                 sub = "No clear morning this season"
-            frames += [fr.render(d, f"Valid: {y}", sub)] * 3      # each year held for 1.5 s at 2 fps
+            frames += [fr.render(d, str(y), sub)] * 3      # each year held for 1.5 s at 2 fps
             log.append(dict(year=y, n=len(stack)))
         valid_idx = [i for i, l in enumerate(log) if l["n"]]
         out[key] = write(name, frames, fps=2, poster=3 * valid_idx[-1]) | {"years": log}

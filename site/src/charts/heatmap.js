@@ -20,7 +20,7 @@ function drawTable(el, { rows, cols, value, colour, fmt, describe, rowLabelWidth
   let cur = [0, 0];
   const draw = (width) => {
     select(el).select('svg').remove();
-    const lw = width < 520 ? Math.min(rowLabelWidth, 112) : rowLabelWidth;
+    const lw = width < 400 ? Math.min(rowLabelWidth, 112) : rowLabelWidth;
     const cw = Math.max(34, Math.min(cell, Math.floor((width - lw - 4) / cols.length)));
     const ch = width < 520 ? Math.max(24, cellH - 4) : cellH;
     const headH = rotate ? 112 : 44;
@@ -119,13 +119,18 @@ export async function wardCoverTable(el) {
   const ramp = (cols) => cols.map((c) => `<span style="background:${c}"></span>`).join('');
   const key = document.createElement('div');
   key.className = 'table-key';
-  key.innerHTML = `<div><span class="table-key__name">Trees</span><span class="table-key__ramp">${ramp(GREENS)}</span></div>`
+  key.innerHTML = '<p class="table-key__title">Key</p>'
+    + `<div><span class="table-key__name">Trees</span><span class="table-key__ramp">${ramp(GREENS)}</span></div>`
     + `<div><span class="table-key__name">Grass, bare ground</span><span class="table-key__ramp">${ramp(SANDS)}</span></div>`
     + `<div><span class="table-key__name">Built-up</span><span class="table-key__ramp">${ramp(NEUTRAL_TO_RED)}</span></div>`
     + '<p class="table-key__ends"><span>0 %</span><span>share of the ward\'s land</span><span>100 %</span></p>'
     + `<div><span class="table-key__name">vs median</span><span class="table-key__ramp">${ramp(DIFF_COLOURS)}</span></div>`
     + '<p class="table-key__ends"><span>cooler</span><span>°C from the city median</span><span>hotter</span></p>';
-  el.after(key);
+  // Key beside the table, top right, where there was empty space (14 November 2026).
+  const wrap = document.createElement('div');
+  wrap.className = 'table-with-key';
+  el.before(wrap);
+  wrap.append(el, key);
 }
 
 /** Table 3: month by month since January 2023, average daily high air temperature minus the 1991 to 2020

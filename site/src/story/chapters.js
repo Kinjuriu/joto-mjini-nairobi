@@ -169,8 +169,9 @@ export const CHAPTERS = [
   },
   {
     id: 'people', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
-    layers: base([{ id: 'population', opacity: LIGHT_OP }, { id: 'ward-labels', opacity: 1 }]),
-    labelWards: TOP10,
+    // Only the ten hottest wards where people live stay bright and named; the rest are dimmed (Stephane, 14 November).
+    layers: base([{ id: 'population', opacity: LIGHT_OP }, { id: 'ward-dim', opacity: 1 }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
+    groups: { hot: TOP10, cool: [] }, labelWards: TOP10, quiet: true,
     chip: '2025 estimate', legend: 'population',
     card: {
       title: 'Who lives on the hottest ground',
@@ -184,8 +185,8 @@ export const CHAPTERS = [
   },
   {
     id: 'people-heat', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
-    layers: base([{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'ward-labels', opacity: 1 }]),
-    labelWards: TOP10,
+    layers: base([{ id: 'heat-diff', opacity: LIGHT_OP }, { id: 'ward-dim', opacity: 1 }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
+    groups: { hot: TOP10, cool: [] }, labelWards: TOP10, quiet: true,
     // The two averages are marked on the legend's colour bar (they are averages, not places on the map).
     legendMarkers: ['Ground under the average resident', 'Average for all county land'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',

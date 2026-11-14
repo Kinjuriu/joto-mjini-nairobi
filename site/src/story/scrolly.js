@@ -64,7 +64,7 @@ export async function initStory(blocks) {
       chip.set(ch.chip);
       await ctl.setChapter({
         basemap: ch.basemap, layers: ch.layers, highlight: ch.highlight || [],
-        groups: ch.groups, labelWards: ch.labelWards, top: ch.top,
+        groups: ch.groups, labelWards: ch.labelWards, top: ch.top, quiet: ch.quiet,
         pulses: (ch.pulses || []).map((p) => { const f = fact(ch.id, p.fact); return { ...p, label: f ? `${f.name}: ${f.value}<br><small>${p.place}</small>` : p.fact }; }),
         center: ch.center, zoom: MOBILE.matches ? ch.mobileZoom : (window.innerWidth < 1100 ? ch.zoom - 0.6 : ch.zoom), padding: padding(),
       }, { instant: !near });
