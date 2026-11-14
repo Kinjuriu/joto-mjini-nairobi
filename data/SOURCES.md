@@ -153,6 +153,18 @@ Searched 10 November 2026.
 - **ESA "Climate analysis in African cities"** (https://climate.esa.int/en/supporting-the-paris-agreement/climate-analysis-in-african-cities/data): about 300 m indicators for more than 50 African cities; the public page does not list the cities, a licence or download links. Nairobi not confirmed. Reference only.
 - **Other relevant work found** (reference only, not data inputs): IIED issue paper on heat in informal settlements in Nairobi, Dar es Salaam and Kariba (2026), https://www.iied.org/sites/default/files/pdfs/2026-02/22697iied.pdf ; Kimutai, J. (2022), heat thresholds for Nairobi, Mombasa and Kisumu, https://preparecenter.org/wp-content/uploads/2022/12/Kenya-Heat-Tresholds-Research-by-J.Kimutai-2022.pdf ; NASA SEDAC Global Urban Heat Island data set 2013, https://doi.org/10.7927/H4H70CRF
 
+## Satellite imagery backdrop (site only, not an analysis input)
+
+- **Name:** EOxCloudless 2025 (Sentinel-2 cloudless, yearly cloud-free mosaic)
+- **Provider:** EOX IT Services GmbH
+- **URL:** https://cloudless.eox.at ; tiles https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/GoogleMapsCompatible/{z}/{y}/{x}.jpg
+- **Licence:** CC BY-NC-SA 4.0 for the 2018 to 2025 layers, non-commercial use (https://cloudless.eox.at/license-non-commercial/). Commercial use needs an EOX commercial licence.
+- **Resolution:** 10 m
+- **Dates covered:** Copernicus Sentinel-2 data from 2025
+- **Date accessed:** 14 November 2026 (2023 layer used from 10 to 14 November 2026)
+- **Citation:** EOxCloudless - https://cloudless.eox.at by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2025)
+- Used only as the picture under the data layers when Mapbox satellite imagery is refused (DECISIONS D42, D50). No number in the story comes from it.
+
 ## Kisumu (optional comparison, run with `JOTO_CITY=kisumu`)
 
 Same datasets, licences and citations as Nairobi, accessed 10 November 2026, with these differences:

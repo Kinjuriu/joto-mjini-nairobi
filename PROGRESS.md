@@ -67,3 +67,8 @@ Times are local, Africa/Nairobi (UTC+3).
   - Shareable view: basemap, layers, opacities, compare state, ward and map position in the URL hash, restored on load; "Copy link" and "Reset view".
   - QA `site/qa/v2_explorer.mjs`: ward chosen by keyboard; roof caveat on Mabatini; compare handle moved by keys; building popup; year play; a copied link restored compare and ward; phone without horizontal overflow; no console errors. Screenshots in `outputs/screenshots/v2/chunk5/`. Fixed during QA: zero-height map on phones (Mapbox CSS won the cascade); compare mode showed the wrong legend.
 - 2026-11-10 14:03 **v2 chunk 6 finished: QA and handover.** Full-page checks at 375 and 1440 px (`site/qa/v2_full.mjs`): no errors, no failed requests, 0 tile 404s, 4 map instances; widths 360, 768, 1280, 1600 with no overflow (fixed tablet cards hiding the place); notebooks 01 and 02 re-executed and all analysis checks match; NASA comparisons in `outputs/screenshots/v2/compare_with_nasa/`; walkthrough `outputs/demo/joto-mjini-walkthrough.webm` (64 MB, git-ignored); `site/SITE_REPORT.md` v2 section with the pre-ship checklist; `MORNING_REPORT_v2.md`. v2 run complete.
+
+## Review rounds and follow-ups
+
+- 2026-11-10 to 2026-11-12 Three review rounds with Stephane, recorded as D42 to D49 in DECISIONS.md and in commits 8894dc2f, 2a76d095 and bb961d1f (entries added here on 14 November because they were missing).
+- 2026-11-14 12:16 Satellite backdrop moved from EOX 2023 to EOxCloudless 2025 (D50, data/SOURCES.md). Licence unchanged (CC BY-NC-SA 4.0 covers 2018 to 2025). Mapbox satellite still refused (HTTP 429). Site builds. Next: census pipeline in a separate repository, Esri account guide, city centre options.

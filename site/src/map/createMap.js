@@ -43,7 +43,7 @@ export class MissingTokenError extends Error {}
 
 // Imagery. Mapbox satellite is sharpest, but its tiles were refused for this account (HTTP 429 on every
 // request, 10 November 2026). We probe one tile once per session: if it is refused we use Sentinel-2
-// cloudless 2023 by EOX (10 m, cloud-free, natural colour, covers the whole region). DECISIONS D42.
+// cloudless 2025 by EOX (10 m, cloud-free, natural colour, covers the whole region). DECISIONS D42.
 let satProbe;
 export function satelliteAvailable() {
   if (SATELLITE === 'sentinel2') return Promise.resolve(false);
@@ -60,8 +60,8 @@ export function satelliteAvailable() {
 }
 const EOX = {
   type: 'raster', tileSize: 256, maxzoom: 15,
-  tiles: ['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/{z}/{y}/{x}.jpg'],
-  attribution: '<a href="https://s2maps.eu" target="_blank" rel="noopener">Sentinel-2 cloudless 2023 by EOX</a> (contains modified Copernicus Sentinel data 2023)',
+  tiles: ['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/GoogleMapsCompatible/{z}/{y}/{x}.jpg'],
+  attribution: '<a href="https://cloudless.eox.at" target="_blank" rel="noopener">EOxCloudless 2025 by EOX IT Services GmbH</a> (contains modified Copernicus Sentinel data 2025)',
 };
 const MAPBOX_SAT = { type: 'raster', url: 'mapbox://mapbox.satellite', tileSize: 256 };
 

@@ -75,3 +75,8 @@ Choices made during unattended runs, with the reason. Newest at the bottom.
 - Ward by ward: only the five hottest (red) and five coolest (blue) wards where people live, tree cover in green, other wards dimmed and unnamed. New numbers in `analysis/results_extra.json` (`wards_top5`): hottest five 41.9 °C, tree cover 6 %; coolest five 35.0 °C, 56 %.
 - Day of heat: the 3 km map animation (which looked broken because of cloud gaps) is replaced by an hour-by-hour line chart, county median against the land around it (`site/public/data/day_of_heat_hourly.csv`); hours with under half the area clear are open circles. At midday the dry plains around the county were hotter than the county itself.
 - Hot mornings animation: a soft calendar (month grid, day circled in brand blue) replaces the "Valid:" date; time and county median sit under it. Approved from a sketch, softened at Stephane's request.
+
+## D50 (2026-11-14). Imagery backdrop moved to EOX 2025
+
+- The satellite backdrop now uses EOxCloudless 2025 in place of 2023, at Stephane's request, so the picture under the data is closer in time to the Landsat composites (2023 to 2026) and the Overture buildings (release 2026-10-21). EOX's non-commercial page states that CC BY-NC-SA 4.0 covers 2018 to 2025, so the licence is unchanged. Credit lines in `site/index.html` and `site/src/map/createMap.js` use EOX's current attribution wording. The backdrop is not used in any calculation, so no finding changes.
+- Mapbox satellite was re-tested on 13 November 2026 and still returns HTTP 429; the automatic switch to Mapbox stays in place.
