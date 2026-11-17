@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Joto Mjini Nairobi: Nairobi's heat divide</title>
-  <meta name="description" content="On hot mornings, the ground in central Nairobi is {{q2.gap_c|c}} hotter than in its forests. A data story about land surface temperature, trees and people across Nairobi's 85 wards.">
+  <meta name="description" content="On hot mornings, the ground in and around Nairobi's Industrial Area is {{x.copy_v3.industrial_and_around.gap_c|c}} hotter than in its forests, and the ground in the city centre {{q2.cbd_gap_c|c}} hotter. A data story about land surface temperature, trees and people across Nairobi's 85 wards.">
   <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://api.mapbox.com" crossorigin>
   <link rel="preconnect" href="https://tiles.maps.eox.at" crossorigin>
@@ -29,17 +29,11 @@
     <!-- 1. Short intro (NASA: frontmatter and opening prose). Nothing else above the first map. -->
     <section class="intro col" id="story">
       <p class="kicker">Nairobi's heat divide</p>
-      <h1>On hot mornings, central Nairobi's ground is {{q2.gap_c|c}} hotter than its forests</h1>
+      <h1>On hot mornings, the ground in and around Nairobi's Industrial Area is {{x.copy_v3.industrial_and_around.gap_c|c}} hotter than its forests</h1>
       <p class="dek">Land surface temperature measured by the Landsat 8 and 9 satellites on clear mornings, January to March, 2023 to 2026</p>
-      <p class="byline">By Stephane [surname], data analyst, Nairobi <span class="sep">|</span> Published [date] <span class="sep">|</span> Last updated [date]</p>
+      <p class="byline">By Stephane Ngugi, Senior Data Analyst and Researcher, Nairobi <span class="sep">|</span> Published 17 November 2026 <span class="sep">|</span> Last updated 17 November 2026</p>
       <div class="prose">
         <p>On clear January to March mornings, half of Nairobi County's ground was hotter than {{q1.county_median_c|c}} at the surface. The hottest tenth of the land averaged {{q1.hottest10pct_land_mean_c|c}}; the coolest tenth averaged {{q1.coolest10pct_land_mean_c|c}}.</p>
-        <p>We checked {{q0.n_scenes_searched|raw}} Landsat 8 and 9 passes over Nairobi between {{q0.first_scene|date}} and {{q0.last_scene|date}}; {{q0.n_scenes_usable|raw}} were clear enough to use. The satellites pass at about {{q0.overpass_local|raw}} in the morning, Nairobi time.</p>
-        <div class="story-lede" id="story-text">
-          <h2 class="story-lede__title">[[COPY: section heading for the story, for example "Why Nairobi's heat is uneven"]]</h2>
-          <p>[[COPY: the opening of the story in your own words: two or three short paragraphs on who feels Nairobi's heat, where, and why it matters now]]</p>
-        </div>
-        <p class="aside"><strong>Surface temperature or air temperature?</strong> [[COPY: four sentences explaining that satellites measure how hot the ground, roofs and roads are, which is different from the air temperature people feel]]</p>
       </div>
     </section>
 
@@ -55,6 +49,19 @@
       </div>
     </section>
 
+    <!-- 2b. The story in words, after the first map story (moved 17 Nov so the map shows on the first screen) -->
+    <section class="col prose story-words" aria-label="Nairobi's heat falls unevenly">
+        <div class="story-lede" id="story-text">
+          <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
+          <h2 class="story-lede__title">Nairobi's heat falls unevenly</h2>
+          <p>Nairobi is often described as a city with a mild climate, and on most days that still holds; yet on clear mornings in the hot season, the ground under some neighbourhoods gets far hotter than the ground under others. The roofs, roads and bare yards of the east and the Industrial Area heat up fast, while Karura Forest, Ngong Road Forest and the leafy suburbs in the west stay much cooler.</p>
+          <p>About {{q4.pop_in_hottest20|int}} people, {{q4.pop_share_in_hottest20_pct|pct}} of the county's residents, live on the hottest fifth of its land. Many of them live in dense neighbourhoods such as Kangemi, Viwandani and Kabiro, where buildings cover most of the ground and there are few trees to give shade. This story maps that exposure: where the hottest ground is, who lives on it, and how trees and buildings relate to it.</p>
+          <p>It matters now because Nairobi keeps building over its open ground, and because most days in the past few years have been warmer than normal, as the air temperature charts near the end of the story show. Knowing where the hottest ground is, and who lives on it, is a first step for anyone deciding where the city most needs shade, trees and cooler roofs.</p>
+        </div>
+        <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
+        <p class="aside"><strong>Surface temperature or air temperature?</strong> Satellites cannot measure the air; they measure how hot the surface is, which means roofs, roads, bare soil and the tops of trees. On a sunny morning, an iron sheet roof or a dusty road can be much hotter than the air a person breathes a metre or two above it. Hot surfaces warm the air above them, so the two are linked, although the air is usually cooler and changes less from one place to the next. In this story, every temperature from a satellite is a land surface temperature, and the few air temperatures, in the charts near the end, are labelled as air temperature.</p>
+    </section>
+
     <!-- 3. Interlude 1: animation and land cover table (chunk 4), paired maps beside bullets, swipe map -->
     <section class="interlude" id="interlude-1" aria-label="The same places, morning after morning">
       <div class="split split--stack wide" id="anim-mornings">
@@ -68,9 +75,11 @@
           <figcaption class="caption">Every clear January to March Landsat morning from {{x.animations.mornings.first|date}} to {{x.animations.mornings.last|date}} ({{x.animations.mornings.n_scenes|raw}} mornings), each shown as the difference from that morning's county median. <span class="source">Data: USGS Landsat 8 and 9 Collection 2 via Microsoft Planetary Computer. Graphic: Joto Mjini Nairobi. <a href="media/hot_mornings.gif">GIF version</a>.</span></figcaption>
         </figure>
         <div class="split__text">
+          <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
+          <h2>The same places, morning after morning</h2>
           <div class="rule" aria-hidden="true"></div>
-          <h2>[[COPY: heading, for example "The same places, morning after morning"]]</h2>
-          <p>[[COPY: two short paragraphs on what the animation shows: on every clear morning, the east and the centre run hotter than the median, and the forests and Karen cooler]]</p>
+          <p>Each frame of this animation is one clear hot-season morning between 2014 and 2026. Some mornings were hotter than others, so each frame shows how much hotter or cooler each place was than the county median on that same morning: red ground was hotter than the rest of the county, and blue ground cooler.</p>
+          <p>As the mornings go by, the colours stay in much the same places. The east, from Kasarani and Dandora out to Ruai, and the land around the Industrial Area are red on most mornings, while Karura Forest, Karen and the forests in the west are blue; the heat divide is part of the city's ground, and it comes back every hot season.</p>
           <p>The hottest clear Landsat morning since 2013 was {{composites.hottest_clear_day.date|date}}, when the county median surface temperature was {{composites.hottest_clear_day.county_median_c|c}}.</p>
         </div>
       </div>
@@ -85,8 +94,9 @@
 
       <div class="split wide split--table" id="landcover-table">
         <div class="split__text">
+          <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
+          <h2>The hottest wards have the fewest trees</h2>
           <div class="rule" aria-hidden="true"></div>
-          <h2>[[COPY: heading, for example "What covers the hottest and coolest wards"]]</h2>
           <p>Areas with more trees were cooler: the hot-season surface temperature fell from {{q3.tree_band_0_10_mean_c|c}} where tree cover was under 10 % to {{q3.tree_band_90_100_mean_c|c}} where it was over 90 %.</p>
           <p>The ten hottest wards where people live had {{x.tables_v2.ward_cover_extremes.hottest_mean_tree_pct|pct}} tree cover on average; the ten coolest had {{x.tables_v2.ward_cover_extremes.coolest_mean_tree_pct|pct}}.</p>
         </div>
@@ -102,8 +112,8 @@
 
       <div class="split split--stack wide" id="seasons">
         <div class="split__text">
-          <div class="rule" aria-hidden="true"></div>
           <h2>The same neighbourhoods are the hottest in both dry seasons</h2>
+          <div class="rule" aria-hidden="true"></div>
           <p>Nairobi has two dry seasons: a hot one from January to March and a cool one from June to August. In the cool season the whole city's ground is cooler (county median {{q1.cool_season_county_median_c|c}}, against {{q1.county_median_c|c}} in the hot season). But look at where the red is in the two maps below: the centre, the east and Ruai are hot in both, and Karura, Karen and the forests are cool in both. Ranked by surface temperature, the wards fall in a similar order in both seasons (rank correlation {{q1.hot_cool_ward_spearman|raw}}, where 1 would be the same order and 0 no link).</p>
         </div>
         <div class="season-pair">
@@ -165,10 +175,11 @@
           <figcaption class="caption">Share of the ground covered by buildings in each Global Human Settlement Layer epoch, 1975 to 2025; 2025 is a JRC projection. <span class="source">Data: GHSL GHS-BUILT-S R2023A, European Commission JRC (CC BY 4.0). Graphic: Joto Mjini Nairobi. <a href="media/nairobi_grows.gif">GIF version</a>.</span></figcaption>
         </figure>
         <div class="split__text">
+          <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
+          <h2>Most new building went up on the city's edges</h2>
           <div class="rule" aria-hidden="true"></div>
-          <h2>[[COPY: heading for the growth animation]]</h2>
           <p>Between 1990 and 2020, built-up surface in Nairobi County grew from about {{q6.built_km2.1990|km2}} to about {{q6.built_km2.2020|km2}}, around {{q6.built_ratio_2020_1990|d1}} times as much.</p>
-          <p>[[COPY: one paragraph on where the city filled in]]</p>
+          <p>Between 1990 and 2020, {{x.copy_v3.growth.top4_added_share_pct|pct}} of the new built-up land was in four outer sub-counties: Kasarani in the north-east, Embakasi East in the east, Langata in the south-west and Westlands in the north-west. The older, dense areas near the centre, such as Mathare, Kamukunji and Starehe, changed little, because they were already about as built up in 1990 as they are today.</p>
         </div>
       </div>
 
@@ -183,17 +194,19 @@
 
       <div class="split split--stack wide" id="anim-day">
         <figure class="split__media figure">
-          <h3 class="chart-title">On 27 January 2026, Nairobi's ground warmed by about 26 °C between sunrise and noon</h3>
+          <h3 class="chart-title">On 27 January 2026, Nairobi's ground warmed by {{x.copy_v3.day_of_heat.rise_first_to_noon_c|c}} between {{x.copy_v3.day_of_heat.first_hour|raw}} and noon</h3>
           <p class="chart-subtitle">Land surface temperature each hour, Nairobi time: the median inside Nairobi County and the median of the land around it. Open circles: hours when more than half of the area was under cloud, so fewer readings went into the median.</p>
           <div class="chart" data-chart="day-heat" data-title="A day of heat, hour by hour">
             <noscript><p>The chart needs JavaScript. The data is in <a href="data/day_of_heat_hourly.csv">day_of_heat_hourly.csv</a>.</p></noscript>
           </div>
-          <figcaption class="caption">Each reading covers a square about 3 km across, so this shows the city and the plains around it, not single neighbourhoods. At noon the dry plains around Nairobi were hotter than the county itself. <span class="source">Data: Copernicus Land Monitoring Service, Global Land Surface Temperature hourly v3, via the Copernicus Data Space Ecosystem. Graphic: Joto Mjini Nairobi. <a href="data/day_of_heat_hourly.csv">Download the data</a>; <a href="media/day_of_heat.gif">map version (GIF)</a>.</span></figcaption>
+          <figcaption class="caption">Each reading covers a square about 3 km across, so this shows the city and the plains around it, not single neighbourhoods. At noon the land around Nairobi was {{x.copy_v3.day_of_heat.noon_around_minus_county_c|c}} hotter than the county itself. <span class="source">Data: Copernicus Land Monitoring Service, Global Land Surface Temperature hourly v3, via the Copernicus Data Space Ecosystem. Graphic: Joto Mjini Nairobi. <a href="data/day_of_heat_hourly.csv">Download the data</a>; <a href="media/day_of_heat.gif">map version (GIF)</a>.</span></figcaption>
         </figure>
         <div class="split__text">
+          <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
+          <h2>Nairobi's ground heats up fast after sunrise</h2>
           <div class="rule" aria-hidden="true"></div>
-          <h2>[[COPY: heading for the day of heat]]</h2>
-          <p>[[COPY: two short paragraphs: the ground warms fast after sunrise, peaks around midday, and cools after 15:00. Say that the hourly data is about 3 km, so it shows the region around Nairobi, not neighbourhoods]]</p>
+          <p>Landsat sees Nairobi only on the mornings it passes over, at about {{q0.overpass_local|raw}}. To follow a whole day, this chart uses a different record, the Copernicus hourly land surface temperature, for 27 January 2026, a hot day with a clear morning. At {{x.copy_v3.day_of_heat.first_hour|raw}} the county's ground was {{x.copy_v3.day_of_heat.county_first_c|c}}; it warmed quickly once the sun was up, reached {{x.copy_v3.day_of_heat.county_peak_c|c}} at {{x.copy_v3.day_of_heat.county_peak_hour|raw}}, and stayed close to that until 14:00. After that it cooled, while clouds built up over the city in the afternoon.</p>
+          <p>Each hourly reading covers a square about 3 km across, so the chart shows Nairobi and the land around it as a whole and cannot pick out single neighbourhoods; for those, the Landsat maps above are the better guide.</p>
         </div>
       </div>
 
@@ -291,7 +304,9 @@
       <p>Everything warm gives off invisible infrared light, and the hotter it is, the more it gives off. The thermal sensors on the Landsat 8 and 9 satellites measure that light and turn it into a surface temperature. They pass over Nairobi at about {{q0.overpass_local|raw}} in the morning, Nairobi time, and together they come back every eight days.</p>
       <p>The thermal sensor sees the ground in squares of about 100 m. The data is delivered on a finer 30 m grid, but it cannot show anything smaller than about 100 m. A value at a single building is the temperature of the area around it.</p>
       <h3>Method in brief</h3>
+      <p>We checked {{q0.n_scenes_searched|raw}} Landsat 8 and 9 passes over Nairobi between {{q0.first_scene|date}} and {{q0.last_scene|date}}; {{q0.n_scenes_usable|raw}} were clear enough to use. The satellites pass at about {{q0.overpass_local|raw}} in the morning, Nairobi time.</p>
       <p>We took every Landsat 8 and 9 scene of Nairobi since April 2013 from Microsoft Planetary Computer, removed clouds and cloud shadows with the scene's quality band, and converted the thermal band to °C. Scenes with at least 80 % of the county clear were kept. Each map is the median of the clear scenes, pixel by pixel, on a 30 m grid in UTM zone 37S. Tree cover and built-up shares come from ESA WorldCover 2021. People come from WorldPop's 2025 estimates. Ward values use the 30 m cells whose centres fall in each ward; people-weighted values weight each cell by the number of people estimated to live there. Each headline number was recomputed with a second, independent method, and both results matched. Every number in this story is listed, with the file and script that produced it, in <code>analysis/FINDINGS.md</code>.</p>
+      <p>"In and around the Industrial Area" in the headline means the Industrial Area as mapped in OpenStreetMap plus {{x.copy_v3.industrial_and_around.buffer_m|raw}} m around it, where its surface temperature was {{x.copy_v3.industrial_and_around.median_c|c}}; "its forests" means Karura Forest and the Nairobi Arboretum together ({{q2.cool_areas_median_c|c}}).</p>
       <p>On the maps, values are smoothed between cells when you zoom in, so the thermal data reads as a continuous field. This changes how the map looks, not the numbers.</p>
       <h3>What the data cannot tell us</h3>
       <ul>
@@ -321,7 +336,7 @@
         <li>Basemaps: © Mapbox © OpenStreetMap contributors. Satellite imagery: <a href="https://cloudless.eox.at">EOxCloudless 2025 by EOX IT Services GmbH</a> (contains modified Copernicus Sentinel data 2025), CC BY-NC-SA 4.0; Mapbox satellite imagery when available.</li>
       </ul>
       <h3>How to cite this story</h3>
-      <p>Stephane [surname] (2026). Joto Mjini Nairobi: Mapping urban heat and cooling inequality across Nairobi. [URL]. Accessed [date].</p>
+      <p>Ngugi, S. (2026). Joto Mjini Nairobi: Mapping urban heat and cooling inequality across Nairobi. https://kinjuriu.github.io/joto-mjini-nairobi/. Accessed [day month year].</p>
       <h3>Code</h3>
       <p>The data pipeline and this site are open source: <a href="https://github.com/Kinjuriu/joto-mjini-nairobi">github.com/Kinjuriu/joto-mjini-nairobi</a>.</p>
       <h3>Acknowledgements</h3>

@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-10 13:30",
- "total_size_mb": 171.1,
+ "generated": "2026-11-17 20:57",
+ "total_size_mb": 172.3,
  "layers": {
   "heat-diff": {
    "id": "heat-diff",
@@ -894,6 +894,41 @@
    "chip": "Sentinel-2, January to March 2026",
    "n_tiles": 6579,
    "size_mb": 32.4
+  },
+  "population-dense": {
+   "id": "population-dense",
+   "kind": "raster",
+   "title": "Where most people live",
+   "tiles": "tiles/population-dense/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "people per km²",
+    "note": "Only the two densest fifths of populated cells are coloured",
+    "classes": [
+     {
+      "color": "#756BB1",
+      "label": "7,500 to 19,100"
+     },
+     {
+      "color": "#54278F",
+      "label": "19,100 or more"
+     }
+    ]
+   },
+   "description": "The densest places in 2025, from WorldPop's constrained 100 m model: the two highest fifths of populated cells. A modelled estimate that may undercount the densest settlements.",
+   "source": "WorldPop 2025, constrained, R2025A (CC BY 4.0)",
+   "chip": "2025 estimate",
+   "n_tiles": 1547,
+   "size_mb": 1.2
   }
  }
 }

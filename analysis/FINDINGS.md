@@ -1,6 +1,6 @@
 # Findings
 
-Every number that may appear in the story, with where it came from. Generated 2026-11-14 15:09 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
+Every number that may appear in the story, with where it came from. Generated 2026-11-17 20:59 (Africa/Nairobi) by `src/analysis/findings.py` from `analysis/results.json` (written by `src/analysis/core.py`). Do not edit numbers by hand; change the code and re-run.
 
 **Hot-season composite:** median of 12 clear Landsat 8 and 9 scenes, January to March, 2023 to 2026 (2023-01-19, 2023-02-04, 2023-02-12, 2023-02-20, 2023-03-08, 2024-02-15, 2025-01-08, 2025-02-09, 2026-01-03, 2026-01-11, 2026-01-27, 2026-02-12). **Cool-season composite:** 4 scenes, June to August, 2018 to 2026 (2018-08-25, 2020-08-30, 2024-06-14, 2026-07-14). All temperatures below are land surface temperature unless the finding says air temperature.
 
@@ -262,6 +262,16 @@ Not used in the story yet.
 - **Caveats:** As S1. Ward counts depend on how completely each area's schools are mapped.
 - **Confidence:** Medium.
 
+### S3. The school map holds almost all of the county's public primary schools
+
+- **Sentence for the story:** The map of schools includes 192 of the 204 public primary and special schools on the Nairobi City County list.
+- **Number(s):** 225 rows in the county list (204 schools, 21 day nurseries); 208 found on the map (192 schools, 16 nurseries); 17 not found
+- **Method:** Name match against the merged school map, secondary schools left out (DECISIONS D57)
+- **Data:** data/raw/schools/nairobi_county_2014/Nairobi County Public-Primary-Schools.pdf (Nairobi City County Education Department, 2014); data/processed/nairobi_schools.geojson; output data/processed/county_school_list_2014.csv, analysis/county_school_list_check.json
+- **Script:** src/analysis/county_school_list.py
+- **Caveats:** The county list is from 2014 and covers public schools only; private schools, which are most of Nairobi's schools, cannot be checked this way. Matches are by name only. 44 of the matched schools are placed only from official lists and may be up to about 300 m off.
+- **Confidence:** Medium to high for public primary schools; says nothing about private schools.
+
 ### R1. Half of Nairobi's households lived under iron sheet roofs in 2019
 
 - **Sentence for the story:** In the 2019 census, 51.3 % of Nairobi's 1,494,676 conventional households had iron sheet roofs, from 38.0 % in Embakasi to 80.6 % in Dagoretti.
@@ -281,6 +291,50 @@ Not used in the story yet.
 - **Script:** src/analysis/census_scaling.py
 - **Caveats:** Scaling to census sub-counties fixes how many people each sub-county holds, not how WorldPop spreads them inside it, so it raises Woodley further. A uniform county growth rate understates growth on the fringe (Njiru) and overstates it in the centre. Not used on the site.
 - **Confidence:** High for the census counts; the scaled ward numbers are an intermediate step.
+
+## Numbers for the v3 story text
+
+Written by `src/analysis/copy_numbers_v3.py` to `analysis/results_extra.json["copy_v3"]`.
+
+### C1. Ngong Road Forest was as cool as Karura on hot mornings
+
+- **Sentence for the story:** On hot mornings, the ground was 27.5 °C in Karura Forest, 28.8 °C in the Nairobi Arboretum and 27.7 °C in Ngong Road Forest.
+- **Number(s):** Karura Forest 27.5 °C (7,310 cells); Nairobi Arboretum 28.8 °C (369 cells); Ngong Road Forest 27.7 °C (8,760 cells); Karura and the Arboretum match results.json q5 to within 0.0 °C
+- **Method:** Median of the hot-season 30 m cells whose centres fall inside each forest outline shown on the map (site/public/data/forests.geojson, OpenStreetMap), the same rule as q5
+- **Data:** data/processed/rasters/lst_hot_season_median.tif; site/public/data/forests.geojson
+- **Script:** src/analysis/copy_numbers_v3.py, forests
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15).
+- **Confidence:** High.
+
+### C2. On 27 January 2026, Nairobi's ground warmed by 26.1 °C between 06:00 and noon
+
+- **Sentence for the story:** The county's median land surface temperature in the hourly chart rose from 14.4 °C at 06:00 to 40.5 °C at 12:00; at noon the land around the county was 2.8 °C hotter (43.3 °C).
+- **Number(s):** rise 26.1 °C; peak 40.5 °C at 12:00; around the county at noon 43.3 °C
+- **Method:** Read from the hourly chart's own data file, so the chart title and caption match the chart
+- **Data:** site/public/data/day_of_heat_hourly.csv
+- **Script:** src/analysis/copy_numbers_v3.py, day_of_heat
+- **Caveats:** Land surface temperature at about 3 km, not air temperature. These values differ slightly from A3 (14.5 °C at 06:00, 40.7 °C at noon, 15:00 hidden by cloud), which uses a stricter cloud rule; the chart and its text both use the chart file.
+- **Confidence:** Medium.
+
+### C4. In and around the Industrial Area, the ground was 13.1 °C hotter than the forests
+
+- **Sentence for the story:** On hot mornings, the ground in and around Nairobi's Industrial Area was 13.1 °C hotter than Karura Forest and the Nairobi Arboretum.
+- **Number(s):** Industrial Area plus 500 m: 40.7 °C (11,530 cells); forests pooled 27.6 °C (q2)
+- **Method:** Median of the hot-season 30 m cells inside the OSM Industrial Area outline buffered by 500 m
+- **Data:** data/processed/rasters/lst_hot_season_median.tif; site/public/data/comparison_areas.geojson
+- **Script:** src/analysis/copy_numbers_v3.py, industrial_and_around
+- **Caveats:** Land surface temperature, not air temperature; Landsat measures heat at about 100 m, so values describe the area around a place, not a single roof or street; mid-morning overpass only (about 10:43 Nairobi time, see F15). The 500 m distance is a choice for the headline; the Industrial Area alone is 13.9 °C (F3).
+- **Confidence:** High for the arithmetic.
+
+### C3. Most new building between 1990 and 2020 went up in four outer sub-counties
+
+- **Sentence for the story:** Between 1990 and 2020, 72.8 % of the new built-up land was in Kasarani, Langata, Embakasi East and Westlands.
+- **Number(s):** Kasarani 9.4 km²; Langata 6.7 km²; Embakasi East 4.4 km²; Westlands 4.3 km²; Roysambu 2.8 km²; Dagoretti North 1.7 km²; Embakasi Central 1.0 km²; Embakasi West 0.9 km²; Dagoretti South 0.8 km²; Embakasi South 0.8 km²; Starehe 0.5 km²; Makadara 0.3 km²; Ruaraka 0.2 km²; Kibra 0.2 km²; Kamukunji 0.1 km²; Embakasi North 0.1 km²; Mathare 0.0 km²; built share changed by under 3 percentage points in Kamukunji, Mathare, Embakasi North, Kibra, Makadara, Starehe, Ruaraka
+- **Method:** (built share 2020 minus built share 1990) times sub-county area, from the T1 table
+- **Data:** analysis/tables/builtup_by_subcounty.csv
+- **Script:** src/analysis/copy_numbers_v3.py, growth
+- **Caveats:** GHSL measures the share of the ground under buildings; Langata's area includes part of Nairobi National Park.
+- **Confidence:** High for the arithmetic; medium for GHSL in dense informal areas.
 
 ## Checks
 

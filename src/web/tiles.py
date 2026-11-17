@@ -357,6 +357,18 @@ def build_layers() -> list[RasterLayer]:
                     description="Estimated people per square kilometre in 2025, from WorldPop's constrained 100 m "
                                 "model. A modelled estimate that may undercount the densest settlements.",
                     source_line="WorldPop 2025, constrained, R2025A (CC BY 4.0)", chip="2025 estimate"),
+        # Story chapter "Who lives on the hottest ground" (Stephane, 17 November 2026): only the two densest
+        # classes are coloured, so the satellite image shows everywhere else.
+        RasterLayer("population-dense", "Where most people live", [Source(dens_path)],
+                    lambda a, v: classify_from(a[0], [pop_breaks[3], pop_breaks[4]], PURPLES[3:5], v),
+                    legend=dict(type="classes", unit="people per km²",
+                                note="Only the two densest fifths of populated cells are coloured",
+                                classes=[dict(color=PURPLES[3], label=f"{int(pop_breaks[3]):,} to {int(pop_breaks[4]):,}"),
+                                         dict(color=PURPLES[4], label=f"{int(pop_breaks[4]):,} or more")]),
+                    description="The densest places in 2025, from WorldPop's constrained 100 m model: the two "
+                                "highest fifths of populated cells. A modelled estimate that may undercount the "
+                                "densest settlements.",
+                    source_line="WorldPop 2025, constrained, R2025A (CC BY 4.0)", chip="2025 estimate"),
         RasterLayer("growth-1990-2020", "Built-up land, 1990 and 2020",
                     [Source(RASTERS / "ghsl_built_1990.tif"), Source(RASTERS / "ghsl_built_2020.tif")], growth,
                     legend=dict(type="categorical", unit="", note="A cell counts as built-up from 25 % built surface",

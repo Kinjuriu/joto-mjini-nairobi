@@ -18,13 +18,13 @@ const TOP_WARDS = resolve(import.meta.dirname, '../analysis/tables/top_wards.csv
 
 const nf = new Intl.NumberFormat('en-GB');
 const FORMATS = {
-  c: (v) => `${Number(v).toFixed(1)} °C`,          // temperature, one decimal, with unit
-  absc: (v) => `${Math.abs(Number(v)).toFixed(1)} °C`,
+  c: (v) => `${Number(v).toFixed(1)}\u00A0°C`,          // temperature, one decimal, with unit
+  absc: (v) => `${Math.abs(Number(v)).toFixed(1)}\u00A0°C`,
   d1: (v) => Number(v).toFixed(1),                 // one decimal, no unit
   int: (v) => nf.format(Math.round(Number(v))),    // people counts, thousands separators
-  pct: (v) => `${Number(v).toFixed(1)} %`,
-  pct0: (v) => `${Math.round(Number(v))} %`,
-  km2: (v) => `${Math.round(Number(v))} km²`,
+  pct: (v) => `${Number(v).toFixed(1)}\u00A0%`,
+  pct0: (v) => `${Math.round(Number(v))}\u00A0%`,
+  km2: (v) => `${Math.round(Number(v))}\u00A0km²`,
   date: (v) => new Date(`${v}T00:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
   raw: (v) => String(v),
 };

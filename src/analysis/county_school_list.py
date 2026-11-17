@@ -2,7 +2,7 @@
 
 Source: Nairobi City County Education Department, "Data on Nairobi public ECD centres & primary schools and
 locations" (PDF exported from Excel on 25 June 2014; 225 rows; name, district, zone and a written location, no
-coordinates). File: data/raw/schools/nairobi_county_2014/Nairobi County Public-Primary-Schools.pdf.
+coordinates). URL: https://nairobi.go.ke/wp-content/uploads/Public-Primary-Schools.pdf. File: data/raw/schools/nairobi_county_2014/Nairobi County Public-Primary-Schools.pdf.
 
 The list has no coordinates, so it cannot add points to the map. It is used only as a completeness check: for each
 county school we look for a school in data/processed/nairobi_schools.geojson whose name matches, using the same

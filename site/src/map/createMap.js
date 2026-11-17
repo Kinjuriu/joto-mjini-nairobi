@@ -29,7 +29,7 @@ const FONT_BOLD = ['DIN Pro Bold', 'Arial Unicode MS Bold'];
 const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-label', 'water-point-label'];
 
 // Default stacking of our data layers, bottom to top (all beneath the basemap labels).
-export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'growth-1990-2020',
+export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'population-dense', 'growth-1990-2020',
   'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
   'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
   'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'forests'];

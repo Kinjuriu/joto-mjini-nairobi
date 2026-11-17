@@ -12,7 +12,7 @@
   --note-bg: #F2F5F8;
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
-  --col: 680px;
+  --col: 820px;
   --wide: 1200px;
   --gap: 24px;
 }
@@ -50,7 +50,7 @@ code { font-size: 0.85em; }
 }
 .wordmark { font-family: var(--sans); font-weight: 700; font-size: 21px; color: #FFFFFF; text-decoration: none; letter-spacing: 0.01em; }
 .wordmark:hover { color: #FFFFFF; text-decoration: underline; }
-.tagline { font-size: 15px; color: #FFFFFF; }
+.tagline { font-size: 19px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.005em; }
 
 /* 2. Title block */
 .title-block { padding-top: 22px; padding-bottom: 14px; }
@@ -61,7 +61,7 @@ h1 { font-weight: 600; font-size: clamp(28px, 4.2vw, 42px); line-height: 1.15; m
 .byline .sep { color: var(--rule); padding: 0 4px; }
 
 /* Headings */
-h2 { font-weight: 600; font-size: 28px; line-height: 1.2; margin: 56px 0 14px; }
+h2 { font-weight: 600; font-size: 28px; line-height: 1.2; margin: 56px 0 10px; }
 h3 { font-family: var(--sans); font-weight: 600; font-size: 19px; line-height: 1.3; margin: 28px 0 8px; }
 .prose p { margin: 0 0 18px; }
 .prose ul { padding-left: 1.1em; }
@@ -76,6 +76,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 19px; line-height: 1
 .figure { margin: 18px auto 36px; }
 .caption { font-family: var(--sans); font-size: 15px; line-height: 1.45; color: var(--ink-2); margin-top: 8px; }
 .caption .source { display: block; margin-top: 4px; font-size: 14px; }
+.source { color: var(--link); }
 .chart-title { font-family: var(--serif); font-size: 20px; margin: 0 0 2px; }
 .chart-subtitle { font-family: var(--sans); font-size: 15px; color: var(--ink-2); margin: 0 0 10px; line-height: 1.4; }
 .placeholder { font-family: var(--sans); font-size: 15px; color: var(--ink-2); padding: 24px; margin: 0; }
@@ -167,7 +168,7 @@ img { max-width: 100%; height: auto; display: block; }
   h2 { font-size: 25px; margin-top: 44px; }
 }
 @media (max-width: 420px) {
-  .tagline { font-size: 14px; }
+  .tagline { font-size: 16px; }
   .data-table { font-size: 14px; }
   .data-table th, .data-table td { padding: 6px 4px; }
   .data-table thead th { font-size: 13px; }
@@ -212,8 +213,8 @@ img { max-width: 100%; height: auto; display: block; }
 .layers-page__view button { font: 13px var(--sans); padding: 2px 8px; border: 1px solid var(--ink-2); background: #FFF; border-radius: 2px; cursor: pointer; }
 
 /* Section links in the header bar: plain links, underline on hover (standard navigation). */
-.masthead__nav { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-left: auto; }
-.masthead__nav a { color: #FFFFFF; font: 600 15px/1.4 var(--sans); text-decoration: none; padding: 2px 0; border-bottom: 2px solid transparent; }
-.masthead__nav a:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+.masthead__nav { display: flex; flex-wrap: wrap; gap: 6px 30px; margin-left: auto; }
+.masthead__nav a { color: #FFFFFF; font: 600 16px/1.4 var(--sans); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; padding: 2px 0; }
+.masthead__nav a:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
 .masthead__nav a:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
 @media (max-width: 760px) { .masthead__nav { margin-left: 0; width: 100%; } }

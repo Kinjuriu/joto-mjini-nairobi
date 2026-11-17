@@ -234,7 +234,7 @@
         "hot_mornings.mp4": 9.82,
         "hot_mornings.webm": 1.97,
         "hot_mornings.gif": 6.31,
-        "hot_mornings_poster.png": 1.63
+        "hot_mornings_poster.png": 1.64
       },
       "gif_width": 800,
       "n_scenes": 35,
@@ -456,5 +456,80 @@
       "by_ward": "site/public/data/schools_heat_by_ward.csv",
       "generated": "2026-11-14 15:08"
     }
+  },
+  "copy_v3": {
+    "forests": {
+      "Karura Forest": {
+        "median_c": 27.5,
+        "n_cells": 7310,
+        "check_vs_q5_c": 0.0
+      },
+      "Nairobi Arboretum": {
+        "median_c": 28.8,
+        "n_cells": 369,
+        "check_vs_q5_c": 0.0
+      },
+      "Ngong Road Forest": {
+        "median_c": 27.7,
+        "n_cells": 8760
+      }
+    },
+    "industrial_and_around": {
+      "buffer_m": 500,
+      "median_c": 40.7,
+      "n_cells": 11530,
+      "forests_median_c": 27.6,
+      "gap_c": 13.1
+    },
+    "day_of_heat": {
+      "date": "2026-01-27",
+      "first_hour": "06:00",
+      "county_first_c": 14.4,
+      "county_noon_c": 40.5,
+      "around_noon_c": 43.3,
+      "rise_first_to_noon_c": 26.1,
+      "noon_around_minus_county_c": 2.8,
+      "county_peak_c": 40.5,
+      "county_peak_hour": "12:00",
+      "source": "site/public/data/day_of_heat_hourly.csv"
+    },
+    "growth": {
+      "added_km2_1990_2020": {
+        "Kasarani": 9.4,
+        "Langata": 6.7,
+        "Embakasi East": 4.4,
+        "Westlands": 4.3,
+        "Roysambu": 2.8,
+        "Dagoretti North": 1.7,
+        "Embakasi Central": 1.0,
+        "Embakasi West": 0.9,
+        "Dagoretti South": 0.8,
+        "Embakasi South": 0.8,
+        "Starehe": 0.5,
+        "Makadara": 0.3,
+        "Ruaraka": 0.2,
+        "Kibra": 0.2,
+        "Kamukunji": 0.1,
+        "Embakasi North": 0.1,
+        "Mathare": 0.0
+      },
+      "top4_added": [
+        "Kasarani",
+        "Langata",
+        "Embakasi East",
+        "Westlands"
+      ],
+      "top4_added_share_pct": 72.8,
+      "under3_points_1990_2020": [
+        "Kamukunji",
+        "Mathare",
+        "Embakasi North",
+        "Kibra",
+        "Makadara",
+        "Starehe",
+        "Ruaraka"
+      ]
+    },
+    "script": "src/analysis/copy_numbers_v3.py"
   }
 }

@@ -133,6 +133,64 @@ def v3_findings(ex: dict) -> list[str]:
     return out
 
 
+
+def copy_v3_findings(ex: dict) -> list[str]:
+    """C1 to C3: numbers added for the v3 story text (src/analysis/copy_numbers_v3.py, 16 November 2026)."""
+    cv = ex.get("copy_v3")
+    if not cv:
+        return []
+    f, d, g = cv["forests"], cv["day_of_heat"], cv["growth"]
+    out = ["## Numbers for the v3 story text\n\nWritten by `src/analysis/copy_numbers_v3.py` to "
+           "`analysis/results_extra.json[\"copy_v3\"]`.\n"]
+    out.append(finding(
+        "C1", "Ngong Road Forest was as cool as Karura on hot mornings",
+        f"On hot mornings, the ground was {c(f['Karura Forest']['median_c'])} in Karura Forest, "
+        f"{c(f['Nairobi Arboretum']['median_c'])} in the Nairobi Arboretum and {c(f['Ngong Road Forest']['median_c'])} "
+        f"in Ngong Road Forest.",
+        "; ".join(f"{k} {c(v['median_c'])} ({n(v['n_cells'])} cells)" for k, v in f.items())
+        + "; Karura and the Arboretum match results.json q5 to within "
+        + c(max(v.get("check_vs_q5_c", 0) for v in f.values())),
+        "Median of the hot-season 30 m cells whose centres fall inside each forest outline shown on the map "
+        "(site/public/data/forests.geojson, OpenStreetMap), the same rule as q5",
+        f"{HOT}; site/public/data/forests.geojson", "src/analysis/copy_numbers_v3.py, forests",
+        CAVEAT_LST, "High."))
+    out.append(finding(
+        "C2", f"On {_date(d['date'])}, Nairobi's ground warmed by {c(d['rise_first_to_noon_c'])} between {d['first_hour']} and noon",
+        f"The county's median land surface temperature in the hourly chart rose from {c(d['county_first_c'])} at "
+        f"{d['first_hour']} to {c(d['county_noon_c'])} at 12:00; at noon the land around the county was "
+        f"{c(d['noon_around_minus_county_c'])} hotter ({c(d['around_noon_c'])}).",
+        f"rise {c(d['rise_first_to_noon_c'])}; peak {c(d['county_peak_c'])} at {d['county_peak_hour']}; around the county "
+        f"at noon {c(d['around_noon_c'])}",
+        "Read from the hourly chart's own data file, so the chart title and caption match the chart",
+        d["source"], "src/analysis/copy_numbers_v3.py, day_of_heat",
+        "Land surface temperature at about 3 km, not air temperature. These values differ slightly from A3 "
+        "(14.5 °C at 06:00, 40.7 °C at noon, 15:00 hidden by cloud), which uses a stricter cloud rule; the chart "
+        "and its text both use the chart file.", "Medium."))
+    ia = cv.get("industrial_and_around")
+    if ia:
+        out.append(finding(
+            "C4", f"In and around the Industrial Area, the ground was {c(ia['gap_c'])} hotter than the forests",
+            f"On hot mornings, the ground in and around Nairobi's Industrial Area was {c(ia['gap_c'])} hotter than "
+            f"Karura Forest and the Nairobi Arboretum.",
+            f"Industrial Area plus {ia['buffer_m']} m: {c(ia['median_c'])} ({n(ia['n_cells'])} cells); forests pooled "
+            f"{c(ia['forests_median_c'])} (q2)",
+            f"Median of the hot-season 30 m cells inside the OSM Industrial Area outline buffered by {ia['buffer_m']} m",
+            f"{HOT}; site/public/data/comparison_areas.geojson", "src/analysis/copy_numbers_v3.py, industrial_and_around",
+            CAVEAT_LST + " The 500 m distance is a choice for the headline; the Industrial Area alone is 13.9 °C (F3).",
+            "High for the arithmetic."))
+    tops = g["top4_added"]
+    out.append(finding(
+        "C3", "Most new building between 1990 and 2020 went up in four outer sub-counties",
+        f"Between 1990 and 2020, {g['top4_added_share_pct']} % of the new built-up land was in {', '.join(tops[:-1])} "
+        f"and {tops[-1]}.",
+        "; ".join(f"{k} {v:.1f} km²" for k, v in g["added_km2_1990_2020"].items())
+        + "; built share changed by under 3 percentage points in " + ", ".join(g["under3_points_1990_2020"]),
+        "(built share 2020 minus built share 1990) times sub-county area, from the T1 table",
+        "analysis/tables/builtup_by_subcounty.csv", "src/analysis/copy_numbers_v3.py, growth",
+        "GHSL measures the share of the ground under buildings; Langata's area includes part of Nairobi National Park.",
+        "High for the arithmetic; medium for GHSL in dense informal areas."))
+    return out
+
 def main() -> None:
     r = json.loads(RES.read_text())
     chk = json.loads(CHK.read_text())
@@ -557,6 +615,7 @@ def main() -> None:
                 "Medium: first pass, not yet checked by an independent method."))
 
     out += v3_findings(ex)
+    out += copy_v3_findings(ex)
 
     out.append("""## Checks
 

@@ -21,8 +21,9 @@
   background: #FFFFFF; color: var(--ink); border-radius: 2px; padding: 22px 26px 18px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28); font-family: var(--sans); font-size: 17px; line-height: 1.5;
 }
-.card__rule, .rule { width: 40px; height: 4px; background: var(--brand); margin: 0 0 14px; }
-.card__title { font: 700 24px/1.2 var(--sans); margin: 0 0 12px; color: var(--ink); }
+.card__rule, .rule { width: 40px; height: 4px; background: var(--brand); margin: 0 0 16px; }
+.split__text h2 { margin-top: 0; }
+.card__title { font: 700 24px/1.2 var(--sans); margin: 0 0 10px; color: var(--ink); }
 .card__text { margin: 0 0 10px; }
 .card__facts { margin: 0 0 10px; padding-left: 1.15em; }
 .card__facts li { margin: 0 0 5px; }
@@ -156,3 +157,10 @@
 .interlude .split--table { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr); }
 .table-with-key > .chart { flex: 1 1 380px; max-width: 470px; }
 .table-key { flex: 0 1 220px; }
+
+/* 17 Nov: the table key's title reads as a heading. */
+.table-key__title { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+/* 17 Nov: the story in words sits after the first map story. */
+.story-words { padding-top: 32px; padding-bottom: 24px; }
+.intro { padding-bottom: 20px; }

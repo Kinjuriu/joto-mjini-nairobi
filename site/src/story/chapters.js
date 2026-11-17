@@ -23,10 +23,11 @@ export const CHAPTERS = [
   {
     id: 'space', block: 'A', basemap: 'satellite', center: COUNTY, zoom: 10.3, mobileZoom: 9.4,
     layers: base([]),
-    chip: 'Sentinel-2 cloudless, 2023', legend: null,
+    chip: 'Sentinel-2 cloudless, 2025', legend: null,
     card: {
       title: 'Nairobi from space',
-      text: '[[COPY: one sentence on what the reader is looking at: Nairobi County in the dry season, seen by the Sentinel-2 satellites, with the county boundary in white]]',
+      // DRAFT 16 Nov (Claude), for Stephane to edit.
+      text: 'This is Nairobi County from space, in a cloud-free picture made by joining many passes of the European Sentinel-2 satellites; the white line is the county boundary.',
     },
   },
   {
@@ -49,8 +50,7 @@ export const CHAPTERS = [
       facts: [
         ['Karura Forest', '{{q5.parks.Karura Forest.park_median_c|c}} at the surface on hot mornings'],
         ['Nairobi Arboretum', '{{q5.parks.Nairobi Arboretum.park_median_c|c}}'],
-        ['City Park', '{{q5.parks.City Park.park_median_c|c}}'],
-        ['Half of the county\'s ground', 'hotter than {{q1.county_median_c|c}}'],
+        ['Ngong Road Forest', '{{x.copy_v3.forests.Ngong Road Forest.median_c|c}}'],
       ],
     },
   },
@@ -102,7 +102,8 @@ export const CHAPTERS = [
     chip: 'Satellite image', legend: null,
     card: {
       title: 'City centre and Industrial Area',
-      text: '[[COPY: introduce the two outlined areas: the downtown grid (inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue), and the Industrial Area as mapped in OpenStreetMap]]',
+      // DRAFT 16 Nov (Claude), for Stephane to edit.
+      text: 'This story compares two built-up places with the forests. The first is the city centre, here the downtown grid inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue; the second is the Industrial Area to its south-east, as mapped in OpenStreetMap. Look at how much of each is roof, road and paved yard.',
     },
   },
   {
@@ -115,9 +116,10 @@ export const CHAPTERS = [
         ['City centre', '{{q2.CBD.median_c|c}}'],
         ['Industrial Area', '{{q2.Industrial Area.median_c|c}}'],
         ['Karura Forest and the Arboretum', '{{q2.cool_areas_median_c|c}}'],
-        ['Difference', '{{q2.gap_c|c}}'],
+        ['City centre compared with the forests', '{{q2.cbd_gap_c|c}} hotter'],
+        ['Industrial Area compared with the forests', '{{q2.industrial_gap_c|c}} hotter'],
       ],
-      note: 'On hot mornings, the ground in the city centre and Industrial Area ({{q2.hot_areas_median_c|c}}) was {{q2.gap_c|c}} hotter than Karura Forest and the Nairobi Arboretum ({{q2.cool_areas_median_c|c}}).',
+      note: 'On hot mornings, the ground in the Industrial Area was {{q2.industrial_gap_c|c}} hotter than Karura Forest and the Nairobi Arboretum, and the ground in the city centre {{q2.cbd_gap_c|c}} hotter.',
     },
   },
   {
@@ -140,7 +142,8 @@ export const CHAPTERS = [
     chip: 'Satellite image', legend: null,
     card: {
       title: 'Islands of cool',
-      text: '[[COPY: point out the edge of Karura Forest and the built-up land beside it]]',
+      // DRAFT 16 Nov (Claude), for Stephane to edit.
+      text: 'Karura Forest fills the top of this view. Along its edge the trees stop and roofs and roads begin; the next card shows how the ground temperature changes across that line.',
     },
   },
   {
@@ -169,10 +172,11 @@ export const CHAPTERS = [
   },
   {
     id: 'people', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
-    // Only the ten hottest wards where people live stay bright and named; the rest are dimmed (Stephane, 14 November).
-    layers: base([{ id: 'population', opacity: LIGHT_OP }, { id: 'ward-dim', opacity: 1 }, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
-    groups: { hot: TOP10, cool: [] }, labelWards: TOP10, quiet: true,
-    chip: '2025 estimate', legend: 'population',
+    // Only the densest places are coloured, over the plain satellite image; the ten hottest wards where people
+    // live are named (Stephane, 17 November 2026; replaces the dimmed map of 14 November).
+    layers: base([{ id: 'population-dense', opacity: 0.85 }, { id: 'wards-line', opacity: 0.6 }, { id: 'ward-labels', opacity: 1 }]),
+    labelWards: TOP10, quiet: true,
+    chip: '2025 estimate', legend: 'population-dense',
     card: {
       title: 'Who lives on the hottest ground',
       facts: [
@@ -248,7 +252,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 export function cardHTML(ch, i, n) {
   const c = ch.card;
   let h = `<article class="card" id="ch-${ch.id}" data-chapter="${ch.id}" aria-label="Map step ${i + 1} of ${n}: ${esc(c.title)}">`
-    + `<div class="card__rule" aria-hidden="true"></div><h3 class="card__title">${esc(c.title)}</h3>`;
+    + `<h3 class="card__title">${esc(c.title)}</h3><div class="card__rule" aria-hidden="true"></div>`;
   if (c.text) h += `<p class="card__text">${esc(c.text)}</p>`;
   if (c.facts) h += `<ul class="card__facts">${c.facts.map(([k, v]) => `<li><strong>${esc(k)}:</strong> ${esc(v)}</li>`).join('')}</ul>`;
   if (c.bars) {
