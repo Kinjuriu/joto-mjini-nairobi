@@ -1,0 +1,133 @@
+{
+  "source": "Nairobi City County Education Department, public ECD centres and primary schools, June 2014 (PDF)",
+  "rows": 225,
+  "ecd_rows": 21,
+  "school_rows": 204,
+  "matched": 208,
+  "matched_schools": 192,
+  "matched_ecd": 16,
+  "match_rule": "name only (secondary schools excluded): same name after normalising, else s10_schools.name_sim >= 0.75; 2 checked by eye",
+  "unmatched": [
+    {
+      "sno": 12,
+      "name": "MUKARARA",
+      "district": "DAGORETTI",
+      "zone": "WAITHAKA",
+      "location": "WAITHAKA NEAR MUKARARA PCEA CHURCH"
+    },
+    {
+      "sno": 13,
+      "name": "DAGORETTI GIRLS REHABILITATION",
+      "district": "DAGORETTI",
+      "zone": "WAITHAKA",
+      "location": "ON BOUNDARY OF KIAMBU WEST & DAGORETTI DISTRICT AFTER MUHURI ROAD FORMER ROUTE 87"
+    },
+    {
+      "sno": 33,
+      "name": "ATHI PRIMARY",
+      "district": "EMBAKASI",
+      "zone": "DANDORA",
+      "location": "5KM FROM MAIN KANGUNDO RD. IN NGUNDU/ATHI ZONE"
+    },
+    {
+      "sno": 43,
+      "name": "VISIONS PRIMARY (MIHANG'O)",
+      "district": "EMBAKASI",
+      "zone": "KAYOLE",
+      "location": "MIHANG'O LOCATION"
+    },
+    {
+      "sno": 64,
+      "name": "KAYOLE NORTH PRIMARY",
+      "district": "EMBAKASI",
+      "zone": "DANDORA",
+      "location": "KAYOLE NORTH (MATOPENI) AREA NEAR KAYOLE POLICE STATION"
+    },
+    {
+      "sno": 65,
+      "name": "KANGUNDO ROAD PRY",
+      "district": "EMBAKASI",
+      "zone": "DANDORA",
+      "location": "OPPOSITE MAMA LUCY KIBAKI HOSPITAL"
+    },
+    {
+      "sno": 69,
+      "name": "NJIRU PRIMARY",
+      "district": "EMBAKASI",
+      "zone": "DANDORA",
+      "location": "ON YOUR WAY TO MWIKI BETWEEN NJIRU CHIEF'S CAMP / D.Os OFFICE AND QUARRY"
+    },
+    {
+      "sno": 72,
+      "name": "UHURU ESTATE PRIMARY",
+      "district": "KAMUKUNJI",
+      "zone": "BAHATI",
+      "location": "UHURU ESTATE ON UHURU RD. NEXT TO UHURU SECONDARY"
+    },
+    {
+      "sno": 75,
+      "name": "BAHATI UHURU PRIMARY",
+      "district": "KAMUKUNJI",
+      "zone": "BAHATI",
+      "location": "HESHIMA AVENUE ZEMBAKASI CRESENT, ZEMBAKASI LANE"
+    },
+    {
+      "sno": 140,
+      "name": "STAR OF HOPE LUNGA LUNGA",
+      "district": "MAKADARA",
+      "zone": "VIWANDA",
+      "location": "LUNGA LUNGA"
+    },
+    {
+      "sno": 145,
+      "name": "ST. ELIZABETH LUNGA LUNGA",
+      "district": "MAKADARA",
+      "zone": "VIWANDA",
+      "location": "ALONG LUNGA LUNGA RD. NEAR MAREBA COMPANY IN LUNGA LUNGA SLUM"
+    },
+    {
+      "sno": 154,
+      "name": "TANA DAY NURSERY",
+      "district": "MAKADARA",
+      "zone": "BURUBURU",
+      "location": "JERICHO - LUMUMBA"
+    },
+    {
+      "sno": 155,
+      "name": "NJORO CLOSE DAY NURSERY SCHOOL",
+      "district": "MAKADARA",
+      "zone": "BURUBURU",
+      "location": "JERICHO"
+    },
+    {
+      "sno": 172,
+      "name": "NG'ETHU WATER WORKS",
+      "district": "STAREHE",
+      "zone": "JUJA ROAD",
+      "location": "NGETHU TREATMENT PLANT"
+    },
+    {
+      "sno": 189,
+      "name": "CENTRAL DAY CURSERY",
+      "district": "STAREHE",
+      "zone": "CENTRAL",
+      "location": "CITY CENTRE NEAR CASINO CLINIC, NDUBERI LANE"
+    },
+    {
+      "sno": 192,
+      "name": "STAREHE DAY NURSERY",
+      "district": "STAREHE",
+      "zone": "JUJA ROAD",
+      "location": "KARIOKOR MARKET TO GIKOMBA MARKET- KINYANJUI ROAD"
+    },
+    {
+      "sno": 225,
+      "name": "LADY NORTHEY DAY NURSERY",
+      "district": "WESTLANDS",
+      "zone": "KILIMANI",
+      "location": "NEXT TO MILIMANI A.I.C. CHURCH ALONG STATE HOUSE ROAD"
+    }
+  ],
+  "script": "src/analysis/county_school_list.py",
+  "output_csv": "data/processed/county_school_list_2014.csv"
+}
