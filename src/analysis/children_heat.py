@@ -321,6 +321,15 @@ def main() -> dict:
     pd.DataFrame([dict(**d, from_c=lo[i], to_c=hi[i]) for i, d in enumerate(sf)]).to_csv(SITE_DATA / "schools_by_heat.csv", index=False)
     cw = pd.read_csv(TABLES / "children_by_ward.csv").merge(bw, on="ward_name", how="left")
     cw[["schools", "on_hottest_fifth", "on_hotter_half"]] = cw[["schools", "on_hottest_fifth", "on_hotter_half"]].fillna(0).astype(int)
+    # Flag wards where WorldPop's people (and so the children estimate) are clearly wrong (D60): fewer than half of
+    # the 2009 census count, although Nairobi grew by about 40 % since 2009; and Woodley/Kenyatta Golf Course, where
+    # the 2019 census counted 36,115 people in Woodley division against WorldPop's 133,937 (D55).
+    w09 = gpd.read_file(ROOT / "data" / "processed" / "nairobi_wards.geojson")[["ward_name", "pop2009_census"]]
+    cw = cw.merge(w09, on="ward_name", how="left")
+    cw["pop_flag"] = ""
+    cw.loc[cw.people < 0.5 * cw.pop2009_census, "pop_flag"] = "low"
+    cw.loc[cw.ward_name == "Woodley/Kenyatta Golf Course", "pop_flag"] = "high"
+    results["wards_population_flagged"] = cw.loc[cw.pop_flag != "", ["ward_name", "pop_flag"]].values.tolist()
     cw.to_csv(SITE_DATA / "children_by_ward.csv", index=False)
     results["checks"] = chk
 

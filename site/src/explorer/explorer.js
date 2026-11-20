@@ -255,6 +255,13 @@ export async function initExplorer(section) {
         `${fmtPct(share)} of this ward's people live on ground hotter than the city median on hot mornings.`);
       kdl = el('dl', { className: 'ward-panel__facts' });
       const addK = (a, b) => kdl.append(el('dt', {}, a), el('dd', {}, b));
+      if (k.pop_flag === 'low') {
+        kdl.append(el('dt', { className: 'ward-panel__warn' }, 'Population warning'), el('dd', { className: 'ward-panel__warn' },
+          `WorldPop places far fewer people here (about ${fmtInt(k.people)}) than the 2009 census counted (${fmtInt(k.pop2009_census)}), so the numbers of people and children for this ward are too low.`));
+      } else if (k.pop_flag === 'high') {
+        kdl.append(el('dt', { className: 'ward-panel__warn' }, 'Population warning'), el('dd', { className: 'ward-panel__warn' },
+          'WorldPop places far more people here than the 2019 census counted in Woodley division (36,115), because it moves some of Kibra\'s residents into this ward, so the numbers of people and children for this ward are too high.'));
+      }
       addK('School-age children, 4 to 17 (estimate)', `about ${fmtInt(k.school_age_4_17)}`);
       addK('Of whom primary school age, 6 to 11', `about ${fmtInt(k.primary_6_11)}`);
       addK('Schools mapped', fmtInt(k.schools));

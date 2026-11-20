@@ -1,6 +1,6 @@
 {
   "children_by_heat": {
-    "generated": "2026-11-20 21:32",
+    "generated": "2026-11-20 22:20",
     "method_note": "Children estimated by splitting WorldPop 2025 people in each 30 m cell with the 2019 census age mix of the cell's census sub-county; estimates, not counts.",
     "census_commit": "d05f526fd31801306a009f7b3e5d25a72b426bf6",
     "thresholds_c": {
@@ -211,7 +211,49 @@
       "adults_hotter_half_share_pct": 68.4,
       "children_hotter_half_scaled_share_pct": 67.7,
       "adults_hotter_half_scaled_share_pct": 66.8
-    }
+    },
+    "wards_population_flagged": [
+      [
+        "Kangemi",
+        "low"
+      ],
+      [
+        "Korogocho",
+        "low"
+      ],
+      [
+        "Lindi",
+        "low"
+      ],
+      [
+        "Laini Saba",
+        "low"
+      ],
+      [
+        "Dandora Area IV",
+        "low"
+      ],
+      [
+        "Kayole Central",
+        "low"
+      ],
+      [
+        "Sarang'ombe",
+        "low"
+      ],
+      [
+        "Mathare North",
+        "low"
+      ],
+      [
+        "Nyayo Highrise",
+        "low"
+      ],
+      [
+        "Woodley/Kenyatta Golf Course",
+        "high"
+      ]
+    ]
   },
   "people_by_heat": {
     "fifths": [
