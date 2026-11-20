@@ -1,6 +1,6 @@
 {
   "children_by_heat": {
-    "generated": "2026-11-20 21:02",
+    "generated": "2026-11-20 21:32",
     "method_note": "Children estimated by splitting WorldPop 2025 people in each 30 m cell with the 2019 census age mix of the cell's census sub-county; estimates, not counts.",
     "census_commit": "d05f526fd31801306a009f7b3e5d25a72b426bf6",
     "thresholds_c": {
@@ -195,7 +195,22 @@
       "census_school_age_share_pct": 25.2,
       "modelled_school_age_share_pct": 25.4,
       "hot_half_children_independent_match": true,
-      "schools_hotter_half_pct": 72.6
+      "schools_hotter_half_pct": 72.6,
+      "schools_hottest_fifth_n_matches": true
+    },
+    "context": {
+      "iron_sheet_households_pct": 51.3,
+      "iron_sheet_min_subcounty": [
+        "EMBAKASI",
+        38.0
+      ],
+      "iron_sheet_max_subcounty": [
+        "DAGORETTI",
+        80.6
+      ],
+      "adults_hotter_half_share_pct": 68.4,
+      "children_hotter_half_scaled_share_pct": 67.7,
+      "adults_hotter_half_scaled_share_pct": 66.8
     }
   },
   "people_by_heat": {
@@ -280,6 +295,75 @@
       "median_tree_pct": 4.2,
       "mean_tree_pct": 11.2,
       "share_under_10pct_trees": 68.2
+    },
+    "fifths": [
+      {
+        "group": "coolest fifth",
+        "n_schools": 162,
+        "share_pct": 4.4,
+        "median_tree_pct": 61.7,
+        "share_under_10pct_trees": 0.0
+      },
+      {
+        "group": "second fifth",
+        "n_schools": 463,
+        "share_pct": 12.5,
+        "median_tree_pct": 23.7,
+        "share_under_10pct_trees": 26.8
+      },
+      {
+        "group": "middle fifth",
+        "n_schools": 1001,
+        "share_pct": 27.0,
+        "median_tree_pct": 6.1,
+        "share_under_10pct_trees": 64.5
+      },
+      {
+        "group": "fourth fifth",
+        "n_schools": 1519,
+        "share_pct": 40.9,
+        "median_tree_pct": 2.3,
+        "share_under_10pct_trees": 82.6
+      },
+      {
+        "group": "hottest fifth",
+        "n_schools": 567,
+        "share_pct": 15.3,
+        "median_tree_pct": 1.8,
+        "share_under_10pct_trees": 89.6
+      }
+    ],
+    "by_ward": {
+      "Baba Dogo": {
+        "schools": 78,
+        "on_hottest_fifth": 47,
+        "median_school_lst_c": 42.0,
+        "median_tree_pct_200m": 4.0
+      },
+      "Kangemi": {
+        "schools": 127,
+        "on_hottest_fifth": 92,
+        "median_school_lst_c": 42.4,
+        "median_tree_pct_200m": 3.0
+      },
+      "Karen": {
+        "schools": 92,
+        "on_hottest_fifth": 0,
+        "median_school_lst_c": 35.0,
+        "median_tree_pct_200m": 34.0
+      },
+      "Kitisuru": {
+        "schools": 107,
+        "on_hottest_fifth": 12,
+        "median_school_lst_c": 37.0,
+        "median_tree_pct_200m": 31.0
+      },
+      "Viwandani": {
+        "schools": 40,
+        "on_hottest_fifth": 33,
+        "median_school_lst_c": 42.5,
+        "median_tree_pct_200m": 1.2
+      }
     }
   }
 }

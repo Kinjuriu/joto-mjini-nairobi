@@ -54,6 +54,9 @@ const charts = {
   calendar: async (el) => (await import('./charts/heatmap.js')).calendar(el),
   air: async (el) => (await import('./charts/air.js')).airChart(el),
   'day-heat': async (el) => (await import('./charts/dayheat.js')).dayHeat(el),
+  'people-heat': async (el) => (await import('./charts/children.js')).peopleByHeat(el),
+  'children-level': async (el) => (await import('./charts/children.js')).childrenByLevel(el),
+  'schools-trees': async (el) => (await import('./charts/children.js')).schoolsTrees(el),
 };
 document.querySelectorAll('[data-chart]').forEach((el) => whenNear(el, charts[el.dataset.chart] || (async () => {})));
 

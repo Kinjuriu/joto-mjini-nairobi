@@ -15,12 +15,16 @@ const GROUPS = [
     ['heat-diff', 'Difference from the city median'], ['heat-abs', 'Surface temperature'],
     ['heat-hottest-day', 'Hottest clear morning, 29 September 2022'], ['heat-cool-season', 'Cool season, difference from its median']] },
   { name: 'Land', layers: [['s2-true', 'Sentinel-2 true colour'], ['s2-false', 'Sentinel-2 false colour'], ['landcover', 'Land cover'], ['trees', 'Tree cover']] },
-  { name: 'People and buildings', layers: [['population', 'Where people live'], ['buildings', 'Buildings by heat (from zoom 14)']] },
+  { name: 'People, schools and buildings', layers: [['population', 'Where people live'], ['schools', 'Schools, by the heat around them'], ['buildings', 'Buildings by heat (from zoom 14)']] },
   { name: 'Change', layers: [['ghsl', 'Built-up area']] },
 ];
 // Bottom to top.
 const STACK = ['s2-true', 's2-false', 'landcover', 'trees', 'population', ...EPOCHS.map((y) => `ghsl-${y}`),
-  'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'buildings'];   // for the legend: topmost active layer
+  'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'buildings', 'schools'];   // for the legend: topmost active layer
+// Layers that sit on top of whichever data layer is on (the others are one at a time).
+const ON_TOP = ['buildings', 'schools'];
+// The schools layer is a vector overlay with no manifest entry; it uses the heat-diff colours and legend (D60).
+const SCHOOLS_INFO = 'One dot per school for children (Kenya Ministry of Education list via the World Bank, and OpenStreetMap), coloured by the median surface temperature within 100 m of it on clear January to March mornings, 2023 to 2026, as the difference from the city median. A broad map of school sites, not an official register; some dots may sit up to 300 m from the school.';
 const ROOF = 'Bare iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can read the surface as cooler than it is. Treat the surface temperature of this ward as a lower bound.';
 const MOBILE = window.matchMedia('(max-width: 767px)');
 
@@ -38,6 +42,14 @@ export async function initExplorer(section) {
   const wards = wardsGeo.features.map((f) => f.properties).sort((a, b) => a.ward_name.localeCompare(b.ward_name));
   const byId = new Map(wardsGeo.features.map((f) => [f.properties.ward_id, f]));
   const N = wards.length;
+  // School-age children (estimates), schools and tree cover near schools for each ward (children_by_ward.csv, D59 and D60).
+  const kids = new Map();
+  try {
+    const txt = await fetch(new URL(`${import.meta.env.BASE_URL}data/children_by_ward.csv`, window.location.href)).then((r) => r.text());
+    const [head, ...lines] = txt.trim().split('\n');
+    const cols = head.split(',');
+    lines.forEach((ln) => { const v = ln.split(','); const o = Object.fromEntries(cols.map((c, i) => [c, v[i]])); kids.set(o.ward_name, o); });
+  } catch { /* the panel works without these rows */ }
 
   // ---------------------------------------------------------------- layer panel
   const pane = section.querySelector('#ex-layers');
@@ -93,7 +105,7 @@ export async function initExplorer(section) {
         const lid = id === 'ghsl' ? `ghsl-${state.year}` : id;
         if (cb.checked) {
           // One data layer at a time (so the one you choose is never hidden under another); buildings can sit on top.
-          if (id !== 'buildings') state.layers = state.layers.filter((l) => l.id === 'buildings');
+          if (!ON_TOP.includes(id)) state.layers = state.layers.filter((l) => ON_TOP.includes(l.id));
           state.layers.push({ id: lid, opacity: defaultOpacity(lid) });
         } else state.layers = state.layers.filter((l) => (id === 'ghsl' ? !l.id.startsWith('ghsl-') : l.id !== lid));
         apply();
@@ -106,7 +118,7 @@ export async function initExplorer(section) {
         const open = info.getAttribute('aria-expanded') !== 'true';
         info.setAttribute('aria-expanded', String(open));
         const m = manifest[id === 'ghsl' ? `ghsl-${state.year}` : id];
-        desc.textContent = m ? `${m.description} Source: ${m.source}.` : '';
+        desc.textContent = id === 'schools' ? SCHOOLS_INFO : m ? `${m.description} Source: ${m.source}.` : '';
         desc.hidden = !open;
       });
       rows.set(id, { cb, range, key });
@@ -125,7 +137,7 @@ export async function initExplorer(section) {
   const cmpPanel = el('div', { className: 'ex-compare', hidden: true });
   pane.append(cmpPanel);
 
-  function defaultOpacity(id) { return id.startsWith('s2') ? 1 : 0.8; }
+  function defaultOpacity(id) { return id.startsWith('s2') || id === 'schools' ? 1 : 0.8; }
 
   function syncPanel() {
     for (const [id, r] of rows) {
@@ -143,11 +155,20 @@ export async function initExplorer(section) {
     return [...STACK].reverse().find((id) => on.includes(id)) || null;
   }
 
+  function showLegend(top) {
+    if (top === 'schools') {
+      legend.show('heat-diff', { title: 'Schools, coloured by the ground around them: difference from the city median, °C' });
+      chip.set(manifest['heat-diff']?.chip || '');
+      return;
+    }
+    legend.show(top);
+    chip.set(top ? manifest[top]?.chip : '');
+  }
+
   function apply() {
     ctl.setLayers([...state.layers, { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }, { id: 'county-line', opacity: 1 }], 250);
     const top = topLayer();
-    legend.show(top);
-    chip.set(top ? manifest[top]?.chip : '');
+    showLegend(top);
     syncPanel();
     writeHash();
   }
@@ -225,10 +246,28 @@ export async function initExplorer(section) {
     const ranks = el('ul', { className: 'ward-panel__ranks' },
       el('li', {}, `${ordinal(p.rank_hottest)} hottest of ${N} by median surface temperature`),
       el('li', {}, p.rank_pop_weighted ? `${ordinal(p.rank_pop_weighted)} hottest of ${N} where people live, weighted by population` : 'No population-weighted rank'));
+    const k = kids.get(p.ward_name);
+    let side = null;
+    let kdl = null;
+    if (k) {
+      const share = Number(k.share_people_on_hotter_half_pct);
+      side = el('p', { className: 'ward-panel__side' }, el('strong', {}, share >= 50 ? 'Hotter half of Nairobi. ' : 'Cooler half of Nairobi. '),
+        `${fmtPct(share)} of this ward's people live on ground hotter than the city median on hot mornings.`);
+      kdl = el('dl', { className: 'ward-panel__facts' });
+      const addK = (a, b) => kdl.append(el('dt', {}, a), el('dd', {}, b));
+      addK('School-age children, 4 to 17 (estimate)', `about ${fmtInt(k.school_age_4_17)}`);
+      addK('Of whom primary school age, 6 to 11', `about ${fmtInt(k.primary_6_11)}`);
+      addK('Schools mapped', fmtInt(k.schools));
+      if (Number(k.schools) > 0) {
+        addK('Schools on the hottest fifth of the county\'s land', fmtInt(k.on_hottest_fifth));
+        addK('Median tree cover within 200 m of its schools', fmtPct(k.median_tree_pct_200m));
+      }
+    }
     const notes = el('div', { className: 'ward-panel__notes' },
-      el('p', {}, 'Land surface temperature on clear January to March mornings, 2023 to 2026: the heat of the ground, roofs and roads, not of the air. Population is a modelled estimate and may undercount the densest settlements.'));
+      el('p', {}, 'Land surface temperature on clear January to March mornings, 2023 to 2026: the heat of the ground, roofs and roads, not of the air. Population is a modelled estimate and may undercount the densest settlements; children are estimated from it with the 2019 census age mix of the census sub-county.'));
     if (p.roof_caveat === true || p.roof_caveat === 'true') notes.append(el('p', { className: 'ward-panel__roof' }, el('strong', {}, 'Iron sheet roofs. '), ROOF));
-    body.replaceChildren(el('h3', {}, p.ward_name), el('p', { className: 'ward-panel__sub' }, `${p.subcounty} sub-county`), ranks, dl, notes, back);
+    body.replaceChildren(...[el('h3', {}, p.ward_name), el('p', { className: 'ward-panel__sub' }, `${p.subcounty} sub-county`), side, ranks, dl,
+      kdl && el('p', { className: 'ward-panel__label' }, 'Children and schools'), kdl, notes, back].filter(Boolean));
   }
 
   function choose(id, { fly = true } = {}) {
@@ -266,7 +305,7 @@ export async function initExplorer(section) {
     const hit = wardsGeo.features.find((f) => inside([e.lngLat.lng, e.lngLat.lat], f.geometry));
     if (hit) choose(hit.properties.ward_id, { fly: false });
   });
-  map.on('moveend', () => { legend.show(topLayer()); chip.set(topLayer() ? manifest[topLayer()]?.chip : ''); });
+  map.on('moveend', () => showLegend(topLayer()));
 
   // ---------------------------------------------------------------- tabs and the phone bottom sheet
   const tabs = [...section.querySelectorAll('[role="tab"]')];

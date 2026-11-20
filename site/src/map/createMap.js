@@ -32,12 +32,12 @@ const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-labe
 export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'population-dense', 'growth-1990-2020',
   'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
   'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
-  'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'forests'];
+  'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'schools', 'forests'];
 
 // Chapter-level styling added 12 November 2026: only some ward names, ward groups, pulsing circles.
 const inNames = (names) => ['in', ['get', 'ward_name'], ['literal', names]];
 
-const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity' };
+const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity', circle: 'circle-opacity' };
 
 export class MissingTokenError extends Error {}
 
@@ -286,6 +286,10 @@ export class MapController {
       if (opacity > 0) map.setLayoutProperty(l.id, 'visibility', 'visible');
       map.setPaintProperty(l.id, `${prop}-transition`, { duration: ms, delay: 0 });
       if (l.type === 'symbol') map.setPaintProperty(l.id, 'icon-opacity-transition', { duration: ms, delay: 0 });
+      if (l.type === 'circle') {
+        map.setPaintProperty(l.id, 'circle-stroke-opacity-transition', { duration: ms, delay: 0 });
+        map.setPaintProperty(l.id, 'circle-stroke-opacity', opacity * full);
+      }
       map.setPaintProperty(l.id, prop, opacity * full);
     }
     if (opacity === 0) {
@@ -535,6 +539,19 @@ export const OVERLAYS = {
     layers: () => [{ id: 'places', type: 'symbol', 'source-layer': 'places', minzoom: 10, filter: ['==', ['get', 'is_green'], true],
       layout: { 'text-field': ['get', 'name'], 'text-font': FONT, 'text-size': 12.5, 'text-max-width': 8 },
       paint: { 'text-color': '#1F4D2E', 'text-halo-color': 'rgba(255,255,255,0.95)', 'text-halo-width': 1.8 } }],
+  },
+  // Schools for children (20 November 2026, D60): one dot per school, coloured on the heat-diff scale by the median
+  // surface temperature within 100 m (property lst, °C), with a thin outline that reads on imagery and on the light map.
+  schools: {
+    source: () => ({ type: 'geojson', data: abs('data/schools.geojson') }),
+    rebuild: true,
+    layers: (c) => [{ id: 'schools', type: 'circle',
+      paint: {
+        'circle-color': diffStep(['-', ['to-number', ['get', 'lst'], 0], c.manifest['heat-diff'].median_c ?? 0]),
+        'circle-radius': ['interpolate', ['linear'], ['zoom'], 9, 2.2, 11, 3.2, 13, 5, 15, 7.5],
+        'circle-stroke-color': c.imagery ? '#FFFFFF' : '#1C2530',
+        'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 9, 0.5, 13, 1.2],
+      } }],
   },
   'comparison-areas': {
     source: () => ({ type: 'geojson', data: abs('data/comparison_areas.geojson') }), beforeLabels: false,

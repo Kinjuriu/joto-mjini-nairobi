@@ -218,3 +218,10 @@ img { max-width: 100%; height: auto; display: block; }
 .masthead__nav a:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
 .masthead__nav a:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
 @media (max-width: 760px) { .masthead__nav { margin-left: 0; width: 100%; } }
+
+/* Children and schools (20 November 2026, D60) */
+.find-side { font-family: var(--sans); font-weight: 600; font-size: 17px; }
+.chart--bars { min-height: 0; }
+.chart--bars text { font-size: 14px; }
+#what-it-means, #what-could-help, .more-intro { padding-top: 24px; }
+.more-intro { border-top: 1px solid var(--rule); margin-top: 40px; }

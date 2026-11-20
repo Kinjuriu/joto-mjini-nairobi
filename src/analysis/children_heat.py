@@ -51,6 +51,8 @@ CENSUS_COMMIT = "d05f526fd31801306a009f7b3e5d25a72b426bf6"
 AGE = CENSUS / "kenya_2019_census_population_by_age_sex_county_subcounty.csv"
 SCHOOL_AGE = CENSUS / "kenya_2019_census_school_age_population_by_county_subcounty.csv"
 ATT_AGE = CENSUS / "kenya_2019_census_school_attendance_by_age_group_county.csv"
+ROOFS = CENSUS / "kenya_2019_census_roofing_material_by_county_subcounty.csv"
+SITE_DATA = ROOT / "site" / "public" / "data"
 TABLES = ROOT / "analysis" / "tables"
 WARD_SC = TABLES / "ward_population_scaled.csv"
 SCHOOLS = TABLES / "schools_heat.csv"
@@ -240,6 +242,30 @@ def main() -> dict:
                  all_schools=grp(s))
     chk["schools_hotter_half_pct"] = r1(100 * s.hotter_half.mean())
 
+    # schools by heat fifth (same thresholds as the land), with tree cover around them
+    s["fifth"] = np.digitize(s.lst_100m_median_c, q)
+    # schools_heat.csv rounds temperatures to 0.01 degC, which moves two schools across the 80th percentile;
+    # use its own on_hottest_fifth flag so the count stays the published 567 (extra.schools)
+    s.loc[s.on_hottest_fifth, "fifth"] = 4
+    s.loc[~s.on_hottest_fifth & (s.fifth == 4), "fifth"] = 3
+    sf = []
+    for i, f in enumerate(FIFTHS):
+        d = s[s.fifth == i]
+        sf.append(dict(group=f, n_schools=int(len(d)), share_pct=r1(100 * len(d) / len(s)),
+                       median_tree_pct=r1(d.tree_pct_200m.median()), share_under_10pct_trees=r1(100 * (d.tree_pct_200m < 10).mean())))
+    trees["fifths"] = sf
+    chk["schools_hottest_fifth_n_matches"] = bool(sf[4]["n_schools"] == int(s.on_hottest_fifth.sum()))
+
+    # schools by ward
+    bw = (s.groupby("ward_name").agg(schools=("school_id", "size"), on_hottest_fifth=("on_hottest_fifth", "sum"),
+                                     on_hotter_half=("hotter_half", "sum"), median_school_lst_c=("lst_100m_median_c", "median"),
+                                     median_tree_pct_200m=("tree_pct_200m", "median")).reset_index())
+    bw["median_school_lst_c"] = bw.median_school_lst_c.round(1)
+    bw["median_tree_pct_200m"] = bw.median_tree_pct_200m.round(1)
+    trees["by_ward"] = {r.ward_name: dict(schools=int(r.schools), on_hottest_fifth=int(r.on_hottest_fifth),
+                                          median_school_lst_c=r1(r.median_school_lst_c), median_tree_pct_200m=r1(r.median_tree_pct_200m))
+                        for r in bw.itertuples() if r.ward_name in ("Kangemi", "Viwandani", "Karen", "Baba Dogo", "Kitisuru")}
+
     # ---------- results
     def side(name: str) -> dict:
         r = t.loc[name]
@@ -269,6 +295,35 @@ def main() -> dict:
         cooler_half=dict(people=k(t.loc["cooler half", "people"]), share_pct=r1(t.loc["cooler half", "people_share_of_county_pct"])),
         county_people=k(pop_county), thresholds_c=results["thresholds_c"],
     )
+    roofs = pd.read_csv(ROOFS)
+    nr = roofs[(roofs.county == "NAIROBI CITY") & (roofs.breakdown == "all")]
+    results["context"] = dict(
+        iron_sheet_households_pct=r1(nr[nr.level == "county"].iron_sheets_pct.iloc[0]),
+        iron_sheet_min_subcounty=nr[nr.level == "subcounty"].sort_values("iron_sheets_pct").iloc[0][["name", "iron_sheets_pct"]].tolist(),
+        iron_sheet_max_subcounty=nr[nr.level == "subcounty"].sort_values("iron_sheets_pct").iloc[-1][["name", "iron_sheets_pct"]].tolist(),
+        adults_hotter_half_share_pct=r1(t.loc["hotter half", "adults_18_plus_share_of_county_pct"]),
+        children_hotter_half_scaled_share_pct=r1(100 * t.loc["hotter half", "school_age_4_17_scaled"] / t.loc["county", "school_age_4_17_scaled"]),
+        adults_hotter_half_scaled_share_pct=r1(100 * t.loc["hotter half", "adults_18_plus_scaled"] / t.loc["county", "adults_18_plus_scaled"]),
+    )
+
+    # ---------- small files for the site's charts and explorer
+    lo = [None] + [r1(v) for v in q]
+    hi = [r1(v) for v in q] + [None]
+    pd.DataFrame([dict(group=f, from_c=lo[i], to_c=hi[i], people=k(t.loc[f, "people"]),
+                       share_pct=r1(t.loc[f, "people_share_of_county_pct"])) for i, f in enumerate(FIFTHS)]
+                 ).to_csv(SITE_DATA / "people_by_heat.csv", index=False)
+    lv = [("pre_primary_4_5", "Pre-primary", "4 to 5"), ("primary_6_11", "Primary", "6 to 11"),
+          ("junior_school_12_14", "Junior school", "12 to 14"), ("senior_school_15_17", "Senior school", "15 to 17"),
+          ("school_age_4_17", "All school ages", "4 to 17"), ("adults_18_plus", "Adults", "18 and over")]
+    pd.DataFrame([dict(key=b, level=n, ages=a, hotter_half=k(t.loc["hotter half", b]), cooler_half=k(t.loc["cooler half", b]),
+                       hotter_half_share_pct=r1(t.loc["hotter half", b + "_share_of_county_pct"])) for b, n, a in lv]
+                 ).to_csv(SITE_DATA / "children_by_level.csv", index=False)
+    pd.DataFrame([dict(**d, from_c=lo[i], to_c=hi[i]) for i, d in enumerate(sf)]).to_csv(SITE_DATA / "schools_by_heat.csv", index=False)
+    cw = pd.read_csv(TABLES / "children_by_ward.csv").merge(bw, on="ward_name", how="left")
+    cw[["schools", "on_hottest_fifth", "on_hotter_half"]] = cw[["schools", "on_hottest_fifth", "on_hotter_half"]].fillna(0).astype(int)
+    cw.to_csv(SITE_DATA / "children_by_ward.csv", index=False)
+    results["checks"] = chk
+
     STANDALONE.write_text(json.dumps(dict(children_by_heat=results, people_by_heat=people_by_heat,
                                           schools_trees_200m=trees), indent=2))
     extra = json.loads(EXTRA.read_text())

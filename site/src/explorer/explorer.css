@@ -71,3 +71,6 @@
   .explorer__map .legend-card { top: 46px; bottom: auto; }
   .explorer__map .mapboxgl-ctrl-top-right { display: none; }
 }
+
+/* Which side of Nairobi a ward is on (20 November 2026, D60) */
+.ward-panel__side { font-family: var(--sans); font-size: 15px; margin: 4px 0 10px; padding: 6px 8px; background: var(--note-bg, #F2F5F8); border-left: 3px solid var(--brand, #3F79AD); }
