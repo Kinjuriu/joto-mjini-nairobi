@@ -119,22 +119,22 @@ A speaking script timed to five minutes: one minute on who Stephane is and why s
 
 ## 6. Checklist
 
-- [ ] Stephane answers the questions in section 9
-- [ ] WorldPop age and sex rasters downloaded, licence recorded
-- [ ] Children by age band on hot and cool ground computed, scaled to the census, checks pass
-- [ ] People by heat band computed
-- [ ] Trees within 200 m of schools computed
-- [ ] Story reordered (section 5, step 1); climate material moved to "More on Nairobi's climate"
-- [ ] Forests and tree cover chapter merged and kept
-- [ ] Schools chapters built (dots map, 72.6 %, Kangemi, Viwandani, Karen, trees near schools)
-- [ ] Day-of-heat chart shows the school day; Term 1 line added
-- [ ] "What it means" and "What could help" written with sources
-- [ ] Explorer: schools layer, school counts and children in the ward panel
+- [x] Stephane answers the questions in section 9 (affiliation and order answered 20 Nov; headline in QUESTIONS 14)
+- [x] ~~WorldPop age and sex rasters downloaded~~ blocked; census age mix used instead (D59)
+- [x] Children by age band on hot and cool ground computed, scaled to the census, checks pass
+- [x] People by heat band computed
+- [x] Trees within 200 m of schools computed
+- [x] Story reordered (section 5, step 1); climate material moved to "More on Nairobi's climate"
+- [x] Forests and tree cover chapter merged and kept
+- [x] Schools chapters built (dots map, 72.6 %, Kangemi, Viwandani, Karen, trees near schools)
+- [x] Day-of-heat chart shows the school day; Term 1 line added
+- [x] "What it means" and "What could help" written with sources
+- [x] Explorer: schools layer, school counts and children in the ward panel
 - [ ] All `[[COPY]]` placeholders drafted; Stephane edits them
 - [ ] Pooled 13.5 °C gap retired; headline chosen
-- [ ] Byline, affiliation (no WBA), dates and URL in
-- [ ] Methods, Resources and the research list (section 8) updated
-- [ ] Build passes, no `{{` or `[[COPY` left, analysis checks pass
+- [x] Byline, affiliation (no WBA), dates and URL in
+- [x] Methods, Resources and the research list (section 8) updated
+- [x] Build passes, no `{{` or `[[COPY` left, analysis checks pass
 - [ ] QA at 375 px and 1440 px: every chapter, explorer, videos, keyboard, reduced motion
 - [ ] Live on GitHub Pages and checked on a phone
 - [ ] Three slides and a five-minute script; sent by Monday 23 November
@@ -186,3 +186,5 @@ Data sources (already in Methods, plus the new ones)
 - **Ages:** report by school level (pre-primary 4 to 5, primary 6 to 11, junior school 12 to 14, senior school 15 to 17), not five-year bands.
 - **During the talk:** stay in the slides; use a short screen recording of the storyboard on slide 2 and a QR code on slide 3 instead of opening the live site.
 - **Cut first if short of time:** the explorer's schools layer.
+
+**Status, 20 November 22:15:** storyboard built on branch `workshop-schools-20nov` (D60); maps still to be seen on the Mac (`MORNING_CHECKLIST.md`); slides next.
