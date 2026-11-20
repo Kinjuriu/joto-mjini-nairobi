@@ -362,3 +362,14 @@ Recorded in `analysis/checks.json` by `src/analysis/checks.py`:
 - **Exact populations.** WorldPop numbers are modelled estimates and may undercount the densest settlements.
 - **Change over time in surface temperature.** Too few clear scenes per year to separate a warming trend from day-to-day weather.
 - **Rainfall, flooding and El Niño impacts.** Planned for a later phase.
+
+## Workshop numbers, 20 November 2026 (D59)
+
+All from `src/analysis/children_heat.py`; tables in `analysis/tables/` and keys in `analysis/results_extra.json`. People are WorldPop 2025 (5,657,000 in the county); children are estimates (D59).
+
+- **W1. People by heat.** Coolest fifth of the land 280,000 people (4.9 %); second 808,000 (14.3 %); middle 1,582,000 (28.0 %); fourth 2,151,000 (38.0 %); hottest 827,000 (14.6 %). Hotter half 3,899,000 (68.9 %); cooler half 1,748,000 (30.9 %); 10,000 live on cells without a temperature. `people_by_heat`, `people_by_heat.csv`.
+- **W2. School-age children (4 to 17) on the hotter half.** About 1,000,000 (69.6 % of the county's 1,438,000), or 925,000 (67.7 %) after scaling to census sub-counties. By level, unscaled: pre-primary 167,000; primary 451,000; junior school 201,000; senior school 181,000. On the hottest fifth: 212,000 (14.8 %). `children_by_heat.sides`.
+- **W3. Children against adults.** 69.6 % of children and 68.4 % of adults live on the hotter half (scaled: 67.7 % and 66.8 %). Children per 100 people: 25.7 on the hotter half, 24.9 on the cooler half, 23.7 on the coolest fifth. Not a meaningful difference; do not call it disproportionate.
+- **W4. School-going estimate.** About 746,000 children aged 4 to 17 attending school live on the hotter half (county attendance rates by age, Volume IV table 2.6b). Rough estimate.
+- **W5. Trees near schools.** Within 200 m: schools on the hotter half, median tree cover 2.5 % (81.4 % below a tenth); cooler half 21.9 % (33.4 %); hottest fifth 1.8 % (89.6 %); coolest fifth 61.7 % (none below a tenth). 2,695 hotter-half and 1,017 cooler-half schools. `schools_trees_200m`, `schools_trees_200m.csv`.
+- **W6. Schools and people.** 72.6 % of schools sit on the hotter half, close to the 68.9 % of people who live there: schools are where people are.

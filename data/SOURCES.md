@@ -177,7 +177,7 @@ Searched 10 November 2026.
 ## 2019 census (KNBS), extracted to CSV
 
 - **Name:** 2019 Kenya Population and Housing Census, Volume II (population by administrative unit, tables 2.2 to 2.4), Volume III (age and sex, table 2.3) and Volume IV (socio-economic characteristics: school attendance tables 2.2, 2.3, 2.6b; roofing material table 2.12)
-- **Provider:** Kenya National Bureau of Statistics; extracted to CSV in https://github.com/Kinjuriu/kenya-2019-census-csv (Volumes II and III published; Volume IV in local commit 89a4594, not yet pushed)
+- **Provider:** Kenya National Bureau of Statistics; extracted to CSV in https://github.com/Kinjuriu/kenya-2019-census-csv (Volumes II, III and IV published; Volume IV merged on GitHub at commit d05f526fd31801306a009f7b3e5d25a72b426bf6)
 - **URL:** https://www.knbs.or.ke/reports/kenya-census-2019/
 - **Licence:** © KNBS 2019, all rights reserved; "Extracts may be published if the source is duly acknowledged."
 - **Resolution:** county, census sub-county (11 in Nairobi), division, location, sub-location (Volume II only)
@@ -204,3 +204,8 @@ Same datasets, licences and citations as Nairobi, accessed 10 November 2026, wit
 - **WorldPop 2025:** same Kenya file; Kisumu study-area total 1,326,762.
 - **GHSL:** same tile R10_C22; a thin strip north of the equator lies on tile R9 and is not filled.
 - **Buildings:** Overture release 2026-10-21.0; 695,434 footprints (OpenStreetMap 466,848; Google 183,092; Microsoft 45,494). File not committed (79 MB).
+
+## Census tables copied into this project (D59)
+
+- `data/raw/census_2019/` holds four CSVs from Kinjuriu/kenya-2019-census-csv at commit d05f526fd31801306a009f7b3e5d25a72b426bf6, downloaded 20 November 2026 from raw.githubusercontent.com. SHA-256: population_by_age_sex_county_subcounty 60da06bb…93e4de; school_age_population_by_county_subcounty bb29556f…faa04; school_attendance_by_age_group_county 41ce521c…14cc; school_attendance_by_county_subcounty f77d7c5b…c514e. Same source, licence and citation as the 2019 census entry above.
+- **Not obtained:** WorldPop Global2 R2025A age and sex structures for Kenya. data.worldpop.org, hub.worldpop.org and data.humdata.org were blocked by the network proxy on 20 November 2026; children were estimated from the census age mix instead (D59).
