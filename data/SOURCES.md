@@ -174,6 +174,26 @@ Searched 10 November 2026.
 - **Citation:** EOxCloudless - https://cloudless.eox.at by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2025)
 - Used only as the picture under the data layers when Mapbox satellite imagery is refused (DECISIONS D42, D50). No number in the story comes from it.
 
+## 2019 census (KNBS), extracted to CSV
+
+- **Name:** 2019 Kenya Population and Housing Census, Volume II (population by administrative unit, tables 2.2 to 2.4), Volume III (age and sex, table 2.3) and Volume IV (socio-economic characteristics: school attendance tables 2.2, 2.3, 2.6b; roofing material table 2.12)
+- **Provider:** Kenya National Bureau of Statistics; extracted to CSV in https://github.com/Kinjuriu/kenya-2019-census-csv (Volumes II, III and IV published; Volume IV merged on GitHub at commit d05f526fd31801306a009f7b3e5d25a72b426bf6)
+- **URL:** https://www.knbs.or.ke/reports/kenya-census-2019/
+- **Licence:** © KNBS 2019, all rights reserved; "Extracts may be published if the source is duly acknowledged."
+- **Resolution:** county, census sub-county (11 in Nairobi), division, location, sub-location (Volume II only)
+- **Dates covered:** census night 24 to 25 August 2019
+- **Date accessed:** 14 November 2026. PDF SHA-256: Volume II 4e4e091a67eddebc7c1158d09c02f4470e10786a269443dde97a4fcc17a4872d; Volume III dc1253195cd766e42e0af6461fc20e2797ef9831301369bfc8942aee891cbb49; Volume IV 56d36d0929299d422249bc843156bb9990a5d29b87dd50e017322a627d492ab2
+- **Citation:** Kenya National Bureau of Statistics (2019). 2019 Kenya Population and Housing Census, Volumes II, III and IV. Nairobi: KNBS.
+- **Also used:** Nairobi's 2009 census count, 3,138,369 (KNBS 2010, 2009 Kenya Population and Housing Census, Volume IA), for the intercensal growth rate (D55).
+
+## Schools
+
+- **Ministry of Education school list (Kenya - Schools).** Provider: Kenya Ministry of Education, published by the World Bank Group on energydata.info. URL: https://energydata.info/dataset/kenya-schools (read from the public vector tiles at https://energydata-tiles-bk.s3.amazonaws.com/tiles/849830e2-fcb5-4b42-8d33-e42c7c1e90b4/). Licence: CC BY 4.0. Resolution: points (some in the Arc 1960 datum, D53). Dates: records marked 2016 (Ministry of Education) or 2007 (Open Data Kenya). Accessed 14 November 2026. 2,164 Nairobi records (2,156 inside the county). Citation: Kenya Ministry of Education, via World Bank Group, Kenya - Schools, energydata.info, CC BY 4.0.
+- **OpenStreetMap schools and kindergartens.** Overpass API, https://overpass-api.de. Licence: ODbL 1.0. Data as of 14 November 2026 11:50 UTC. 2,406 in the county. Citation: © OpenStreetMap contributors.
+- **Checked, not merged:** HOT Education Facilities of Kenya (HDX, ODbL, 2 November 2026; 2,405 in the county; the same OpenStreetMap data). Open Schools Kenya (open.africa, ODbL, 29 May 2023; 1,138; an OpenStreetMap extract). opendata.go.ke Kenya Primary Schools 2007 (dead link). UNICEF Giga Maps (API needs a key).
+- **Published count used for comparison:** The Eastleigh Voice, "Concern as private schools dominate Nairobi's education sector", 28 March 2024 (the article does not name its source).
+- **Nairobi City County public ECD centres and primary schools (check only, not merged).** Provider: Nairobi City County Education Department, "Data on Nairobi public ECD centres & primary schools and locations". URL: https://nairobi.go.ke/wp-content/uploads/Public-Primary-Schools.pdf. PDF exported from Excel on 25 June 2014; downloaded by Stephane, accessed 17 November 2026 (SHA-256 345cb542…c57336, identical to a fresh download that day). File: `data/raw/schools/nairobi_county_2014/Nairobi County Public-Primary-Schools.pdf`. Licence: not stated (public county document). Resolution: a list of 225 names with district, zone and a written location; no coordinates. Dates: 2014. Used only to check how complete the school map is for public primary schools (D57). Citation: Nairobi City County Education Department (2014). Data on Nairobi public ECD centres and primary schools and locations. https://nairobi.go.ke/wp-content/uploads/Public-Primary-Schools.pdf
+
 ## Kisumu (optional comparison, run with `JOTO_CITY=kisumu`)
 
 Same datasets, licences and citations as Nairobi, accessed 10 November 2026, with these differences:
@@ -184,3 +204,8 @@ Same datasets, licences and citations as Nairobi, accessed 10 November 2026, wit
 - **WorldPop 2025:** same Kenya file; Kisumu study-area total 1,326,762.
 - **GHSL:** same tile R10_C22; a thin strip north of the equator lies on tile R9 and is not filled.
 - **Buildings:** Overture release 2026-10-21.0; 695,434 footprints (OpenStreetMap 466,848; Google 183,092; Microsoft 45,494). File not committed (79 MB).
+
+## Census tables copied into this project (D59)
+
+- `data/raw/census_2019/` holds four CSVs from Kinjuriu/kenya-2019-census-csv at commit d05f526fd31801306a009f7b3e5d25a72b426bf6, downloaded 20 November 2026 from raw.githubusercontent.com. SHA-256: population_by_age_sex_county_subcounty 60da06bb…93e4de; school_age_population_by_county_subcounty bb29556f…faa04; school_attendance_by_age_group_county 41ce521c…14cc; school_attendance_by_county_subcounty f77d7c5b…c514e. Same source, licence and citation as the 2019 census entry above.
+- **Not obtained:** WorldPop Global2 R2025A age and sex structures for Kenya. data.worldpop.org, hub.worldpop.org and data.humdata.org were blocked by the network proxy on 20 November 2026; children were estimated from the census age mix instead (D59).

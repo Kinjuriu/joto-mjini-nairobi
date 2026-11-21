@@ -32,17 +32,20 @@
     "method": "xarray clip and threshold vs numpy mask",
     "match": true
   },
-  "spot_cool_places": {
-    "values": {
+  "forests_cooler_than_hot_areas": {
+    "forests": {
       "Karura Forest": 27.5,
-      "Nairobi Arboretum": 28.8,
-      "Nairobi National Park": 37.8,
-      "Nairobi Dam": 34.1,
-      "City Park": 31.4
+      "Nairobi Arboretum": 28.8
     },
     "cbd": 37.8,
     "industrial": 41.5,
-    "all_cooler": false
+    "all_cooler": true,
+    "method": "median of the hot-season composite inside each OSM forest polygon, read independently of core.q2_gap",
+    "other_places_for_information": {
+      "Nairobi National Park": 37.8,
+      "Nairobi Dam": 34.1,
+      "City Park": 31.4
+    }
   },
   "ward_pop_sum": {
     "ward_sum": 5588514,

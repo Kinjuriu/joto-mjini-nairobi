@@ -1,0 +1,86 @@
+ward_id,ward_name,constituency,name_matches,census_subcounty,rule
+NBO-001,Airbase,Kamukunji,KAMUKUNJI,KAMUKUNJI,kept
+NBO-002,Baba Dogo,Ruaraka,KASARANI,KASARANI,kept
+NBO-003,California,Kamukunji,KAMUKUNJI,KAMUKUNJI,kept
+NBO-004,Clay City,Kasarani,KASARANI,KASARANI,kept
+NBO-005,Dandora Area I,Embakasi North,,,no name match
+NBO-006,Dandora Area II,Embakasi North,,,no name match
+NBO-007,Dandora Area III,Embakasi North,,,no name match
+NBO-008,Dandora Area IV,Embakasi North,,,no name match
+NBO-009,Eastleigh North,Kamukunji,KAMUKUNJI,KAMUKUNJI,kept
+NBO-010,Eastleigh South,Kamukunji,KAMUKUNJI,KAMUKUNJI,kept
+NBO-011,Embakasi,Embakasi East,EMBAKASI,EMBAKASI,kept
+NBO-012,Gatina,Dagoretti North,DAGORETTI,DAGORETTI,kept
+NBO-013,Githurai,Roysambu,KASARANI,KASARANI,kept
+NBO-014,Harambee,Makadara,MAKADARA,MAKADARA,kept
+NBO-015,Hospital,Mathare,,,no name match
+NBO-016,Huruma,Mathare,MATHARE,MATHARE,kept
+NBO-017,Imara Daima,Embakasi South,EMBAKASI,EMBAKASI,kept
+NBO-018,Kabiro,Dagoretti North,DAGORETTI,DAGORETTI,kept
+NBO-019,Kahawa,Roysambu,,,no name match
+NBO-020,Kahawa West,Roysambu,KASARANI,KASARANI,kept
+NBO-021,Kangemi,Westlands,WESTLANDS,WESTLANDS,kept
+NBO-022,Karen,Langata,LANG'ATA,LANG'ATA,kept
+NBO-023,Kariobangi North,Embakasi North,KASARANI,,only ward of its constituency matching this census sub-county
+NBO-024,Kariobangi South,Embakasi West,NJIRU,NJIRU,kept
+NBO-025,Karura,Westlands,WESTLANDS,WESTLANDS,kept
+NBO-026,Kasarani,Kasarani,KASARANI,KASARANI,kept
+NBO-027,Kawangware,Dagoretti North,DAGORETTI,DAGORETTI,kept
+NBO-028,Kayole Central,Embakasi Central,EMBAKASI,EMBAKASI,kept
+NBO-029,Kayole North,Embakasi Central,NJIRU,,only ward of its constituency matching this census sub-county
+NBO-030,Kayole South,Embakasi Central,EMBAKASI,EMBAKASI,kept
+NBO-031,Kiamaiko,Mathare,MATHARE,MATHARE,kept
+NBO-032,Kileleshwa,Dagoretti North,WESTLANDS,WESTLANDS,kept
+NBO-033,Kilimani,Dagoretti North,WESTLANDS,WESTLANDS,kept
+NBO-034,Kitisuru,Westlands,WESTLANDS,WESTLANDS,kept
+NBO-035,Komarock,Embakasi Central,EMBAKASI,EMBAKASI,kept
+NBO-036,Korogocho,Ruaraka,KASARANI,KASARANI,kept
+NBO-037,Kwa Njenga,Embakasi South,,,no name match
+NBO-038,Kwa Reuben,Embakasi South,EMBAKASI,EMBAKASI,kept
+NBO-039,Kware,Embakasi South,EMBAKASI,EMBAKASI,kept
+NBO-040,Laini Saba,Kibra,KIBRA,KIBRA,kept
+NBO-041,Landimawe,Starehe,,,no name match
+NBO-042,Lindi,Kibra,KIBRA,KIBRA,kept
+NBO-043,Lower Savannah,Embakasi East,,,no name match
+NBO-044,Lucky Summer,Ruaraka,KASARANI,KASARANI,kept
+NBO-045,Mabatini,Mathare,MATHARE,MATHARE,kept
+NBO-046,Makina,Kibra,KIBRA,KIBRA,kept
+NBO-047,Makongeni,Makadara,MAKADARA,MAKADARA,kept
+NBO-048,Maringo/Hamza,Makadara,MAKADARA,MAKADARA,kept
+NBO-049,Mathare North,Ruaraka,KASARANI,KASARANI,kept
+NBO-050,Matopeni/Spring Valley,Embakasi Central,WESTLANDS,,only ward of its constituency matching this census sub-county
+NBO-051,Mihango,Embakasi East,NJIRU,,only ward of its constituency matching this census sub-county
+NBO-052,Mlango Kubwa,Mathare,MATHARE,MATHARE,kept
+NBO-053,Mountain View,Westlands,,,no name match
+NBO-054,Mowlem,Embakasi West,NJIRU,NJIRU,kept
+NBO-055,Mugumo-ini,Langata,LANG'ATA,LANG'ATA,kept
+NBO-056,Mutu-ini,Dagoretti South,DAGORETTI,DAGORETTI,kept
+NBO-057,Mwiki,Kasarani,KASARANI,KASARANI,kept
+NBO-058,Nairobi Central,Starehe,,,no name match
+NBO-059,Nairobi South,Starehe,,,no name match
+NBO-060,Nairobi West,Langata,LANG'ATA,LANG'ATA,kept
+NBO-061,Ngando,Dagoretti South,DAGORETTI,DAGORETTI,kept
+NBO-062,Ngara,Starehe,STAREHE,STAREHE,kept
+NBO-063,Ngei,Mathare,,,no name match
+NBO-064,Njiru,Kasarani,NJIRU,NJIRU,kept
+NBO-065,Nyayo Highrise,Langata,,,no name match
+NBO-066,Pangani,Starehe,STAREHE,STAREHE,kept
+NBO-067,Parklands/Highridge,Westlands,WESTLANDS,WESTLANDS,kept
+NBO-068,Pipeline,Embakasi South,,,no name match
+NBO-069,Pumwani,Kamukunji,KAMUKUNJI,KAMUKUNJI,kept
+NBO-070,Riruta,Dagoretti South,DAGORETTI,DAGORETTI,kept
+NBO-071,Roysambu,Roysambu,KASARANI,KASARANI,kept
+NBO-072,Ruai,Kasarani,NJIRU,NJIRU,kept
+NBO-073,Sarang'ombe,Kibra,KIBRA,KIBRA,kept
+NBO-074,South C,Langata,LANG'ATA,LANG'ATA,kept
+NBO-075,Umoja I,Embakasi West,,,no name match
+NBO-076,Umoja II,Embakasi West,,,no name match
+NBO-077,Upper Savannah,Embakasi East,,,no name match
+NBO-078,Utalii,Ruaraka,KASARANI,KASARANI,kept
+NBO-079,Utawala,Embakasi East,EMBAKASI,EMBAKASI,kept
+NBO-080,Uthiru/Ruthimitu,Dagoretti South,DAGORETTI,DAGORETTI,kept
+NBO-081,Viwandani,Makadara,MAKADARA,MAKADARA,kept
+NBO-082,Waithaka,Dagoretti South,DAGORETTI,DAGORETTI,kept
+NBO-083,Woodley/Kenyatta Golf Course,Kibra,KIBRA,KIBRA,kept
+NBO-084,Zimmerman,Roysambu,KASARANI,KASARANI,kept
+NBO-085,Ziwani/Kariokor,Starehe,STAREHE,STAREHE,kept

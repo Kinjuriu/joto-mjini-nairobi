@@ -39,6 +39,18 @@ export async function initStory(blocks) {
     basemap: first.basemap, center: first.center, zoom: MOBILE.matches ? first.mobileZoom : first.zoom,
     scrollZoom: false, navigation: !MOBILE.matches,
   });
+  // 2019 census counts for the ten wards in "Five hot wards, five cool wards" (data/ward_contrast.csv, D61).
+  let censusTexts = null;
+  try {
+    const txt = await fetch(new URL(`${import.meta.env.BASE_URL}data/ward_contrast.csv`, window.location.href)).then((r) => r.text());
+    const [head, ...lines] = txt.trim().split('\n');
+    const cols = head.split(',');
+    const nf = new Intl.NumberFormat('en-GB');
+    censusTexts = Object.fromEntries(lines.map((ln) => {
+      const o = Object.fromEntries(ln.split(',').map((v, i) => [cols[i], v]));
+      return [o.ward_name, `${nf.format(Math.round(Number(o.census_2019) / 100) * 100)} people on ${Number(o.ward_km2).toFixed(1)} km²`];
+    }));
+  } catch { /* labels fall back to names only */ }
   const legend = new LegendCard(holder, ctl.manifest);
   const chip = new DateChip(holder);
   frames.forEach((f) => f.classList.add('is-ready'));
@@ -64,7 +76,7 @@ export async function initStory(blocks) {
       chip.set(ch.chip);
       await ctl.setChapter({
         basemap: ch.basemap, layers: ch.layers, highlight: ch.highlight || [],
-        groups: ch.groups, labelWards: ch.labelWards, top: ch.top, quiet: ch.quiet,
+        groups: ch.groups, labelWards: ch.labelWards, labelTexts: ch.labelText === 'census' ? censusTexts : null, top: ch.top, quiet: ch.quiet,
         pulses: (ch.pulses || []).map((p) => { const f = fact(ch.id, p.fact); return { ...p, label: f ? `${f.name}: ${f.value}<br><small>${p.place}</small>` : p.fact }; }),
         center: ch.center, zoom: MOBILE.matches ? ch.mobileZoom : (window.innerWidth < 1100 ? ch.zoom - 0.6 : ch.zoom), padding: padding(),
       }, { instant: !near });

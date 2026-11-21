@@ -69,19 +69,25 @@ def main() -> dict:
     checks["pop_hottest20"] = dict(core=res["q4"]["pop_in_hottest20"], independent=int(round(p, -3)),
                                    method="xarray clip and threshold vs numpy mask")
 
-    # 5. Spot check: cool places cooler than the CBD and Industrial Area.
+    # 5. The city centre and Industrial Area against the two forests (D52). Nairobi National Park, Nairobi Dam
+    #    and City Park are recorded for information only: the park is open grassland and savanna that heats up in
+    #    the dry season, so it was never a fair "cool" reference.
     from src.rasterio_utils import polygon_mask, read
     hot = read(hot_path)
-    spots = {}
-    for name in ["Karura Forest", "Nairobi Arboretum", "Nairobi National Park", "Nairobi Dam", "City Park"]:
+    forests = {n: round(float(np.nanmedian(hot[polygon_mask(place_polygon(n, "forest").geometry)])), 1)
+               for n in ["Karura Forest", "Nairobi Arboretum"]}
+    info = {}
+    for name in ["Nairobi National Park", "Nairobi Dam", "City Park"]:
         try:
-            spots[name] = round(float(np.nanmedian(hot[polygon_mask(place_polygon(name).geometry)])), 1)
+            info[name] = round(float(np.nanmedian(hot[polygon_mask(place_polygon(name).geometry)])), 1)
         except KeyError:
-            spots[name] = None
-    hot_ref = min(res["q2"]["CBD"]["median_c"], res["q2"]["Industrial Area"]["median_c"])
-    checks["spot_cool_places"] = dict(values=spots, cbd=res["q2"]["CBD"]["median_c"],
-                                      industrial=res["q2"]["Industrial Area"]["median_c"],
-                                      all_cooler=all(v is not None and v < hot_ref for v in spots.values()))
+            info[name] = None
+    cbd, ind = res["q2"]["CBD"]["median_c"], res["q2"]["Industrial Area"]["median_c"]
+    checks["forests_cooler_than_hot_areas"] = dict(
+        forests=forests, cbd=cbd, industrial=ind,
+        all_cooler=all(v < min(cbd, ind) for v in forests.values()),
+        method="median of the hot-season composite inside each OSM forest polygon, read independently of core.q2_gap",
+        other_places_for_information=info)
 
     # 6. Ward population totals vs county total.
     tot = res["q4"]["county_pop"]

@@ -12,7 +12,7 @@
   --note-bg: #F2F5F8;
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
-  --col: 680px;
+  --col: 820px;
   --wide: 1200px;
   --gap: 24px;
 }
@@ -34,7 +34,9 @@ a:hover { color: #1B3D5C; text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
 code { font-size: 0.85em; }
 
-.col { max-width: var(--col); margin-left: auto; margin-right: auto; padding: 0 20px; }
+/* 21 Nov (D63): text sits on the same left edge as the title and menu, not centred; lines keep a readable width. */
+.col { max-width: var(--wide); margin-left: auto; margin-right: auto; padding: 0 20px; }
+.col > * { max-width: var(--col); }
 .wide { max-width: var(--wide); margin: 0 auto; padding: 0 20px; }
 
 /* Reading progress: thin, static, answers "how far along am I". */
@@ -50,7 +52,7 @@ code { font-size: 0.85em; }
 }
 .wordmark { font-family: var(--sans); font-weight: 700; font-size: 21px; color: #FFFFFF; text-decoration: none; letter-spacing: 0.01em; }
 .wordmark:hover { color: #FFFFFF; text-decoration: underline; }
-.tagline { font-size: 15px; color: #FFFFFF; }
+.tagline { font-size: 19px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.005em; }
 
 /* 2. Title block */
 .title-block { padding-top: 22px; padding-bottom: 14px; }
@@ -61,7 +63,7 @@ h1 { font-weight: 600; font-size: clamp(28px, 4.2vw, 42px); line-height: 1.15; m
 .byline .sep { color: var(--rule); padding: 0 4px; }
 
 /* Headings */
-h2 { font-weight: 600; font-size: 28px; line-height: 1.2; margin: 56px 0 14px; }
+h2 { font-weight: 600; font-size: 28px; line-height: 1.2; margin: 56px 0 10px; }
 h3 { font-family: var(--sans); font-weight: 600; font-size: 19px; line-height: 1.3; margin: 28px 0 8px; }
 .prose p { margin: 0 0 18px; }
 .prose ul { padding-left: 1.1em; }
@@ -76,6 +78,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 19px; line-height: 1
 .figure { margin: 18px auto 36px; }
 .caption { font-family: var(--sans); font-size: 15px; line-height: 1.45; color: var(--ink-2); margin-top: 8px; }
 .caption .source { display: block; margin-top: 4px; font-size: 14px; }
+.source { color: var(--link); }
 .chart-title { font-family: var(--serif); font-size: 20px; margin: 0 0 2px; }
 .chart-subtitle { font-family: var(--sans); font-size: 15px; color: var(--ink-2); margin: 0 0 10px; line-height: 1.4; }
 .placeholder { font-family: var(--sans); font-size: 15px; color: var(--ink-2); padding: 24px; margin: 0; }
@@ -167,7 +170,7 @@ img { max-width: 100%; height: auto; display: block; }
   h2 { font-size: 25px; margin-top: 44px; }
 }
 @media (max-width: 420px) {
-  .tagline { font-size: 14px; }
+  .tagline { font-size: 16px; }
   .data-table { font-size: 14px; }
   .data-table th, .data-table td { padding: 6px 4px; }
   .data-table thead th { font-size: 13px; }
@@ -212,8 +215,64 @@ img { max-width: 100%; height: auto; display: block; }
 .layers-page__view button { font: 13px var(--sans); padding: 2px 8px; border: 1px solid var(--ink-2); background: #FFF; border-radius: 2px; cursor: pointer; }
 
 /* Section links in the header bar: plain links, underline on hover (standard navigation). */
-.masthead__nav { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-left: auto; }
-.masthead__nav a { color: #FFFFFF; font: 600 15px/1.4 var(--sans); text-decoration: none; padding: 2px 0; border-bottom: 2px solid transparent; }
-.masthead__nav a:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+.masthead__nav { display: flex; flex-wrap: wrap; gap: 6px 30px; margin-left: auto; }
+.masthead__nav a { color: #FFFFFF; font: 600 16px/1.4 var(--sans); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; padding: 2px 0; }
+.masthead__nav a:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
 .masthead__nav a:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
 @media (max-width: 760px) { .masthead__nav { margin-left: 0; width: 100%; } }
+
+/* Children and schools (20 November 2026, D60) */
+.find-side { font-family: var(--sans); font-weight: 600; font-size: 17px; }
+.chart--bars { min-height: 0; }
+.chart--bars text { font-size: 14px; }
+#what-it-means, #what-could-help, .more-intro { padding-top: 24px; }
+.more-intro { border-top: 1px solid var(--rule); margin-top: 40px; }
+
+/* Cover (21 November 2026, D62): our own rooftops picture, Kangemi beside Karen, on a dark band with the title block
+   under it, after NASA Earthdata's story covers. Nothing moves. */
+.hero { background: #0B1620; color: #FFFFFF; margin: 0 0 8px; }
+.hero__figure { position: relative; margin: 0; }
+.hero__img { display: block; width: 100%; height: auto; max-height: 54vh; object-fit: cover; object-position: center; }
+.hero__labels { position: absolute; left: 0; right: 0; top: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; padding: 14px 18px; pointer-events: none; }
+.hero__label { justify-self: start; font: 400 16px/1.35 var(--sans); background: rgba(11, 22, 32, 0.82); color: #FFFFFF; padding: 6px 10px; max-width: 30em; }
+.hero__label strong { font-weight: 600; }
+.hero__text { max-width: var(--wide); margin: 0 auto; padding: 28px 20px 30px; }
+.hero .kicker { color: #C9D6E2; }
+.hero h1 { color: #FFFFFF; font-size: clamp(32px, 4.6vw, 58px); line-height: 1.08; max-width: 22em; margin: 0 0 14px; }
+.hero .dek { color: #DCE5EE; font-size: 21px; max-width: 46em; }
+.hero__tags { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 18px 0 20px; padding: 14px 0 0; border-top: 1px solid rgba(255, 255, 255, 0.25); font-family: var(--sans); }
+.hero__tags > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.hero__tags dt { font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #C9D6E2; margin-right: 2px; }
+.hero__tags dd { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.hero__tags dd span { font-size: 15px; font-weight: 600; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 2px; padding: 3px 10px; }
+.hero__byline { color: #DCE5EE; }
+.hero__byline a { color: #FFFFFF; }
+.hero__byline .sep { color: rgba(255, 255, 255, 0.4); }
+.hero__credit { font: 400 13px/1.45 var(--sans); color: #AEBBC8; margin: 12px 0 0; max-width: 70em; }
+.hero + .intro { padding-top: 26px; }
+@media (max-width: 760px) {
+  .hero__labels { position: static; grid-template-columns: 1fr 1fr; padding: 8px 12px 0; }
+  .hero__label { font-size: 13.5px; background: none; padding: 0; }
+  .hero .dek { font-size: 18px; }
+}
+
+/* The opening swipe map sits straight after the introduction. */
+.opening-map { margin-top: 8px; }
+
+/* "See more about Nairobi's heat": a native <details>, closed by default. */
+.more { margin: 48px 0 0; border-top: 1px solid var(--rule); }
+.more__summary { cursor: pointer; list-style: none; max-width: var(--wide); margin: 0 auto; padding: 22px 20px; font-family: var(--sans); }
+.more__summary::-webkit-details-marker { display: none; }
+.more__title { display: inline-block; font-weight: 600; font-size: 20px; color: #FFFFFF; background: var(--brand); padding: 9px 16px; border-radius: 2px; }
+.more__summary:hover .more__title { background: var(--brand-dark); }
+.more[open] .more__title::after { content: " (close)"; font-weight: 400; }
+.more__hint { display: block; margin-top: 8px; color: var(--ink-2); font-size: 16px; }
+
+/* Back to top: a plain fixed link, shown by main.js once the reader is a screen down. */
+.to-top { position: fixed; right: 18px; bottom: 18px; z-index: 40; font: 600 15px/1 var(--sans); color: #FFFFFF; background: var(--ink); padding: 10px 14px; border-radius: 2px; text-decoration: none; }
+.to-top:hover { color: #FFFFFF; background: #000000; text-decoration: underline; }
+.to-top[hidden] { display: none; }
+
+/* Methods page */
+.methods-page { padding-top: 18px; }
+.back-link { font-family: var(--sans); font-weight: 600; }

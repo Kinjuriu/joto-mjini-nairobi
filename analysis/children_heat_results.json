@@ -1,0 +1,411 @@
+{
+  "children_by_heat": {
+    "generated": "2026-11-20 22:20",
+    "method_note": "Children estimated by splitting WorldPop 2025 people in each 30 m cell with the 2019 census age mix of the cell's census sub-county; estimates, not counts.",
+    "census_commit": "d05f526fd31801306a009f7b3e5d25a72b426bf6",
+    "thresholds_c": {
+      "p20": 34.7,
+      "p40": 37.7,
+      "median": 38.7,
+      "p60": 39.6,
+      "p80": 41.6
+    },
+    "attendance_rates_pct": {
+      "age_4_5": 88.7,
+      "age_6_13": 96.9,
+      "age_14_17": 91.1
+    },
+    "sides": {
+      "coolest fifth": {
+        "people": 280000,
+        "people_share_pct": 4.9,
+        "pre_primary_4_5": 11000,
+        "pre_primary_4_5_share_pct": 4.4,
+        "primary_6_11": 30000,
+        "primary_6_11_share_pct": 4.6,
+        "junior_school_12_14": 14000,
+        "junior_school_12_14_share_pct": 4.7,
+        "senior_school_15_17": 13000,
+        "senior_school_15_17_share_pct": 4.8,
+        "school_age_4_17": 66000,
+        "school_age_4_17_share_pct": 4.6,
+        "under_4": 24000,
+        "under_4_share_pct": 4.3,
+        "adults_18_plus": 190000,
+        "adults_18_plus_share_pct": 5.2,
+        "school_going_4_17": 49000,
+        "school_age_4_17_scaled_to_census": 69000,
+        "children_4_17_per_100_people": 23.7
+      },
+      "second fifth": {
+        "people": 808000,
+        "people_share_pct": 14.3,
+        "pre_primary_4_5": 32000,
+        "pre_primary_4_5_share_pct": 13.7,
+        "primary_6_11": 89000,
+        "primary_6_11_share_pct": 13.8,
+        "junior_school_12_14": 41000,
+        "junior_school_12_14_share_pct": 14.1,
+        "senior_school_15_17": 37000,
+        "senior_school_15_17_share_pct": 14.3,
+        "school_age_4_17": 200000,
+        "school_age_4_17_share_pct": 13.9,
+        "under_4": 75000,
+        "under_4_share_pct": 13.6,
+        "adults_18_plus": 532000,
+        "adults_18_plus_share_pct": 14.5,
+        "school_going_4_17": 149000,
+        "school_age_4_17_scaled_to_census": 207000,
+        "children_4_17_per_100_people": 24.8
+      },
+      "middle fifth": {
+        "people": 1582000,
+        "people_share_pct": 28.0,
+        "pre_primary_4_5": 67000,
+        "pre_primary_4_5_share_pct": 28.2,
+        "primary_6_11": 182000,
+        "primary_6_11_share_pct": 28.2,
+        "junior_school_12_14": 82000,
+        "junior_school_12_14_share_pct": 28.2,
+        "senior_school_15_17": 74000,
+        "senior_school_15_17_share_pct": 28.3,
+        "school_age_4_17": 406000,
+        "school_age_4_17_share_pct": 28.2,
+        "under_4": 157000,
+        "under_4_share_pct": 28.3,
+        "adults_18_plus": 1019000,
+        "adults_18_plus_share_pct": 27.8,
+        "school_going_4_17": 302000,
+        "school_age_4_17_scaled_to_census": 385000,
+        "children_4_17_per_100_people": 25.6
+      },
+      "fourth fifth": {
+        "people": 2151000,
+        "people_share_pct": 38.0,
+        "pre_primary_4_5": 92000,
+        "pre_primary_4_5_share_pct": 38.7,
+        "primary_6_11": 249000,
+        "primary_6_11_share_pct": 38.5,
+        "junior_school_12_14": 111000,
+        "junior_school_12_14_share_pct": 38.1,
+        "senior_school_15_17": 100000,
+        "senior_school_15_17_share_pct": 37.9,
+        "school_age_4_17": 551000,
+        "school_age_4_17_share_pct": 38.3,
+        "under_4": 216000,
+        "under_4_share_pct": 38.8,
+        "adults_18_plus": 1383000,
+        "adults_18_plus_share_pct": 37.8,
+        "school_going_4_17": 411000,
+        "school_age_4_17_scaled_to_census": 511000,
+        "children_4_17_per_100_people": 25.6
+      },
+      "hottest fifth": {
+        "people": 827000,
+        "people_share_pct": 14.6,
+        "pre_primary_4_5": 35000,
+        "pre_primary_4_5_share_pct": 14.9,
+        "primary_6_11": 96000,
+        "primary_6_11_share_pct": 14.8,
+        "junior_school_12_14": 43000,
+        "junior_school_12_14_share_pct": 14.7,
+        "senior_school_15_17": 38000,
+        "senior_school_15_17_share_pct": 14.6,
+        "school_age_4_17": 212000,
+        "school_age_4_17_share_pct": 14.8,
+        "under_4": 83000,
+        "under_4_share_pct": 14.9,
+        "adults_18_plus": 532000,
+        "adults_18_plus_share_pct": 14.5,
+        "school_going_4_17": 158000,
+        "school_age_4_17_scaled_to_census": 192000,
+        "children_4_17_per_100_people": 25.6
+      },
+      "hotter half": {
+        "people": 3899000,
+        "people_share_pct": 68.9,
+        "pre_primary_4_5": 167000,
+        "pre_primary_4_5_share_pct": 70.1,
+        "primary_6_11": 451000,
+        "primary_6_11_share_pct": 69.8,
+        "junior_school_12_14": 201000,
+        "junior_school_12_14_share_pct": 69.3,
+        "senior_school_15_17": 181000,
+        "senior_school_15_17_share_pct": 68.9,
+        "school_age_4_17": 1000000,
+        "school_age_4_17_share_pct": 69.6,
+        "under_4": 391000,
+        "under_4_share_pct": 70.3,
+        "adults_18_plus": 2507000,
+        "adults_18_plus_share_pct": 68.4,
+        "school_going_4_17": 746000,
+        "school_age_4_17_scaled_to_census": 925000,
+        "children_4_17_per_100_people": 25.7
+      },
+      "cooler half": {
+        "people": 1748000,
+        "people_share_pct": 30.9,
+        "pre_primary_4_5": 71000,
+        "pre_primary_4_5_share_pct": 29.8,
+        "primary_6_11": 194000,
+        "primary_6_11_share_pct": 30.1,
+        "junior_school_12_14": 89000,
+        "junior_school_12_14_share_pct": 30.6,
+        "senior_school_15_17": 81000,
+        "senior_school_15_17_share_pct": 30.9,
+        "school_age_4_17": 435000,
+        "school_age_4_17_share_pct": 30.3,
+        "under_4": 164000,
+        "under_4_share_pct": 29.5,
+        "adults_18_plus": 1149000,
+        "adults_18_plus_share_pct": 31.4,
+        "school_going_4_17": 324000,
+        "school_age_4_17_scaled_to_census": 439000,
+        "children_4_17_per_100_people": 24.9
+      },
+      "county": {
+        "people": 5657000,
+        "people_share_pct": 100.0,
+        "pre_primary_4_5": 238000,
+        "pre_primary_4_5_share_pct": 100.0,
+        "primary_6_11": 646000,
+        "primary_6_11_share_pct": 100.0,
+        "junior_school_12_14": 291000,
+        "junior_school_12_14_share_pct": 100.0,
+        "senior_school_15_17": 263000,
+        "senior_school_15_17_share_pct": 100.0,
+        "school_age_4_17": 1438000,
+        "school_age_4_17_share_pct": 100.0,
+        "under_4": 556000,
+        "under_4_share_pct": 100.0,
+        "adults_18_plus": 3663000,
+        "adults_18_plus_share_pct": 100.0,
+        "school_going_4_17": 1071000,
+        "school_age_4_17_scaled_to_census": 1366000,
+        "children_4_17_per_100_people": 25.4
+      }
+    },
+    "checks": {
+      "land_fifths_each_about_20pct": true,
+      "hottest_fifth_people_equals_q4": true,
+      "fifths_plus_no_temp_equal_county": true,
+      "halves_equal_fifths": true,
+      "bands_add_up": true,
+      "all_ages_add_up": true,
+      "census_school_age_share_pct": 25.2,
+      "modelled_school_age_share_pct": 25.4,
+      "hot_half_children_independent_match": true,
+      "schools_hotter_half_pct": 72.6,
+      "schools_hottest_fifth_n_matches": true
+    },
+    "context": {
+      "iron_sheet_households_pct": 51.3,
+      "iron_sheet_min_subcounty": [
+        "EMBAKASI",
+        38.0
+      ],
+      "iron_sheet_max_subcounty": [
+        "DAGORETTI",
+        80.6
+      ],
+      "adults_hotter_half_share_pct": 68.4,
+      "children_hotter_half_scaled_share_pct": 67.7,
+      "adults_hotter_half_scaled_share_pct": 66.8
+    },
+    "wards_population_flagged": [
+      [
+        "Kangemi",
+        "low"
+      ],
+      [
+        "Korogocho",
+        "low"
+      ],
+      [
+        "Lindi",
+        "low"
+      ],
+      [
+        "Laini Saba",
+        "low"
+      ],
+      [
+        "Dandora Area IV",
+        "low"
+      ],
+      [
+        "Kayole Central",
+        "low"
+      ],
+      [
+        "Sarang'ombe",
+        "low"
+      ],
+      [
+        "Mathare North",
+        "low"
+      ],
+      [
+        "Nyayo Highrise",
+        "low"
+      ],
+      [
+        "Woodley/Kenyatta Golf Course",
+        "high"
+      ]
+    ]
+  },
+  "people_by_heat": {
+    "fifths": [
+      {
+        "group": "coolest fifth",
+        "people": 280000,
+        "share_pct": 4.9,
+        "land_share_pct": 20.0
+      },
+      {
+        "group": "second fifth",
+        "people": 808000,
+        "share_pct": 14.3,
+        "land_share_pct": 20.0
+      },
+      {
+        "group": "middle fifth",
+        "people": 1582000,
+        "share_pct": 28.0,
+        "land_share_pct": 20.0
+      },
+      {
+        "group": "fourth fifth",
+        "people": 2151000,
+        "share_pct": 38.0,
+        "land_share_pct": 20.0
+      },
+      {
+        "group": "hottest fifth",
+        "people": 827000,
+        "share_pct": 14.6,
+        "land_share_pct": 20.0
+      }
+    ],
+    "hotter_half": {
+      "people": 3899000,
+      "share_pct": 68.9
+    },
+    "cooler_half": {
+      "people": 1748000,
+      "share_pct": 30.9
+    },
+    "county_people": 5657000,
+    "thresholds_c": {
+      "p20": 34.7,
+      "p40": 37.7,
+      "median": 38.7,
+      "p60": 39.6,
+      "p80": 41.6
+    }
+  },
+  "schools_trees_200m": {
+    "radius_m": 200.0,
+    "source": "ESA WorldCover 2021 tree fraction on the 30 m grid",
+    "hotter_half": {
+      "n_schools": 2695,
+      "median_tree_pct": 2.5,
+      "mean_tree_pct": 5.4,
+      "share_under_10pct_trees": 81.4
+    },
+    "cooler_half": {
+      "n_schools": 1017,
+      "median_tree_pct": 21.9,
+      "mean_tree_pct": 26.7,
+      "share_under_10pct_trees": 33.4
+    },
+    "hottest_fifth": {
+      "n_schools": 567,
+      "median_tree_pct": 1.8,
+      "mean_tree_pct": 3.7,
+      "share_under_10pct_trees": 89.6
+    },
+    "coolest_fifth": {
+      "n_schools": 162,
+      "median_tree_pct": 61.7,
+      "mean_tree_pct": 60.9,
+      "share_under_10pct_trees": 0.0
+    },
+    "all_schools": {
+      "n_schools": 3712,
+      "median_tree_pct": 4.2,
+      "mean_tree_pct": 11.2,
+      "share_under_10pct_trees": 68.2
+    },
+    "fifths": [
+      {
+        "group": "coolest fifth",
+        "n_schools": 162,
+        "share_pct": 4.4,
+        "median_tree_pct": 61.7,
+        "share_under_10pct_trees": 0.0
+      },
+      {
+        "group": "second fifth",
+        "n_schools": 463,
+        "share_pct": 12.5,
+        "median_tree_pct": 23.7,
+        "share_under_10pct_trees": 26.8
+      },
+      {
+        "group": "middle fifth",
+        "n_schools": 1001,
+        "share_pct": 27.0,
+        "median_tree_pct": 6.1,
+        "share_under_10pct_trees": 64.5
+      },
+      {
+        "group": "fourth fifth",
+        "n_schools": 1519,
+        "share_pct": 40.9,
+        "median_tree_pct": 2.3,
+        "share_under_10pct_trees": 82.6
+      },
+      {
+        "group": "hottest fifth",
+        "n_schools": 567,
+        "share_pct": 15.3,
+        "median_tree_pct": 1.8,
+        "share_under_10pct_trees": 89.6
+      }
+    ],
+    "by_ward": {
+      "Baba Dogo": {
+        "schools": 78,
+        "on_hottest_fifth": 47,
+        "median_school_lst_c": 42.0,
+        "median_tree_pct_200m": 4.0
+      },
+      "Kangemi": {
+        "schools": 127,
+        "on_hottest_fifth": 92,
+        "median_school_lst_c": 42.4,
+        "median_tree_pct_200m": 3.0
+      },
+      "Karen": {
+        "schools": 92,
+        "on_hottest_fifth": 0,
+        "median_school_lst_c": 35.0,
+        "median_tree_pct_200m": 34.0
+      },
+      "Kitisuru": {
+        "schools": 107,
+        "on_hottest_fifth": 12,
+        "median_school_lst_c": 37.0,
+        "median_tree_pct_200m": 31.0
+      },
+      "Viwandani": {
+        "schools": 40,
+        "on_hottest_fifth": 33,
+        "median_school_lst_c": 42.5,
+        "median_tree_pct_200m": 1.2
+      }
+    }
+  }
+}

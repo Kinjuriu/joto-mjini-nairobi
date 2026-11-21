@@ -117,6 +117,8 @@
     "hot_areas_median_c": 41.1,
     "cool_areas_median_c": 27.6,
     "gap_c": 13.5,
+    "cbd_gap_c": 10.2,
+    "industrial_gap_c": 13.9,
     "industrial_minus_karura_c": 14.0,
     "cbd_minus_arboretum_c": 9.0,
     "definitions": {

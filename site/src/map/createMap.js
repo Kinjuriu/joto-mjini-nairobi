@@ -29,15 +29,15 @@ const FONT_BOLD = ['DIN Pro Bold', 'Arial Unicode MS Bold'];
 const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-label', 'water-point-label'];
 
 // Default stacking of our data layers, bottom to top (all beneath the basemap labels).
-export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'growth-1990-2020',
+export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'population-dense', 'population-hot', 'growth-1990-2020',
   'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
   'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
-  'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'forests'];
+  'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'schools', 'forests'];
 
 // Chapter-level styling added 12 November 2026: only some ward names, ward groups, pulsing circles.
 const inNames = (names) => ['in', ['get', 'ward_name'], ['literal', names]];
 
-const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity' };
+const opacityProp = { raster: 'raster-opacity', fill: 'fill-opacity', line: 'line-opacity', symbol: 'text-opacity', circle: 'circle-opacity' };
 
 export class MissingTokenError extends Error {}
 
@@ -286,6 +286,10 @@ export class MapController {
       if (opacity > 0) map.setLayoutProperty(l.id, 'visibility', 'visible');
       map.setPaintProperty(l.id, `${prop}-transition`, { duration: ms, delay: 0 });
       if (l.type === 'symbol') map.setPaintProperty(l.id, 'icon-opacity-transition', { duration: ms, delay: 0 });
+      if (l.type === 'circle') {
+        map.setPaintProperty(l.id, 'circle-stroke-opacity-transition', { duration: ms, delay: 0 });
+        map.setPaintProperty(l.id, 'circle-stroke-opacity', opacity * full);
+      }
       map.setPaintProperty(l.id, prop, opacity * full);
     }
     if (opacity === 0) {
@@ -326,6 +330,7 @@ export class MapController {
     this.setGroups(ch.groups || null);
     this.setLayers(ch.layers || [], quick ? 0 : FADE_MS);
     this.setLabelFilter(ch.labelWards || null);
+    this.setLabelText(ch.labelTexts || null);
     for (const id of ch.top || []) {   // chapter-specific stacking, for example tree cover above the ward groups
       const sp = this.specs.get(id);
       const before = this.map.getLayer('ward-dim') ? 'ward-dim' : this.firstSymbolId();
@@ -359,6 +364,26 @@ export class MapController {
       if (HIDE.some((h) => l.id.startsWith(h))) continue;
       this.map.setLayoutProperty(l.id, 'visibility', on ? 'none' : 'visible');
     }
+  }
+
+  /** Ward labels with a second line (texts: {ward_name: 'line two'}), or plain names (null). D61. */
+  setLabelText(texts) {
+    const sp = this.specs.get('ward-labels');
+    if (!sp) return;
+    const plain = !texts;
+    const field = plain ? ['get', 'ward_name']
+      : ['match', ['get', 'ward_name'],
+        ...Object.entries(texts).flatMap(([n, t]) => [n, ['format', n.toUpperCase(), {}, `\n${t}`, { 'font-scale': 0.82 }]]),
+        ['upcase', ['get', 'ward_name']]];
+    sp.layers.forEach((l) => {
+      l.layout['text-field'] = field;
+      l.layout['text-transform'] = plain ? 'uppercase' : 'none';
+      l.layout['text-variable-anchor'] = plain ? ['center'] : ['center', 'top', 'bottom', 'left', 'right'];
+      l.layout['text-radial-offset'] = plain ? 0 : 0.6;
+      if (this.map.getLayer(l.id)) {
+        for (const k of ['text-field', 'text-transform', 'text-variable-anchor', 'text-radial-offset']) this.map.setLayoutProperty(l.id, k, l.layout[k]);
+      }
+    });
   }
 
   /** Show only these ward names (null: all). */
@@ -535,6 +560,19 @@ export const OVERLAYS = {
     layers: () => [{ id: 'places', type: 'symbol', 'source-layer': 'places', minzoom: 10, filter: ['==', ['get', 'is_green'], true],
       layout: { 'text-field': ['get', 'name'], 'text-font': FONT, 'text-size': 12.5, 'text-max-width': 8 },
       paint: { 'text-color': '#1F4D2E', 'text-halo-color': 'rgba(255,255,255,0.95)', 'text-halo-width': 1.8 } }],
+  },
+  // Schools for children (20 November 2026, D60): one dot per school, coloured on the heat-diff scale by the median
+  // surface temperature within 100 m (property lst, °C), with a thin outline that reads on imagery and on the light map.
+  schools: {
+    source: () => ({ type: 'geojson', data: abs('data/schools.geojson') }),
+    rebuild: true,
+    layers: (c) => [{ id: 'schools', type: 'circle',
+      paint: {
+        'circle-color': diffStep(['-', ['to-number', ['get', 'lst'], 0], c.manifest['heat-diff'].median_c ?? 0]),
+        'circle-radius': ['interpolate', ['linear'], ['zoom'], 9, 2.2, 11, 3.2, 13, 5, 15, 7.5],
+        'circle-stroke-color': c.imagery ? '#FFFFFF' : '#1C2530',
+        'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 9, 0.5, 13, 1.2],
+      } }],
   },
   'comparison-areas': {
     source: () => ({ type: 'geojson', data: abs('data/comparison_areas.geojson') }), beforeLabels: false,

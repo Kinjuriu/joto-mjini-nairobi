@@ -1,0 +1,61 @@
+# Build the Joto Mjini Nairobi site and publish it on GitHub Pages (21 November 2026, D63).
+# Live address: https://kinjuriu.github.io/joto-mjini-nairobi/
+#
+# One-time setup on github.com (repository Kinjuriu/joto-mjini-nairobi):
+#   1. Settings > Secrets and variables > Actions > New repository secret: name MAPBOX_TOKEN, value = the
+#      VITE_MAPBOX_TOKEN from site/.env.local (never commit the token itself).
+#   2. Settings > Pages > Build and deployment > Source: GitHub Actions.
+# After that, every push to main or to workshop-schools-20nov rebuilds and republishes the site; the
+# "Actions" tab shows progress. You can also run it by hand there (Run workflow).
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main, workshop-schools-20nov]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Install
+        working-directory: site
+        run: npm ci --no-audit --no-fund
+      - name: Build
+        working-directory: site
+        env:
+          VITE_MAPBOX_TOKEN: ${{ secrets.MAPBOX_TOKEN }}
+          SITE_BASE: /joto-mjini-nairobi/
+        run: |
+          test -n "$VITE_MAPBOX_TOKEN" || { echo "The MAPBOX_TOKEN repository secret is missing (see the top of this file)."; exit 1; }
+          npm run build
+          if grep -q '{{\|\[\[COPY' dist/index.html; then echo "Unfilled placeholder in the page"; exit 1; fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

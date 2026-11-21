@@ -28,7 +28,17 @@ export async function dayHeat(el) {
     const y = scaleLinear().domain([10, 46]).range([height - m.bottom, m.top]);
     const svg = select(el).insert('svg', '.chart-detail').attr('viewBox', `0 0 ${width} ${height}`).attr('class', 'chart-svg')
       .attr('role', 'img').attr('tabindex', 0)
-      .attr('aria-label', 'Line chart of land surface temperature each hour from 06:00 to 19:00 on 27 January 2026, inside Nairobi County and on the land around it. Use the arrow keys to read each hour.');
+      .attr('aria-label', 'Line chart of land surface temperature each hour from 06:00 to 19:00 on 27 January 2026, inside Nairobi County and on the land around it, with class hours from 08:00 to 15:30 shaded and the Landsat pass at about 10:43 marked. Use the arrow keys to read each hour.');
+    // Class hours, 08:00 to 15:30 on weekdays (Basic Education Regulations 2015, section 84), and the Landsat pass
+    // at about 10:43, so the reader can see that the hottest hours fall in the school day (20 November 2026, D60).
+    const h0 = Number(rows[0].h.slice(0, 2));
+    const xh = (hh) => x(rows[0].h) + (hh - h0) * x.step();
+    svg.append('rect').attr('x', xh(8)).attr('y', m.top).attr('width', xh(15.5) - xh(8)).attr('height', height - m.top - m.bottom)
+      .attr('fill', '#79C1E9').attr('fill-opacity', 0.28);
+    svg.append('text').attr('class', 'label-strong').attr('x', xh(8) + 4).attr('y', narrow ? m.top + 27 : m.top - 7).text(narrow ? 'Class hours' : 'Class hours, 08:00 to 15:30');
+    svg.append('line').attr('x1', xh(10 + 43 / 60)).attr('x2', xh(10 + 43 / 60)).attr('y1', m.top + 22).attr('y2', height - m.bottom)
+      .attr('stroke', '#1C2530').attr('stroke-dasharray', '3 3');
+    svg.append('text').attr('x', xh(10 + 43 / 60) + 5).attr('y', height - m.bottom - 8).text(narrow ? 'Landsat' : 'Landsat passes, about 10:43');
     svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.left},0)`)
       .call(axisLeft(y).ticks(6).tickSize(-(width - m.left - m.right)).tickFormat((v) => `${v}°`));
     svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${height - m.bottom})`)

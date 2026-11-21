@@ -15,6 +15,12 @@ const updateProgress = () => {
   bar.style.width = `${h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0}%`;
 };
 window.addEventListener('scroll', updateProgress, { passive: true });
+
+// "Back to top" (21 Nov, D62): a plain link, shown once the reader is more than a screen down; no animation.
+const toTop = document.querySelector('.to-top');
+const updateToTop = () => { if (toTop) toTop.hidden = window.scrollY < window.innerHeight; };
+window.addEventListener('scroll', updateToTop, { passive: true });
+updateToTop();
 updateProgress();
 
 function whenNear(el, init, margin = '800px') {
@@ -54,6 +60,9 @@ const charts = {
   calendar: async (el) => (await import('./charts/heatmap.js')).calendar(el),
   air: async (el) => (await import('./charts/air.js')).airChart(el),
   'day-heat': async (el) => (await import('./charts/dayheat.js')).dayHeat(el),
+  'people-heat': async (el) => (await import('./charts/children.js')).peopleByHeat(el),
+  'children-level': async (el) => (await import('./charts/children.js')).childrenByLevel(el),
+  'schools-trees': async (el) => (await import('./charts/children.js')).schoolsTrees(el),
 };
 document.querySelectorAll('[data-chart]').forEach((el) => whenNear(el, charts[el.dataset.chart] || (async () => {})));
 

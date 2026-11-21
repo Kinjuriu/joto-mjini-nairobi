@@ -1,0 +1,6 @@
+group,n_schools,share_pct,median_tree_pct,share_under_10pct_trees,from_c,to_c
+coolest fifth,162,4.4,61.7,0.0,,34.7
+second fifth,463,12.5,23.7,26.8,34.7,37.7
+middle fifth,1001,27.0,6.1,64.5,37.7,39.6
+fourth fifth,1519,40.9,2.3,82.6,39.6,41.6
+hottest fifth,567,15.3,1.8,89.6,41.6,
