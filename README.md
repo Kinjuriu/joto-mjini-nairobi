@@ -1,61 +1,197 @@
-# Joto Mjini Nairobi
+<a name="readme-top"></a>
 
-**Mapping urban heat and cooling inequality across Nairobi.**
+<!-- Structure after the Best-README-Template (https://github.com/othneildrew/Best-README-Template), via https://github.com/Kinjuriu/Best-README-Template -->
 
-A data story about urban heat in Nairobi: which parts of the city get hottest on hot days, who lives there, and how trees, open ground and roofs relate to that heat. It ends with an interactive map where anyone can find their ward and compare it with the rest of the city. Built for the Earthna and CIFF workshop "Land, Food and Heat Resilience in Africa's Arid Regions", Nairobi, 26 November 2026.
+<br />
+<div align="center">
+  <a href="https://kinjuriu.github.io/joto-mjini-nairobi/">
+    <img src="site/public/figures/cover_rooftops.webp" alt="Two views from above at the same scale: the crowded rooftops of Kangemi coloured orange and red, and the scattered houses of Karen among trees coloured blue" width="720">
+  </a>
 
-"Joto Mjini Nairobi" is the working name (Swahili for "heat in the city"). Other names considered: Nairobi's Heat Divide (kept as the story's headline frame), Nairobi Heat Atlas, Joto Atlas, Joto Map, Nairobi Joto Lab. To rename, search the project for "Joto Mjini Nairobi" and replace it.
+  <h3 align="center">Joto Mjini Nairobi</h3>
 
-This is a separate project from the El Niño urban overlay. The El Niño project can later reuse this pipeline's boundary, buildings and basemap and add rainfall.
+  <p align="center">
+    Mapping urban heat and cooling inequality across Nairobi
+    <br />
+    <a href="https://kinjuriu.github.io/joto-mjini-nairobi/"><strong>Read the story »</strong></a>
+    <br />
+    <br />
+    <a href="https://kinjuriu.github.io/joto-mjini-nairobi/#explore">Find your ward</a>
+    ·
+    <a href="https://kinjuriu.github.io/joto-mjini-nairobi/methods.html">Methods, data and resources</a>
+    ·
+    <a href="https://github.com/Kinjuriu/joto-mjini-nairobi/issues">Report a problem</a>
+  </p>
+</div>
 
-## How the work is split
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#data">Data</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#repository-layout">Repository Layout</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-- **Opus 5.5 in Claude Code (Faniki account)** does the build, following the prompts in `prompts/`.
-- **Claude in the Claude app** reviews what Opus produces.
-- **Stephane** decides, does the final human QA, and presents.
-- **Tony Widjarnaso** reviews the urban analysis if he has capacity.
 
-## Tonight's overnight run
+## About The Project
 
-1. **Plug in your charger.** In Terminal, run `caffeinate -dims` and leave that window open, so the Mac does not sleep. Press Control-C in that window in the morning to stop it.
-2. **Open this folder in VS Code** (File, Open Folder, `~/Desktop/joto-mjini`).
-3. **Optional:** copy `.env.example` to `.env` and add your Copernicus Data Space credentials if you have them. The run works without them.
-4. **Open Claude Code** in VS Code, sign in with your Faniki account and choose Opus 5.5.
-5. **Install the permissions file.** Run this once in Terminal (the remote tools are not allowed to write into a `.claude` folder, so the file waits in `setup/`):
+Joto Mjini Nairobi ("heat in the city" in Swahili) is an open data story about where heat falls in Nairobi and who lives and learns on the hottest ground. It uses the Landsat 8 and 9 satellites to measure land surface temperature, meaning how hot the ground, roofs and roads are, on clear January to March mornings from 2023 to 2026, and it sets that heat beside where people live, where the city's schools stand and where its trees grow.
 
+The story finds that about seven in ten of Nairobi's school-age children, roughly one million children aged 4 to 17, live on the hotter half of the city, and that the land around the schools there has very few trees: within 200 m of a school on the hotter half, a median of 2.5 % of the ground is under trees, against 21.9 % around schools on the cooler half. The five hottest wards where people live held about 187,000 people on 11.3 km² at the 2019 census, while the five coolest held about 157,000 on 143.6 km². The story ends with a map where anyone can look up their own ward and see which side of Nairobi it is on.
+
+The numbers are estimates with stated limits: satellites measure the ground, not the air people feel or the inside of classrooms; population comes from modelled WorldPop estimates and the 2019 census; and the school map is a broad map of school sites, without pupil numbers. Every number on the site traces back to a script and a source, listed in [`analysis/FINDINGS.md`](analysis/FINDINGS.md) and on the [methods page](https://kinjuriu.github.io/joto-mjini-nairobi/methods.html).
+
+The project was prepared for the workshop "Land, Food and Heat Resilience in Africa's Arid Regions" in Nairobi on 26 November 2026, hosted by the Earthna Center for a Sustainable Future and the Children's Investment Fund Foundation. The hosts did not commission or review it.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+* Python 3.12 with [uv](https://docs.astral.sh/uv/): rasterio, GeoPandas, NumPy, pandas, xarray and odc-stac for the data pipeline and analysis
+* [Vite](https://vite.dev/) for the site, with [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/) for the maps and [D3](https://d3js.org/) for hand-built charts
+* GitHub Actions and GitHub Pages for publishing
+
+### Data
+
+* Landsat 8 and 9 Collection 2 Level-2 surface temperature (USGS), via Microsoft Planetary Computer
+* ESA WorldCover 2021 land and tree cover; Sentinel-2 imagery (Copernicus); EOxCloudless 2025 imagery
+* WorldPop 2025 population; Kenya National Bureau of Statistics 2019 census, Volumes II to IV ([extracted to CSV here](https://github.com/Kinjuriu/kenya-2019-census-csv))
+* Schools: Kenya Ministry of Education list via the World Bank, and OpenStreetMap
+* Overture Maps building footprints; GHSL built-up area; IEBC ward boundaries via the American Red Cross and HDX
+* Copernicus hourly land surface temperature; Open-Meteo (ERA5) air temperature
+
+Licences and citations for every dataset are in [`data/SOURCES.md`](data/SOURCES.md).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Getting Started
+
+### Prerequisites
+
+* Python 3.12 and [uv](https://docs.astral.sh/uv/getting-started/installation/)
+* Node.js 22 and npm
+* A free [Mapbox](https://account.mapbox.com/) public access token, to draw the maps
+
+### Installation
+
+1. Clone the repository
+   ```sh
+   git clone https://github.com/Kinjuriu/joto-mjini-nairobi.git
+   cd joto-mjini-nairobi
    ```
-   mkdir -p ~/Desktop/joto-mjini-nairobi/.claude && mv ~/Desktop/joto-mjini-nairobi/setup/claude-settings.json ~/Desktop/joto-mjini-nairobi/.claude/settings.json
+2. Install the Python environment
+   ```sh
+   uv sync
+   ```
+3. Install the site
+   ```sh
+   cd site
+   npm ci
+   ```
+4. Add your Mapbox token in `site/.env.local` (this file is ignored by git)
+   ```sh
+   VITE_MAPBOX_TOKEN=your_public_token
+   ```
+5. Run the site, then open the address the terminal shows
+   ```sh
+   npm run dev
    ```
 
-   The file `.claude/settings.json` lets Opus run the data, Python and site commands without stopping to ask, and blocks `git push`, deleting files, `sudo` and reading `.env`. A few commands may still ask for approval; if the run stalls on one in the morning, approve it and tell Opus to continue.
-6. **Paste this as your first message:**
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-   > Read prompts/00_START_HERE_tonight.md and follow it exactly, through all four phases, without stopping to ask me anything.
 
-7. **In the morning,** open `MORNING_REPORT.md` first, then `analysis/FINDINGS.md`, then run the site with `cd site && npm run dev`. Bring the report back to Claude for review.
+## Usage
 
-## Files
+* **Read the story** at <https://kinjuriu.github.io/joto-mjini-nairobi/>, or run it locally as above.
+* **Look up a ward** in "Explore the map": its surface temperature, people, school-age children, schools and tree cover, and which half of the city it is on.
+* **Download the data** (ward table, schools, people and children by heat, charts) from the [methods page](https://kinjuriu.github.io/joto-mjini-nairobi/methods.html). The ward and school files open in QGIS or any web map.
+* **Rebuild the numbers.** The pipeline is in `src/pipeline` (numbered steps `s1` to `s10`), the analysis in `src/analysis` and the web tiles in `src/web/tiles.py`; each script runs with `uv run python -m <module>`, and its docstring says what it reads and writes.
+* **Publish.** Every push to `main` builds the site and publishes it on GitHub Pages through `.github/workflows/deploy-pages.yml`, which reads the Mapbox token from the `MAPBOX_TOKEN` repository secret.
 
-| File | What it is |
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Repository Layout
+
+| Folder or file | What it holds |
 |---|---|
-| `CLAUDE.md` | Rules Opus reads every session: data honesty, ethics, writing style, never stop, never push |
-| `DESIGN_RULES.md` | Stephane's no-vibe-coding rules, mandatory for the site |
-| `prompts/00_START_HERE_tonight.md` | The overnight run, phase by phase |
-| `prompts/01_data_pipeline.md` | Datasets, sources, fallbacks, processing |
-| `prompts/02_analysis.md` | The questions, outputs and checks |
-| `prompts/03_story_site.md` | The story site, modelled on NASA's LA fires story |
-| `prompts/04_qa_and_report.md` | QA, screenshots, presentation outline, morning report |
-| `reference/la-fires.stories.mdx` | Source of NASA's "Fanning the Flames" story |
-| `reference/README.md` | How the NASA story is built, and African equivalents of NLCD and NLDAS |
-| `reference/workshop_brief.md` | The workshop details |
-| `docs/application_draft.md` | Draft answers for the workshop application form |
+| `site/` | The story site: `index.html`, `methods.html`, `src/` (maps, charts, explorer), `public/` (data, tiles, figures, animations) |
+| `src/pipeline/` | Downloading and preparing the satellite, land cover, population, buildings and school data |
+| `src/analysis/` | The questions and every number on the site |
+| `analysis/` | Results (`results.json`, `results_extra.json`), tables and `FINDINGS.md` |
+| `data/SOURCES.md` | Every dataset, its licence and citation |
+| `DECISIONS.md` | Each method choice, dated, with the reason for it |
+| `DESIGN_RULES.md` | The design rules the site follows |
 
-## Timeline to 26 November
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- [ ] Tonight, 10 November: overnight run 1 (data, analysis, first site)
-- [ ] 11 November: review the morning report with Claude; submit the workshop application (rolling review, closes 20 November)
-- [ ] 11 to 14 November: run 2 to fix problems and polish the writing
-- [ ] 15 to 17 November: send to Tony for review
-- [ ] 18 to 21 November: revisions; publish to GitHub Pages
-- [ ] 22 to 25 November: slides and rehearsal, with offline screenshots as a backup
-- [ ] 26 November: workshop
+
+## Roadmap
+
+- [x] Heat divide maps, wards and the explorer
+- [x] Schools, school-age children and trees around schools
+- [x] Live site on GitHub Pages
+- [ ] Workshop presentation, 26 November 2026
+- [ ] A longer article on the heat divide and Nairobi's children
+- [ ] Ward populations scaled to 2019 census locations, to correct WorldPop in Kibra and Kangemi
+- [ ] Pupil numbers for each school from the Ministry of Education's register
+- [ ] Classroom air temperature measurements, and afternoon and night-time heat
+- [ ] Rainfall, flooding and El Niño
+
+See the [open issues](https://github.com/Kinjuriu/joto-mjini-nairobi/issues) for proposed changes and known problems.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Contributing
+
+Corrections and suggestions are welcome, especially from people who know Nairobi's wards and schools. Open an issue describing the problem or the idea; for a change to the code or the data, fork the repository, create a branch, commit your change and open a pull request.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## License
+
+Distributed under the MIT License; see [`LICENSE`](LICENSE). The datasets keep their own licences, listed in [`data/SOURCES.md`](data/SOURCES.md), and some (for example EOxCloudless imagery, CC BY-NC-SA 4.0) do not allow commercial use.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Contact
+
+Stephane Ngugi, Senior Data Analyst & Researcher, Independent Researcher
+
+[LinkedIn](https://www.linkedin.com/in/stephane-njoki/) · [GitHub](https://github.com/Kinjuriu)
+
+Project: <https://github.com/Kinjuriu/joto-mjini-nairobi>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Acknowledgments
+
+* The structure of the story follows NASA Earthdata's ["Fanning the Flames"](https://earthdata.nasa.gov/dashboard/stories/la-fires) story on the 2025 Los Angeles wildfires
+* The data providers listed above, whose open data made this possible
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template) for the layout of this README
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -1024,25 +1024,29 @@
     "max_area_mismatch_pct": 52.4
   },
   "cover": {
-    "panel_m": 1200.0,
+    "views_panel_m": 1200.0,
     "wards": {
       "Kangemi": {
+        "panel_m": 800.0,
         "centre_lonlat": [
-          36.75576,
-          -1.27037
+          36.75127,
+          -1.26675
         ],
-        "n_buildings": 5510,
-        "median_building_lst_c": 41.6,
-        "median_building_diff_c": 2.9
+        "n_buildings": 2660,
+        "median_building_lst_c": 42.9,
+        "median_building_diff_c": 4.3,
+        "green_share_pct": 2.5
       },
       "Karen": {
+        "panel_m": 1200.0,
         "centre_lonlat": [
           36.75694,
           -1.36556
         ],
         "n_buildings": 1225,
         "median_building_lst_c": 35.7,
-        "median_building_diff_c": -3.0
+        "median_building_diff_c": -3.0,
+        "green_share_pct": 65.1
       }
     },
     "views": {
@@ -1073,7 +1077,7 @@
         "iron_sheet_households_pct": 44.0
       }
     },
-    "gap_c": 5.9,
+    "gap_c": 7.2,
     "note": "Buildings coloured by hot-season LST of the surrounding 100 m, difference from the county median; Sentinel-2 2026 underneath (D62)"
   }
 }
