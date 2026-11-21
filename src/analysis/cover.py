@@ -1,7 +1,7 @@
 """Cover image for the story (21 November 2026, D62): rooftops of the hottest and the coolest ward, side by side.
 
-Each panel is a square of the same size (PANEL_M metres), centred on the densest square kilometre of buildings in
-the ward, so both are shown at the same scale. Buildings (Overture footprints) are coloured by the hot-season
+Each panel is a square of the same size (COVER_M metres): Karen's is centred on its densest square kilometre of buildings, and
+Kangemi's on the square with the least green ground, so it shows rooftops only (D64), so both are shown at the same scale. Buildings (Overture footprints) are coloured by the hot-season
 surface temperature of the 100 m around them, as the difference from the county median (the heat-diff colours
 used on every map); the ground between them is ESA WorldCover 2021 land cover (trees green, grass and farmland olive), drawn
 as smooth shapes; the 10 m Sentinel-2 photo used first looked blurry at this scale (D63). Wards: Kangemi, the hottest ward where people live (q4), and Karen, the
@@ -27,8 +27,10 @@ from src.config import PROCESSED, RASTERS, ROOT, UTM, get_logger  # noqa: E402
 
 log = get_logger("cover")
 OUT = ROOT / "site" / "public" / "figures"
-PANEL_M = 1200.0
+PANEL_M = 1200.0   # the story's two rooftop map steps (Eastlands, Karen)
+COVER_M = 800.0    # the cover panels (21 Nov, D64): 800 m lets Kangemi show only rooftops, with no valley or trees
 WARDS = ("Kangemi", "Karen")
+GREEN = (10, 20, 30, 40, 90, 95)   # WorldCover trees, shrubs, grass, cropland, wetland, mangrove
 BREAKS = [-99, -6, -4, -2, -0.5, 0.5, 2, 4, 6, 99]
 COLS = ["#1D4E6F", "#3B7CA6", "#8DBAD6", "#C9DDE9", "#F2EFE9", "#F6CBA6", "#F4A26B", "#D9542B", "#A1201A"]
 
@@ -51,6 +53,31 @@ def densest_centre(b: gpd.GeoDataFrame, ward_geom) -> tuple[float, float]:
     return bxy
 
 
+def least_green_centre(b: gpd.GeoDataFrame, ward_geom, size: float) -> tuple[float, float]:
+    """Centre of the size-metre square (stepped by 100 m, at least 40 % inside the ward) with the smallest share of
+    WorldCover green ground; ties go to the square with more building footprint area (21 Nov, D64). Used for Kangemi,
+    so the cover shows its rooftops without the green valley along its edge."""
+    from shapely.geometry import box as sbox
+    c = b.geometry.centroid
+    x, y, a = c.x.values, c.y.values, b.footprint_m2.values
+    h = size / 2
+    x0, y0, x1, y1 = ward_geom.bounds
+    best, bxy = None, None
+    with rasterio.open(RASTERS / "worldcover_2021.tif") as wc:
+        for cx in np.arange(x0 - 400, x1 + 400, 100):
+            for cy in np.arange(y0 - 400, y1 + 400, 100):
+                sq = sbox(cx - h, cy - h, cx + h, cy + h)
+                if sq.intersection(ward_geom).area / sq.area < 0.4:
+                    continue
+                cls = wc.read(1, window=from_bounds(*sq.bounds, wc.transform), boundless=True, fill_value=0)
+                green = round(float(np.isin(cls, GREEN).mean()), 3)
+                built = a[(abs(x - cx) < h) & (abs(y - cy) < h)].sum()
+                key = (green, -built)
+                if best is None or key < best:
+                    best, bxy = key, (cx, cy)
+    return bxy
+
+
 def main() -> dict:
     wards = gpd.read_file(PROCESSED / "nairobi_wards.geojson").to_crs(UTM).set_index("ward_name")
     b = gpd.read_parquet(PROCESSED / "buildings_lst.parquet").to_crs(UTM)
@@ -61,8 +88,9 @@ def main() -> dict:
     cmap, norm = ListedColormap(COLS), BoundaryNorm(BREAKS, len(COLS))
     if True:
         for ax, ward in zip(axes, WARDS):
-            cx, cy = densest_centre(b, wards.loc[ward].geometry)
-            h = PANEL_M / 2
+            g = wards.loc[ward].geometry
+            cx, cy = least_green_centre(b, g, COVER_M) if ward == "Kangemi" else densest_centre(b, g)
+            h = COVER_M / 2
             box = (cx - h, cy - h, cx + h, cy + h)
             # Ground: ESA WorldCover 2021 (10 m) drawn as smooth shapes, which stay sharp at this scale where the 10 m
             # Sentinel-2 photo looked blurry (21 Nov, D63): trees green, grass and farmland olive, the rest dark.
@@ -81,12 +109,13 @@ def main() -> dict:
             sel.plot(ax=ax, column="lst_anomaly_c", cmap=cmap, norm=norm, linewidth=0.2, edgecolor="#101418")
             ax.set_xlim(box[0], box[2]); ax.set_ylim(box[1], box[3]); ax.set_axis_off()
             # 200 m scale bar, bottom left
-            ax.plot([box[0] + 60, box[0] + 260], [box[1] + 60, box[1] + 60], color="white", lw=3, solid_capstyle="butt")
-            ax.text(box[0] + 60, box[1] + 85, "200 m", color="white", fontsize=12, fontweight="bold")
+            # no scale bar: the page states the scale in its caption, so a blurred cover carries no stray marks
+
             lon, lat = gpd.GeoSeries.from_xy([cx], [cy], crs=UTM).to_crs(4326).iloc[0].coords[0]
             out[ward] = dict(centre_lonlat=[round(lon, 5), round(lat, 5)], n_buildings=int(len(sel)),
                              median_building_lst_c=round(float(sel.lst_c.median()), 1),
-                             median_building_diff_c=round(float(sel.lst_anomaly_c.median()), 1))
+                             median_building_diff_c=round(float(sel.lst_anomaly_c.median()), 1),
+                             green_share_pct=round(float(100 * np.isin(cls, GREEN).mean()), 1))
     for ext in ("webp", "png"):
         fig.savefig(OUT / f"cover_rooftops.{ext}", facecolor=fig.get_facecolor(), dpi=150 if ext == "webp" else 100)
     plt.close(fig)
@@ -110,7 +139,7 @@ def main() -> dict:
                        share_hotter_than_median_pct=round(float(100 * (sel.lst_anomaly_c > 0).mean()), 1),
                        iron_sheet_households_pct=round(float(roofs.loc[sc, "iron_sheets_pct"]), 1))
     extra = json.loads((ROOT / "analysis" / "results_extra.json").read_text())
-    extra["cover"] = dict(panel_m=PANEL_M, wards=out, views=vout,
+    extra["cover"] = dict(panel_m=COVER_M, views_panel_m=PANEL_M, wards=out, views=vout,
                           gap_c=round(out["Kangemi"]["median_building_lst_c"] - out["Karen"]["median_building_lst_c"], 1), note="Buildings coloured by hot-season LST of the surrounding 100 m, difference from the county median; Sentinel-2 2026 underneath (D62)")
     (ROOT / "analysis" / "results_extra.json").write_text(json.dumps(extra, indent=2))
     log.info("cover: %s", out)
