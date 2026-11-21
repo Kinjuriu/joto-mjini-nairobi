@@ -1073,6 +1073,7 @@
         "iron_sheet_households_pct": 44.0
       }
     },
+    "gap_c": 5.9,
     "note": "Buildings coloured by hot-season LST of the surrounding 100 m, difference from the county median; Sentinel-2 2026 underneath (D62)"
   }
 }

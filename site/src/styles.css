@@ -34,7 +34,9 @@ a:hover { color: #1B3D5C; text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
 code { font-size: 0.85em; }
 
-.col { max-width: var(--col); margin-left: auto; margin-right: auto; padding: 0 20px; }
+/* 21 Nov (D63): text sits on the same left edge as the title and menu, not centred; lines keep a readable width. */
+.col { max-width: var(--wide); margin-left: auto; margin-right: auto; padding: 0 20px; }
+.col > * { max-width: var(--col); }
 .wide { max-width: var(--wide); margin: 0 auto; padding: 0 20px; }
 
 /* Reading progress: thin, static, answers "how far along am I". */
@@ -259,7 +261,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* "See more about Nairobi's heat": a native <details>, closed by default. */
 .more { margin: 48px 0 0; border-top: 1px solid var(--rule); }
-.more__summary { cursor: pointer; list-style: none; max-width: var(--col); margin: 0 auto; padding: 22px 20px; font-family: var(--sans); }
+.more__summary { cursor: pointer; list-style: none; max-width: var(--wide); margin: 0 auto; padding: 22px 20px; font-family: var(--sans); }
 .more__summary::-webkit-details-marker { display: none; }
 .more__title { display: inline-block; font-weight: 600; font-size: 20px; color: #FFFFFF; background: var(--brand); padding: 9px 16px; border-radius: 2px; }
 .more__summary:hover .more__title { background: var(--brand-dark); }

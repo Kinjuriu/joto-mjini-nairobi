@@ -3,8 +3,8 @@
 Each panel is a square of the same size (PANEL_M metres), centred on the densest square kilometre of buildings in
 the ward, so both are shown at the same scale. Buildings (Overture footprints) are coloured by the hot-season
 surface temperature of the 100 m around them, as the difference from the county median (the heat-diff colours
-used on every map); the ground between them is the Sentinel-2 true-colour composite (January to March 2026),
-dimmed so the buildings read first. Wards: Kangemi, the hottest ward where people live (q4), and Karen, the
+used on every map); the ground between them is ESA WorldCover 2021 land cover (trees green, grass and farmland olive), drawn
+as smooth shapes; the 10 m Sentinel-2 photo used first looked blurry at this scale (D63). Wards: Kangemi, the hottest ward where people live (q4), and Karen, the
 coolest ward (q1). No text is baked in; the page adds the labels so they stay readable at any width.
 
 Run: uv run python -m src.analysis.cover
@@ -59,16 +59,26 @@ def main() -> dict:
     fig.subplots_adjust(0, 0, 1, 1, wspace=0.012)
     fig.patch.set_facecolor("#0B1620")
     cmap, norm = ListedColormap(COLS), BoundaryNorm(BREAKS, len(COLS))
-    with rasterio.open(RASTERS / "s2_true_rgb.tif") as s2:
+    if True:
         for ax, ward in zip(axes, WARDS):
             cx, cy = densest_centre(b, wards.loc[ward].geometry)
             h = PANEL_M / 2
             box = (cx - h, cy - h, cx + h, cy + h)
-            img = s2.read(window=from_bounds(*box, s2.transform), boundless=True, fill_value=0).transpose(1, 2, 0).astype(float)
-            img = (img / 255.0) ** 1.1 * 0.55           # dimmed so buildings read first
-            ax.imshow(img, extent=(box[0], box[2], box[1], box[3]), interpolation="bilinear")
+            # Ground: ESA WorldCover 2021 (10 m) drawn as smooth shapes, which stay sharp at this scale where the 10 m
+            # Sentinel-2 photo looked blurry (21 Nov, D63): trees green, grass and farmland olive, the rest dark.
+            with rasterio.open(RASTERS / "worldcover_2021.tif") as wc:
+                cls = wc.read(1, window=from_bounds(*box, wc.transform), boundless=True, fill_value=0)
+            from scipy.ndimage import gaussian_filter, zoom
+            ground = np.zeros((*cls.shape, 3)) + np.array([0x1A, 0x1F, 0x1C]) / 255
+            for code, col in ((30, "#33402C"), (40, "#33402C"), (10, "#2F6B3F"), (80, "#24476B")):
+                m = gaussian_filter(zoom((cls == code).astype(float), 8, order=1), 5) > 0.5   # smooth edges
+                if code == 30:
+                    ground = np.repeat(np.repeat(ground, 8, 0), 8, 1)
+                rgb = np.array([int(col[i:i + 2], 16) for i in (1, 3, 5)]) / 255
+                ground[m[:ground.shape[0], :ground.shape[1]]] = rgb
+            ax.imshow(ground, extent=(box[0], box[2], box[1], box[3]), interpolation="antialiased")
             sel = b.cx[box[0]:box[2], box[1]:box[3]]
-            sel.plot(ax=ax, column="lst_anomaly_c", cmap=cmap, norm=norm, linewidth=0.15, edgecolor="#0B1620")
+            sel.plot(ax=ax, column="lst_anomaly_c", cmap=cmap, norm=norm, linewidth=0.2, edgecolor="#101418")
             ax.set_xlim(box[0], box[2]); ax.set_ylim(box[1], box[3]); ax.set_axis_off()
             # 200 m scale bar, bottom left
             ax.plot([box[0] + 60, box[0] + 260], [box[1] + 60, box[1] + 60], color="white", lw=3, solid_capstyle="butt")
@@ -100,7 +110,8 @@ def main() -> dict:
                        share_hotter_than_median_pct=round(float(100 * (sel.lst_anomaly_c > 0).mean()), 1),
                        iron_sheet_households_pct=round(float(roofs.loc[sc, "iron_sheets_pct"]), 1))
     extra = json.loads((ROOT / "analysis" / "results_extra.json").read_text())
-    extra["cover"] = dict(panel_m=PANEL_M, wards=out, views=vout, note="Buildings coloured by hot-season LST of the surrounding 100 m, difference from the county median; Sentinel-2 2026 underneath (D62)")
+    extra["cover"] = dict(panel_m=PANEL_M, wards=out, views=vout,
+                          gap_c=round(out["Kangemi"]["median_building_lst_c"] - out["Karen"]["median_building_lst_c"], 1), note="Buildings coloured by hot-season LST of the surrounding 100 m, difference from the county median; Sentinel-2 2026 underneath (D62)")
     (ROOT / "analysis" / "results_extra.json").write_text(json.dumps(extra, indent=2))
     log.info("cover: %s", out)
     return out

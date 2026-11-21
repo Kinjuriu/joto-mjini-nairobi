@@ -30,10 +30,10 @@
     <header class="hero" id="story" aria-labelledby="hero-title">
       <figure class="hero__figure">
         <img class="hero__img" src="figures/cover_rooftops.webp" width="2400" height="1200" fetchpriority="high"
-             alt="Two satellite views at the same scale, each 1.2 km across. Left: the crowded rooftops of Kangemi, almost all coloured orange and red, hotter than the city median. Right: the scattered houses of Karen among trees, almost all coloured blue, cooler than the city median.">
+             alt="Two views from above at the same scale, each 1.2 km across. Left: the crowded rooftops of Kangemi, almost all coloured orange and red, hotter than the city median. Right: the scattered houses of Karen among green tree cover, almost all coloured blue, cooler than the city median.">
         <figcaption class="hero__labels">
-          <span class="hero__label"><strong>Kangemi</strong>, the hottest ward where people live: {{x.cover.wards.Kangemi.median_building_lst_c|c}} around the median building</span>
-          <span class="hero__label"><strong>Karen</strong>, the coolest ward: {{x.cover.wards.Karen.median_building_lst_c|c}}</span>
+          <span class="hero__label"><strong>Kangemi</strong>, Nairobi's hottest ward where people live: the ground around its buildings was {{x.cover.wards.Kangemi.median_building_lst_c|c}} on hot mornings</span>
+          <span class="hero__label"><strong>Karen</strong>, Nairobi's coolest ward: {{x.cover.wards.Karen.median_building_lst_c|c}} at the same moments, {{x.cover.gap_c|c}} cooler</span>
         </figcaption>
       </figure>
       <div class="hero__text">
@@ -46,7 +46,7 @@
           <div><dt>Source</dt><dd><span>Independent research</span></dd></div>
         </dl>
         <p class="byline hero__byline">By Stephane Ngugi, Senior Data Analyst &amp; Researcher, Independent Researcher <span class="sep">|</span> <a href="https://www.linkedin.com/in/stephane-njoki/">LinkedIn</a> <span class="sep">|</span> <a href="https://github.com/Kinjuriu">GitHub</a> <span class="sep">|</span> Published 17 November 2026 <span class="sep">|</span> Last updated 21 November 2026</p>
-        <p class="hero__credit">Cover: buildings from Overture Maps Foundation (ODbL), coloured by Landsat 8 and 9 surface temperature (USGS) on January to March mornings, 2023 to 2026, as the difference from the city median: orange and red hotter, blue cooler. Underneath: Sentinel-2, January to March 2026 (contains modified Copernicus Sentinel data). Each view is 1.2 km across.</p>
+        <p class="hero__credit">Cover: two views from above at the same scale, each 1.2 km across. Buildings from Overture Maps Foundation (ODbL), coloured by Landsat 8 and 9 land surface temperature (USGS) on clear January to March mornings, 2023 to 2026, as the difference from the city median: orange and red hotter, blue cooler. Trees in green from ESA WorldCover 2021 (CC BY 4.0). These are temperatures of the ground and roofs at about 10:43 in the hot season, not the air temperature people feel.</p>
       </div>
     </header>
 
