@@ -172,7 +172,7 @@ Corrections and suggestions are welcome, especially from people who know Nairobi
 
 ## License
 
-No licence has been chosen for the code and text yet, so all rights are reserved by the author for now. The datasets keep their own licences, listed in [`data/SOURCES.md`](data/SOURCES.md).
+Distributed under the MIT License; see [`LICENSE`](LICENSE). The datasets keep their own licences, listed in [`data/SOURCES.md`](data/SOURCES.md), and some (for example EOxCloudless imagery, CC BY-NC-SA 4.0) do not allow commercial use.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
