@@ -225,3 +225,52 @@ img { max-width: 100%; height: auto; display: block; }
 .chart--bars text { font-size: 14px; }
 #what-it-means, #what-could-help, .more-intro { padding-top: 24px; }
 .more-intro { border-top: 1px solid var(--rule); margin-top: 40px; }
+
+/* Cover (21 November 2026, D62): our own rooftops picture, Kangemi beside Karen, on a dark band with the title block
+   under it, after NASA Earthdata's story covers. Nothing moves. */
+.hero { background: #0B1620; color: #FFFFFF; margin: 0 0 8px; }
+.hero__figure { position: relative; margin: 0; }
+.hero__img { display: block; width: 100%; height: auto; max-height: 54vh; object-fit: cover; object-position: center; }
+.hero__labels { position: absolute; left: 0; right: 0; top: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; padding: 14px 18px; pointer-events: none; }
+.hero__label { justify-self: start; font: 400 16px/1.35 var(--sans); background: rgba(11, 22, 32, 0.82); color: #FFFFFF; padding: 6px 10px; max-width: 30em; }
+.hero__label strong { font-weight: 600; }
+.hero__text { max-width: var(--wide); margin: 0 auto; padding: 28px 20px 30px; }
+.hero .kicker { color: #C9D6E2; }
+.hero h1 { color: #FFFFFF; font-size: clamp(32px, 4.6vw, 58px); line-height: 1.08; max-width: 22em; margin: 0 0 14px; }
+.hero .dek { color: #DCE5EE; font-size: 21px; max-width: 46em; }
+.hero__tags { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 18px 0 20px; padding: 14px 0 0; border-top: 1px solid rgba(255, 255, 255, 0.25); font-family: var(--sans); }
+.hero__tags > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.hero__tags dt { font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #C9D6E2; margin-right: 2px; }
+.hero__tags dd { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.hero__tags dd span { font-size: 15px; font-weight: 600; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 2px; padding: 3px 10px; }
+.hero__byline { color: #DCE5EE; }
+.hero__byline a { color: #FFFFFF; }
+.hero__byline .sep { color: rgba(255, 255, 255, 0.4); }
+.hero__credit { font: 400 13px/1.45 var(--sans); color: #AEBBC8; margin: 12px 0 0; max-width: 70em; }
+.hero + .intro { padding-top: 26px; }
+@media (max-width: 760px) {
+  .hero__labels { position: static; grid-template-columns: 1fr 1fr; padding: 8px 12px 0; }
+  .hero__label { font-size: 13.5px; background: none; padding: 0; }
+  .hero .dek { font-size: 18px; }
+}
+
+/* The opening swipe map sits straight after the introduction. */
+.opening-map { margin-top: 8px; }
+
+/* "See more about Nairobi's heat": a native <details>, closed by default. */
+.more { margin: 48px 0 0; border-top: 1px solid var(--rule); }
+.more__summary { cursor: pointer; list-style: none; max-width: var(--col); margin: 0 auto; padding: 22px 20px; font-family: var(--sans); }
+.more__summary::-webkit-details-marker { display: none; }
+.more__title { display: inline-block; font-weight: 600; font-size: 20px; color: #FFFFFF; background: var(--brand); padding: 9px 16px; border-radius: 2px; }
+.more__summary:hover .more__title { background: var(--brand-dark); }
+.more[open] .more__title::after { content: " (close)"; font-weight: 400; }
+.more__hint { display: block; margin-top: 8px; color: var(--ink-2); font-size: 16px; }
+
+/* Back to top: a plain fixed link, shown by main.js once the reader is a screen down. */
+.to-top { position: fixed; right: 18px; bottom: 18px; z-index: 40; font: 600 15px/1 var(--sans); color: #FFFFFF; background: var(--ink); padding: 10px 14px; border-radius: 2px; text-decoration: none; }
+.to-top:hover { color: #FFFFFF; background: #000000; text-decoration: underline; }
+.to-top[hidden] { display: none; }
+
+/* Methods page */
+.methods-page { padding-top: 18px; }
+.back-link { font-family: var(--sans); font-weight: 600; }

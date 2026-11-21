@@ -141,6 +141,37 @@ export const CHAPTERS = [
     },
   },
   {
+    id: 'rooftops', block: 'B', basemap: 'satellite', center: [36.9115, -1.2770], zoom: 15.2, mobileZoom: 14.6,
+    layers: [{ id: 'buildings', opacity: 1 }, { id: 'ward-labels', opacity: 1 }],
+    chip: 'January to March mornings, 2023 to 2026', legend: 'buildings',
+    card: {
+      title: 'Rooftops of Eastlands',
+      // 21 Nov (D62): moved into the children's story, paired with Karen at the same scale.
+      text: 'Weighted by where people live, the hottest wards include Kayole South, Dandora Area I and Kariobangi North.',
+      facts: [
+        ['Buildings in this view', '{{x.cover.views.eastlands.n_buildings|int}}, in and around {{x.cover.views.eastlands.ward|raw}}'],
+        ['On ground hotter than the city median', '{{x.cover.views.eastlands.share_hotter_than_median_pct|pct}} of them'],
+        ['Median surface temperature around them', '{{x.cover.views.eastlands.median_building_lst_c|c}}'],
+      ],
+      note: 'Each building shows the surface temperature of the area of about 100 m around it. Bare iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can read the surface as cooler than it is. Treat the surface temperature of these wards as a lower bound.',
+    },
+  },
+  {
+    id: 'rooftops-karen', block: 'B', basemap: 'satellite', center: [36.75694, -1.36556], zoom: 15.2, mobileZoom: 14.6,
+    layers: [{ id: 'buildings', opacity: 1 }, { id: 'ward-labels', opacity: 1 }],
+    chip: 'January to March mornings, 2023 to 2026', legend: 'buildings',
+    card: {
+      title: 'Rooftops of Karen',
+      // DRAFT 21 Nov (Claude), for Stephane to edit (D62).
+      text: 'The same scale and the same colours in Karen, the coolest ward: houses stand apart among trees and gardens, and the ground around almost all of them was cooler than the city median.',
+      facts: [
+        ['Buildings in this view', '{{x.cover.views.karen.n_buildings|int}}'],
+        ['On ground hotter than the city median', '{{x.cover.views.karen.share_hotter_than_median_pct|pct}} of them'],
+        ['Median surface temperature around them', '{{x.cover.views.karen.median_building_lst_c|c}}'],
+      ],
+    },
+  },
+  {
     id: 'schools', block: 'B', basemap: 'satellite', center: COUNTY, zoom: 10.6, mobileZoom: 9.6,
     layers: base([{ id: 'schools', opacity: 1 }]),
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
@@ -169,8 +200,9 @@ export const CHAPTERS = [
         ['On the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Kangemi.on_hottest_fifth|int}}'],
         ['Median surface temperature at its schools', '{{x.schools_trees_200m.by_ward.Kangemi.median_school_lst_c|c}}'],
         ['Median tree cover within 200 m of its schools', '{{x.schools_trees_200m.by_ward.Kangemi.median_tree_pct_200m|pct}}'],
+        ['Children aged 4 to 17 living in the ward', 'about {{x.wards_top5_census.wards.Kangemi.school_age_2019|int}} (2019 census estimate)'],
       ],
-      note: 'Kangemi has more schools on the hottest ground than any other ward.',
+      note: 'Kangemi has more schools on the hottest ground than any other ward. Children are the ward\'s 2019 census population times the share aged 4 to 17 in its census sub-county; the school map has no pupil numbers, so how many of them attend these schools is not known.',
     },
   },
   {
@@ -185,6 +217,7 @@ export const CHAPTERS = [
         ['On the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Viwandani.on_hottest_fifth|int}}'],
         ['Median surface temperature at its schools', '{{x.schools_trees_200m.by_ward.Viwandani.median_school_lst_c|c}}'],
         ['Median tree cover within 200 m of its schools', '{{x.schools_trees_200m.by_ward.Viwandani.median_tree_pct_200m|pct}}'],
+        ['Children aged 4 to 17 living in the ward', 'about {{x.wards_top5_census.wards.Viwandani.school_age_2019|int}} (2019 census estimate)'],
       ],
       note: 'Viwandani, beside the Industrial Area, has the highest share of its schools on the hottest ground.',
     },
@@ -201,6 +234,7 @@ export const CHAPTERS = [
         ['On the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Karen.on_hottest_fifth|int}}'],
         ['Median surface temperature at its schools', '{{x.schools_trees_200m.by_ward.Karen.median_school_lst_c|c}}'],
         ['Median tree cover within 200 m of its schools', '{{x.schools_trees_200m.by_ward.Karen.median_tree_pct_200m|pct}}'],
+        ['Children aged 4 to 17 living in the ward', 'about {{x.wards_top5_census.wards.Karen.school_age_2019|int}} (2019 census estimate)'],
       ],
       note: 'Karen has the coolest ground of any ward in the county.',
       link: ['#explore', 'Find the schools in your own ward below'],
@@ -224,20 +258,6 @@ export const CHAPTERS = [
         ['Bare ground', '{{q3.by_name.bare.share_pct|pct}}, {{q3.by_name.bare.median_c|c}}'],
       ],
       note: 'Median land surface temperature on clear January to March mornings, 2023 to 2026.',
-    },
-  },
-  {
-    id: 'rooftops', block: 'C', basemap: 'satellite', center: [36.9115, -1.2770], zoom: 15.2, mobileZoom: 14.6,
-    layers: [{ id: 'buildings', opacity: 1 }, { id: 'ward-labels', opacity: 1 }],
-    chip: 'January to March mornings, 2023 to 2026', legend: 'buildings',
-    card: {
-      title: 'Rooftops of Eastlands',
-      text: 'Weighted by where people live, the hottest wards include Kayole South, Dandora Area I and Kariobangi North.',
-      facts: [
-        ['Ten hottest wards by where people live', 'home to about {{q4.top10_total_pop|int}} people'],
-        ['Most tree cover in any of them', '{{q4.top10_max_tree_pct|pct}} of the land'],
-      ],
-      note: 'Each building shows the surface temperature of the area of about 100 m around it. Bare iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can read the surface as cooler than it is. Treat the surface temperature of these wards as a lower bound.',
     },
   },
   {

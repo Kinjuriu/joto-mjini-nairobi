@@ -1,11 +1,11 @@
-ward_name,group,census_2019,census_land_km2,ward_km2,people_per_km2,worldpop_2025,sublocations
-Kangemi,hot,62831,1.6,1.57,39900,11500,Kangemi Central
-Viwandani,hot,43070,5.0,5.71,7500,57100,Viwandani
-Kabiro,hot,36228,0.8,1.14,31800,40200,Kabiro
-Dandora Area I,hot,24409,0.6,0.59,41700,16200,Dandora I
-Baba Dogo,hot,20392,1.1,2.31,8800,40900,Baba Dogo
-Kileleshwa,cool,32513,9.2,9.04,3600,41800,Kileleshwa; Muthangari
-Mutu-ini,cool,22964,4.3,5.02,4600,58900,Gitiba; Mutuini
-Karura,cool,32439,38.3,36.97,900,80800,Karura; Muthaiga
-Kitisuru,cool,33659,20.6,21.3,1600,52500,Kitisuru; Kyuna; Loresho
-Karen,cool,35190,71.5,71.22,500,112800,Karen; Lenana; Hardy; Lang'ata
+ward_name,group,census_2019,census_land_km2,ward_km2,people_per_km2,worldpop_2025,school_age_2019,sublocations
+Kangemi,hot,62831,1.6,1.57,39900,11500,13800,Kangemi Central
+Viwandani,hot,43070,5.0,5.71,7500,57100,10100,Viwandani
+Kabiro,hot,36228,0.8,1.14,31800,40200,9300,Kabiro
+Dandora Area I,hot,24409,0.6,0.59,41700,16200,6800,Dandora I
+Baba Dogo,hot,20392,1.1,2.31,8800,40900,5100,Baba Dogo
+Kileleshwa,cool,32513,9.2,9.04,3600,41800,7100,Kileleshwa; Muthangari
+Mutu-ini,cool,22964,4.3,5.02,4600,58900,5900,Gitiba; Mutuini
+Karura,cool,32439,38.3,36.97,900,80800,7100,Karura; Muthaiga
+Kitisuru,cool,33659,20.6,21.3,1600,52500,7400,Kitisuru; Kyuna; Loresho
+Karen,cool,35190,71.5,71.22,500,112800,8200,Karen; Lenana; Hardy; Lang'ata

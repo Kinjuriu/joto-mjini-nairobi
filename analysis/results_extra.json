@@ -961,56 +961,118 @@
       "Kangemi": {
         "census_2019": 62831,
         "km2": 1.57,
-        "people_per_km2": 39900
+        "people_per_km2": 39900,
+        "school_age_2019": 13800
       },
       "Viwandani": {
         "census_2019": 43070,
         "km2": 5.71,
-        "people_per_km2": 7500
+        "people_per_km2": 7500,
+        "school_age_2019": 10100
       },
       "Kabiro": {
         "census_2019": 36228,
         "km2": 1.14,
-        "people_per_km2": 31800
+        "people_per_km2": 31800,
+        "school_age_2019": 9300
       },
       "Dandora Area I": {
         "census_2019": 24409,
         "km2": 0.59,
-        "people_per_km2": 41700
+        "people_per_km2": 41700,
+        "school_age_2019": 6800
       },
       "Baba Dogo": {
         "census_2019": 20392,
         "km2": 2.31,
-        "people_per_km2": 8800
+        "people_per_km2": 8800,
+        "school_age_2019": 5100
       },
       "Kileleshwa": {
         "census_2019": 32513,
         "km2": 9.04,
-        "people_per_km2": 3600
+        "people_per_km2": 3600,
+        "school_age_2019": 7100
       },
       "Mutu-ini": {
         "census_2019": 22964,
         "km2": 5.02,
-        "people_per_km2": 4600
+        "people_per_km2": 4600,
+        "school_age_2019": 5900
       },
       "Karura": {
         "census_2019": 32439,
         "km2": 36.97,
-        "people_per_km2": 900
+        "people_per_km2": 900,
+        "school_age_2019": 7100
       },
       "Kitisuru": {
         "census_2019": 33659,
         "km2": 21.3,
-        "people_per_km2": 1600
+        "people_per_km2": 1600,
+        "school_age_2019": 7400
       },
       "Karen": {
         "census_2019": 35190,
         "km2": 71.22,
-        "people_per_km2": 500
+        "people_per_km2": 500,
+        "school_age_2019": 8200
       }
     },
     "density_ratio": 15.0,
     "area_ratio": 12.7,
     "max_area_mismatch_pct": 52.4
+  },
+  "cover": {
+    "panel_m": 1200.0,
+    "wards": {
+      "Kangemi": {
+        "centre_lonlat": [
+          36.75576,
+          -1.27037
+        ],
+        "n_buildings": 5510,
+        "median_building_lst_c": 41.6,
+        "median_building_diff_c": 2.9
+      },
+      "Karen": {
+        "centre_lonlat": [
+          36.75694,
+          -1.36556
+        ],
+        "n_buildings": 1225,
+        "median_building_lst_c": 35.7,
+        "median_building_diff_c": -3.0
+      }
+    },
+    "views": {
+      "eastlands": {
+        "centre_lonlat": [
+          36.9115,
+          -1.277
+        ],
+        "ward": "Kayole South",
+        "census_subcounty": "Embakasi",
+        "n_buildings": 7602,
+        "median_building_lst_c": 40.9,
+        "median_building_diff_c": 2.3,
+        "share_hotter_than_median_pct": 99.9,
+        "iron_sheet_households_pct": 38.0
+      },
+      "karen": {
+        "centre_lonlat": [
+          36.75694,
+          -1.36556
+        ],
+        "ward": "Karen",
+        "census_subcounty": "Lang'ata",
+        "n_buildings": 1223,
+        "median_building_lst_c": 35.7,
+        "median_building_diff_c": -3.0,
+        "share_hotter_than_median_pct": 1.4,
+        "iron_sheet_households_pct": 44.0
+      }
+    },
+    "note": "Buildings coloured by hot-season LST of the surrounding 100 m, difference from the county median; Sentinel-2 2026 underneath (D62)"
   }
 }

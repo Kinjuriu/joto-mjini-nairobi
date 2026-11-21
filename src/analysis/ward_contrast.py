@@ -55,14 +55,21 @@ def main() -> dict:
     sub = pd.read_csv(SUB)
     sub = sub[sub.county == "NAIROBI CITY"]
     w = gpd.read_file(WARDS)[["ward_name", "area_km2", "pop_total"]].set_index("ward_name")
+    from src.analysis.children_heat import age_shares
+    shares = age_shares()
+    child_share = shares.loc[:, [a for a in shares.columns if 4 <= a <= 17]].sum(axis=1)
+    sub_of = sub.groupby("name").subcounty.first()
     rows = []
     for ward, names in MATCH.items():
         d = sub[sub.name.isin(names)]
         assert len(d) == len(names), (ward, names, d.name.tolist())
         pop = int(d.total.sum())
+        # children aged 4 to 17: the census population times its census sub-county's share at those ages (D62)
+        kids = float(sum(r.total * child_share[r.subcounty] for r in d.itertuples()))
         rows.append(dict(ward_name=ward, group="hot" if ward in hot else "cool", census_2019=pop,
                          census_land_km2=round(float(d.land_area_km2.sum()), 1), ward_km2=round(float(w.loc[ward, "area_km2"]), 2),
                          people_per_km2=int(round(pop / w.loc[ward, "area_km2"], -2)), worldpop_2025=int(round(w.loc[ward, "pop_total"], -2)),
+                         school_age_2019=int(round(kids, -2)),
                          sublocations="; ".join(n.title().replace("'A", "'a") for n in names)))
     t = pd.DataFrame(rows)
     assert set(t.ward_name) == set(hot) | set(cool)
@@ -76,7 +83,8 @@ def main() -> dict:
                     worldpop_2025=int(round(d.worldpop_2025.sum(), -3)))
     res = dict(source="KNBS 2019 census, Volume II table 2.4, sub-locations matched to wards by name and land area (D61)",
                hot=grp("hot"), cool=grp("cool"),
-               wards={r.ward_name: dict(census_2019=int(r.census_2019), km2=float(r.ward_km2), people_per_km2=int(r.people_per_km2))
+               wards={r.ward_name: dict(census_2019=int(r.census_2019), km2=float(r.ward_km2), people_per_km2=int(r.people_per_km2),
+                                         school_age_2019=int(r.school_age_2019))
                       for r in t.itertuples()})
     res["density_ratio"] = round(res["hot"]["people_per_km2"] / res["cool"]["people_per_km2"], 1)
     res["area_ratio"] = round(res["cool"]["km2"] / res["hot"]["km2"], 1)
