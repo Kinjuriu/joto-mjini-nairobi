@@ -29,7 +29,7 @@ const FONT_BOLD = ['DIN Pro Bold', 'Arial Unicode MS Bold'];
 const HIDE = ['poi-label', 'transit-label', 'airport-label', 'natural-point-label', 'water-point-label'];
 
 // Default stacking of our data layers, bottom to top (all beneath the basemap labels).
-export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'population-dense', 'growth-1990-2020',
+export const DEFAULT_ORDER = ['s2-true', 's2-false', 'landcover', 'trees', 'population', 'population-dense', 'population-hot', 'growth-1990-2020',
   'ghsl-1975', 'ghsl-1990', 'ghsl-2000', 'ghsl-2010', 'ghsl-2020', 'ghsl-2025',
   'heat-cool-abs', 'heat-cool-season', 'heat-hottest-day', 'heat-abs', 'heat-diff', 'wards-fill', 'buildings',
   'ward-groups', 'ward-dim', 'forest-mask', 'county-mask', 'wards-line', 'county-line', 'schools', 'forests'];
@@ -330,6 +330,7 @@ export class MapController {
     this.setGroups(ch.groups || null);
     this.setLayers(ch.layers || [], quick ? 0 : FADE_MS);
     this.setLabelFilter(ch.labelWards || null);
+    this.setLabelText(ch.labelTexts || null);
     for (const id of ch.top || []) {   // chapter-specific stacking, for example tree cover above the ward groups
       const sp = this.specs.get(id);
       const before = this.map.getLayer('ward-dim') ? 'ward-dim' : this.firstSymbolId();
@@ -363,6 +364,26 @@ export class MapController {
       if (HIDE.some((h) => l.id.startsWith(h))) continue;
       this.map.setLayoutProperty(l.id, 'visibility', on ? 'none' : 'visible');
     }
+  }
+
+  /** Ward labels with a second line (texts: {ward_name: 'line two'}), or plain names (null). D61. */
+  setLabelText(texts) {
+    const sp = this.specs.get('ward-labels');
+    if (!sp) return;
+    const plain = !texts;
+    const field = plain ? ['get', 'ward_name']
+      : ['match', ['get', 'ward_name'],
+        ...Object.entries(texts).flatMap(([n, t]) => [n, ['format', n.toUpperCase(), {}, `\n${t}`, { 'font-scale': 0.82 }]]),
+        ['upcase', ['get', 'ward_name']]];
+    sp.layers.forEach((l) => {
+      l.layout['text-field'] = field;
+      l.layout['text-transform'] = plain ? 'uppercase' : 'none';
+      l.layout['text-variable-anchor'] = plain ? ['center'] : ['center', 'top', 'bottom', 'left', 'right'];
+      l.layout['text-radial-offset'] = plain ? 0 : 0.6;
+      if (this.map.getLayer(l.id)) {
+        for (const k of ['text-field', 'text-transform', 'text-variable-anchor', 'text-radial-offset']) this.map.setLayoutProperty(l.id, k, l.layout[k]);
+      }
+    });
   }
 
   /** Show only these ward names (null: all). */

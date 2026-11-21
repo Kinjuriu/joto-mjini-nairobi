@@ -940,5 +940,77 @@
         "median_tree_pct_200m": 1.2
       }
     }
+  },
+  "wards_top5_census": {
+    "source": "KNBS 2019 census, Volume II table 2.4, sub-locations matched to wards by name and land area (D61)",
+    "hot": {
+      "people": 186930,
+      "people_rounded": 187000,
+      "km2": 11.3,
+      "people_per_km2": 16500,
+      "worldpop_2025": 166000
+    },
+    "cool": {
+      "people": 156765,
+      "people_rounded": 157000,
+      "km2": 143.6,
+      "people_per_km2": 1100,
+      "worldpop_2025": 347000
+    },
+    "wards": {
+      "Kangemi": {
+        "census_2019": 62831,
+        "km2": 1.57,
+        "people_per_km2": 39900
+      },
+      "Viwandani": {
+        "census_2019": 43070,
+        "km2": 5.71,
+        "people_per_km2": 7500
+      },
+      "Kabiro": {
+        "census_2019": 36228,
+        "km2": 1.14,
+        "people_per_km2": 31800
+      },
+      "Dandora Area I": {
+        "census_2019": 24409,
+        "km2": 0.59,
+        "people_per_km2": 41700
+      },
+      "Baba Dogo": {
+        "census_2019": 20392,
+        "km2": 2.31,
+        "people_per_km2": 8800
+      },
+      "Kileleshwa": {
+        "census_2019": 32513,
+        "km2": 9.04,
+        "people_per_km2": 3600
+      },
+      "Mutu-ini": {
+        "census_2019": 22964,
+        "km2": 5.02,
+        "people_per_km2": 4600
+      },
+      "Karura": {
+        "census_2019": 32439,
+        "km2": 36.97,
+        "people_per_km2": 900
+      },
+      "Kitisuru": {
+        "census_2019": 33659,
+        "km2": 21.3,
+        "people_per_km2": 1600
+      },
+      "Karen": {
+        "census_2019": 35190,
+        "km2": 71.22,
+        "people_per_km2": 500
+      }
+    },
+    "density_ratio": 15.0,
+    "area_ratio": 12.7,
+    "max_area_mismatch_pct": 52.4
   }
 }

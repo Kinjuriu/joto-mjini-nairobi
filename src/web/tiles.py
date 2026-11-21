@@ -51,6 +51,7 @@ DIFF_LABELS = ["−6 or cooler", "−6 to −4", "−4 to −2", "−2 to −0.5
 YLORBR = ["#FFF7D6", "#FEE391", "#FEC44F", "#FB9A29", "#EC7014", "#CC4C02", "#8C2D04"]
 GREENS = ["#D9EBC7", "#9CC98A", "#5A9E5C", "#2E6B3F"]
 PURPLES = ["#F2F0F7", "#CBC9E2", "#9E9AC8", "#756BB1", "#54278F"]
+HOT_POP = ["#D6C4FA", "#8A2BE2"]   # pale lavender and vivid violet: distinct from each other and from dark imagery (D61)
 WC = {10: ("Tree cover", "#2E6B3F"), 20: ("Shrubland", "#8FB573"), 30: ("Grassland", "#E3D9A0"),
       40: ("Cropland", "#D8A657"), 50: ("Built-up", "#C8423A"), 60: ("Bare or sparse", "#B9B0A2"),
       80: ("Water", "#3E6FA8"), 90: ("Wetland", "#6FA9A8")}
@@ -267,6 +268,7 @@ def build_layers() -> list[RasterLayer]:
     pv = dens[cm & np.isfinite(dens) & (dens > 0)]
     pop_breaks = [0.0] + [float(round(v, -2)) for v in np.percentile(pv, [20, 40, 60, 80])]
     pop_floor = 100.0   # people per km2; lighter than that stays transparent so the basemap shows through
+    hot_p80 = float(np.percentile(hot_vals, 80))   # the q4 hottest-fifth threshold
 
     def diff(median):
         return lambda a, v: classify(a[0] - median, DIFF_BREAKS, DIFF_COLOURS, v)
@@ -369,6 +371,23 @@ def build_layers() -> list[RasterLayer]:
                                 "highest fifths of populated cells. A modelled estimate that may undercount the "
                                 "densest settlements.",
                     source_line="WorldPop 2025, constrained, R2025A (CC BY 4.0)", chip="2025 estimate"),
+        # Story chapter "Who lives on the hottest ground" (21 November 2026, D61): people only where the ground is
+        # on the hottest fifth of the county (hot-season LST at or above the county 80th percentile, as q4), so
+        # the map shows the same people the card counts. Three density classes with stronger contrast.
+        RasterLayer("population-hot", "People on the hottest fifth of the land",
+                    [Source(dens_path), Source(RASTERS / "lst_hot_season_median.tif")],
+                    lambda a, v: classify_from(a[0], [pop_breaks[3], pop_breaks[4]], HOT_POP,
+                                               v & np.isfinite(a[1]) & (a[1] >= hot_p80) & np.isfinite(a[0])),
+                    legend=dict(type="classes", unit="people per km²",
+                                note=f"Only the hottest fifth of the county's ground (surface {hot_p80:.1f} °C or more on hot mornings) where at least {int(pop_breaks[3]):,} people live per km²",
+                                classes=[dict(color=HOT_POP[0], label=f"{int(pop_breaks[3]):,} to {int(pop_breaks[4]):,}"),
+                                         dict(color=HOT_POP[1], label=f"{int(pop_breaks[4]):,} or more")]),
+                    description="The crowded places on the hottest fifth of Nairobi County's land: WorldPop 2025 people per "
+                                "km² (the two densest fifths of populated cells), shown only where the hot-season surface "
+                                "temperature is at or above the county's 80th percentile. Thinly settled hot ground, such as the "
+                                "open land around Ruai, is left clear. A modelled estimate that may undercount the densest settlements.",
+                    source_line="WorldPop 2025, constrained, R2025A (CC BY 4.0); Landsat 8 and 9 (USGS); analysis: Joto Mjini Nairobi",
+                    chip="2025 estimate, hot-season mornings 2023 to 2026"),
         RasterLayer("growth-1990-2020", "Built-up land, 1990 and 2020",
                     [Source(RASTERS / "ghsl_built_1990.tif"), Source(RASTERS / "ghsl_built_2020.tif")], growth,
                     legend=dict(type="categorical", unit="", note="A cell counts as built-up from 25 % built surface",

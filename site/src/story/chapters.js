@@ -102,6 +102,7 @@ export const CHAPTERS = [
     layers: base([{ id: 'ward-groups', opacity: 1 }, { id: 'trees', opacity: 0.95 }, { id: 'ward-dim', opacity: 1 },
       { id: 'wards-line', opacity: 1 }, { id: 'ward-labels', opacity: 1 }]),
     groups: { hot: HOT5, cool: COOL5 }, labelWards: [...HOT5, ...COOL5], top: ['trees'],
+    labelText: 'census',   // ward labels carry the 2019 census count and the ward's area (D61)
     chip: 'January to March mornings, 2023 to 2026', legend: 'trees',
     legendTitle: 'Green: tree cover. Red: the five hottest wards where people live; blue: the five coolest',
     card: {
@@ -109,9 +110,11 @@ export const CHAPTERS = [
       facts: [
         ['Five hottest wards, where people live', '{{x.wards_top5.hot_lst_c|c}}, tree cover {{x.wards_top5.hot_tree_pct|pct0}}'],
         ['Five coolest wards', '{{x.wards_top5.cool_lst_c|c}}, tree cover {{x.wards_top5.cool_tree_pct|pct0}}'],
-        ['Difference', '{{x.wards_top5.gap_c|c}}'],
+        ['People in the five hottest wards', 'about {{x.wards_top5_census.hot.people_rounded|int}} on {{x.wards_top5_census.hot.km2|d1}} km², {{x.wards_top5_census.hot.people_per_km2|int}} per km²'],
+        ['People in the five coolest wards', 'about {{x.wards_top5_census.cool.people_rounded|int}} on {{x.wards_top5_census.cool.km2|d1}} km², {{x.wards_top5_census.cool.people_per_km2|int}} per km²'],
       ],
-      note: 'Red outlines: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo. Blue: Kileleshwa, Mutu-ini, Karura, Kitisuru, Karen.',
+      // DRAFT 21 Nov (Claude), for Stephane to edit (D61).
+      note: 'The five hottest wards hold more people than the five coolest on less than a twelfth of the land. People from the 2019 census, for the census areas that match each ward; the map labels give each ward\'s count. Red: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo. Blue: Kileleshwa, Mutu-ini, Karura, Kitisuru, Karen.',
       link: ['#explore', 'Find your own ward below'],
     },
   },
@@ -123,9 +126,10 @@ export const CHAPTERS = [
     id: 'people', block: 'B', basemap: 'satellite', center: [36.855, -1.285], zoom: 11.2, mobileZoom: 10.2,
     // Only the densest places are coloured, over the plain satellite image; the ten hottest wards where people
     // live are named (Stephane, 17 November 2026; replaces the dimmed map of 14 November).
-    layers: base([{ id: 'population-dense', opacity: 0.85 }, { id: 'wards-line', opacity: 0.6 }, { id: 'ward-labels', opacity: 1 }]),
+    // 21 Nov (D61): only the crowded places on the hottest fifth, so the map shows the people the card counts.
+    layers: base([{ id: 'population-hot', opacity: 0.9 }, { id: 'wards-line', opacity: 0.6 }, { id: 'ward-labels', opacity: 1 }]),
     labelWards: TOP10, quiet: true,
-    chip: '2025 estimate', legend: 'population-dense',
+    chip: '2025 estimate, hot-season mornings 2023 to 2026', legend: 'population-hot',
     card: {
       title: 'Who lives on the hottest ground',
       facts: [
@@ -133,7 +137,7 @@ export const CHAPTERS = [
         ['Share of the county\'s people', '{{q4.pop_share_in_hottest20_pct|pct}}'],
         ['Hottest fifth means', 'surface above {{q4.hottest20_threshold_c|c}} on hot mornings'],
       ],
-      note: 'Population from WorldPop 2025, a modelled estimate that may undercount the densest settlements.',
+      note: 'Purple marks the crowded places on that hottest ground; thinly settled hot land, such as the open ground around Ruai, is left clear. Population from WorldPop 2025, a modelled estimate that may undercount the densest settlements.',
     },
   },
   {

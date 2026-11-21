@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-17 20:57",
- "total_size_mb": 172.3,
+ "generated": "2026-11-21 19:30",
+ "total_size_mb": 173.1,
  "layers": {
   "heat-diff": {
    "id": "heat-diff",
@@ -929,6 +929,41 @@
    "chip": "2025 estimate",
    "n_tiles": 1547,
    "size_mb": 1.2
+  },
+  "population-hot": {
+   "id": "population-hot",
+   "kind": "raster",
+   "title": "People on the hottest fifth of the land",
+   "tiles": "tiles/population-hot/{z}/{x}/{y}.webp",
+   "minzoom": 9,
+   "maxzoom": 15,
+   "bounds": [
+    36.65987,
+    -1.44406,
+    37.10452,
+    -1.16011
+   ],
+   "resampling": "linear",
+   "legend": {
+    "type": "classes",
+    "unit": "people per km²",
+    "note": "Only the hottest fifth of the county's ground (surface 41.6 °C or more on hot mornings) where at least 7,500 people live per km²",
+    "classes": [
+     {
+      "color": "#D6C4FA",
+      "label": "7,500 to 19,100"
+     },
+     {
+      "color": "#8A2BE2",
+      "label": "19,100 or more"
+     }
+    ]
+   },
+   "description": "The crowded places on the hottest fifth of Nairobi County's land: WorldPop 2025 people per km² (the two densest fifths of populated cells), shown only where the hot-season surface temperature is at or above the county's 80th percentile. Thinly settled hot ground, such as the open land around Ruai, is left clear. A modelled estimate that may undercount the densest settlements.",
+   "source": "WorldPop 2025, constrained, R2025A (CC BY 4.0); Landsat 8 and 9 (USGS); analysis: Joto Mjini Nairobi",
+   "chip": "2025 estimate, hot-season mornings 2023 to 2026",
+   "n_tiles": 1547,
+   "size_mb": 0.8
   }
  }
 }
