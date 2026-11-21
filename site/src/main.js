@@ -8,14 +8,6 @@ import './styles.css';
 import './map/map.css';
 import './story/story.css';
 
-// Cover look (21 Nov, D64): ?cover=blur, ?cover=photo or ?cover=sharp previews the three options.
-const coverLook = new URLSearchParams(window.location.search).get('cover');
-const hero = document.querySelector('.hero');
-if (hero && ['blur', 'photo', 'sharp'].includes(coverLook)) {
-  hero.classList.remove('hero--blur', 'hero--photo', 'hero--sharp');
-  hero.classList.add(`hero--${coverLook}`);
-}
-
 // Thin, static reading progress bar (the one allowed exception in DESIGN_RULES.md).
 const bar = document.querySelector('.progress__bar');
 const updateProgress = () => {

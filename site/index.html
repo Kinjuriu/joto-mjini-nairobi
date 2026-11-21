@@ -27,15 +27,10 @@
       <a href="methods.html">Resources</a>
     </nav>
   </header>
-  <!-- Cover (21 Nov, D64): one screen, the two rooftop squares behind the title. Three looks to choose from:
-       blur (our rooftop render, blurred), photo (Maxar aerial photos, blurred), sharp (our render, not blurred).
-       Preview with ?cover=blur, ?cover=photo or ?cover=sharp; the class on the header below is the default. -->
-  <header class="hero hero--blur" id="cover" aria-labelledby="hero-title">
-    <div class="hero__bg hero__bg--render" aria-hidden="true">
+  <!-- Cover (21 Nov, D64): one screen, the two rooftop squares, sharp, behind the title (Stephane chose this look). -->
+  <header class="hero" id="cover" aria-labelledby="hero-title">
+    <div class="hero__bg" aria-hidden="true">
       <img src="figures/cover_rooftops.webp" width="2400" height="1200" alt="" fetchpriority="high">
-    </div>
-    <div class="hero__bg hero__bg--photo" aria-hidden="true">
-      <img src="figures/cover_aerial_kangemi.jpg" alt="" loading="lazy"><img src="figures/cover_aerial_karen.jpg" alt="" loading="lazy">
     </div>
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="hero__text">
@@ -48,7 +43,7 @@
     <div class="hero__foot">
     <p class="hero__note"><span class="hero__side">Left: </span>Kangemi, Nairobi's hottest ward where people live</p>
     <p class="hero__note"><span class="hero__side">Right: </span>Karen, Nairobi's coolest ward</p>
-    <p class="hero__credit"><span class="for-render">Two squares 800 m across, at the same scale. Buildings from Overture Maps (ODbL), coloured by Landsat 8 and 9 ground temperature (USGS) on hot mornings: orange hotter and blue cooler than the city median; trees from ESA WorldCover 2021.</span><span class="for-photo">Two squares 800 m across, at the same scale. Imagery: Maxar, Nairobi mosaic 2019, via OpenAerialMap (CC BY-NC 4.0).</span></p>
+    <p class="hero__credit">Kangemi's square is 800 m across and Karen's 1.2 km across. Buildings from Overture Maps (ODbL), coloured by Landsat 8 and 9 ground temperature (USGS) on hot mornings: orange hotter and blue cooler than the city median; trees from ESA WorldCover 2021.</p>
     </div>
   </header>
 </div>
