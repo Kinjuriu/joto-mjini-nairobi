@@ -29,6 +29,9 @@ def landsat() -> None:
         return
     im = Image.open(src).convert("RGBA")
     a = np.asarray(im).astype(float)
+    # NASA's picture carries the Landsat 9 mission logo in its top-left corner; blank it so only the satellite stays.
+    h, w = a.shape[:2]
+    a[: int(h * 0.40), : int(w * 0.18), :3] = 0
     light = a[..., :3].max(axis=2)
     alpha = np.clip((light - 18) / 30, 0, 1) * 255          # near-black background fades to transparent
     a[..., 3] = np.minimum(a[..., 3], alpha)

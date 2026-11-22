@@ -28,17 +28,18 @@ export async function schoolDay(el) {
     svg.append('rect').attr('x', x(8)).attr('y', bandY).attr('width', x(15.5) - x(8)).attr('height', bandH).attr('fill', '#79C1E9').attr('fill-opacity', 0.55);
     svg.append('text').attr('class', 'label-strong').attr('x', x(8) + 8).attr('y', bandY + 25).text(narrow ? 'Class hours' : 'Class hours, 08:00 to 15:30');
     svg.append('rect').attr('x', x(15.5)).attr('y', bandY).attr('width', x(16.75) - x(15.5)).attr('height', bandH).attr('fill', '#79C1E9').attr('fill-opacity', 0.22);
-    svg.append('text').attr('x', x(15.5) + 4).attr('y', bandY + bandH + 16).text(narrow ? 'Games, clubs' : 'Games and clubs to 16:45');
+    svg.append('text').attr('x', x(16.75)).attr('y', bandY + bandH + 16).attr('text-anchor', 'end').text(narrow ? 'Games, clubs' : 'Games and clubs to 16:45');
     // earliest reporting
     svg.append('line').attr('x1', x(7.25)).attr('x2', x(7.25)).attr('y1', bandY).attr('y2', bandY + bandH).attr('stroke', '#1C2530').attr('stroke-width', 2);
     svg.append('text').attr('x', narrow ? x(7.25) - 4 : x(7.25)).attr('y', bandY + bandH + 16).attr('text-anchor', narrow ? 'start' : 'middle').text('07:15 earliest arrival');
     // Landsat pass, with the small Landsat 9 picture
     const ls = 10 + 43 / 60;
-    svg.append('line').attr('x1', x(ls)).attr('x2', x(ls)).attr('y1', narrow ? 58 : 44).attr('y2', bandY + bandH).attr('stroke', '#1C2530').attr('stroke-dasharray', '3 3');
-    const sat = narrow ? 36 : 44;
-    svg.append('image').attr('href', abs('figures/landsat9.png')).attr('x', x(ls) - sat / 2).attr('y', (narrow ? 58 : 44) - sat * 0.8 - 2)
-      .attr('width', sat).attr('height', sat * 0.8).attr('preserveAspectRatio', 'xMidYMid meet').on('error', function () { select(this).remove(); });
-    svg.append('text').attr('x', x(ls) - 6).attr('y', narrow ? 50 : 62).attr('text-anchor', 'end').text(narrow ? 'Landsat 10:43' : 'Landsat, about 10:43');
+    const top = narrow ? 50 : 50;
+    svg.append('line').attr('x1', x(ls)).attr('x2', x(ls)).attr('y1', top).attr('y2', bandY + bandH).attr('stroke', '#1C2530').attr('stroke-dasharray', '3 3');
+    const sat = narrow ? 44 : 56;
+    svg.append('image').attr('href', abs('figures/landsat9.png')).attr('x', x(ls) - sat / 2).attr('y', top - sat * 0.57 - 4)
+      .attr('width', sat).attr('height', sat * 0.57).attr('preserveAspectRatio', 'xMidYMid meet').on('error', function () { select(this).remove(); });
+    svg.append('text').attr('x', x(ls) - 6).attr('y', top + 16).attr('text-anchor', 'end').text(narrow ? 'Landsat 10:43' : 'Landsat, about 10:43');
     // hottest hour
     svg.append('line').attr('x1', x(peakH)).attr('x2', x(peakH)).attr('y1', narrow ? 84 : 70).attr('y2', bandY + bandH).attr('stroke', '#A1201A').attr('stroke-width', 2.5);
     svg.append('circle').attr('cx', x(peakH)).attr('cy', narrow ? 84 : 70).attr('r', 5).attr('fill', '#A1201A');
