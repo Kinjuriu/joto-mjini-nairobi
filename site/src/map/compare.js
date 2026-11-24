@@ -3,7 +3,7 @@
 // (role="slider"). Used by interlude 1 and by the explorer's Compare mode.
 import { createMap } from './createMap.js';
 
-export async function createCompare(container, { left, right, labels = ['', ''], start = 50, mapOpts = {}, onMove } = {}) {
+export async function createCompare(container, { left, right, labels = ['', ''], start = 50, mapOpts = {}, onMove, hint } = {}) {
   container.classList.add('compare');
   const a = Object.assign(document.createElement('div'), { className: 'compare__map compare__map--left' });
   const b = Object.assign(document.createElement('div'), { className: 'compare__map compare__map--right' });
@@ -39,14 +39,25 @@ export async function createCompare(container, { left, right, labels = ['', ''],
   handle.setAttribute('aria-label', `Swipe between ${labels[0]} (left) and ${labels[1]} (right)`);
   handle.setAttribute('aria-valuemin', '0');
   handle.setAttribute('aria-valuemax', '100');
-  handle.innerHTML = '<span class="compare__grip" aria-hidden="true"></span>';
+  // A visible grip with arrows both ways, so readers see the line can be dragged (22 Nov: a first-time reader
+  // did not find it). Static arrows; nothing moves until the reader moves it.
+  handle.innerHTML = '<span class="compare__grip" aria-hidden="true"><svg viewBox="0 0 40 20" width="40" height="20">'
+    + '<path d="M3 10 L11 4 L11 16 Z M37 10 L29 4 L29 16 Z" fill="currentColor"/><rect x="18" y="3" width="1.6" height="14" fill="currentColor"/><rect x="21" y="3" width="1.6" height="14" fill="currentColor"/></svg></span>';
   container.append(handle);
+  // Optional hint beside the grip; it goes away after the first drag or key press.
+  let hintEl = null;
+  if (hint) {
+    hintEl = Object.assign(document.createElement('p'), { className: 'compare__hint', textContent: hint });
+    container.append(hintEl);
+  }
+  const dropHint = () => { if (hintEl) { hintEl.remove(); hintEl = null; } };
 
   let pos = start;
   const set = (p) => {
     pos = Math.max(0, Math.min(100, p));
     b.style.clipPath = `inset(0 0 0 ${pos}%)`;
     handle.style.left = `${pos}%`;
+    if (hintEl) hintEl.style.left = `${pos}%`;
     handle.setAttribute('aria-valuenow', String(Math.round(pos)));
     handle.setAttribute('aria-valuetext', `${Math.round(pos)} % of the width shows ${labels[0]}`);
     if (onMove) onMove(pos);
@@ -57,6 +68,7 @@ export async function createCompare(container, { left, right, labels = ['', ''],
     return ((e.clientX - r.left) / r.width) * 100;
   };
   handle.addEventListener('pointerdown', (e) => {
+    dropHint();
     handle.setPointerCapture(e.pointerId);
     const move = (ev) => set(fromEvent(ev));
     const up = () => { handle.removeEventListener('pointermove', move); handle.removeEventListener('pointerup', up); };
@@ -65,6 +77,7 @@ export async function createCompare(container, { left, right, labels = ['', ''],
     e.preventDefault();
   });
   handle.addEventListener('keydown', (e) => {
+    if (e.key.startsWith('Arrow') || e.key === 'Home' || e.key === 'End') dropHint();
     const step = e.shiftKey ? 10 : 2;
     if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') set(pos - step);
     else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') set(pos + step);

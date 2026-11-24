@@ -20,7 +20,7 @@ export async function dayHeat(el) {
   let idx = 6;
   const draw = (width) => {
     select(el).select('svg').remove();
-    const m = { top: 24, right: 150, bottom: 34, left: 40 };
+    const m = { top: 52, right: 150, bottom: 34, left: 40 };
     const narrow = width < 560;
     if (narrow) m.right = 16;
     const height = Math.round(Math.max(280, Math.min(380, width * 0.45)));
@@ -39,6 +39,12 @@ export async function dayHeat(el) {
     svg.append('line').attr('x1', xh(10 + 43 / 60)).attr('x2', xh(10 + 43 / 60)).attr('y1', m.top + 22).attr('y2', height - m.bottom)
       .attr('stroke', '#1C2530').attr('stroke-dasharray', '3 3');
     svg.append('text').attr('x', xh(10 + 43 / 60) + 5).attr('y', height - m.bottom - 8).text(narrow ? 'Landsat' : 'Landsat passes, about 10:43');
+    // A small picture of Landsat 9 at the top of its line (22 Nov, Stephane). NASA image, public domain; it draws
+    // nothing until site/public/figures/landsat9.png exists.
+    const sat = narrow ? 34 : 46;
+    svg.append('image').attr('href', abs('figures/landsat9.png')).attr('class', 'sat-icon')
+      .attr('x', xh(10 + 43 / 60) - sat / 2).attr('y', m.top + 22 - sat * 0.8).attr('width', sat).attr('height', sat * 0.8)
+      .attr('preserveAspectRatio', 'xMidYMid meet').on('error', function () { select(this).remove(); });
     svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.left},0)`)
       .call(axisLeft(y).ticks(6).tickSize(-(width - m.left - m.right)).tickFormat((v) => `${v}°`));
     svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${height - m.bottom})`)

@@ -88,11 +88,12 @@ export default defineConfig({
         layers: resolve(import.meta.dirname, 'layers.html'),
         slides: resolve(import.meta.dirname, 'slides.html'),
         methods: resolve(import.meta.dirname, 'methods.html'),
+        story: resolve(import.meta.dirname, 'story.html'),
       },
     },
   },
   // The v1 site in _v1/ is kept for reference only; do not scan it for dependencies.
-  optimizeDeps: { entries: ['index.html', 'layers.html', 'slides.html', 'methods.html'] },
+  optimizeDeps: { entries: ['index.html', 'layers.html', 'slides.html', 'methods.html', 'story.html'] },
   server: { port: 5173 },
   preview: { port: 4173 },
 });

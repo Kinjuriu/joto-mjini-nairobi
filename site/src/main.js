@@ -45,6 +45,7 @@ whenNear(document.getElementById('season-compare'), async (el) => {
     left: { ...view, basemap: 'satellite', layers: [{ id: 'county-line', opacity: 1 }, { id: 'places', opacity: 1 }] },
     right: { ...view, basemap: 'satellite', layers: [{ id: 'heat-diff', opacity: 0.85 }, { id: 'county-line', opacity: 1 }, { id: 'places', opacity: 1 }] },
     labels: ['Satellite image', 'Surface temperature'],
+    hint: 'Drag the white line left and right',
   });
   new LegendCard(el, cmp.right.manifest).show('heat-diff', { title: 'Right side: difference from the city median, °C' });
   window.__compare = cmp;
@@ -63,6 +64,7 @@ const charts = {
   'people-heat': async (el) => (await import('./charts/children.js')).peopleByHeat(el),
   'children-level': async (el) => (await import('./charts/children.js')).childrenByLevel(el),
   'schools-trees': async (el) => (await import('./charts/children.js')).schoolsTrees(el),
+  'school-day': async (el) => (await import('./charts/schoolday.js')).schoolDay(el),
 };
 document.querySelectorAll('[data-chart]').forEach((el) => whenNear(el, charts[el.dataset.chart] || (async () => {})));
 

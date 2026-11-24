@@ -45,7 +45,6 @@
 
 /* Compare maps fill their frame */
 .compare > .compare__map { position: absolute; inset: 0; }
-.compare__grip { display: none; }
 
 /* Explorer placeholder spacing until chunk 5 */
 .explorer { padding: 40px 0; background: var(--paper); }
@@ -125,7 +124,7 @@
 .ward-blocks img { width: 100%; height: auto; border: 1px solid var(--rule); }
 
 /* Story opening, written by Stephane. */
-.story-lede { margin: 28px 0 22px; padding-top: 16px; border-top: 3px solid var(--brand); }
+.story-lede { margin: 28px 0 22px; }
 .story-lede__title { font-family: var(--sans); font-size: 26px; margin: 0 0 10px; }
 
 /* Resources */

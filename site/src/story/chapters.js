@@ -27,7 +27,7 @@ export const CHAPTERS = [
     card: {
       title: 'Nairobi from space',
       // DRAFT 16 Nov (Claude), for Stephane to edit.
-      text: 'This is Nairobi County from space, in a cloud-free picture made by joining many passes of the European Sentinel-2 satellites; the white line is the county boundary.',
+      text: 'Nairobi County from space, in a cloud-free picture from the European Sentinel-2 satellites. The white line is the county boundary.',
     },
   },
   {
@@ -46,10 +46,8 @@ export const CHAPTERS = [
         ['Half of the county\'s ground', 'hotter than {{q1.county_median_c|c}} at the surface'],
         ['Hottest tenth of the land', '{{q1.hottest10pct_land_mean_c|c}}'],
         ['Coolest tenth', '{{q1.coolest10pct_land_mean_c|c}}'],
-        ['Hottest ward', '{{q1.hottest_ward|raw}}, {{q1.hottest_ward_c|c}}'],
-        ['Coolest ward', '{{q1.coolest_ward|raw}}, {{q1.coolest_ward_c|c}}'],
       ],
-      note: 'Blue ground was cooler than the county median, orange and red hotter. Land surface temperature, not air temperature.',
+      note: 'Orange and red ground was hotter than the county median; blue was cooler.',
     },
   },
   {
@@ -59,7 +57,7 @@ export const CHAPTERS = [
     card: {
       title: 'City centre and Industrial Area',
       // DRAFT 16 Nov (Claude), for Stephane to edit.
-      text: 'This story compares two built-up places with the forests. The first is the city centre, here the downtown grid inside Uhuru Highway, University Way, Tom Mboya Street and Haile Selassie Avenue; the second is the Industrial Area to its south-east, as mapped in OpenStreetMap. Look at how much of each is roof, road and paved yard.',
+      text: 'The city centre and, to its south-east, the Industrial Area: almost all roof, road and paved yard.',
     },
   },
   {
@@ -69,13 +67,11 @@ export const CHAPTERS = [
     card: {
       title: 'The same view, by surface temperature',
       facts: [
-        ['City centre', '{{q2.CBD.median_c|c}}'],
         ['Industrial Area', '{{q2.Industrial Area.median_c|c}}'],
+        ['City centre', '{{q2.CBD.median_c|c}}'],
         ['Karura Forest and the Arboretum', '{{q2.cool_areas_median_c|c}}'],
-        ['City centre compared with the forests', '{{q2.cbd_gap_c|c}} hotter'],
-        ['Industrial Area compared with the forests', '{{q2.industrial_gap_c|c}} hotter'],
       ],
-      note: 'On hot mornings, the ground in the Industrial Area was {{q2.industrial_gap_c|c}} hotter than Karura Forest and the Nairobi Arboretum, and the ground in the city centre {{q2.cbd_gap_c|c}} hotter.',
+      note: 'The Industrial Area\'s ground was {{q2.industrial_gap_c|c}} hotter than the forests.',
     },
   },
   {
@@ -86,9 +82,8 @@ export const CHAPTERS = [
     card: {
       title: 'The city\'s cool islands',
       // DRAFT 20 Nov (Claude), for Stephane to edit. Merges the false-colour "Where the trees are" step.
-      text: 'This is false colour: the satellite also sees light our eyes cannot, so living plants show bright green and roofs, roads and bare ground show purple. The three forests outlined here are among the coolest ground in the county on hot mornings.',
+      text: 'In false colour, living plants show bright green and roofs and bare ground purple. These three forests are among the coolest ground in the county.',
       facts: [
-        ['Ground mostly under trees', '{{q3.by_name.tree.share_pct|pct}} of the county'],
         ['Karura Forest', '{{q5.parks.Karura Forest.park_median_c|c}} at the surface on hot mornings'],
         ['Nairobi Arboretum', '{{q5.parks.Nairobi Arboretum.park_median_c|c}}'],
         ['Ngong Road Forest', '{{x.copy_v3.forests.Ngong Road Forest.median_c|c}}'],
@@ -108,14 +103,11 @@ export const CHAPTERS = [
     card: {
       title: 'Five hot wards, five cool wards',
       facts: [
-        ['Five hottest wards, where people live', '{{x.wards_top5.hot_lst_c|c}}, tree cover {{x.wards_top5.hot_tree_pct|pct0}}'],
-        ['Five coolest wards', '{{x.wards_top5.cool_lst_c|c}}, tree cover {{x.wards_top5.cool_tree_pct|pct0}}'],
-        ['People in the five hottest wards', 'about {{x.wards_top5_census.hot.people_rounded|int}} on {{x.wards_top5_census.hot.km2|d1}} km², {{x.wards_top5_census.hot.people_per_km2|int}} per km²'],
-        ['People in the five coolest wards', 'about {{x.wards_top5_census.cool.people_rounded|int}} on {{x.wards_top5_census.cool.km2|d1}} km², {{x.wards_top5_census.cool.people_per_km2|int}} per km²'],
+        ['Five hottest wards, where people live', 'about {{x.wards_top5_census.hot.people_rounded|int}} people on {{x.wards_top5_census.hot.km2|d1}} km², tree cover {{x.wards_top5.hot_tree_pct|pct0}}'],
+        ['Five coolest wards', 'about {{x.wards_top5_census.cool.people_rounded|int}} people on {{x.wards_top5_census.cool.km2|d1}} km², tree cover {{x.wards_top5.cool_tree_pct|pct0}}'],
       ],
-      // DRAFT 21 Nov (Claude), for Stephane to edit (D61).
-      note: 'The five hottest wards hold more people than the five coolest on less than a twelfth of the land. People from the 2019 census, for the census areas that match each ward; the map labels give each ward\'s count. Red: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo. Blue: Kileleshwa, Mutu-ini, Karura, Kitisuru, Karen.',
-      link: ['#explore', 'Find your own ward below'],
+      // 22 Nov: shortened to a summary (Stephane); the full comparison is on the Story page.
+      note: 'People from the 2019 census.',
     },
   },
 
@@ -137,7 +129,7 @@ export const CHAPTERS = [
         ['Share of the county\'s people', '{{q4.pop_share_in_hottest20_pct|pct}}'],
         ['Hottest fifth means', 'surface above {{q4.hottest20_threshold_c|c}} on hot mornings'],
       ],
-      note: 'Purple marks the crowded places on that hottest ground; thinly settled hot land, such as the open ground around Ruai, is left clear. Population from WorldPop 2025, a modelled estimate that may undercount the densest settlements.',
+      note: 'Purple marks the crowded places on the hottest ground. Population: WorldPop 2025 estimate.',
     },
   },
   {
@@ -147,13 +139,13 @@ export const CHAPTERS = [
     card: {
       title: 'Rooftops of Eastlands',
       // 21 Nov (D62): moved into the children's story, paired with Karen at the same scale.
-      text: 'Weighted by where people live, the hottest wards include Kayole South, Dandora Area I and Kariobangi North.',
+      text: 'Rooftops in and around Kayole South, among the hottest places where people live.',
       facts: [
         ['Buildings in this view', '{{x.cover.views.eastlands.n_buildings|int}}, in and around {{x.cover.views.eastlands.ward|raw}}'],
         ['On ground hotter than the city median', '{{x.cover.views.eastlands.share_hotter_than_median_pct|pct}} of them'],
         ['Median surface temperature around them', '{{x.cover.views.eastlands.median_building_lst_c|c}}'],
       ],
-      note: 'Each building shows the surface temperature of the area of about 100 m around it. Bare iron sheet roofs give off heat less efficiently, so where they cover much of the ground the satellite can read the surface as cooler than it is. Treat the surface temperature of these wards as a lower bound.',
+      note: 'Each building shows the surface temperature of the 100 m around it.',
     },
   },
   {
@@ -163,7 +155,7 @@ export const CHAPTERS = [
     card: {
       title: 'Rooftops of Karen',
       // DRAFT 21 Nov (Claude), for Stephane to edit (D62).
-      text: 'The same scale and the same colours in Karen, the coolest ward: houses stand apart among trees and gardens, and the ground around almost all of them was cooler than the city median.',
+      text: 'The same scale in Karen: houses stand apart among trees and gardens.',
       facts: [
         ['Buildings in this view', '{{x.cover.views.karen.n_buildings|int}}'],
         ['On ground hotter than the city median', '{{x.cover.views.karen.share_hotter_than_median_pct|pct}} of them'],
@@ -179,13 +171,11 @@ export const CHAPTERS = [
     card: {
       title: 'Where children go to school',
       // DRAFT 20 Nov (Claude), for Stephane to edit.
-      text: 'Each dot is one of the {{x.schools.n_schools|int}} schools for children mapped for this story, from the Ministry of Education\'s list and OpenStreetMap, coloured by the surface temperature of the ground within 100 m of it on hot mornings.',
+      text: 'Each dot is one of {{x.schools.n_schools|int}} schools, coloured by the heat of the ground around it on hot mornings.',
       facts: [
         ['Schools on the hotter half of the county\'s land', '{{x.schools.share_hotter_than_county_median_pct|pct}}'],
-        ['People living on the hotter half', '{{x.people_by_heat.hotter_half.share_pct|pct}}'],
         ['Schools on the hottest fifth', '{{x.schools.n_on_hottest_fifth|int}}'],
       ],
-      note: 'Schools follow where people live, and most of Nairobi lives on the hotter half. The map is a broad map of school sites; {{x.schools.sensitivity_official_list_only.n_schools|int}} schools are placed from official lists only and may sit up to 300 m from the school itself.',
     },
   },
   {
@@ -194,15 +184,13 @@ export const CHAPTERS = [
     highlight: ['Kangemi'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
-      title: 'Kangemi',
+      title: 'Kangemi, Nairobi\'s hottest ward where people live',
+      // 22 Nov (Stephane): say plainly that Kangemi is the hottest ward, with its schools and children.
+      text: '{{x.schools_trees_200m.by_ward.Kangemi.schools|int}} schools and about {{x.wards_top5_census.wards.Kangemi.school_age_2019|int}} school-age children (2019 census).',
       facts: [
-        ['Schools mapped', '{{x.schools_trees_200m.by_ward.Kangemi.schools|int}}'],
-        ['On the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Kangemi.on_hottest_fifth|int}}'],
-        ['Median surface temperature at its schools', '{{x.schools_trees_200m.by_ward.Kangemi.median_school_lst_c|c}}'],
-        ['Median tree cover within 200 m of its schools', '{{x.schools_trees_200m.by_ward.Kangemi.median_tree_pct_200m|pct}}'],
-        ['Children aged 4 to 17 living in the ward', 'about {{x.wards_top5_census.wards.Kangemi.school_age_2019|int}} (2019 census estimate)'],
+        ['Schools on the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Kangemi.on_hottest_fifth|int}}'],
+        ['Tree cover within 200 m of its schools (median)', '{{x.schools_trees_200m.by_ward.Kangemi.median_tree_pct_200m|pct}}'],
       ],
-      note: 'Kangemi has more schools on the hottest ground than any other ward. Children are the ward\'s 2019 census population times the share aged 4 to 17 in its census sub-county; the school map has no pupil numbers, so how many of them attend these schools is not known.',
     },
   },
   {
@@ -211,15 +199,14 @@ export const CHAPTERS = [
     highlight: ['Viwandani'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
-      title: 'Viwandani',
+      title: 'Viwandani, the second hottest, beside the Industrial Area',
+      // 22 Nov: what sets Viwandani apart. Its name means "at the factories"; it is part of the Mukuru settlements,
+      // declared a Special Planning Area in 2017 for flooding and pollution (Wikipedia; Muungano wa Wanavijiji).
+      text: 'Its name means "at the factories". {{x.schools_trees_200m.by_ward.Viwandani.schools|int}} schools and about {{x.wards_top5_census.wards.Viwandani.school_age_2019|int}} school-age children (2019 census).',
       facts: [
-        ['Schools mapped', '{{x.schools_trees_200m.by_ward.Viwandani.schools|int}}'],
-        ['On the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Viwandani.on_hottest_fifth|int}}'],
-        ['Median surface temperature at its schools', '{{x.schools_trees_200m.by_ward.Viwandani.median_school_lst_c|c}}'],
-        ['Median tree cover within 200 m of its schools', '{{x.schools_trees_200m.by_ward.Viwandani.median_tree_pct_200m|pct}}'],
-        ['Children aged 4 to 17 living in the ward', 'about {{x.wards_top5_census.wards.Viwandani.school_age_2019|int}} (2019 census estimate)'],
+        ['Schools on the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Viwandani.on_hottest_fifth|int}}'],
+        ['Tree cover within 200 m of its schools (median)', '{{x.schools_trees_200m.by_ward.Viwandani.median_tree_pct_200m|pct}}, the lowest of the wards shown'],
       ],
-      note: 'Viwandani, beside the Industrial Area, has the highest share of its schools on the hottest ground.',
     },
   },
   {
@@ -228,15 +215,12 @@ export const CHAPTERS = [
     highlight: ['Karen'],
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
-      title: 'Karen, for comparison',
+      title: 'Karen, Nairobi\'s coolest ward',
+      text: '{{x.schools_trees_200m.by_ward.Karen.schools|int}} schools and about {{x.wards_top5_census.wards.Karen.school_age_2019|int}} school-age children (2019 census).',
       facts: [
-        ['Schools mapped', '{{x.schools_trees_200m.by_ward.Karen.schools|int}}'],
-        ['On the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Karen.on_hottest_fifth|int}}'],
-        ['Median surface temperature at its schools', '{{x.schools_trees_200m.by_ward.Karen.median_school_lst_c|c}}'],
-        ['Median tree cover within 200 m of its schools', '{{x.schools_trees_200m.by_ward.Karen.median_tree_pct_200m|pct}}'],
-        ['Children aged 4 to 17 living in the ward', 'about {{x.wards_top5_census.wards.Karen.school_age_2019|int}} (2019 census estimate)'],
+        ['Schools on the hottest fifth of the county\'s land', '{{x.schools_trees_200m.by_ward.Karen.on_hottest_fifth|int}}'],
+        ['Tree cover within 200 m of its schools (median)', '{{x.schools_trees_200m.by_ward.Karen.median_tree_pct_200m|pct}}'],
       ],
-      note: 'Karen has the coolest ground of any ward in the county.',
       link: ['#explore', 'Find the schools in your own ward below'],
     },
   },
