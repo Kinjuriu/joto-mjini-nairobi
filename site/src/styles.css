@@ -307,3 +307,15 @@ img { max-width: 100%; height: auto; display: block; }
 .cover-credit { max-width: var(--wide); margin-top: 10px; font-size: 14px; }
 .cover-credit .source { display: inline; margin-top: 0; }
 .intro__title { margin-top: 0; }
+
+/* 25 Nov (Stephane): less empty space beside the tall charts and a larger classroom photo. */
+@media (min-width: 861px) {
+  /* Text starts at the top of its chart and stays in view while the reader scrolls past the chart. */
+  .interlude #children-by-level, .interlude #schools-trees { align-items: start; }
+  #children-by-level .split__text, #schools-trees .split__text { position: sticky; top: 96px; }
+  /* Class hours: text and photo share the row evenly; the photo fills its column. */
+  #class-hours { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  #class-hours .classroom-photo { margin-bottom: 0; }
+  #class-hours .classroom-photo img { aspect-ratio: 4 / 3; object-fit: cover; }
+}
+.school-day { max-width: 860px; margin: 32px auto 0; padding: 0 20px; }
