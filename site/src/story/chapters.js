@@ -108,6 +108,11 @@ export const CHAPTERS = [
       ],
       // 22 Nov: shortened to a summary (Stephane); the full comparison is on the Story page.
       note: 'Population figures are sourced from the 2019 Kenya Population and Housing Census.',
+      // 25 Nov (Stephane, after Tony's review): density and its history. "15 times" = people_per_km2 hot / cool.
+      after: [
+        'Population density in the five hottest wards averages about {{x.wards_top5_census.hot.people_per_km2|int}} people per square kilometre, compared with roughly {{x.wards_top5_census.cool.people_per_km2|int}} in the five coolest wards, concentrating 15 times as many residents onto each square kilometre of land.',
+        'This divide dates back to Nairobi\'s colonial planning, which reserved large, low-density plots in the west, including Karen, for Europeans while housing African workers in dense estates in the east. Modern zoning rules have largely preserved that pattern, keeping single-family plots in Karen and crowded housing in the east (United Nations University; The Standard).',
+      ],
     },
   },
 
@@ -331,6 +336,7 @@ export function cardHTML(ch, i, n) {
       + `<span class="card__bar-track"><span class="card__bar-fill" style="width: calc(${v} / ${max} * 100%)"></span></span>`
       + `<span class="card__bar-value">${esc(v)} ${esc(unit)}</span></div>`).join('')}</div>`;
   }
+  if (c.after) h += c.after.map((s) => `<p class="card__text">${esc(s)}</p>`).join('');
   if (c.note) h += `<p class="card__note">${esc(c.note)}</p>`;
   if (c.link) h += `<p class="card__link"><a href="${c.link[0]}">${esc(c.link[1])}</a></p>`;
   return `${h}</article>`;
