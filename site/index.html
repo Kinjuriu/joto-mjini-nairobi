@@ -23,8 +23,7 @@
     </div>
     <nav class="masthead__nav" aria-label="Sections">
       <a href="#explore">Explore the map</a>
-      <a href="story.html">Story</a>
-      <a href="methods.html">Resources</a>
+            <a href="methods.html">Resources</a>
     </nav>
   </header>
   <!-- Cover (21 Nov, D64): one screen, the two rooftop squares, sharp, behind the title (Stephane chose this look). -->
@@ -35,7 +34,7 @@
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="hero__text">
       <h1 id="hero-title">Nairobi's heat divide</h1>
-      <p class="hero__dek">Seven in ten of Nairobi's school-age children live on the hotter half of the city</p>
+      <p class="hero__dek">Seven in ten of Nairobi's school-aged children live on the hotter half of the city</p>
       <p class="hero__byline">By Stephane Ngugi, Senior Data Analyst &amp; Researcher
         <a class="hero__icon" href="https://www.linkedin.com/in/stephane-njoki/" aria-label="Stephane Ngugi on LinkedIn"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="24" height="24" rx="3" fill="currentColor"/><circle cx="6.6" cy="6.4" r="2" fill="#0B1620"/><rect x="4.8" y="9.3" width="3.6" height="10.3" fill="#0B1620"/><rect x="10.4" y="9.3" width="3.4" height="10.3" fill="#0B1620"/><path d="M13.6 13.6c0-2.4 4-2.7 4 0v6h3.5v-6.6c0-5.3-5.7-5.2-7.5-2.5z" fill="#0B1620"/></svg></a>
         <a class="hero__icon" href="https://github.com/Kinjuriu" aria-label="Stephane Ngugi on GitHub"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></p>
@@ -43,32 +42,35 @@
     <div class="hero__foot">
     <p class="hero__note"><span class="hero__side">Left: </span>Kangemi, Nairobi's hottest ward where people live</p>
     <p class="hero__note"><span class="hero__side">Right: </span>Karen, Nairobi's coolest ward</p>
-    <p class="hero__credit">Kangemi's square is 800 m across and Karen's 1.2 km across. Buildings from Overture Maps (ODbL), coloured by Landsat 8 and 9 ground temperature (USGS) on hot mornings: orange hotter and blue cooler than the city median; trees from ESA WorldCover 2021.</p>
     </div>
   </header>
 </div>
 
   <main id="main">
 
-    <section class="intro col" id="story-start" aria-label="Introduction">
+    <!-- 25 Nov (Stephane): the cover credit, shortened, sits below the photo instead of on it. -->
+    <p class="caption col cover-credit">Cover: rooftops in Kangemi (a square 800 m across) and Karen (1.2 km across), coloured by surface temperature on hot mornings, orange hotter and blue cooler than the city median. <span class="source">Data: Overture Maps (ODbL); USGS Landsat 8 and 9; ESA WorldCover 2021.</span></p>
+
+    <section class="intro col" id="story-start" aria-labelledby="intro-title">
       <div class="prose">
-        <p class="standfirst">Land surface temperature on clear January to March mornings, 2023 to 2026, from the Landsat 8 and 9 satellites, with the people, children, schools and trees on Nairobi's hotter and cooler ground.</p>
+        <h2 id="intro-title" class="intro__title">Mapping urban heat and cooling inequality across Nairobi</h2>
+        <p class="standfirst">Land surface temperatures derived from clear-sky Landsat 8 and 9 satellite imagery on January to March mornings (2023 to 2026), overlaid with the spatial distributions of residents, children, schools, and tree canopy across Nairobi's warmer and cooler ground.</p>
         <!-- DRAFT 20 Nov (Claude), for Stephane to edit -->
-        <p>On clear January to March mornings, half of Nairobi County's ground was hotter than {{q1.county_median_c|c}} at the surface, and the ground in and around the Industrial Area was {{x.copy_v3.industrial_and_around.gap_c|c}} hotter than Karura Forest and the Nairobi Arboretum. This story calls the ground above that median the city's hotter half, and it is where most of Nairobi lives: about {{x.people_by_heat.hotter_half.people|int}} people, {{x.people_by_heat.hotter_half.share_pct|pct}} of the county's residents, including about {{x.children_by_heat.sides.hotter half.school_age_4_17|int}} children of school age, from 4 to 17 years old.</p>
+        <p>On clear January to March mornings, half of Nairobi County's land area recorded surface temperatures above {{q1.county_median_c|c}}, with ground in and around the Industrial Area registering {{x.copy_v3.industrial_and_around.gap_c|c}} warmer than Karura Forest and the Nairobi Arboretum. In this analysis, the area exceeding that median threshold is defined as the city's "hotter half", and it is where the majority of Nairobi resides: approximately {{x.people_by_heat.hotter_half.people|int}} people ({{x.people_by_heat.hotter_half.share_pct|pct}} of county residents), including roughly {{x.children_by_heat.sides.hotter half.school_age_4_17|int}} school-aged children between 4 and 17 years old.</p>
       </div>
     </section>
 
     <!-- 1b. Opening map (moved up 21 Nov, D62): drag to compare the ground and its heat -->
     <figure class="figure full opening-map" id="opening-map">
         <div class="wide">
-          <h3 class="chart-title">What lies under the heat</h3>
-          <p class="chart-subtitle"><strong>Drag the white line left and right.</strong> On the left is the ground as the satellite photographs it; on the right, the same ground coloured by how much hotter or cooler it was than the city median on hot mornings.</p>
+          <h3 class="chart-title">What lies beneath the heat?</h3>
+          <p class="chart-subtitle"><strong>Drag the white divider left and right to compare layers.</strong> The left view shows true-colour satellite imagery of the surface; the right view displays the same ground shaded by its temperature difference (warm or cold) from the city's median temperature on hot mornings.</p>
         </div>
         <div class="map-frame map-frame--compare" id="season-compare" data-compare>
           <noscript><img src="figures/v2_pair_hot_cool.png" alt="Hot season and cool season surface temperature maps." width="2400" height="1080"></noscript>
         </div>
         <figcaption class="caption wide">
-          The forests (Karura, the Arboretum, Ngong Road) sit in the blue. The built-up centre and east sit in the orange and red.<span class="js-only"> You can also focus the line and use the arrow keys.</span>
+          Forested areas (Karura, the Arboretum, and Ngong Road) fall within the cooler blue zones, while the built-up centre and east sit in the warmer orange and red zones.<span class="js-only"> You can also select the divider line and use the arrow keys to navigate.</span>
           <span class="source">Surface temperature: median of {{q0.n_hot_scenes|raw}} clear Landsat 8 and 9 scenes, January to March 2023 to 2026, USGS via Microsoft Planetary Computer; analysis: Joto Mjini Nairobi. Imagery: EOxCloudless 2025 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2025). Labels © Mapbox © OpenStreetMap contributors.</span>
         </figcaption>
       </figure>
@@ -78,8 +80,8 @@
     <section class="col prose sources-note" aria-labelledby="sources-note-title">
       <h2 id="sources-note-title">Two kinds of picture from space</h2>
       <div class="rule" aria-hidden="true"></div>
-      <p>The photographs of the ground in this story come from the European Space Agency's Sentinel-2 satellites, joined into one cloud-free picture by EOX, with place and street names from Mapbox and OpenStreetMap; they show what the ground looks like, its roofs, roads, trees and bare soil. The heat comes from a different instrument, the thermal sensors on the Landsat 8 and 9 satellites, run by NASA and the US Geological Survey, which measure how hot the surface itself is as they pass over Nairobi at about {{q0.overpass_local|raw}}; the maps use the median of {{q0.n_hot_scenes|raw}} clear mornings from January to March, 2023 to 2026.</p>
-      <p>That reading is a land surface temperature, the heat of roofs, roads, soil and treetops, which on a sunny morning can be far hotter than the air a person breathes a metre or two above them. Hot surfaces warm the air around them, so the two are linked, but every satellite temperature in this story is the temperature of the ground, not of the air.</p>
+      <p>The true-colour ground satellite imagery in this analysis comes from the European Space Agency's Sentinel-2 satellites, compiled into a cloud-free mosaic by EOX, with place and street names from Mapbox and OpenStreetMap, showing physical land cover including roofs, roads, trees, and bare soil. The thermal data comes from a separate instrument: thermal sensors aboard NASA and the US Geological Survey's Landsat 8 and 9 satellites, which measure surface temperatures as they pass over Nairobi at approximately {{q0.overpass_local|raw}} am. The maps display the <strong>median land surface temperature</strong> across {{q0.n_hot_scenes|raw}} clear mornings from January to March, 2023 to 2026.</p>
+      <p>That reading is a land surface temperature, which is the heat of roofs, roads, soil, and treetops. On a sunny morning, it can be far hotter than the air a person breathes one to two metres above the ground. Because hot surfaces warm the air around them, <strong>ground surface temperature and air temperature</strong> are closely linked; nevertheless, every satellite temperature in this analysis measures the temperature of the ground, not of the air.</p>
     </section>
 
     <!-- 2. Story block A: Nairobi's heat divide -->
@@ -100,7 +102,7 @@
           <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
           <h2 class="story-lede__title">Nairobi's heat falls unevenly</h2>
           <div class="rule" aria-hidden="true"></div>
-          <p>Nairobi is often described as a city with a mild climate, and on most days that still holds; yet on clear mornings in the hot season, the ground under some neighbourhoods gets far hotter than the ground under others. The roofs, roads and bare yards of the east and the Industrial Area heat up fast, while Karura Forest, Ngong Road Forest and the leafy suburbs in the west stay much cooler.</p>
+          <p>Nairobi is often described as a city with a mild climate, and on most days that still holds. Yet on clear mornings in the hot season, the ground under some neighbourhoods gets far hotter than the ground under others. The roofs, roads, and bare yards of the east and the Industrial Area heat up fast, while Karura Forest, Ngong Road Forest, and the leafy suburbs in the west stay much cooler.</p>
         </div>
     </section>
 
@@ -111,12 +113,13 @@
           <!-- DRAFT 20 Nov (Claude), for Stephane to edit -->
           <h2>Most of Nairobi's people live on its hotter ground</h2>
           <div class="rule" aria-hidden="true"></div>
-          <p>Split Nairobi County's land into five equal parts by how hot its ground gets on hot mornings, and its people are far from evenly spread: about {{x.people_by_heat.hotter_half.people|int}} people, {{x.people_by_heat.hotter_half.share_pct|pct}} of the county, live on the hotter half, and only about {{x.people_by_heat.fifths.0.people|int}} on the coolest fifth, which takes in the forests and much of Karen and Kitisuru.</p>
+          <p>Imagine dividing all of Nairobi County into tiny 30-metre squares and lining them up from coolest to hottest based on clear, hot-season mornings. If you cut that line right down the middle at {{q1.county_median_c|c}}, both halves cover the exact same amount of land, yet the number of people living on each side is completely uneven. About {{x.people_by_heat.hotter_half.people|int}} people ({{x.people_by_heat.hotter_half.share_pct|pct}} of the county) live on the hotter half, compared with about {{x.people_by_heat.cooler_half.people|int}} on the cooler half. That means for every person living on cool ground, more than two people live on hot ground.</p>
+          <p>Now take that same line of squares and divide it into five equal-sized parts, stepping up from coolest to hottest. The coolest fifth, which covers the city's forests and much of Karen and Kitisuru, is home to only about {{x.people_by_heat.fifths.0.people|int}} people ({{x.people_by_heat.fifths.0.share_pct|pct}} of the county). Jump up to the fourth fifth, where the ground reaches {{x.people_by_heat.thresholds_c.p60|c}} to {{x.people_by_heat.thresholds_c.p80|c}}, and the population shoots up to about {{x.people_by_heat.fifths.3.people|int}} people ({{x.people_by_heat.fifths.3.share_pct|pct}} of the county), nearly eight times as many people living on the exact same amount of land. The very hottest fifth holds about {{x.people_by_heat.fifths.4.people|int}} people. That is still three times as many people as the coolest fifth, and it is only lower than the fourth fifth because much of that hottest land is bare, open ground around Ruai and the airport where few people live.</p>
           <p class="find-side"><a href="#explore">Find out which side of Nairobi you live on</a>: type your ward's name into the map at the end.</p>
         </div>
         <figure class="split__media figure">
-          <h3 class="chart-title">Where Nairobi's people live, by the heat of the ground</h3>
-          <p class="chart-subtitle">People living on each fifth of Nairobi County's land, from the coolest to the hottest, by surface temperature on clear January to March mornings, 2023 to 2026. Each fifth covers the same area of land.</p>
+          <h3 class="chart-title">Where Nairobi's residents live, by ground surface temperature</h3>
+          <p class="chart-subtitle">Population living on each fifth of Nairobi County's land area, ordered from coolest to hottest by land surface temperature on clear January to March mornings, 2023 to 2026. Each fifth covers the exact same area of land.</p>
           <div class="chart chart--bars" data-chart="people-heat" data-title="People by the heat of the ground">
             <noscript><p>The chart needs JavaScript. The data is in <a href="data/people_by_heat.csv">people_by_heat.csv</a>.</p></noscript>
           </div>
@@ -129,7 +132,7 @@
           <img src="figures/wards_hottest.png" alt="Ten small maps, one per ward, of the ten hottest wards where people live: Kangemi, Viwandani, Kabiro, Dandora Area I, Baba Dogo, Imara Daima, Kariobangi North, Kawangware, Kayole South and Kiamaiko. Almost all of their ground is orange and yellow, 41 to 42 °C where people live, with tree cover between 0 and 14 percent." width="1760" height="1243" loading="lazy">
           <img src="figures/wards_coolest.png" alt="Ten small maps of the ten coolest wards where people live: Karen, Kitisuru, Karura, Mutu-ini, Kileleshwa, Kilimani, Parklands/Highridge, Uthiru/Ruthimitu, Roysambu and Waithaka. Most of their ground is purple, 34 to 37 °C where people live, with tree cover between 26 and 66 percent." width="1760" height="1243" loading="lazy">
         </div>
-        <figcaption class="caption">Each ward is drawn at its own scale, with a 1 km or 500 m bar, over a faded Sentinel-2 satellite photo of the streets around it. Both charts use the same colour scale, so a purple patch in Karen and a purple patch in Kangemi are the same temperature. Ranked by surface temperature where people live (weighted by WorldPop 2025 population). <span class="source">Data: USGS Landsat 8 and 9 via Microsoft Planetary Computer; WorldPop 2025; ESA WorldCover 2021; IEBC ward boundaries via American Red Cross, HDX. Graphic: Joto Mjini Nairobi.</span></figcaption>
+        <figcaption class="caption">Each ward is mapped at its own scale, with a 1 km or 500 m scale bar, over faded Sentinel-2 satellite imagery of the streets around it. Both charts use the same colour scale, so a purple patch in Karen and a purple patch in Kangemi represent the exact same temperature. Wards are ranked by surface temperature where people live, weighted by WorldPop 2025 population data. <span class="source">Data: USGS Landsat 8 and 9 via Microsoft Planetary Computer; WorldPop 2025; ESA WorldCover 2021; IEBC ward boundaries via American Red Cross, HDX. Graphic: Joto Mjini Nairobi.</span></figcaption>
       </figure>
 
       <div class="split wide split--table" id="landcover-table">
@@ -137,12 +140,12 @@
           <!-- DRAFT 16 Nov (Claude), for Stephane to edit -->
           <h2>The hottest wards have the fewest trees</h2>
           <div class="rule" aria-hidden="true"></div>
-          <p>Areas with more trees were cooler: the hot-season surface temperature fell from {{q3.tree_band_0_10_mean_c|c}} where tree cover was under 10 % to {{q3.tree_band_90_100_mean_c|c}} where it was over 90 %.</p>
-          <p>The ten hottest wards where people live had {{x.tables_v2.ward_cover_extremes.hottest_mean_tree_pct|pct}} tree cover on average; the ten coolest had {{x.tables_v2.ward_cover_extremes.coolest_mean_tree_pct|pct}}.</p>
+          <p>Areas with more trees were cooler: hot-season surface temperature fell from {{q3.tree_band_0_10_mean_c|c}} where tree cover was under 10% to {{q3.tree_band_90_100_mean_c|c}} where it was over 90%.</p>
+          <p>The ten hottest wards where people live averaged {{x.tables_v2.ward_cover_extremes.hottest_mean_tree_pct|pct}} tree cover, compared with {{x.tables_v2.ward_cover_extremes.coolest_mean_tree_pct|pct}} in the ten coolest.</p>
         </div>
         <figure class="split__media figure">
           <h3 class="chart-title">Trees, grass, roofs and bare ground in the hottest and coolest wards</h3>
-          <p class="chart-subtitle">Share of each ward's land (%) and surface temperature where people live, difference from the city median (°C). Top: the 10 hottest wards; bottom: the 10 coolest. January to March mornings, 2023 to 2026.</p>
+          <p class="chart-subtitle">Share of each ward's land area (%) and surface temperature where people live, shown as the difference from the city median (°C). Top: the 10 hottest wards; bottom: the 10 coolest. January to March mornings, 2023 to 2026.</p>
           <div class="chart chart--table" data-chart="ward-cover" data-title="Land cover in the 10 hottest and 10 coolest wards">
             <noscript><p>The table needs JavaScript. The same numbers are in <a href="data/ward_cover_extremes.csv">ward_cover_extremes.csv</a>.</p></noscript>
           </div>
@@ -164,13 +167,13 @@
       <div class="split wide" id="children-by-level">
         <div class="split__text">
           <!-- DRAFT 20 Nov (Claude), for Stephane to edit -->
-          <h2>The hot side is home to most of the city's children, as it is to most adults</h2>
+          <h2>The hotter half of Nairobi is home to most of its children, just like most adults</h2>
           <div class="rule" aria-hidden="true"></div>
-          <p>About {{x.children_by_heat.sides.hotter half.school_age_4_17|int}} children of school age, from 4 to 17 years old, live on the hotter half of Nairobi's ground, {{x.children_by_heat.sides.hotter half.school_age_4_17_share_pct|pct}} of the county's estimated {{x.children_by_heat.sides.county.school_age_4_17|int}}, almost the same share as its adults ({{x.children_by_heat.context.adults_hotter_half_share_pct|pct}}). What sets children apart is how their bodies cope with heat, and that they spend their days in classrooms during the hottest hours.</p>
+          <p>Approximately {{x.children_by_heat.sides.hotter half.school_age_4_17|int}} school-aged children (ages 4 to 17) live on the hotter half of Nairobi's land area. That represents {{x.children_by_heat.sides.hotter half.school_age_4_17_share_pct|pct}} of the county's estimated {{x.children_by_heat.sides.county.school_age_4_17|int}} children, closely matching the {{x.children_by_heat.context.adults_hotter_half_share_pct|pct}} share of adults residing on hotter ground. What sets children apart is both their higher physiological vulnerability to heat stress and the fact that they spend their days inside classrooms during the hottest hours.</p>
         </div>
         <figure class="split__media figure">
-          <h3 class="chart-title">Children and adults on the hotter and cooler halves of Nairobi</h3>
-          <p class="chart-subtitle">Estimated people in each school age group, and adults, living on ground hotter (red) or cooler (blue) than the county median on hot mornings. School levels follow the Competency-Based Curriculum entry ages.</p>
+          <h3 class="chart-title">Children and adults living on Nairobi's hotter and cooler ground</h3>
+          <p class="chart-subtitle">Estimated population in each school-age group, alongside adults, living on ground hotter (red) or cooler (blue) than the county median on hot mornings. School levels follow the Competency-Based Curriculum entry ages.</p>
           <div class="chart chart--bars" data-chart="children-level" data-title="Children by school level on the hotter and cooler halves">
             <noscript><p>The chart needs JavaScript. The data is in <a href="data/children_by_level.csv">children_by_level.csv</a>.</p></noscript>
           </div>
@@ -183,10 +186,10 @@
           <!-- DRAFT 20 Nov (Claude), for Stephane to edit -->
           <h2>Schools on the hot side have almost no trees around them</h2>
           <div class="rule" aria-hidden="true"></div>
-          <p>The difference between Nairobi's hot and cool sides is clearest in the land around its schools. Within 200 m of the {{x.schools_trees_200m.fifths.0.n_schools|int}} schools on the coolest fifth of the county's land, a median of {{x.schools_trees_200m.fifths.0.median_tree_pct|pct}} of the ground is under trees; around the {{x.schools_trees_200m.fifths.4.n_schools|int}} schools on the hottest fifth, the median is {{x.schools_trees_200m.fifths.4.median_tree_pct|pct}}, and at {{x.schools_trees_200m.fifths.4.share_under_10pct_trees|pct}} of those schools less than a tenth of the land nearby is under trees.</p>
+          <p>The difference between Nairobi's hotter and cooler ground is clearest in the land around its schools. Within 200 m of the {{x.schools_trees_200m.fifths.0.n_schools|int}} schools on the coolest fifth of the county's land, a median of {{x.schools_trees_200m.fifths.0.median_tree_pct|pct}} of the ground is under trees. Around the {{x.schools_trees_200m.fifths.4.n_schools|int}} schools on the hottest fifth, that median drops to {{x.schools_trees_200m.fifths.4.median_tree_pct|pct}}, and at {{x.schools_trees_200m.fifths.4.share_under_10pct_trees|pct}} of those schools, less than a tenth of the land within 200 m is under trees.</p>
         </div>
         <figure class="split__media figure">
-          <h3 class="chart-title">Tree cover around Nairobi's schools, by the heat of the ground they stand on</h3>
+          <h3 class="chart-title">Tree cover around Nairobi's schools, by ground surface temperature</h3>
           <p class="chart-subtitle">Median share of the land within 200 m of each school that is under trees, for the schools on each fifth of the county's land, from the coolest to the hottest fifth.</p>
           <div class="chart chart--bars" data-chart="schools-trees" data-title="Tree cover around schools">
             <noscript><p>The chart needs JavaScript. The data is in <a href="data/schools_by_heat.csv">schools_by_heat.csv</a>.</p></noscript>
@@ -210,13 +213,13 @@
         <div class="split__text">
           <h2>Nairobi's ground is hottest during class hours</h2>
           <div class="rule" aria-hidden="true"></div>
-          <p>Landsat sees Nairobi only on the mornings it passes over, at about {{q0.overpass_local|raw}}, so the chart above follows a whole day with a different record, the Copernicus hourly land surface temperature, for 27 January 2026, a Tuesday in the fourth week of the first school term. The county's ground warmed quickly once the sun was up, reached {{x.copy_v3.day_of_heat.county_peak_c|c}} at {{x.copy_v3.day_of_heat.county_peak_hour|raw}}, and stayed close to that until 14:00.</p>
-          <p>Kenya's day schools hold classes from 08:00 to 15:30 on weekdays, under Regulation 84 of the Basic Education Regulations, 2015, so the hottest hours of the day fall inside the school day; and the first term of 2026 ran from 5 January to 2 April, the same hot, dry months that these maps describe.</p>
+          <p>Landsat captures Nairobi only during its morning overpass, at about {{q0.overpass_local|raw}} am. The chart above tracks a full day using a different dataset: the Copernicus hourly land surface temperature record for 27 January 2026, a Tuesday in the fourth week of the first school term. The county's ground warmed quickly once the sun was up, reached {{x.copy_v3.day_of_heat.county_peak_c|c}} at {{x.copy_v3.day_of_heat.county_peak_hour|raw}}, and stayed close to that level until 14:00.</p>
+          <p>Kenya's day schools hold classes from 08:00 to 15:30 on weekdays under Regulation 84 of the Basic Education Regulations, 2015, which puts the hottest hours of the day directly inside school hours. The first term of 2026 also ran from 5 January to 2 April, the same hot, dry months that these maps describe.</p>
         </div>
         <div class="split__media">
           <figure class="figure classroom-photo">
             <img src="figures/classroom.jpg" alt="Inside a classroom: wooden desks and benches on a concrete floor, under walls of corrugated iron sheets, with pupils' bags hanging by the door" loading="lazy" onerror="this.closest('figure').remove()">
-            <figcaption class="caption">A classroom with iron sheet walls. <span class="source">Photo: iRise.</span></figcaption>
+            <figcaption class="caption">A classroom with iron sheet walls in Kahawa West, Nairobi. <span class="source">Photo: iRise CBO.</span></figcaption>
           </figure>
           <figure class="figure">
             <h3 class="chart-title">A school day in Nairobi</h3>
@@ -234,8 +237,8 @@
     <section class="col prose" id="what-it-means" aria-labelledby="what-it-means-title">
       <h2 id="what-it-means-title">What it means</h2>
       <div class="rule" aria-hidden="true"></div>
-      <p>Children heat up faster than adults and find it hard to learn in hot classrooms, and in Nairobi most of them live, and most of their schools stand, on the hotter half of the city, where the ground around schools has the least shade. Shade trees at the hottest schools, ceilings under iron sheet roofs and temperature sensors inside classrooms are the first things worth testing.</p>
-      <p class="find-side"><a href="story.html">Read the full story</a>: what the research says about heat and children, and what could help.</p>
+      <p>Children heat up faster than adults and struggle to learn in hot classrooms. In Nairobi, most children live, and most of their schools stand, on the hotter half of the city, where the ground around schools has the least shade. Shade trees at the hottest schools, insulated ceilings under iron sheet roofs, and indoor classroom sensors to track the air temperatures satellites cannot see are the first interventions worth testing.</p>
+      <!-- 25 Nov (Stephane): link to story.html hidden until she rewrites the story. -->
     </section>
 
     <!-- 7. Explorer -->

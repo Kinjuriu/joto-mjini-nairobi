@@ -27,7 +27,7 @@ export const CHAPTERS = [
     card: {
       title: 'Nairobi from space',
       // DRAFT 16 Nov (Claude), for Stephane to edit.
-      text: 'Nairobi County from space, in a cloud-free picture from the European Sentinel-2 satellites. The white line is the county boundary.',
+      text: 'Nairobi County from space, in a cloud-free picture from the European Sentinel-2 satellites. The white line is the county\'s boundary.',
     },
   },
   {
@@ -42,12 +42,12 @@ export const CHAPTERS = [
     chip: 'January to March mornings, 2023 to 2026', legend: 'heat-diff',
     card: {
       title: 'The heat divide',
+      text: 'Half of Nairobi County\'s ground is hotter than {{q1.county_median_c|c}} at the surface.',
       facts: [
-        ['Half of the county\'s ground', 'hotter than {{q1.county_median_c|c}} at the surface'],
-        ['Hottest tenth of the land', '{{q1.hottest10pct_land_mean_c|c}}'],
-        ['Coolest tenth', '{{q1.coolest10pct_land_mean_c|c}}'],
+        ['Hottest tenth of the land area', '{{q1.hottest10pct_land_mean_c|c}} at the surface'],
+        ['Coolest tenth of the land area', '{{q1.coolest10pct_land_mean_c|c}} at the surface'],
       ],
-      note: 'Orange and red ground was hotter than the county median; blue was cooler.',
+      note: 'Ground shaded in orange and red recorded surface temperatures hotter than the county median, while ground shaded in blue was cooler.',
     },
   },
   {
@@ -57,7 +57,7 @@ export const CHAPTERS = [
     card: {
       title: 'City centre and Industrial Area',
       // DRAFT 16 Nov (Claude), for Stephane to edit.
-      text: 'The city centre and, to its south-east, the Industrial Area: almost all roof, road and paved yard.',
+      text: 'The city centre and, to its south-east, the Industrial Area consist almost entirely of built surfaces, including roofs, roads, and paved yards.',
     },
   },
   {
@@ -82,7 +82,7 @@ export const CHAPTERS = [
     card: {
       title: 'The city\'s cool islands',
       // DRAFT 20 Nov (Claude), for Stephane to edit. Merges the false-colour "Where the trees are" step.
-      text: 'In false colour, living plants show bright green and roofs and bare ground purple. These three forests are among the coolest ground in the county.',
+      text: 'In false-colour satellite imagery, living vegetation appears bright green, while roofs and bare ground appear purple. These three forests represent some of the coolest ground in the county:',
       facts: [
         ['Karura Forest', '{{q5.parks.Karura Forest.park_median_c|c}} at the surface on hot mornings'],
         ['Nairobi Arboretum', '{{q5.parks.Nairobi Arboretum.park_median_c|c}}'],
@@ -103,11 +103,11 @@ export const CHAPTERS = [
     card: {
       title: 'Five hot wards, five cool wards',
       facts: [
-        ['Five hottest wards, where people live', 'about {{x.wards_top5_census.hot.people_rounded|int}} people on {{x.wards_top5_census.hot.km2|d1}} km², tree cover {{x.wards_top5.hot_tree_pct|pct0}}'],
-        ['Five coolest wards', 'about {{x.wards_top5_census.cool.people_rounded|int}} people on {{x.wards_top5_census.cool.km2|d1}} km², tree cover {{x.wards_top5.cool_tree_pct|pct0}}'],
+        ['Five hottest populated wards', 'approximately {{x.wards_top5_census.hot.people_rounded|int}} residents across {{x.wards_top5_census.hot.km2|d1}} km², with {{x.wards_top5.hot_tree_pct|pct0}} tree cover'],
+        ['Five coolest wards', 'approximately {{x.wards_top5_census.cool.people_rounded|int}} residents across {{x.wards_top5_census.cool.km2|d1}} km², with {{x.wards_top5.cool_tree_pct|pct0}} tree cover'],
       ],
       // 22 Nov: shortened to a summary (Stephane); the full comparison is on the Story page.
-      note: 'People from the 2019 census.',
+      note: 'Population figures are sourced from the 2019 Kenya Population and Housing Census.',
     },
   },
 
@@ -125,11 +125,11 @@ export const CHAPTERS = [
     card: {
       title: 'Who lives on the hottest ground',
       facts: [
-        ['People on the hottest fifth of the land', 'about {{q4.pop_in_hottest20|int}}'],
-        ['Share of the county\'s people', '{{q4.pop_share_in_hottest20_pct|pct}}'],
-        ['Hottest fifth means', 'surface above {{q4.hottest20_threshold_c|c}} on hot mornings'],
+        ['People living on the hottest fifth of Nairobi\'s land', 'about {{q4.pop_in_hottest20|int}}'],
+        ['Share of the county\'s total population', '{{q4.pop_share_in_hottest20_pct|pct}}'],
+        ['What "hottest fifth" means', 'ground surface temperatures above {{q4.hottest20_threshold_c|c}} on hot mornings'],
       ],
-      note: 'Purple marks the crowded places on the hottest ground. Population: WorldPop 2025 estimate.',
+      note: 'On the map, purple highlights crowded neighbourhoods sitting on this hottest ground. Population figures are from the WorldPop 2025 estimate.',
     },
   },
   {
@@ -139,13 +139,13 @@ export const CHAPTERS = [
     card: {
       title: 'Rooftops of Eastlands',
       // 21 Nov (D62): moved into the children's story, paired with Karen at the same scale.
-      text: 'Rooftops in and around Kayole South, among the hottest places where people live.',
+      text: 'A close-up of rooftops in and around Kayole South, among the hottest places where people live in Nairobi.',
       facts: [
-        ['Buildings in this view', '{{x.cover.views.eastlands.n_buildings|int}}, in and around {{x.cover.views.eastlands.ward|raw}}'],
-        ['On ground hotter than the city median', '{{x.cover.views.eastlands.share_hotter_than_median_pct|pct}} of them'],
-        ['Median surface temperature around them', '{{x.cover.views.eastlands.median_building_lst_c|c}}'],
+        ['Buildings mapped in this view', '{{x.cover.views.eastlands.n_buildings|int}}, in and around {{x.cover.views.eastlands.ward|raw}}'],
+        ['Share on ground hotter than the city median', '{{x.cover.views.eastlands.share_hotter_than_median_pct|pct}} of all buildings shown'],
+        ['Median surface temperature around these buildings', '{{x.cover.views.eastlands.median_building_lst_c|c}}'],
       ],
-      note: 'Each building shows the surface temperature of the 100 m around it.',
+      note: 'Each building is coloured by the surface temperature within 100 m around it.',
     },
   },
   {
@@ -155,7 +155,7 @@ export const CHAPTERS = [
     card: {
       title: 'Rooftops of Karen',
       // DRAFT 21 Nov (Claude), for Stephane to edit (D62).
-      text: 'The same scale in Karen: houses stand apart among trees and gardens.',
+      text: 'Shown at the same map scale in Karen, where houses stand apart among trees and gardens.',
       facts: [
         ['Buildings in this view', '{{x.cover.views.karen.n_buildings|int}}'],
         ['On ground hotter than the city median', '{{x.cover.views.karen.share_hotter_than_median_pct|pct}} of them'],
@@ -171,7 +171,7 @@ export const CHAPTERS = [
     card: {
       title: 'Where children go to school',
       // DRAFT 20 Nov (Claude), for Stephane to edit.
-      text: 'Each dot is one of {{x.schools.n_schools|int}} schools, coloured by the heat of the ground around it on hot mornings.',
+      text: 'Each dot represents one of {{x.schools.n_schools|int}} schools, coloured by the surface temperature of the ground around it on hot mornings.',
       facts: [
         ['Schools on the hotter half of the county\'s land', '{{x.schools.share_hotter_than_county_median_pct|pct}}'],
         ['Schools on the hottest fifth', '{{x.schools.n_on_hottest_fifth|int}}'],
