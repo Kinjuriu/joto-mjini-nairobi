@@ -88,7 +88,7 @@ export default defineConfig({
         layers: resolve(import.meta.dirname, 'layers.html'),
         slides: resolve(import.meta.dirname, 'slides.html'),
         methods: resolve(import.meta.dirname, 'methods.html'),
-        story: resolve(import.meta.dirname, 'story.html'),
+        // story: resolve(import.meta.dirname, 'story.html'),  // hidden 25 Nov until Stephane rewrites it
       },
     },
   },

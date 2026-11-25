@@ -5,13 +5,14 @@
 #   1. Settings > Secrets and variables > Actions > New repository secret: name MAPBOX_TOKEN, value = the
 #      VITE_MAPBOX_TOKEN from site/.env.local (never commit the token itself).
 #   2. Settings > Pages > Build and deployment > Source: GitHub Actions.
-# After that, every push to main or to workshop-schools-20nov rebuilds and republishes the site; the
+# After that, every push to main rebuilds and republishes the site (the github-pages environment only
+# accepts main, so pushes to other branches are not deployed; merge them into main); the
 # "Actions" tab shows progress. You can also run it by hand there (Run workflow).
 name: Deploy site to GitHub Pages
 
 on:
   push:
-    branches: [main, workshop-schools-20nov]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

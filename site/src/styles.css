@@ -302,3 +302,8 @@ img { max-width: 100%; height: auto; display: block; }
 .article-end { border-top: 1px solid var(--rule); margin-top: 32px; padding-top: 18px; }
 .classroom-photo img { width: 100%; height: auto; }
 .classroom-photo { margin-bottom: 20px; }
+
+/* 25 Nov (Stephane): cover credit below the photo; the intro gets the site's subtitle as its heading. */
+.cover-credit { max-width: var(--wide); margin-top: 10px; font-size: 14px; }
+.cover-credit .source { display: inline; margin-top: 0; }
+.intro__title { margin-top: 0; }
