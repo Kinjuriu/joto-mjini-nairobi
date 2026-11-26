@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Entry point: fonts, styles, reading progress, and the maps and charts, each loaded when it comes near the screen.
 import '@fontsource/source-serif-4/latin-400.css';
 import '@fontsource/source-serif-4/latin-600.css';

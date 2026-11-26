@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Independent checks of headline numbers (prompt 02, 'Checks before you finish').
 
 Each check recomputes a number by a different route from src/analysis/core.py and compares.

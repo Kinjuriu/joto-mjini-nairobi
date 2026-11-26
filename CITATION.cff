@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use or refer to this work, please cite it as below."
+title: "Joto Mjini Nairobi: Nairobi's heat divide and the children who live and learn on its hot side"
+type: software
+authors:
+  - family-names: "Ngugi"
+    given-names: "Stephane"
+    affiliation: "Independent researcher"
+date-released: 2026-11-26
+url: "https://kinjuriu.github.io/joto-mjini-nairobi/"
+repository-code: "https://github.com/Kinjuriu/joto-mjini-nairobi"
+abstract: >-
+  An open-data storyboard mapping land surface temperature across Nairobi County from Landsat 8 and 9,
+  with the people, school-age children, schools and tree cover on the city's hotter and cooler ground.
+keywords:
+  - urban heat
+  - Nairobi
+  - land surface temperature
+  - schools
+  - children
+  - Landsat
+license-url: "https://github.com/Kinjuriu/joto-mjini-nairobi/blob/main/LICENSE"

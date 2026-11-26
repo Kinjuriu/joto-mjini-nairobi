@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Shared paths, constants and helpers for the Joto Mjini Nairobi pipeline."""
 from __future__ import annotations
 

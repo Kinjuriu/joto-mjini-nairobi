@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Animated maps (the agreed exception to "no autoplay", DECISIONS D37): muted and looping, playing only while
 // at least half on screen and pausing when scrolled away, with a visible Pause/Play button. Under
 // prefers-reduced-motion they show the poster frame and wait for the reader to press Play.

@@ -1,21 +1,23 @@
-MIT License
+Copyright (c) 2026 Stephane Ngugi. All rights reserved.
 
-Copyright (c) 2026 Stephane Ngugi
+SOURCE CODE
+The source code in this repository (the data pipeline, analysis and website code) is proprietary.
+No permission is granted to copy, modify, publish, distribute, sublicense or sell it, in whole or in
+part, without prior written permission from Stephane Ngugi. To ask for permission, contact her on
+LinkedIn: https://www.linkedin.com/in/stephane-njoki/
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Versions of this repository published before 26 November 2026 were released under the MIT License.
+Copies made from those versions remain under the MIT License, which requires keeping the copyright
+notice "Copyright (c) 2026 Stephane Ngugi" in all copies.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+STORYBOARD CONTENT
+The text, maps, charts, figures and design of the Joto Mjini Nairobi storyboard are licensed under
+Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0); see LICENSE-CONTENT.md.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+DATA
+Data derived from third-party sources keeps the licence of its source, as listed in data/SOURCES.md.
+In particular, databases derived from OpenStreetMap and Overture Maps are available under the Open
+Database License (ODbL), and images that include EOxCloudless imagery are CC BY-NC-SA 4.0.
+
+CITATION
+If you use or refer to this work, please cite it as set out in CITATION.cff.

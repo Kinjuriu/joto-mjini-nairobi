@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 2: Landsat 8 and 9 surface temperature and NDVI over the study county (Nairobi by default).
 
 Source: USGS Landsat Collection 2 Level-2, via Microsoft Planetary Computer (no login).

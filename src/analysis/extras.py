@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Optional analyses ("if time remains" in prompt 02). Results go to analysis/results_extra.json.
 
 1. Hot-season minus cool-season surface temperature difference map (Nairobi).

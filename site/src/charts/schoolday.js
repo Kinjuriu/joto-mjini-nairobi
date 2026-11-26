@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // A school day in Nairobi (22 November 2026, Stephane): official class hours for day schools, the Landsat pass
 // and the hour Nairobi's ground was hottest on 27 January 2026, on one time line. Hand-built SVG, no hover needed.
 // Hours: Basic Education Regulations, 2015, Regulation 84 (class 08:00 to 15:30, co-curricular 15:30 to 16:45,

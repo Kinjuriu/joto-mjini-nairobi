@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 3: land cover, population, built-up growth and buildings, on the shared grid.
 
 Run: uv run python -m src.pipeline.s3_context [--force] [--only worldcover|population|ghsl|buildings]

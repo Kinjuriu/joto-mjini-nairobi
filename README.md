@@ -172,9 +172,17 @@ Corrections and suggestions are welcome, especially from people who know Nairobi
 
 ## License
 
-Distributed under the MIT License; see [`LICENSE`](LICENSE). The datasets keep their own licences, listed in [`data/SOURCES.md`](data/SOURCES.md), and some (for example EOxCloudless imagery, CC BY-NC-SA 4.0) do not allow commercial use.
+Copyright (c) 2026 Stephane Ngugi. All rights reserved.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+* **Code:** proprietary; no reuse without written permission (see [`LICENSE`](LICENSE)). Versions published before 26 November 2026 were released under the MIT License, and copies of those versions keep it.
+* **Storyboard text, maps, charts and design:** [CC BY-NC 4.0](LICENSE-CONTENT.md); credit Stephane Ngugi, Joto Mjini Nairobi, and no commercial use without permission.
+* **Data:** each dataset keeps its own licence, listed in [`data/SOURCES.md`](data/SOURCES.md). Databases derived from OpenStreetMap and Overture Maps are under the ODbL, and images with EOxCloudless imagery are CC BY-NC-SA 4.0.
+
+### How to cite
+
+> Ngugi, S. (2026). *Joto Mjini Nairobi: Nairobi's heat divide and the children who live and learn on its hot side.* https://kinjuriu.github.io/joto-mjini-nairobi/
+
+GitHub's "Cite this repository" button uses [`CITATION.cff`](CITATION.cff).
 
 
 ## Contact

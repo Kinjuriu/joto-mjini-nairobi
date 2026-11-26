@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """People in the five hottest and five coolest wards from the 2019 census (D61).
 
 The "Five hot wards, five cool wards" map step shows how small the hottest wards are and how large the coolest

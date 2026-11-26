@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Cover image for the story (21 November 2026, D62): rooftops of the hottest and the coolest ward, side by side.
 
 Each panel is a square of the given size (COVER_M: Kangemi 800 m, Karen 1.2 km, so not the same scale): Karen's is centred on its densest square kilometre of buildings, and

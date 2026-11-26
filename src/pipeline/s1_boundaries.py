@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 1: Nairobi County boundary, wards and place names.
 
 Run: uv run python -m src.pipeline.s1_boundaries [--force]

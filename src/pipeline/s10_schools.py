@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """School locations for Nairobi County, from every open source we could reach, merged and de-duplicated.
 
 Sources (data/SOURCES.md, "Schools"):

@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Numbers for the v3 story text (16 November 2026).
 
 Writes analysis/results_extra.json["copy_v3"] so the page reads every number through {{x.copy_v3...}}:

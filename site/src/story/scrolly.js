@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // The scrolling map story (chunk 3). Cards scroll over a full-screen sticky map; when a card's middle is
 // nearest the middle of the screen, the map flies to that chapter and cross-fades its layers.
 //

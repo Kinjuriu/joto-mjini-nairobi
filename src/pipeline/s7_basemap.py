@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 7: Protomaps basemap extract for the Nairobi area (no API key needed at view time).
 
 Uses the `pmtiles` CLI (brew install pmtiles). Picks the latest daily build unless --build is given.

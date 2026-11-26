@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """v2 animated maps (chunk 4), in the spirit of NASA's wind-gust animation: title, large time stamp,
 colour bar and credit baked into every frame; a faded Sentinel-2 true-colour background; county outline,
 faint ward lines and a few place labels.

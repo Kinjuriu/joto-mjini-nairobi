@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """v2 tables for the heatmap tables and the highlighted chart (chunk 4).
 
 T1 builtup_by_subcounty.csv   built-up share of each of the 17 sub-counties (constituencies), GHSL epochs

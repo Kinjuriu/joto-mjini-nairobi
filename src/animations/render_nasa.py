@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Data-visualisation animations in the style of NASA's HRRR wind-gust and TEMPO NO2 animations
 (Stephane's request, 10 November 2026): a plain scientific map on white, a title at the top left, a
 "Valid:" time stamp at the top right, latitude and longitude on the axes, the county and ward outlines,

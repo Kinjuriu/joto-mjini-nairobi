@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """City centre comparison area for F3: the downtown grid, traced from OpenStreetMap roads (DECISIONS D51).
 
 The area people call "town": inside Uhuru Highway (west), University Way (north), Tom Mboya Street

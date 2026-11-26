@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 2b: seasonal surface temperature and NDVI composites from usable Landsat scenes.
 
 Run: uv run python -m src.pipeline.s2b_composites [--force]

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Slides: fonts and styles only. Native scrolling; Page Down, Page Up and the arrow keys move one slide.
 import '@fontsource/source-serif-4/latin-400.css';
 import '@fontsource/source-serif-4/latin-600.css';

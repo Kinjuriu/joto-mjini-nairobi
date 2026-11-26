@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 9 (v2): hourly land surface temperature for one hot day, from the Copernicus Land Monitoring Service.
 
 Product: CLMS Global Land Surface Temperature, hourly, ~3 km, version 3 (Meteosat over Africa), served by

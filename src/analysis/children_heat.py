@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """People, school-age children and tree cover near schools on Nairobi's hot and cool ground (D59).
 
 Heat bands use the same layer and thresholds as q1 and q4: the hot-season median land surface temperature

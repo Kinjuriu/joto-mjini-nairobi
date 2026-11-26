@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Small raster helpers shared by pipeline and analysis."""
 from __future__ import annotations
 

@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Steps 4 and 5: daily air temperature for Nairobi (Open-Meteo, ERA5) and the RONI El Nino index.
 
 Run: uv run python -m src.pipeline.s4_climate [--force]

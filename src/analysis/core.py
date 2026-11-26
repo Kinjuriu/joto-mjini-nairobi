@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Phase 2 analysis: one function per story question. Results go to analysis/results.json.
 
 Run: uv run python -m src.analysis.core

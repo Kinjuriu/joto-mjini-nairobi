@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """v2 static figures for the story page.
 
 pair_hot_cool: the hot-season and cool-season surface temperature maps side by side, on one colour scale

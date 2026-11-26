@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Hot-season land surface temperature at Nairobi's schools.
 
 For each school in data/processed/nairobi_schools.geojson (built by src/pipeline/s10_schools.py):
