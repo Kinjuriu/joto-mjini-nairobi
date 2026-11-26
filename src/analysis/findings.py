@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Write analysis/FINDINGS.md from analysis/results.json, so every number in it is computed, not typed.
 
 Run: uv run python -m src.analysis.findings

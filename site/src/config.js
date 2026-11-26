@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Shared paths, formatting and the fixed colour ramps from prompts/v2/DESIGN_BRIEF_v2.md.
 
 export const BASE = import.meta.env.BASE_URL;

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Three bar charts for the children and schools part of the story (20 November 2026, DECISIONS D60).
 // Hand-built SVG with direct labels: every number is printed on the chart, so nothing depends on hover.
 // Each row has its label above the bar, which works the same at 375 px and 1440 px.

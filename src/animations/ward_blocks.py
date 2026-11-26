@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Ward block charts in the style of NASA's TEMPO plots (Stephane's request, 11 November 2026).
 
 Two figures: the ten hottest and the ten coolest wards where people live (ranked by population-weighted

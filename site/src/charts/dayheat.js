@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // A day of heat (12 November 2026): hour-by-hour land surface temperature on 27 January 2026 from the
 // Copernicus hourly product (about 3 km), as a line chart. It replaces the map animation, whose 3 km cloud
 // gaps made it look broken. Two lines: the median inside Nairobi County and the median of the land around it.

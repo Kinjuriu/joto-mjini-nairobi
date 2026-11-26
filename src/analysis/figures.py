@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Static figures for slides and the no-JavaScript view, in the project palette and typefaces.
 
 Writes PNG and SVG to outputs/figures/ and copies the PNGs to site/public/figures/.

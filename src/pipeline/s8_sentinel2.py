@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 8 (v2): Sentinel-2 dry-season composite of Nairobi at 10 m, true and false colour.
 
 Source: Copernicus Sentinel-2 Level-2A (collection `sentinel-2-l2a`, Microsoft Planetary Computer).

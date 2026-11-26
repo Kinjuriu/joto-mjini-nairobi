@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // The Story page (22 November 2026, Stephane): the long article with its charts. Same fonts, styles and chart code
 // as the storyboard, but no maps, so it loads quickly.
 import '@fontsource/source-serif-4/latin-400.css';

@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Check the merged school map against the Nairobi City County list of public ECD centres and primary schools.
 
 Source: Nairobi City County Education Department, "Data on Nairobi public ECD centres & primary schools and

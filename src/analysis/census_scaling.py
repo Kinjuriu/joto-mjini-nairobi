@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """WorldPop 2025 ward populations scaled to the 2019 census sub-county totals (prompt v3, task 5).
 
 The 2019 census reports Nairobi by 11 census sub-counties (Dagoretti, Embakasi, ...), which are not the 17 IEBC

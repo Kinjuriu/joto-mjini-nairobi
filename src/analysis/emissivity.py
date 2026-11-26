@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """v2 roof check: is surface emissivity lower in dense, low-tree wards (metal roofs)?
 
 Landsat Collection 2 surface temperature uses emissivity from ASTER GED (2000 to 2008), adjusted for

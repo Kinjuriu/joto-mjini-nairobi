@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Swipe compare: two synchronised maps, the right one clipped at the handle.
 // The handle is a plain vertical rule with a square grip; it works with mouse, touch and the arrow keys
 // (role="slider"). Used by interlude 1 and by the explorer's Compare mode.

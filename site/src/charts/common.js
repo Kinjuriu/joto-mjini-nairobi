@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Shared bits for the hand-built SVG charts: resize handling, colour helpers and a detail line that shows the
 // value under the pointer, finger or keyboard focus (nothing is hover-only).
 

@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Prepare the two real pictures for the site (22 November 2026, D65).
 
 Save the originals in data/raw/pictures/ first:

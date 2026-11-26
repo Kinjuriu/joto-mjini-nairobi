@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Legend card (bottom right of every map, design brief v2 section 2) and date chip (top centre).
 // Both read tiles/manifest.json, so a legend can never disagree with the tiles it describes.
 

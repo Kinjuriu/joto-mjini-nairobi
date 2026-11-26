@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Heatmap tables in the spirit of NASA's land cover table, following DESIGN_RULES.md: squared cells,
 // the number printed in each cell, one colour ramp per table (or per column where stated), title,
 // subtitle, source and date around it in HTML. One tab stop per table: arrow keys move a highlighted

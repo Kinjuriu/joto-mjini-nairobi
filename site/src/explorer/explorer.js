@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // The explorer (chunk 5): a small version of NASA's dashboard exploration view.
 // Layer panel with groups, real checkboxes, opacity sliders and "i" buttons; a built-up year selector with a
 // play button (paused by default); swipe compare with a layer picker per side; an accessible ward combobox

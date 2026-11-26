@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 8: write data/processed/MANIFEST.md listing every processed file, size, grid and purpose."""
 from __future__ import annotations
 

@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Iron sheet roofs from the 2019 census, by Nairobi census sub-county, set against ward surface temperature.
 
 Census: KNBS 2019 Volume IV table 2.12 (share of conventional households by dominant roofing material),

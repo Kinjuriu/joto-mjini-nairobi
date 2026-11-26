@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // The one map module every map on the site uses (design brief v2, section 1).
 //
 // createMap(container, options) returns a controller that:

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // Daily maximum air temperature since January 2023 with the El Niño period shaded (layout of NASA's highlighted
 // rainfall chart). Crosshair on hover and on tap; the chart takes keyboard focus and the arrow keys step a day
 // (Shift steps a month); the record day is labelled directly.

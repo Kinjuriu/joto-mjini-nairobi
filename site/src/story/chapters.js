@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 // The scrolling map story, as data (chunk 3). Each chapter is one card and one map state.
 //
 // Card text uses sentences and numbers from analysis/FINDINGS.md. Numbers are written as {{path|format}}

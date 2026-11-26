@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """v2 web tiles: static XYZ folders for Mapbox GL JS, plus site/public/tiles/manifest.json.
 
 Raster layers become WebP tiles (`site/public/tiles/<layer>/{z}/{x}/{y}.webp`) with the colour ramps of

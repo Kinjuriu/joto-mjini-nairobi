@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Web-ready outputs for the story site, written to site/public/data/.
 
 Run: uv run python -m src.analysis.web [--only wards|rasters|buildings|charts|places] [--force]

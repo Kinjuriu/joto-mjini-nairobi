@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Step 1b (v2): replace the geoBoundaries wards with IEBC-based ward boundaries.
 
 Primary source: "Administrative Wards in Kenya 1450" (American Red Cross, HDX, CC BY), the 1,450 IEBC

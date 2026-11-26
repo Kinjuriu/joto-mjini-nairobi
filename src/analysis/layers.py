@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stephane Ngugi. All rights reserved. See LICENSE.
 """Load the analysis layers on the shared 30 m grid, plus ward and place geometries."""
 from __future__ import annotations
 
